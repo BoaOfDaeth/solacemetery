@@ -13,7 +13,7 @@ interface Stats {
   }>;
   top_monster_killers?: Array<{
     killer: string;
-    kills: number;
+    total_levels: number;
   }>;
 }
 
@@ -42,10 +42,11 @@ async function getStats(): Promise<Stats> {
     const topMonsterKillers = await query(`
       SELECT 
         killer,
-        COUNT(*) as kills
+        SUM(vlevel) as total_levels
       FROM MVP 
+      WHERE vlevel IS NOT NULL
       GROUP BY killer 
-      ORDER BY kills DESC 
+      ORDER BY total_levels DESC 
       LIMIT 10
     `);
 
@@ -138,7 +139,7 @@ export default async function Home() {
           <div className="bg-white shadow">
             <div className="px-6 py-4 border-b border-gray-200">
               <h3 className="text-lg font-medium text-gray-900">
-                Top 10 Monster Killers
+                Top 10 Mobs
               </h3>
             </div>
             <div className="overflow-x-auto">
@@ -146,24 +147,24 @@ export default async function Home() {
                 <thead className="bg-gray-50">
                   <tr>
                     <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                      Monster
+                      Mob
                     </th>
                     <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                      Kills
+                      PLayer Levels killed
                     </th>
                   </tr>
                 </thead>
                 <tbody className="bg-white divide-y divide-gray-200">
-                  {stats.top_monster_killers?.map((monster: any, index: number) => (
-                    <tr key={monster.killer} className="hover:bg-gray-50">
+                  {stats.top_monster_killers?.map((mob: any, index: number) => (
+                    <tr key={mob.killer} className="hover:bg-gray-50">
                       <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
                         <FormatPlayer
-                          name={monster.killer}
+                          name={mob.killer}
                           linkType="mob"
                         />
                       </td>
                       <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                        {monster.kills}
+                        {mob.total_levels}
                       </td>
                     </tr>
                   ))}
@@ -173,7 +174,7 @@ export default async function Home() {
                         colSpan={2}
                         className="px-6 py-4 text-center text-sm text-gray-500"
                       >
-                        No monster killer data available
+                        No mob killer data available
                       </td>
                     </tr>
                   )}
