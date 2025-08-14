@@ -36,6 +36,7 @@ async function getCharacterData(name: string): Promise<CharacterData | null> {
       SELECT DISTINCT krace as race, kclass as class
       FROM PVP 
       WHERE killer = ? 
+      ORDER BY id DESC
       LIMIT 1
     `, [name]);
 
