@@ -88,12 +88,6 @@ export default function SearchPage() {
       <div className="min-h-screen bg-gray-100 flex items-center justify-center">
         <div className="text-center">
           <p className="text-red-600">Error: {error}</p>
-          <Link
-            href="/"
-            className="mt-4 inline-block text-blue-600 hover:text-blue-800"
-          >
-            ← Back to Home
-          </Link>
         </div>
       </div>
     );
@@ -104,12 +98,6 @@ export default function SearchPage() {
       <div className="min-h-screen bg-gray-100 flex items-center justify-center">
         <div className="text-center">
           <p className="text-gray-600">No search data available</p>
-          <Link
-            href="/"
-            className="mt-4 inline-block text-blue-600 hover:text-blue-800"
-          >
-            ← Back to Home
-          </Link>
         </div>
       </div>
     );
@@ -120,26 +108,18 @@ export default function SearchPage() {
       {/* Header */}
       <div className="bg-white shadow">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center">
-              <MagnifyingGlassIcon className="h-8 w-8 text-blue-500 mr-3" />
-              <div>
-                <h1 className="text-2xl font-bold text-gray-900">
-                  Search Results
-                </h1>
-                <p className="text-gray-600">
-                  Found {searchData.total} character
-                  {searchData.total !== 1 ? 's' : ''} for &quot;
-                  {searchData.query}&quot;
-                </p>
-              </div>
+          <div className="flex items-center">
+            <MagnifyingGlassIcon className="h-8 w-8 text-blue-500 mr-3" />
+            <div>
+              <h1 className="text-2xl font-bold text-gray-900">
+                Search Results
+              </h1>
+              <p className="text-gray-600">
+                Found {searchData.total} character
+                {searchData.total !== 1 ? 's' : ''} for &quot;
+                {searchData.query}&quot;
+              </p>
             </div>
-            <Link
-              href="/"
-              className="bg-gray-600 hover:bg-gray-700 text-white px-4 py-2 rounded-md text-sm font-medium"
-            >
-              Back to Home
-            </Link>
           </div>
         </div>
       </div>
@@ -194,9 +174,6 @@ export default function SearchPage() {
             <p className="text-gray-600 mb-4">
               No characters found matching &quot;{searchData.query}&quot;
             </p>
-            <Link href="/" className="text-blue-600 hover:text-blue-800">
-              ← Back to Home
-            </Link>
           </div>
         )}
       </div>

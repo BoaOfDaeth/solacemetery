@@ -38,7 +38,7 @@ export default function RootLayout({
                   href="/"
                   className="text-white hover:text-gray-300 px-3 py-2 rounded-md text-sm font-medium"
                 >
-                  Top
+                  Stats
                 </Link>
                 <Link
                   href="/pvp"
