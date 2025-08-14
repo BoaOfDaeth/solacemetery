@@ -309,9 +309,6 @@ export default function Home() {
                     <thead className="bg-gray-50">
                       <tr>
                         <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                          ID
-                        </th>
-                        <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                           Killer
                         </th>
                         <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
@@ -325,12 +322,9 @@ export default function Home() {
                     <tbody className="bg-white divide-y divide-gray-200">
                       {filteredMvpData.map(record => (
                         <tr key={record.id} className="hover:bg-gray-50">
-                          <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-                            {record.id}
-                          </td>
                           <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
                             <Link
-                              href={`/character/${encodeURIComponent(record.killer)}`}
+                              href={`/mob/${encodeURIComponent(record.killer)}`}
                               className="text-blue-600 hover:text-blue-800 hover:underline"
                             >
                               {record.killer}
@@ -369,9 +363,6 @@ export default function Home() {
                     <thead className="bg-gray-50">
                       <tr>
                         <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                          ID
-                        </th>
-                        <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                           Killer
                         </th>
                         <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
@@ -394,9 +385,6 @@ export default function Home() {
                     <tbody className="bg-white divide-y divide-gray-200">
                       {filteredPvpData.map(record => (
                         <tr key={record.id} className="hover:bg-gray-50">
-                          <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-                            {record.id}
-                          </td>
                           <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
                             <Link
                               href={`/character/${encodeURIComponent(record.killer)}`}

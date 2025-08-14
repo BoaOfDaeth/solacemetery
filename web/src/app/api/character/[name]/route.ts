@@ -36,15 +36,9 @@ export async function GET(
     const connection = await mysql.createConnection(dbConfig);
 
     try {
-      // Get MVP appearances (as killer) - exclude self-kills
-      const [mvpKills] = await connection.execute(
-        `SELECT id, killer, victim, vlevel, 'killer' as role FROM MVP WHERE killer = ? AND killer != victim`,
-        [characterName]
-      );
-
-      // Get MVP appearances (as victim) - exclude self-kills
+      // Get MVP appearances (as victim)
       const [mvpDeaths] = await connection.execute(
-        `SELECT id, killer, victim, vlevel, 'victim' as role FROM MVP WHERE victim = ? AND killer != victim`,
+        `SELECT id, killer, victim, vlevel, 'victim' as role FROM MVP WHERE victim = ?`,
         [characterName]
       );
 
@@ -61,7 +55,6 @@ export async function GET(
       );
 
       // Calculate statistics
-      const totalMvpKills = (mvpKills as any[]).length;
       const totalMvpDeaths = (mvpDeaths as any[]).length;
       const totalPvpKills = (pvpKills as any[]).length;
       const totalPvpDeaths = (pvpDeaths as any[]).length;
@@ -70,21 +63,18 @@ export async function GET(
         character: characterName,
         statistics: {
           mvp: {
-            kills: totalMvpKills,
             deaths: totalMvpDeaths,
-            total: totalMvpKills + totalMvpDeaths,
+            total: totalMvpDeaths,
           },
           pvp: {
             kills: totalPvpKills,
             deaths: totalPvpDeaths,
             total: totalPvpKills + totalPvpDeaths,
           },
-          total:
-            totalMvpKills + totalMvpDeaths + totalPvpKills + totalPvpDeaths,
+          total: totalMvpDeaths + totalPvpKills + totalPvpDeaths,
         },
         appearances: {
           mvp: {
-            kills: mvpKills,
             deaths: mvpDeaths,
           },
           pvp: {

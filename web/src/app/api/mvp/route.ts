@@ -9,7 +9,7 @@ export async function GET(request: NextRequest) {
     const killer = searchParams.get('killer');
     const victim = searchParams.get('victim');
 
-    let sql = 'SELECT * FROM MVP WHERE killer != victim';
+    let sql = 'SELECT * FROM MVP';
     const params: any[] = [];
 
     // Build WHERE clause if filters are provided
@@ -24,7 +24,7 @@ export async function GET(request: NextRequest) {
     }
 
     if (conditions.length > 0) {
-      sql += ' AND ' + conditions.join(' AND ');
+      sql += ' WHERE ' + conditions.join(' AND ');
     }
 
     sql += ` ORDER BY id DESC LIMIT ${parseInt(limit)} OFFSET ${parseInt(offset)}`;

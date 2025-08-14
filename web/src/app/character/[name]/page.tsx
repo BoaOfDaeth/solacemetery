@@ -7,7 +7,6 @@ interface CharacterData {
   character: string;
   statistics: {
     mvp: {
-      kills: number;
       deaths: number;
       total: number;
     };
@@ -20,7 +19,6 @@ interface CharacterData {
   };
   appearances: {
     mvp: {
-      kills: any[];
       deaths: any[];
     };
     pvp: {
@@ -152,15 +150,6 @@ export default function CharacterPage({
 
           <div className="bg-white rounded-lg shadow p-6">
             <h3 className="text-lg font-semibold text-gray-900 mb-2">
-              MVP Kills
-            </h3>
-            <p className="text-3xl font-bold text-green-600">
-              {characterData.statistics.mvp.kills}
-            </p>
-          </div>
-
-          <div className="bg-white rounded-lg shadow p-6">
-            <h3 className="text-lg font-semibold text-gray-900 mb-2">
               MVP Deaths
             </h3>
             <p className="text-3xl font-bold text-red-600">
@@ -170,65 +159,25 @@ export default function CharacterPage({
 
           <div className="bg-white rounded-lg shadow p-6">
             <h3 className="text-lg font-semibold text-gray-900 mb-2">
-              PVP Total
+              PVP Kills
             </h3>
             <p className="text-3xl font-bold text-purple-600">
-              {characterData.statistics.pvp.total}
+              {characterData.statistics.pvp.kills}
             </p>
-            <p className="text-sm text-gray-500">
-              {characterData.statistics.pvp.kills} kills /{' '}
-              {characterData.statistics.pvp.deaths} deaths
+          </div>
+
+          <div className="bg-white rounded-lg shadow p-6">
+            <h3 className="text-lg font-semibold text-gray-900 mb-2">
+              PVP Deaths
+            </h3>
+            <p className="text-3xl font-bold text-orange-600">
+              {characterData.statistics.pvp.deaths}
             </p>
           </div>
         </div>
 
         {/* MVP Section */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-8">
-          {/* MVP Kills */}
-          <div className="bg-white rounded-lg shadow">
-            <div className="px-6 py-4 border-b border-gray-200">
-              <h2 className="text-xl font-semibold text-gray-900">
-                MVP Kills ({characterData.statistics.mvp.kills})
-              </h2>
-            </div>
-            <div className="overflow-x-auto">
-              <table className="min-w-full divide-y divide-gray-200">
-                <thead className="bg-gray-50">
-                  <tr>
-                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                      Victim
-                    </th>
-                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                      Level
-                    </th>
-                  </tr>
-                </thead>
-                <tbody className="bg-white divide-y divide-gray-200">
-                  {characterData.appearances.mvp.kills.map((kill: any) => (
-                    <tr key={kill.id}>
-                      <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
-                        {kill.victim}
-                      </td>
-                      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                        {kill.vlevel}
-                      </td>
-                    </tr>
-                  ))}
-                  {characterData.appearances.mvp.kills.length === 0 && (
-                    <tr>
-                      <td
-                        colSpan={2}
-                        className="px-6 py-4 text-center text-sm text-gray-500"
-                      >
-                        No MVP kills recorded
-                      </td>
-                    </tr>
-                  )}
-                </tbody>
-              </table>
-            </div>
-          </div>
-
+        <div className="mb-8">
           {/* MVP Deaths */}
           <div className="bg-white rounded-lg shadow">
             <div className="px-6 py-4 border-b border-gray-200">
@@ -252,7 +201,12 @@ export default function CharacterPage({
                   {characterData.appearances.mvp.deaths.map((death: any) => (
                     <tr key={death.id}>
                       <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
-                        {death.killer}
+                        <Link
+                          href={`/mob/${encodeURIComponent(death.killer)}`}
+                          className="text-blue-600 hover:text-blue-800 hover:underline"
+                        >
+                          {death.killer}
+                        </Link>
                       </td>
                       <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                         {death.vlevel}
@@ -306,7 +260,12 @@ export default function CharacterPage({
                   {characterData.appearances.pvp.kills.map((kill: any) => (
                     <tr key={kill.id}>
                       <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
-                        {kill.victim}
+                        <Link
+                          href={`/character/${encodeURIComponent(kill.victim)}`}
+                          className="text-blue-600 hover:text-blue-800 hover:underline"
+                        >
+                          {kill.victim}
+                        </Link>
                       </td>
                       <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                         {kill.klevel}
@@ -363,7 +322,12 @@ export default function CharacterPage({
                   {characterData.appearances.pvp.deaths.map((death: any) => (
                     <tr key={death.id}>
                       <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
-                        {death.killer}
+                        <Link
+                          href={`/character/${encodeURIComponent(death.killer)}`}
+                          className="text-blue-600 hover:text-blue-800 hover:underline"
+                        >
+                          {death.killer}
+                        </Link>
                       </td>
                       <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                         {death.klevel}
