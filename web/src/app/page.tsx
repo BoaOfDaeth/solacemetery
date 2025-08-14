@@ -42,7 +42,7 @@ export default function Home() {
     return (
       <div className="min-h-screen bg-gray-50 flex items-center justify-center">
         <div className="text-center">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto"></div>
+          <div className="animate-spin h-12 w-12 border-b-2 border-blue-600 mx-auto"></div>
           <p className="mt-4 text-gray-600">Loading Solacemetry data...</p>
         </div>
       </div>
@@ -65,7 +65,7 @@ export default function Home() {
       {/* Top Killers Table - Moved to top */}
       {stats && (
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-2">
-          <div className="bg-white rounded-lg shadow">
+                      <div className="bg-white shadow">
             <div className="px-6 py-4 border-b border-gray-200">
               <h3 className="text-lg font-medium text-gray-900">
                 Top 10 Killers
@@ -125,7 +125,7 @@ export default function Home() {
       {stats && (
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-8">
           <div className="grid grid-cols-1 gap-6">
-            <div className="bg-white rounded-lg shadow p-6">
+            <div className="bg-white shadow p-6">
               <div className="flex items-center">
                 <UserGroupIcon className="h-8 w-8 text-blue-500" />
                 <div className="ml-4">

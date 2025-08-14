@@ -73,7 +73,7 @@ export default function CharacterPage({
       <div className="min-h-screen bg-gray-100 py-8">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center">
-            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto"></div>
+            <div className="animate-spin h-12 w-12 border-b-2 border-blue-600 mx-auto"></div>
             <p className="mt-4 text-gray-600">Loading character data...</p>
           </div>
         </div>
@@ -86,7 +86,7 @@ export default function CharacterPage({
       <div className="min-h-screen bg-gray-100 py-8">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center">
-            <div className="bg-red-50 border border-red-200 rounded-md p-4">
+            <div className="bg-red-50 border border-red-200 p-4">
               <h3 className="text-lg font-medium text-red-800">Error</h3>
               <p className="mt-2 text-red-700">{error}</p>
             </div>
@@ -132,7 +132,7 @@ export default function CharacterPage({
         {/* PVP Section */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-2">
           {/* PVP Kills */}
-          <div className="bg-white rounded-lg shadow">
+          <div className="bg-white shadow">
             <div className="px-6 py-4 border-b border-gray-200">
               <h2 className="text-xl font-semibold text-gray-900">
                 PVP Kills ({characterData.statistics.pvp.kills})
@@ -187,7 +187,7 @@ export default function CharacterPage({
           </div>
 
           {/* PVP Deaths */}
-          <div className="bg-white rounded-lg shadow">
+          <div className="bg-white shadow">
             <div className="px-6 py-4 border-b border-gray-200">
               <h2 className="text-xl font-semibold text-gray-900">
                 PVP Deaths ({characterData.statistics.pvp.deaths})
@@ -250,7 +250,7 @@ export default function CharacterPage({
         {/* MVP Section */}
         <div className="mt-2">
           {/* MVP Deaths */}
-          <div className="bg-white rounded-lg shadow">
+          <div className="bg-white shadow">
             <div className="px-6 py-4 border-b border-gray-200">
               <h2 className="text-xl font-semibold text-gray-900">
                 MVP Deaths ({characterData.statistics.mvp.deaths})

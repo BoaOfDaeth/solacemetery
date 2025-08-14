@@ -50,7 +50,7 @@ export default function MobPage({
       <div className="min-h-screen bg-gray-100 py-8">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center">
-            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto"></div>
+            <div className="animate-spin h-12 w-12 border-b-2 border-blue-600 mx-auto"></div>
             <p className="mt-4 text-gray-600">Loading mob data...</p>
           </div>
         </div>
@@ -63,7 +63,7 @@ export default function MobPage({
       <div className="min-h-screen bg-gray-100 py-8">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center">
-            <div className="bg-red-50 border border-red-200 rounded-md p-4">
+            <div className="bg-red-50 border border-red-200 p-4">
               <h3 className="text-lg font-medium text-red-800">Error</h3>
               <p className="mt-2 text-red-700">{error}</p>
               <Link
@@ -111,7 +111,7 @@ export default function MobPage({
 
         {/* Statistics Cards */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-          <div className="bg-white rounded-lg shadow p-6">
+          <div className="bg-white shadow p-6">
             <h3 className="text-lg font-semibold text-gray-900 mb-2">
               Total Kills
             </h3>
@@ -120,7 +120,7 @@ export default function MobPage({
             </p>
           </div>
 
-          <div className="bg-white rounded-lg shadow p-6">
+          <div className="bg-white shadow p-6">
             <h3 className="text-lg font-semibold text-gray-900 mb-2">
               Unique Victims
             </h3>
@@ -129,7 +129,7 @@ export default function MobPage({
             </p>
           </div>
 
-          <div className="bg-white rounded-lg shadow p-6">
+          <div className="bg-white shadow p-6">
             <h3 className="text-lg font-semibold text-gray-900 mb-2">
               Average Victim Level
             </h3>
@@ -140,7 +140,7 @@ export default function MobPage({
         </div>
 
         {/* Victim List */}
-        <div className="bg-white rounded-lg shadow">
+        <div className="bg-white shadow">
           <div className="px-6 py-4 border-b border-gray-200">
             <h2 className="text-xl font-semibold text-gray-900">
               Victim List ({mobData.statistics.totalKills})
