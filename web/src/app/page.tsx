@@ -4,10 +4,8 @@ import { useState, useEffect } from 'react';
 import { Tab } from '@headlessui/react';
 import Link from 'next/link';
 import {
-  ChartBarIcon,
   UserGroupIcon,
   BoltIcon,
-  ShieldCheckIcon,
   MagnifyingGlassIcon,
   UserIcon,
 } from '@heroicons/react/24/outline';
@@ -32,8 +30,12 @@ interface PVPRecord {
 interface Stats {
   mvp_records: number;
   pvp_records: number;
-  unique_killers: number;
-  unique_victims: number;
+  top_killers?: Array<{
+    killer: string;
+    kills: number;
+    race?: string;
+    class?: string;
+  }>;
 }
 
 export default function Home() {
@@ -205,7 +207,7 @@ export default function Home() {
       {/* Stats Cards */}
       {stats && (
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div className="bg-white rounded-lg shadow p-6">
               <div className="flex items-center">
                 <BoltIcon className="h-8 w-8 text-red-500" />
@@ -232,31 +234,73 @@ export default function Home() {
                 </div>
               </div>
             </div>
-            <div className="bg-white rounded-lg shadow p-6">
-              <div className="flex items-center">
-                <ShieldCheckIcon className="h-8 w-8 text-green-500" />
-                <div className="ml-4">
-                  <p className="text-sm font-medium text-gray-600">
-                    Unique Killers
-                  </p>
-                  <p className="text-2xl font-bold text-gray-900">
-                    {stats.unique_killers?.toLocaleString() || '0'}
-                  </p>
-                </div>
-              </div>
+          </div>
+        </div>
+      )}
+
+      {/* Top Killers Table */}
+      {stats && (
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-8">
+          <div className="bg-white rounded-lg shadow">
+            <div className="px-6 py-4 border-b border-gray-200">
+              <h3 className="text-lg font-medium text-gray-900">
+                Top 10 Killers
+              </h3>
+              <p className="text-sm text-gray-600">
+                Players with the most PVP kills
+              </p>
             </div>
-            <div className="bg-white rounded-lg shadow p-6">
-              <div className="flex items-center">
-                <ChartBarIcon className="h-8 w-8 text-purple-500" />
-                <div className="ml-4">
-                  <p className="text-sm font-medium text-gray-600">
-                    Unique Victims
-                  </p>
-                  <p className="text-2xl font-bold text-gray-900">
-                    {stats.unique_victims?.toLocaleString() || '0'}
-                  </p>
-                </div>
-              </div>
+            <div className="overflow-x-auto">
+              <table className="min-w-full divide-y divide-gray-200">
+                <thead className="bg-gray-50">
+                  <tr>
+                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                      Rank
+                    </th>
+                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                      Player
+                    </th>
+                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                      Kills
+                    </th>
+                  </tr>
+                </thead>
+                <tbody className="bg-white divide-y divide-gray-200">
+                  {stats.top_killers?.map((killer: any, index: number) => (
+                    <tr key={killer.killer} className="hover:bg-gray-50">
+                      <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
+                        #{index + 1}
+                      </td>
+                      <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
+                        <Link
+                          href={`/character/${encodeURIComponent(killer.killer)}`}
+                          className="text-blue-600 hover:text-blue-800 hover:underline"
+                        >
+                          {killer.killer}
+                        </Link>
+                        {killer.race && killer.class && (
+                          <span className="text-gray-500 ml-2">
+                            {killer.race}/{killer.class}
+                          </span>
+                        )}
+                      </td>
+                      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                        {killer.kills}
+                      </td>
+                    </tr>
+                  ))}
+                  {(!stats.top_killers || stats.top_killers.length === 0) && (
+                    <tr>
+                      <td
+                        colSpan={3}
+                        className="px-6 py-4 text-center text-sm text-gray-500"
+                      >
+                        No killer data available
+                      </td>
+                    </tr>
+                  )}
+                </tbody>
+              </table>
             </div>
           </div>
         </div>

@@ -66,18 +66,25 @@ export async function GET(request: NextRequest) {
         const pvpCount = await query(
           'SELECT COUNT(*) as count FROM PVP WHERE killer != victim'
         );
-        const uniqueKillers = await query(
-          'SELECT COUNT(DISTINCT killer) as count FROM PVP WHERE killer != victim'
-        );
-        const uniqueVictims = await query(
-          'SELECT COUNT(DISTINCT victim) as count FROM MVP'
-        );
+
+        // Get top 10 killers with their race and class
+        const topKillers = await query(`
+          SELECT 
+            killer,
+            COUNT(*) as kills,
+            MAX(krace) as race,
+            MAX(kclass) as class
+          FROM PVP 
+          WHERE killer != victim 
+          GROUP BY killer 
+          ORDER BY kills DESC 
+          LIMIT 10
+        `);
 
         results = {
           mvp_records: (mvpCount as any[])[0]?.count || 0,
           pvp_records: (pvpCount as any[])[0]?.count || 0,
-          unique_killers: (uniqueKillers as any[])[0]?.count || 0,
-          unique_victims: (uniqueVictims as any[])[0]?.count || 0,
+          top_killers: topKillers as any[],
         };
     }
 
