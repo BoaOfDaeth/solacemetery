@@ -1,9 +1,6 @@
-'use client';
-
-import { useState, useEffect } from 'react';
-import Link from 'next/link';
 import { FormatPlayer } from '@/lib/utils';
 import { UserGroupIcon } from '@heroicons/react/24/outline';
+import { query } from '@/lib/db';
 
 interface PvpRecord {
   id: number;
@@ -22,62 +19,38 @@ interface MvpRecord {
   vlevel?: number;
 }
 
-export default function PvpPage() {
-  const [pvpData, setPvpData] = useState<PvpRecord[]>([]);
-  const [mvpData, setMvpData] = useState<MvpRecord[]>([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
+async function getPvpData(): Promise<{ pvpData: PvpRecord[]; mvpData: MvpRecord[] }> {
+  try {
+    const pvpData = await query(`
+      SELECT id, killer, victim, klevel, vlevel, krace, kclass
+      FROM PVP 
+      WHERE killer != victim
+      ORDER BY id DESC
+      LIMIT 100
+    `);
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        setLoading(true);
+    const mvpData = await query(`
+      SELECT id, killer, victim, vlevel
+      FROM MVP 
+      ORDER BY id DESC
+      LIMIT 100
+    `);
 
-        // Fetch PVP data
-        const pvpResponse = await fetch('/api/pvp?limit=100');
-        if (!pvpResponse.ok) {
-          throw new Error('Failed to fetch PVP data');
-        }
-        const pvpData = await pvpResponse.json();
-        setPvpData(pvpData.data || []);
-
-        // Fetch MVP data
-        const mvpResponse = await fetch('/api/mvp?limit=100');
-        if (!mvpResponse.ok) {
-          throw new Error('Failed to fetch MVP data');
-        }
-        const mvpData = await mvpResponse.json();
-        setMvpData(mvpData.data || []);
-      } catch (err) {
-        setError(err instanceof Error ? err.message : 'An error occurred');
-      } finally {
-        setLoading(false);
-      }
+    return {
+      pvpData: pvpData as PvpRecord[],
+      mvpData: mvpData as MvpRecord[],
     };
-
-    fetchData();
-  }, []);
-
-  if (loading) {
-    return (
-      <div className="min-h-screen bg-gray-100 flex items-center justify-center">
-        <div className="text-center">
-                      <div className="animate-spin h-12 w-12 border-b-2 border-blue-600 mx-auto"></div>
-          <p className="mt-4 text-gray-600">Loading PVP data...</p>
-        </div>
-      </div>
-    );
+  } catch (error) {
+    console.error('Error fetching PVP data:', error);
+    return {
+      pvpData: [],
+      mvpData: [],
+    };
   }
+}
 
-  if (error) {
-    return (
-      <div className="min-h-screen bg-gray-100 flex items-center justify-center">
-        <div className="text-center">
-          <p className="text-red-600">Error: {error}</p>
-        </div>
-      </div>
-    );
-  }
+export default async function PvpPage() {
+  const { pvpData, mvpData } = await getPvpData();
 
   return (
     <div className="min-h-screen bg-gray-100">

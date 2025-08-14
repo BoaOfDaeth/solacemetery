@@ -1,9 +1,6 @@
-'use client';
-
-import { useState, useEffect } from 'react';
-import Link from 'next/link';
 import { FormatPlayer } from '@/lib/utils';
 import { BoltIcon } from '@heroicons/react/24/outline';
+import { query } from '@/lib/db';
 
 interface MvpRecord {
   id: number;
@@ -12,51 +9,24 @@ interface MvpRecord {
   vlevel?: number;
 }
 
-export default function MvpPage() {
-  const [mvpData, setMvpData] = useState<MvpRecord[]>([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
+async function getMvpData(): Promise<MvpRecord[]> {
+  try {
+    const mvpData = await query(`
+      SELECT id, killer, victim, vlevel
+      FROM MVP 
+      ORDER BY id DESC
+      LIMIT 100
+    `);
 
-  useEffect(() => {
-    const fetchMvpData = async () => {
-      try {
-        setLoading(true);
-        const response = await fetch('/api/mvp?limit=100');
-        if (!response.ok) {
-          throw new Error('Failed to fetch MVP data');
-        }
-        const data = await response.json();
-        setMvpData(data.data || []);
-      } catch (err) {
-        setError(err instanceof Error ? err.message : 'An error occurred');
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchMvpData();
-  }, []);
-
-  if (loading) {
-    return (
-      <div className="min-h-screen bg-gray-100 flex items-center justify-center">
-        <div className="text-center">
-                      <div className="animate-spin h-12 w-12 border-b-2 border-red-600 mx-auto"></div>
-          <p className="mt-4 text-gray-600">Loading MVP data...</p>
-        </div>
-      </div>
-    );
+    return mvpData as MvpRecord[];
+  } catch (error) {
+    console.error('Error fetching MVP data:', error);
+    return [];
   }
+}
 
-  if (error) {
-    return (
-      <div className="min-h-screen bg-gray-100 flex items-center justify-center">
-        <div className="text-center">
-          <p className="text-red-600">Error: {error}</p>
-        </div>
-      </div>
-    );
-  }
+export default async function MvpPage() {
+  const mvpData = await getMvpData();
 
   return (
     <div className="min-h-screen bg-gray-100">

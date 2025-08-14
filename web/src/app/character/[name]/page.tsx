@@ -1,117 +1,126 @@
-'use client';
-
-import { useEffect, useState } from 'react';
-import Link from 'next/link';
 import { FormatPlayer } from '@/lib/utils';
+import { query } from '@/lib/db';
+import { notFound } from 'next/navigation';
 
 interface CharacterData {
   character: string;
   characterInfo: {
-    race: string | null;
-    class: string | null;
+    race?: string;
+    class?: string;
   };
   statistics: {
-    mvp: {
-      deaths: number;
-      total: number;
-    };
     pvp: {
       kills: number;
       deaths: number;
-      total: number;
     };
-    total: number;
+    mvp: {
+      deaths: number;
+    };
   };
   appearances: {
-    mvp: {
-      deaths: any[];
-    };
     pvp: {
       kills: any[];
+      deaths: any[];
+    };
+    mvp: {
       deaths: any[];
     };
   };
 }
 
-export default function CharacterPage({
-  params,
-}: {
-  params: Promise<{ name: string }>;
-}) {
-  const [characterData, setCharacterData] = useState<CharacterData | null>(
-    null
-  );
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
+async function getCharacterData(name: string): Promise<CharacterData | null> {
+  try {
+    // Get character info
+    const characterInfo = await query(`
+      SELECT DISTINCT krace as race, kclass as class
+      FROM PVP 
+      WHERE killer = ? 
+      LIMIT 1
+    `, [name]);
 
-  useEffect(() => {
-    const fetchCharacterData = async () => {
-      try {
-        setLoading(true);
-        const { name } = await params;
-        const response = await fetch(
-          `/api/character/${encodeURIComponent(name)}`
-        );
+    // Get PVP kills
+    const pvpKills = await query(`
+      SELECT id, victim, vlevel
+      FROM PVP 
+      WHERE killer = ? AND killer != victim
+      ORDER BY id DESC
+    `, [name]);
 
-        if (!response.ok) {
-          throw new Error('Failed to fetch character data');
-        }
+    // Get PVP deaths
+    const pvpDeaths = await query(`
+      SELECT id, killer, klevel, krace, kclass, vlevel
+      FROM PVP 
+      WHERE victim = ?
+      ORDER BY id DESC
+    `, [name]);
 
-        const data = await response.json();
-        setCharacterData(data);
-      } catch (err) {
-        setError(err instanceof Error ? err.message : 'An error occurred');
-      } finally {
-        setLoading(false);
-      }
+    // Get MVP deaths
+    const mvpDeaths = await query(`
+      SELECT id, killer, vlevel
+      FROM MVP 
+      WHERE victim = ?
+      ORDER BY id DESC
+    `, [name]);
+
+    // Calculate statistics
+    const pvpKillsCount = await query(`
+      SELECT COUNT(*) as count
+      FROM PVP 
+      WHERE killer = ? AND killer != victim
+    `, [name]);
+
+    const pvpDeathsCount = await query(`
+      SELECT COUNT(*) as count
+      FROM PVP 
+      WHERE victim = ?
+    `, [name]);
+
+    const mvpDeathsCount = await query(`
+      SELECT COUNT(*) as count
+      FROM MVP 
+      WHERE victim = ?
+    `, [name]);
+
+    return {
+      character: name,
+      characterInfo: {
+        race: (characterInfo as any[])[0]?.race,
+        class: (characterInfo as any[])[0]?.class,
+      },
+      statistics: {
+        pvp: {
+          kills: (pvpKillsCount as any[])[0]?.count || 0,
+          deaths: (pvpDeathsCount as any[])[0]?.count || 0,
+        },
+        mvp: {
+          deaths: (mvpDeathsCount as any[])[0]?.count || 0,
+        },
+      },
+      appearances: {
+        pvp: {
+          kills: pvpKills as any[],
+          deaths: pvpDeaths as any[],
+        },
+        mvp: {
+          deaths: mvpDeaths as any[],
+        },
+      },
     };
-
-    fetchCharacterData();
-  }, [params]);
-
-  if (loading) {
-    return (
-      <div className="min-h-screen bg-gray-100 py-8">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center">
-            <div className="animate-spin h-12 w-12 border-b-2 border-blue-600 mx-auto"></div>
-            <p className="mt-4 text-gray-600">Loading character data...</p>
-          </div>
-        </div>
-      </div>
-    );
+  } catch (error) {
+    console.error('Error fetching character data:', error);
+    return null;
   }
+}
 
-  if (error) {
-    return (
-      <div className="min-h-screen bg-gray-100 py-8">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center">
-            <div className="bg-red-50 border border-red-200 p-4">
-              <h3 className="text-lg font-medium text-red-800">Error</h3>
-              <p className="mt-2 text-red-700">{error}</p>
-            </div>
-          </div>
-        </div>
-      </div>
-    );
-  }
+export default async function CharacterPage({ 
+  params 
+}: { 
+  params: { name: string } 
+}) {
+  const characterData = await getCharacterData(params.name);
 
   if (!characterData) {
-    return (
-      <div className="min-h-screen bg-gray-100 py-8">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center">
-            <h1 className="text-2xl font-bold text-gray-900 mb-4">
-              Character Not Found
-            </h1>
-            <p className="text-gray-600 mb-4">
-              No data found for this character.
-            </p>
-          </div>
-        </div>
-      </div>
-    );
+    notFound();
   }
 
   return (

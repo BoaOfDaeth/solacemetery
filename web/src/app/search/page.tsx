@@ -1,8 +1,7 @@
-'use client';
-
-import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { MagnifyingGlassIcon } from '@heroicons/react/24/outline';
+import { query } from '@/lib/db';
+import { notFound } from 'next/navigation';
 
 interface SearchResult {
   character_name: string;
@@ -15,92 +14,101 @@ interface SearchData {
   total: number;
 }
 
-export default function SearchPage() {
-  const [searchData, setSearchData] = useState<SearchData | null>(null);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
+async function getSearchResults(searchQuery: string): Promise<SearchData | null> {
+  try {
+    if (!searchQuery || searchQuery.trim().length === 0) {
+      return null;
+    }
 
-  useEffect(() => {
-    const fetchSearchResults = async () => {
-      try {
-        setLoading(true);
-        const urlParams = new URLSearchParams(window.location.search);
-        const query = urlParams.get('q');
+    const queryParam = `%${searchQuery.trim()}%`;
 
-        if (!query) {
-          setError('No search query provided');
-          return;
-        }
+    // Search for characters in PVP table (as killers)
+    const pvpKillers = await query(`
+      SELECT DISTINCT killer as character_name, 'pvp_killer' as source
+      FROM PVP 
+      WHERE killer LIKE ? AND killer != victim
+    `, [queryParam]);
 
-        const response = await fetch(
-          `/api/search?q=${encodeURIComponent(query)}`
-        );
-        if (!response.ok) {
-          throw new Error('Failed to fetch search results');
-        }
+    // Search for characters in PVP table (as victims)
+    const pvpVictims = await query(`
+      SELECT DISTINCT victim as character_name, 'pvp_victim' as source
+      FROM PVP 
+      WHERE victim LIKE ?
+    `, [queryParam]);
 
-        const data = await response.json();
-        if (data.success) {
-          setSearchData(data.data);
-        } else {
-          setError(data.error || 'Search failed');
-        }
-      } catch (err) {
-        setError(err instanceof Error ? err.message : 'An error occurred');
-      } finally {
-        setLoading(false);
+    // Search for characters in MVP table (as victims)
+    const mvpVictims = await query(`
+      SELECT DISTINCT victim as character_name, 'mvp_victim' as source
+      FROM MVP 
+      WHERE victim LIKE ?
+    `, [queryParam]);
+
+    // Combine all results and remove duplicates
+    const allResults = [
+      ...(pvpKillers as any[]),
+      ...(pvpVictims as any[]),
+      ...(mvpVictims as any[])
+    ];
+
+    // Remove duplicates based on character_name
+    const uniqueResults = allResults.filter((result, index, self) =>
+      index === self.findIndex(r => r.character_name === result.character_name)
+    );
+
+    // Group sources for each character
+    const groupedResults = uniqueResults.reduce((acc, result) => {
+      const existing = acc.find((r: SearchResult) => r.character_name === result.character_name);
+      if (existing) {
+        existing.source += `,${result.source}`;
+      } else {
+        acc.push({ ...result });
       }
+      return acc;
+    }, [] as SearchResult[]);
+
+    return {
+      query: searchQuery.trim(),
+      results: groupedResults,
+      total: groupedResults.length,
     };
+  } catch (error) {
+    console.error('Error fetching search results:', error);
+    return null;
+  }
+}
 
-    fetchSearchResults();
-  }, []);
+function getSourceLabel(source: string) {
+  const sources = source.split(',');
+  const labels = sources.map(s => {
+    switch (s) {
+      case 'mvp_victim':
+        return 'MVP Victim';
+      case 'pvp_killer':
+        return 'PVP Killer';
+      case 'pvp_victim':
+        return 'PVP Victim';
+      default:
+        return s;
+    }
+  });
+  return labels.join(', ');
+}
 
-  const getSourceLabel = (source: string) => {
-    const sources = source.split(',');
-    const labels = sources.map(s => {
-      switch (s) {
-        case 'mvp_victim':
-          return 'MVP Victim';
-        case 'pvp_killer':
-          return 'PVP Killer';
-        case 'pvp_victim':
-          return 'PVP Victim';
-        default:
-          return s;
-      }
-    });
-    return labels.join(', ');
-  };
-
-  if (loading) {
-    return (
-      <div className="min-h-screen bg-gray-100 flex items-center justify-center">
-        <div className="text-center">
-                      <div className="animate-spin h-12 w-12 border-b-2 border-blue-600 mx-auto"></div>
-          <p className="mt-4 text-gray-600">Searching...</p>
-        </div>
-      </div>
-    );
+export default async function SearchPage({
+  searchParams,
+}: {
+  searchParams: { q?: string };
+}) {
+  const searchQuery = searchParams.q;
+  
+  if (!searchQuery) {
+    notFound();
   }
 
-  if (error) {
-    return (
-      <div className="min-h-screen bg-gray-100 flex items-center justify-center">
-        <div className="text-center">
-          <p className="text-red-600">Error: {error}</p>
-        </div>
-      </div>
-    );
-  }
+  const searchData = await getSearchResults(searchQuery);
 
   if (!searchData) {
-    return (
-      <div className="min-h-screen bg-gray-100 flex items-center justify-center">
-        <div className="text-center">
-          <p className="text-gray-600">No search data available</p>
-        </div>
-      </div>
-    );
+    notFound();
   }
 
   return (
