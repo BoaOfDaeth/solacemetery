@@ -36,27 +36,27 @@ export async function GET(
     const connection = await mysql.createConnection(dbConfig);
 
     try {
-      // Get MVP appearances (as killer)
+      // Get MVP appearances (as killer) - exclude self-kills
       const [mvpKills] = await connection.execute(
-        `SELECT id, killer, victim, vlevel, 'killer' as role FROM MVP WHERE killer = ?`,
+        `SELECT id, killer, victim, vlevel, 'killer' as role FROM MVP WHERE killer = ? AND killer != victim`,
         [characterName]
       );
 
-      // Get MVP appearances (as victim)
+      // Get MVP appearances (as victim) - exclude self-kills
       const [mvpDeaths] = await connection.execute(
-        `SELECT id, killer, victim, vlevel, 'victim' as role FROM MVP WHERE victim = ?`,
+        `SELECT id, killer, victim, vlevel, 'victim' as role FROM MVP WHERE victim = ? AND killer != victim`,
         [characterName]
       );
 
-      // Get PVP appearances (as killer)
+      // Get PVP appearances (as killer) - exclude self-kills
       const [pvpKills] = await connection.execute(
-        `SELECT id, killer, victim, klevel, vlevel, krace, kclass, 'killer' as role FROM PVP WHERE killer = ?`,
+        `SELECT id, killer, victim, klevel, vlevel, krace, kclass, 'killer' as role FROM PVP WHERE killer = ? AND killer != victim`,
         [characterName]
       );
 
-      // Get PVP appearances (as victim)
+      // Get PVP appearances (as victim) - exclude self-kills
       const [pvpDeaths] = await connection.execute(
-        `SELECT id, killer, victim, klevel, vlevel, krace, kclass, 'victim' as role FROM PVP WHERE victim = ?`,
+        `SELECT id, killer, victim, klevel, vlevel, krace, kclass, 'victim' as role FROM PVP WHERE victim = ? AND killer != victim`,
         [characterName]
       );
 

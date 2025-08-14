@@ -13,6 +13,7 @@ export async function GET(request: NextRequest) {
         results = await query(`
           SELECT killer, COUNT(*) as kills 
           FROM MVP 
+          WHERE killer != victim
           GROUP BY killer 
           ORDER BY kills DESC 
           LIMIT 10
@@ -23,6 +24,7 @@ export async function GET(request: NextRequest) {
         results = await query(`
           SELECT victim, COUNT(*) as deaths 
           FROM MVP 
+          WHERE killer != victim
           GROUP BY victim 
           ORDER BY deaths DESC 
           LIMIT 10
@@ -33,7 +35,7 @@ export async function GET(request: NextRequest) {
         results = await query(`
           SELECT krace, COUNT(*) as pvp_kills 
           FROM PVP 
-          WHERE krace IS NOT NULL 
+          WHERE krace IS NOT NULL AND killer != victim
           GROUP BY krace 
           ORDER BY pvp_kills DESC
         `);
@@ -43,7 +45,7 @@ export async function GET(request: NextRequest) {
         results = await query(`
           SELECT kclass, COUNT(*) as pvp_kills 
           FROM PVP 
-          WHERE kclass IS NOT NULL 
+          WHERE kclass IS NOT NULL AND killer != victim
           GROUP BY kclass 
           ORDER BY pvp_kills DESC
         `);
@@ -53,7 +55,7 @@ export async function GET(request: NextRequest) {
         results = await query(`
           SELECT vlevel, COUNT(*) as count 
           FROM MVP 
-          WHERE vlevel IS NOT NULL 
+          WHERE vlevel IS NOT NULL AND killer != victim
           GROUP BY vlevel 
           ORDER BY vlevel
         `);
@@ -61,13 +63,13 @@ export async function GET(request: NextRequest) {
 
       default:
         // Overview stats
-        const mvpCount = await query('SELECT COUNT(*) as count FROM MVP');
-        const pvpCount = await query('SELECT COUNT(*) as count FROM PVP');
+        const mvpCount = await query('SELECT COUNT(*) as count FROM MVP WHERE killer != victim');
+        const pvpCount = await query('SELECT COUNT(*) as count FROM PVP WHERE killer != victim');
         const uniqueKillers = await query(
-          'SELECT COUNT(DISTINCT killer) as count FROM MVP'
+          'SELECT COUNT(DISTINCT killer) as count FROM MVP WHERE killer != victim'
         );
         const uniqueVictims = await query(
-          'SELECT COUNT(DISTINCT victim) as count FROM MVP'
+          'SELECT COUNT(DISTINCT victim) as count FROM MVP WHERE killer != victim'
         );
 
         results = {

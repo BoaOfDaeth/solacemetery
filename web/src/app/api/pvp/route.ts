@@ -11,7 +11,7 @@ export async function GET(request: NextRequest) {
     const krace = searchParams.get('krace');
     const kclass = searchParams.get('kclass');
 
-    let sql = 'SELECT * FROM PVP';
+    let sql = 'SELECT * FROM PVP WHERE killer != victim';
     const params: unknown[] = [];
 
     // Build WHERE clause if filters are provided
@@ -34,7 +34,7 @@ export async function GET(request: NextRequest) {
     }
 
     if (conditions.length > 0) {
-      sql += ' WHERE ' + conditions.join(' AND ');
+      sql += ' AND ' + conditions.join(' AND ');
     }
 
     sql += ` ORDER BY id DESC LIMIT ${parseInt(limit)} OFFSET ${parseInt(offset)}`;
