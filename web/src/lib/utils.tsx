@@ -8,6 +8,10 @@ interface PlayerData {
   linkType?: 'character' | 'mob';
 }
 
+/**
+ * FormatPlayer component for consistent player/mob display
+ * Handles URL encoding and displays level, race, and class information
+ */
 export function FormatPlayer({
   name,
   level,

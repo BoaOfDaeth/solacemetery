@@ -22,31 +22,22 @@ async function getMobData(name: string): Promise<MobData | null> {
       ORDER BY id DESC
     `, [name]);
 
-    // Calculate statistics
-    const totalKills = await query(`
-      SELECT COUNT(*) as count
+    // Calculate statistics in a single query for better performance
+    const stats = await query(`
+      SELECT 
+        COUNT(*) as total_kills,
+        COUNT(DISTINCT victim) as unique_victims,
+        AVG(vlevel) as avg_level
       FROM MVP 
       WHERE killer = ?
-    `, [name]);
-
-    const uniqueVictims = await query(`
-      SELECT COUNT(DISTINCT victim) as count
-      FROM MVP 
-      WHERE killer = ?
-    `, [name]);
-
-    const avgLevel = await query(`
-      SELECT AVG(vlevel) as avg
-      FROM MVP 
-      WHERE killer = ? AND vlevel IS NOT NULL
     `, [name]);
 
     return {
       monster: name,
       statistics: {
-        totalKills: (totalKills as any[])[0]?.count || 0,
-        uniqueVictims: (uniqueVictims as any[])[0]?.count || 0,
-        avgLevel: Math.round((avgLevel as any[])[0]?.avg || 0),
+        totalKills: (stats as any[])[0]?.total_kills || 0,
+        uniqueVictims: (stats as any[])[0]?.unique_victims || 0,
+        avgLevel: Math.round((stats as any[])[0]?.avg_level || 0),
       },
       kills: kills as any[],
     };
@@ -74,17 +65,17 @@ export default async function MobPage({
 
   return (
     <div className="min-h-screen bg-gray-100 py-2">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="max-w-7xl mx-auto px-0 sm:px-6 lg:px-8">
         {/* Header */}
-        <div className="mb-2">
-          <h1 className="text-3xl font-bold text-gray-900">
+        <div className="mb-2 text-center sm:text-left">
+          <h1 className="text-2xl sm:text-3xl font-bold text-gray-900">
             {decodedName}
           </h1>
         </div>
 
         {/* Statistics Cards */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-2 mb-2">
-          <div className="bg-white shadow p-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-2 mb-2">
+          <div className="bg-white shadow p-4">
             <h3 className="text-lg font-semibold text-gray-900 mb-2">
               Total Kills
             </h3>
@@ -93,16 +84,7 @@ export default async function MobPage({
             </p>
           </div>
 
-          <div className="bg-white shadow p-6">
-            <h3 className="text-lg font-semibold text-gray-900 mb-2">
-              Unique Victims
-            </h3>
-            <p className="text-3xl font-bold">
-              {mobData.statistics.uniqueVictims}
-            </p>
-          </div>
-
-          <div className="bg-white shadow p-6">
+          <div className="bg-white shadow p-4">
             <h3 className="text-lg font-semibold text-gray-900 mb-2">
               Average Victim Level
             </h3>

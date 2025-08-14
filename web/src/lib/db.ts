@@ -9,11 +9,23 @@ const dbConfig = {
   waitForConnections: true,
   connectionLimit: 10,
   queueLimit: 0,
+  // Performance optimizations
+  acquireTimeout: 60000,
+  timeout: 60000,
+  reconnect: true,
 };
 
 // Create connection pool
 const pool = mysql.createPool(dbConfig);
 
+/**
+ * Database query function with error handling
+ * 
+ * Recommended database indexes for optimal performance:
+ * - PVP table: INDEX(killer), INDEX(victim), INDEX(killer, victim), INDEX(id DESC)
+ * - MVP table: INDEX(killer), INDEX(victim), INDEX(id DESC)
+ * - Composite indexes for common query patterns
+ */
 export async function query(sql: string, params?: unknown[]) {
   try {
     const [results] = await pool.execute(sql, params);

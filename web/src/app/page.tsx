@@ -75,11 +75,9 @@ export default async function Home() {
       {/* Header */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center my-4">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <h1 className="text-3xl font-bold text-gray-900">
-              Solace MUD stats
-            </h1>
-          </div>
+          <h1 className="text-3xl font-bold text-gray-900">
+            Solace MUD Stats
+          </h1>
         </div>
       </div>
 
@@ -150,7 +148,7 @@ export default async function Home() {
                       Mob
                     </th>
                     <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                      PLayer Levels killed
+                      Player Levels killed
                     </th>
                   </tr>
                 </thead>

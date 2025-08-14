@@ -96,9 +96,10 @@ function getSourceLabel(source: string) {
 export default async function SearchPage({
   searchParams,
 }: {
-  searchParams: { q?: string };
+  searchParams: Promise<{ q?: string }>;
 }) {
-  const searchQuery = searchParams.q;
+  // Await searchParams before accessing its properties
+  const { q: searchQuery } = await searchParams;
   
   if (!searchQuery) {
     notFound();

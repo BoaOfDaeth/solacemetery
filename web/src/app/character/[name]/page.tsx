@@ -1,4 +1,3 @@
-import Link from 'next/link';
 import { FormatPlayer } from '@/lib/utils';
 import { query } from '@/lib/db';
 import { notFound } from 'next/navigation';
@@ -63,24 +62,13 @@ async function getCharacterData(name: string): Promise<CharacterData | null> {
       ORDER BY id DESC
     `, [name]);
 
-    // Calculate statistics
-    const pvpKillsCount = await query(`
-      SELECT COUNT(*) as count
-      FROM PVP 
-      WHERE killer = ? AND killer != victim
-    `, [name]);
-
-    const pvpDeathsCount = await query(`
-      SELECT COUNT(*) as count
-      FROM PVP 
-      WHERE victim = ?
-    `, [name]);
-
-    const mvpDeathsCount = await query(`
-      SELECT COUNT(*) as count
-      FROM MVP 
-      WHERE victim = ?
-    `, [name]);
+    // Calculate statistics in a single query for better performance
+    const stats = await query(`
+      SELECT 
+        (SELECT COUNT(*) FROM PVP WHERE killer = ? AND killer != victim) as pvp_kills,
+        (SELECT COUNT(*) FROM PVP WHERE victim = ?) as pvp_deaths,
+        (SELECT COUNT(*) FROM MVP WHERE victim = ?) as mvp_deaths
+    `, [name, name, name]);
 
     return {
       character: name,
@@ -90,11 +78,11 @@ async function getCharacterData(name: string): Promise<CharacterData | null> {
       },
       statistics: {
         pvp: {
-          kills: (pvpKillsCount as any[])[0]?.count || 0,
-          deaths: (pvpDeathsCount as any[])[0]?.count || 0,
+          kills: (stats as any[])[0]?.pvp_kills || 0,
+          deaths: (stats as any[])[0]?.pvp_deaths || 0,
         },
         mvp: {
-          deaths: (mvpDeathsCount as any[])[0]?.count || 0,
+          deaths: (stats as any[])[0]?.mvp_deaths || 0,
         },
       },
       appearances: {
