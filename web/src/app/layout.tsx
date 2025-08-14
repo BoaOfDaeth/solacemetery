@@ -33,22 +33,22 @@ export default function RootLayout({
         <nav className="bg-gray-800 shadow-lg">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="flex items-center justify-between h-16">
-              <div className="flex items-center space-x-8">
+              <div className="flex items-center space-x-4 sm:space-x-8">
                 <Link
                   href="/"
-                  className="text-white hover:text-gray-300 px-3 py-2 rounded-md text-sm font-medium"
+                  className="text-white hover:text-gray-300 px-2 sm:px-3 py-2 rounded-md text-sm font-medium"
                 >
                   Stats
                 </Link>
                 <Link
                   href="/pvp"
-                  className="text-gray-300 hover:text-white px-3 py-2 rounded-md text-sm font-medium"
+                  className="text-gray-300 hover:text-white px-2 sm:px-3 py-2 rounded-md text-sm font-medium"
                 >
                   PVP
                 </Link>
                 <Link
                   href="/mvp"
-                  className="text-gray-300 hover:text-white px-3 py-2 rounded-md text-sm font-medium"
+                  className="text-gray-300 hover:text-white px-2 sm:px-3 py-2 rounded-md text-sm font-medium"
                 >
                   MVP
                 </Link>
