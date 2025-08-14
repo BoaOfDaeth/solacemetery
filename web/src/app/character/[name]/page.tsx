@@ -50,7 +50,7 @@ async function getCharacterData(name: string): Promise<CharacterData | null> {
     const pvpDeaths = await query(`
       SELECT id, killer, klevel, krace, kclass, vlevel
       FROM PVP 
-      WHERE victim = ?
+      WHERE victim = ? AND killer != victim
       ORDER BY id DESC
     `, [name]);
 
@@ -66,7 +66,7 @@ async function getCharacterData(name: string): Promise<CharacterData | null> {
     const stats = await query(`
       SELECT 
         (SELECT COUNT(*) FROM PVP WHERE killer = ? AND killer != victim) as pvp_kills,
-        (SELECT COUNT(*) FROM PVP WHERE victim = ?) as pvp_deaths,
+        (SELECT COUNT(*) FROM PVP WHERE victim = ? AND killer != victim) as pvp_deaths,
         (SELECT COUNT(*) FROM MVP WHERE victim = ?) as mvp_deaths
     `, [name, name, name]);
 
