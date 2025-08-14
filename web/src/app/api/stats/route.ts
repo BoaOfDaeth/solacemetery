@@ -63,21 +63,25 @@ export async function GET(request: NextRequest) {
         // Overview stats
         const [mvpCount] = await query('SELECT COUNT(*) as count FROM MVP');
         const [pvpCount] = await query('SELECT COUNT(*) as count FROM PVP');
-        const [uniqueKillers] = await query('SELECT COUNT(DISTINCT killer) as count FROM MVP');
-        const [uniqueVictims] = await query('SELECT COUNT(DISTINCT victim) as count FROM MVP');
-        
+        const [uniqueKillers] = await query(
+          'SELECT COUNT(DISTINCT killer) as count FROM MVP'
+        );
+        const [uniqueVictims] = await query(
+          'SELECT COUNT(DISTINCT victim) as count FROM MVP'
+        );
+
         results = {
           mvp_records: mvpCount.count,
           pvp_records: pvpCount.count,
           unique_killers: uniqueKillers.count,
-          unique_victims: uniqueVictims.count
+          unique_victims: uniqueVictims.count,
         };
     }
 
-    return NextResponse.json({ 
-      success: true, 
+    return NextResponse.json({
+      success: true,
       data: results,
-      type
+      type,
     });
   } catch (error) {
     console.error('Stats API error:', error);

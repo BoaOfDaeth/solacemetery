@@ -1,14 +1,14 @@
-"use client";
+'use client';
 
-import { useState, useEffect } from "react";
-import { Tab } from "@headlessui/react";
+import { useState, useEffect } from 'react';
+import { Tab } from '@headlessui/react';
 import {
   ChartBarIcon,
   UserGroupIcon,
   BoltIcon,
   ShieldCheckIcon,
   MagnifyingGlassIcon,
-} from "@heroicons/react/24/outline";
+} from '@heroicons/react/24/outline';
 
 interface MVPRecord {
   id: number;
@@ -40,7 +40,7 @@ export default function Home() {
   const [pvpData, setPvpData] = useState<PVPRecord[]>([]);
   const [stats, setStats] = useState<Stats | null>(null);
   const [loading, setLoading] = useState(true);
-  const [searchTerm, setSearchTerm] = useState("");
+  const [searchTerm, setSearchTerm] = useState('');
 
   useEffect(() => {
     fetchData();
@@ -51,40 +51,40 @@ export default function Home() {
       setLoading(true);
 
       // Fetch MVP data
-      const mvpResponse = await fetch("/api/mvp?limit=100");
+      const mvpResponse = await fetch('/api/mvp?limit=100');
       const mvpResult = await mvpResponse.json();
       if (mvpResult.success) {
         setMvpData(mvpResult.data);
       }
 
       // Fetch PVP data
-      const pvpResponse = await fetch("/api/pvp?limit=100");
+      const pvpResponse = await fetch('/api/pvp?limit=100');
       const pvpResult = await pvpResponse.json();
       if (pvpResult.success) {
         setPvpData(pvpResult.data);
       }
 
       // Fetch stats
-      const statsResponse = await fetch("/api/stats");
+      const statsResponse = await fetch('/api/stats');
       const statsResult = await statsResponse.json();
       if (statsResult.success) {
         setStats(statsResult.data);
       }
     } catch (error) {
-      console.error("Error fetching data:", error);
+      console.error('Error fetching data:', error);
     } finally {
       setLoading(false);
     }
   };
 
   const filteredMvpData = mvpData.filter(
-    (record) =>
+    record =>
       record.killer.toLowerCase().includes(searchTerm.toLowerCase()) ||
       record.victim.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
   const filteredPvpData = pvpData.filter(
-    (record) =>
+    record =>
       record.killer.toLowerCase().includes(searchTerm.toLowerCase()) ||
       record.victim.toLowerCase().includes(searchTerm.toLowerCase()) ||
       record.krace?.toLowerCase().includes(searchTerm.toLowerCase()) ||
@@ -120,7 +120,7 @@ export default function Home() {
                   placeholder="Search players, monsters, races, classes..."
                   className="pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                   value={searchTerm}
-                  onChange={(e) => setSearchTerm(e.target.value)}
+                  onChange={e => setSearchTerm(e.target.value)}
                 />
               </div>
             </div>
@@ -140,7 +140,7 @@ export default function Home() {
                     MVP Records
                   </p>
                   <p className="text-2xl font-bold text-gray-900">
-                    {stats.mvp_records?.toLocaleString() || "0"}
+                    {stats.mvp_records?.toLocaleString() || '0'}
                   </p>
                 </div>
               </div>
@@ -153,7 +153,7 @@ export default function Home() {
                     PVP Records
                   </p>
                   <p className="text-2xl font-bold text-gray-900">
-                    {stats.pvp_records?.toLocaleString() || "0"}
+                    {stats.pvp_records?.toLocaleString() || '0'}
                   </p>
                 </div>
               </div>
@@ -166,7 +166,7 @@ export default function Home() {
                     Unique Killers
                   </p>
                   <p className="text-2xl font-bold text-gray-900">
-                    {stats.unique_killers?.toLocaleString() || "0"}
+                    {stats.unique_killers?.toLocaleString() || '0'}
                   </p>
                 </div>
               </div>
@@ -179,7 +179,7 @@ export default function Home() {
                     Unique Victims
                   </p>
                   <p className="text-2xl font-bold text-gray-900">
-                    {stats.unique_victims?.toLocaleString() || "0"}
+                    {stats.unique_victims?.toLocaleString() || '0'}
                   </p>
                 </div>
               </div>
@@ -198,8 +198,8 @@ export default function Home() {
                  ring-white ring-opacity-60 ring-offset-2 ring-offset-blue-400 focus:outline-none focus:ring-2
                  ${
                    selected
-                     ? "bg-white shadow"
-                     : "text-blue-100 hover:bg-white/[0.12] hover:text-white"
+                     ? 'bg-white shadow'
+                     : 'text-blue-100 hover:bg-white/[0.12] hover:text-white'
                  }`
               }
             >
@@ -211,8 +211,8 @@ export default function Home() {
                  ring-white ring-opacity-60 ring-offset-2 ring-offset-blue-400 focus:outline-none focus:ring-2
                  ${
                    selected
-                     ? "bg-white shadow"
-                     : "text-blue-100 hover:bg-white/[0.12] hover:text-white"
+                     ? 'bg-white shadow'
+                     : 'text-blue-100 hover:bg-white/[0.12] hover:text-white'
                  }`
               }
             >
@@ -249,7 +249,7 @@ export default function Home() {
                       </tr>
                     </thead>
                     <tbody className="bg-white divide-y divide-gray-200">
-                      {filteredMvpData.map((record) => (
+                      {filteredMvpData.map(record => (
                         <tr key={record.id} className="hover:bg-gray-50">
                           <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
                             {record.id}
@@ -261,7 +261,7 @@ export default function Home() {
                             {record.victim}
                           </td>
                           <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-                            {record.vlevel || "-"}
+                            {record.vlevel || '-'}
                           </td>
                         </tr>
                       ))}
@@ -308,7 +308,7 @@ export default function Home() {
                       </tr>
                     </thead>
                     <tbody className="bg-white divide-y divide-gray-200">
-                      {filteredPvpData.map((record) => (
+                      {filteredPvpData.map(record => (
                         <tr key={record.id} className="hover:bg-gray-50">
                           <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
                             {record.id}
@@ -320,16 +320,16 @@ export default function Home() {
                             {record.victim}
                           </td>
                           <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-                            {record.klevel || "-"}
+                            {record.klevel || '-'}
                           </td>
                           <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-                            {record.vlevel || "-"}
+                            {record.vlevel || '-'}
                           </td>
                           <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-                            {record.krace || "-"}
+                            {record.krace || '-'}
                           </td>
                           <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-                            {record.kclass || "-"}
+                            {record.kclass || '-'}
                           </td>
                         </tr>
                       ))}

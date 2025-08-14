@@ -10,7 +10,7 @@ export async function GET(request: NextRequest) {
     const victim = searchParams.get('victim');
 
     let sql = 'SELECT * FROM MVP';
-    const params: unknown[] = [];
+    const params: any[] = [];
 
     // Build WHERE clause if filters are provided
     const conditions: string[] = [];
@@ -31,13 +31,13 @@ export async function GET(request: NextRequest) {
 
     const results = await query(sql, params);
 
-    return NextResponse.json({ 
-      success: true, 
+    return NextResponse.json({
+      success: true,
       data: results,
       pagination: {
         limit: parseInt(limit),
-        offset: parseInt(offset)
-      }
+        offset: parseInt(offset),
+      },
     });
   } catch (error) {
     console.error('MVP API error:', error);

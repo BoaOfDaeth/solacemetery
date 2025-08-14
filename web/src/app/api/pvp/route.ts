@@ -41,13 +41,13 @@ export async function GET(request: NextRequest) {
 
     const results = await query(sql, params);
 
-    return NextResponse.json({ 
-      success: true, 
+    return NextResponse.json({
+      success: true,
       data: results,
       pagination: {
         limit: parseInt(limit),
-        offset: parseInt(offset)
-      }
+        offset: parseInt(offset),
+      },
     });
   } catch (error) {
     console.error('PVP API error:', error);
