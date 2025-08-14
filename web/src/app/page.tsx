@@ -52,70 +52,29 @@ export default function Home() {
   return (
     <div className="min-h-screen bg-gray-50">
       {/* Header */}
-      <div className="bg-white shadow-sm border-b">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between items-center py-6">
-            <div>
-              <h1 className="text-3xl font-bold text-gray-900">Solacemetry</h1>
-              <p className="text-gray-600">Gaming Database Dashboard</p>
-            </div>
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="flex justify-between items-center my-4">
+          <div>
+            <h1 className="text-3xl font-bold text-gray-900">
+              Solace MUD Cemetery
+            </h1>
           </div>
         </div>
       </div>
 
-      {/* Stats Cards */}
+      {/* Top Killers Table - Moved to top */}
       {stats && (
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <div className="bg-white rounded-lg shadow p-6">
-              <div className="flex items-center">
-                <BoltIcon className="h-8 w-8 text-red-500" />
-                <div className="ml-4">
-                  <p className="text-sm font-medium text-gray-600">
-                    MVP Records
-                  </p>
-                  <p className="text-2xl font-bold text-gray-900">
-                    {stats.mvp_records?.toLocaleString() || '0'}
-                  </p>
-                </div>
-              </div>
-            </div>
-            <div className="bg-white rounded-lg shadow p-6">
-              <div className="flex items-center">
-                <UserGroupIcon className="h-8 w-8 text-blue-500" />
-                <div className="ml-4">
-                  <p className="text-sm font-medium text-gray-600">
-                    PVP Records
-                  </p>
-                  <p className="text-2xl font-bold text-gray-900">
-                    {stats.pvp_records?.toLocaleString() || '0'}
-                  </p>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      )}
-
-      {/* Top Killers Table */}
-      {stats && (
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-8">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-2">
           <div className="bg-white rounded-lg shadow">
             <div className="px-6 py-4 border-b border-gray-200">
               <h3 className="text-lg font-medium text-gray-900">
                 Top 10 Killers
               </h3>
-              <p className="text-sm text-gray-600">
-                Players with the most PVP kills
-              </p>
             </div>
             <div className="overflow-x-auto">
               <table className="min-w-full divide-y divide-gray-200">
                 <thead className="bg-gray-50">
                   <tr>
-                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                      Rank
-                    </th>
                     <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                       Player
                     </th>
@@ -127,9 +86,6 @@ export default function Home() {
                 <tbody className="bg-white divide-y divide-gray-200">
                   {stats.top_killers?.map((killer: any, index: number) => (
                     <tr key={killer.killer} className="hover:bg-gray-50">
-                      <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
-                        #{index + 1}
-                      </td>
                       <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
                         <Link
                           href={`/character/${encodeURIComponent(killer.killer)}`}
@@ -151,7 +107,7 @@ export default function Home() {
                   {(!stats.top_killers || stats.top_killers.length === 0) && (
                     <tr>
                       <td
-                        colSpan={3}
+                        colSpan={2}
                         className="px-6 py-4 text-center text-sm text-gray-500"
                       >
                         No killer data available
@@ -165,43 +121,26 @@ export default function Home() {
         </div>
       )}
 
-      {/* Quick Navigation */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-8">
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          <Link
-            href="/pvp"
-            className="bg-white rounded-lg shadow p-6 hover:shadow-lg transition-shadow"
-          >
-            <div className="flex items-center">
-              <UserGroupIcon className="h-12 w-12 text-blue-500" />
-              <div className="ml-4">
-                <h3 className="text-lg font-medium text-gray-900">
-                  PVP Records
-                </h3>
-                <p className="text-sm text-gray-600">
-                  View all Player vs Player combat records
-                </p>
+      {/* Stats Cards - Only PVP Records */}
+      {stats && (
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-8">
+          <div className="grid grid-cols-1 gap-6">
+            <div className="bg-white rounded-lg shadow p-6">
+              <div className="flex items-center">
+                <UserGroupIcon className="h-8 w-8 text-blue-500" />
+                <div className="ml-4">
+                  <p className="text-sm font-medium text-gray-600">
+                    PVP Records
+                  </p>
+                  <p className="text-2xl font-bold text-gray-900">
+                    {stats.pvp_records?.toLocaleString() || '0'}
+                  </p>
+                </div>
               </div>
             </div>
-          </Link>
-          <Link
-            href="/mvp"
-            className="bg-white rounded-lg shadow p-6 hover:shadow-lg transition-shadow"
-          >
-            <div className="flex items-center">
-              <BoltIcon className="h-12 w-12 text-red-500" />
-              <div className="ml-4">
-                <h3 className="text-lg font-medium text-gray-900">
-                  MVP Records
-                </h3>
-                <p className="text-sm text-gray-600">
-                  View all Monster vs Player combat records
-                </p>
-              </div>
-            </div>
-          </Link>
+          </div>
         </div>
-      </div>
+      )}
     </div>
   );
 }

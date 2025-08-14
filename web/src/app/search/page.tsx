@@ -125,7 +125,7 @@ export default function SearchPage() {
       </div>
 
       {/* Search Results */}
-      <div className="max-w-7xl mx-auto py-8">
+      <div className="max-w-7xl mx-auto py-1">
         {searchData.results.length > 0 ? (
           <table className="min-w-full divide-y divide-gray-200 bg-white">
             <thead className="bg-gray-50">
