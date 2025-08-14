@@ -104,16 +104,9 @@ export default function MobPage({
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Header */}
         <div className="mb-8">
-          <Link
-            href="/"
-            className="text-blue-600 hover:text-blue-800 mb-4 inline-block"
-          >
-            ← Back to Home
-          </Link>
           <h1 className="text-3xl font-bold text-gray-900">
             {mobData.monster}
           </h1>
-          <p className="text-gray-600 mt-2">Monster Statistics & Victim List</p>
         </div>
 
         {/* Statistics Cards */}
