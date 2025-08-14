@@ -26,7 +26,6 @@ async function getSearchResults(searchQuery: string): Promise<SearchData | null>
       SELECT DISTINCT killer as character_name, 'pvp_killer' as source
       FROM PVP 
       WHERE killer LIKE ? AND killer != victim
-      ORDER BY id DESC
     `, [queryParam]);
 
     // Search for characters in PVP table (as victims)
@@ -34,7 +33,6 @@ async function getSearchResults(searchQuery: string): Promise<SearchData | null>
       SELECT DISTINCT victim as character_name, 'pvp_victim' as source
       FROM PVP 
       WHERE victim LIKE ?
-      ORDER BY id DESC
     `, [queryParam]);
 
     // Search for characters in MVP table (as victims)
@@ -42,7 +40,6 @@ async function getSearchResults(searchQuery: string): Promise<SearchData | null>
       SELECT DISTINCT victim as character_name, 'mvp_victim' as source
       FROM MVP 
       WHERE victim LIKE ?
-      ORDER BY id DESC
     `, [queryParam]);
 
     // Combine all results and remove duplicates
@@ -119,7 +116,7 @@ export default async function SearchPage({
     <div className="min-h-screen bg-gray-100">
       {/* Header */}
       <div className="bg-white shadow">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
+        <div className="max-w-7xl py-2 ml-7">
           <div className="flex items-center">
             <div>
               <h1 className="text-2xl font-bold text-gray-900">
@@ -136,7 +133,7 @@ export default async function SearchPage({
       </div>
 
       {/* Search Results */}
-      <div className="max-w-7xl mx-auto py-1">
+      <div className="max-w-7xl mx-auto pb-2">
         {searchData.results.length > 0 ? (
           <table className="min-w-full divide-y divide-gray-200 bg-white">
             <thead className="bg-gray-50">

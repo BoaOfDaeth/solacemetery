@@ -77,15 +77,15 @@ export default async function Home() {
         <div className="flex justify-between items-center my-4">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <h1 className="text-3xl font-bold text-gray-900">
-              Solace MUD player stats
+              Solace MUD stats
             </h1>
           </div>
         </div>
       </div>
 
       {/* Top Killers Tables */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-2">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
+      <div className="max-w-7xl mx-auto px-0 sm:px-4 lg:px-8 py-2">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-2">
           {/* Top 10 Player Killers */}
           <div className="bg-white shadow">
             <div className="px-6 py-4 border-b border-gray-200">
@@ -185,10 +185,10 @@ export default async function Home() {
         </div>
       </div>
 
-      {/* Stats Cards - Only PVP Records */}
+      {/* Stats Cards */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-8">
-        <div className="grid grid-cols-1 gap-6">
-          <div className="bg-white shadow p-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-2 max-w-2xl mx-auto">
+          <div className="bg-white shadow p-4">
             <div className="flex items-center">
               <div>
                 <p className="text-sm font-medium text-gray-600">
@@ -196,6 +196,19 @@ export default async function Home() {
                 </p>
                 <p className="text-2xl font-bold text-gray-900">
                   {stats.pvp_records?.toLocaleString() || '0'}
+                </p>
+              </div>
+            </div>
+          </div>
+          
+          <div className="bg-white shadow p-4">
+            <div className="flex items-center">
+              <div>
+                <p className="text-sm font-medium text-gray-600">
+                  MVP Records
+                </p>
+                <p className="text-2xl font-bold text-gray-900">
+                  {stats.mvp_records?.toLocaleString() || '0'}
                 </p>
               </div>
             </div>

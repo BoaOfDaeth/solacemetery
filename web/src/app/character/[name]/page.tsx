@@ -36,13 +36,12 @@ async function getCharacterData(name: string): Promise<CharacterData | null> {
       SELECT DISTINCT krace as race, kclass as class
       FROM PVP 
       WHERE killer = ? 
-      ORDER BY id DESC
       LIMIT 1
     `, [name]);
 
     // Get PVP kills
     const pvpKills = await query(`
-      SELECT id, victim, vlevel
+      SELECT id, victim, vlevel, klevel
       FROM PVP 
       WHERE killer = ? AND killer != victim
       ORDER BY id DESC
@@ -132,15 +131,15 @@ export default async function CharacterPage({
 
   return (
     <div className="min-h-screen bg-gray-100 py-2">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="max-w-7xl mx-auto px-0 sm:px-6 lg:px-8">
         {/* Header */}
-        <div className="mb-2">
+        <div className="mb-2 text-center sm:text-left">
           <h1 className="text-3xl font-bold text-gray-900">
             {decodedName}
           </h1>
           {characterData.characterInfo.race &&
             characterData.characterInfo.class && (
-              <p className="font-bold ml-2">
+              <p className="font-bold sm:ml-2">
                 {characterData.characterInfo.race}{' '}
                 {characterData.characterInfo.class}
               </p>
