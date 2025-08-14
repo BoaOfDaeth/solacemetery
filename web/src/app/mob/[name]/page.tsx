@@ -100,22 +100,22 @@ export default function MobPage({
   }
 
   return (
-    <div className="min-h-screen bg-gray-100 py-8">
+    <div className="min-h-screen bg-gray-100 py-2">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Header */}
-        <div className="mb-8">
+        <div className="mb-2">
           <h1 className="text-3xl font-bold text-gray-900">
             {mobData.monster}
           </h1>
         </div>
 
         {/* Statistics Cards */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-2 mb-2">
           <div className="bg-white shadow p-6">
             <h3 className="text-lg font-semibold text-gray-900 mb-2">
               Total Kills
             </h3>
-            <p className="text-3xl font-bold text-red-600">
+            <p className="text-3xl font-bold">
               {mobData.statistics.totalKills}
             </p>
           </div>
@@ -124,7 +124,7 @@ export default function MobPage({
             <h3 className="text-lg font-semibold text-gray-900 mb-2">
               Unique Victims
             </h3>
-            <p className="text-3xl font-bold text-blue-600">
+            <p className="text-3xl font-bold">
               {mobData.statistics.uniqueVictims}
             </p>
           </div>
@@ -133,7 +133,7 @@ export default function MobPage({
             <h3 className="text-lg font-semibold text-gray-900 mb-2">
               Average Victim Level
             </h3>
-            <p className="text-3xl font-bold text-green-600">
+            <p className="text-3xl font-bold">
               {mobData.statistics.avgLevel}
             </p>
           </div>
