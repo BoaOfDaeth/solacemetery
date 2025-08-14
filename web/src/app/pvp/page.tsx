@@ -14,21 +14,39 @@ interface PvpRecord {
   kclass?: string;
 }
 
+interface MvpRecord {
+  id: number;
+  killer: string;
+  victim: string;
+  vlevel?: number;
+}
+
 export default function PvpPage() {
   const [pvpData, setPvpData] = useState<PvpRecord[]>([]);
+  const [mvpData, setMvpData] = useState<MvpRecord[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    const fetchPvpData = async () => {
+    const fetchData = async () => {
       try {
         setLoading(true);
-        const response = await fetch('/api/pvp?limit=100');
-        if (!response.ok) {
+
+        // Fetch PVP data
+        const pvpResponse = await fetch('/api/pvp?limit=100');
+        if (!pvpResponse.ok) {
           throw new Error('Failed to fetch PVP data');
         }
-        const data = await response.json();
-        setPvpData(data.data || []);
+        const pvpData = await pvpResponse.json();
+        setPvpData(pvpData.data || []);
+
+        // Fetch MVP data
+        const mvpResponse = await fetch('/api/mvp?limit=100');
+        if (!mvpResponse.ok) {
+          throw new Error('Failed to fetch MVP data');
+        }
+        const mvpData = await mvpResponse.json();
+        setMvpData(mvpData.data || []);
       } catch (err) {
         setError(err instanceof Error ? err.message : 'An error occurred');
       } finally {
@@ -36,7 +54,7 @@ export default function PvpPage() {
       }
     };
 
-    fetchPvpData();
+    fetchData();
   }, []);
 
   if (loading) {
@@ -123,6 +141,49 @@ export default function PvpPage() {
                   className="px-6 py-4 text-center text-sm text-gray-500"
                 >
                   No PVP records found
+                </td>
+              </tr>
+            )}
+          </tbody>
+        </table>
+      </div>
+
+      {/* MVP Deaths Table */}
+      <div className="max-w-7xl mx-auto pb-8">
+        <table className="min-w-full divide-y divide-gray-200 bg-white">
+          <tbody className="divide-y divide-gray-200">
+            {mvpData.map(record => (
+              <tr key={record.id} className="hover:bg-gray-50">
+                <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
+                  <Link
+                    href={`/mob/${encodeURIComponent(record.killer)}`}
+                    className="text-red-600 hover:text-red-800 hover:underline"
+                  >
+                    {record.killer}
+                  </Link>
+                </td>
+                <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                  <Link
+                    href={`/character/${encodeURIComponent(record.victim)}`}
+                    className="text-blue-600 hover:text-blue-800 hover:underline"
+                  >
+                    {record.victim}
+                  </Link>
+                  {record.vlevel && (
+                    <span className="text-gray-500 ml-1">
+                      ({record.vlevel})
+                    </span>
+                  )}
+                </td>
+              </tr>
+            ))}
+            {mvpData.length === 0 && (
+              <tr>
+                <td
+                  colSpan={2}
+                  className="px-6 py-4 text-center text-sm text-gray-500"
+                >
+                  No MVP deaths recorded
                 </td>
               </tr>
             )}

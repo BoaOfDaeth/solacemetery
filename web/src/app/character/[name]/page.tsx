@@ -89,12 +89,6 @@ export default function CharacterPage({
             <div className="bg-red-50 border border-red-200 rounded-md p-4">
               <h3 className="text-lg font-medium text-red-800">Error</h3>
               <p className="mt-2 text-red-700">{error}</p>
-              <Link
-                href="/"
-                className="mt-4 inline-block text-blue-600 hover:text-blue-800"
-              >
-                ← Back to Home
-              </Link>
             </div>
           </div>
         </div>
@@ -113,9 +107,6 @@ export default function CharacterPage({
             <p className="text-gray-600 mb-4">
               No data found for this character.
             </p>
-            <Link href="/" className="text-blue-600 hover:text-blue-800">
-              ← Back to Home
-            </Link>
           </div>
         </div>
       </div>
@@ -126,69 +117,152 @@ export default function CharacterPage({
     <div className="min-h-screen bg-gray-100 py-8">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Header */}
-        <div className="mb-8">
-          <Link
-            href="/"
-            className="text-blue-600 hover:text-blue-800 mb-4 inline-block"
-          >
-            ← Back to Home
-          </Link>
+        <div className="mb-2">
           <h1 className="text-3xl font-bold text-gray-900">
             {characterData.character}
           </h1>
           {characterData.characterInfo.race &&
             characterData.characterInfo.class && (
-              <p className="text-gray-600 mt-2">
+              <p className="font-bold ml-2">
                 {characterData.characterInfo.race}{' '}
                 {characterData.characterInfo.class}
               </p>
             )}
-          <p className="text-gray-600 mt-1">
-            Character Statistics & Appearances
-          </p>
         </div>
 
         {/* Statistics Cards */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+        <div className="mb-8">
           <div className="bg-white rounded-lg shadow p-6">
             <h3 className="text-lg font-semibold text-gray-900 mb-2">
-              Total Appearances
+              PVP Record
             </h3>
-            <p className="text-3xl font-bold text-blue-600">
-              {characterData.statistics.total}
-            </p>
-          </div>
-
-          <div className="bg-white rounded-lg shadow p-6">
-            <h3 className="text-lg font-semibold text-gray-900 mb-2">
-              MVP Deaths
-            </h3>
-            <p className="text-3xl font-bold text-red-600">
-              {characterData.statistics.mvp.deaths}
-            </p>
-          </div>
-
-          <div className="bg-white rounded-lg shadow p-6">
-            <h3 className="text-lg font-semibold text-gray-900 mb-2">
-              PVP Kills
-            </h3>
-            <p className="text-3xl font-bold text-purple-600">
-              {characterData.statistics.pvp.kills}
-            </p>
-          </div>
-
-          <div className="bg-white rounded-lg shadow p-6">
-            <h3 className="text-lg font-semibold text-gray-900 mb-2">
-              PVP Deaths
-            </h3>
-            <p className="text-3xl font-bold text-orange-600">
+            <p className="text-3xl font-bold">
+              {characterData.statistics.pvp.kills} -{' '}
               {characterData.statistics.pvp.deaths}
             </p>
           </div>
         </div>
 
+        {/* PVP Section */}
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+          {/* PVP Kills */}
+          <div className="bg-white rounded-lg shadow">
+            <div className="px-6 py-4 border-b border-gray-200">
+              <h2 className="text-xl font-semibold text-gray-900">
+                PVP Kills ({characterData.statistics.pvp.kills})
+              </h2>
+            </div>
+            <div className="overflow-x-auto">
+              <table className="min-w-full divide-y divide-gray-200">
+                <thead className="bg-gray-50">
+                  <tr>
+                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                      Victim
+                    </th>
+                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                      Killed at Level
+                    </th>
+                  </tr>
+                </thead>
+                <tbody className="bg-white divide-y divide-gray-200">
+                  {characterData.appearances.pvp.kills.map((kill: any) => (
+                    <tr key={kill.id}>
+                      <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
+                        <Link
+                          href={`/character/${encodeURIComponent(kill.victim)}`}
+                          className="text-blue-600 hover:text-blue-800 hover:underline"
+                        >
+                          {kill.victim}
+                        </Link>
+                        {kill.vlevel && (
+                          <span className="text-gray-500 ml-1">
+                            ({kill.vlevel})
+                          </span>
+                        )}
+                      </td>
+                      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                        {kill.klevel || '-'}
+                      </td>
+                    </tr>
+                  ))}
+                  {characterData.appearances.pvp.kills.length === 0 && (
+                    <tr>
+                      <td
+                        colSpan={2}
+                        className="px-6 py-4 text-center text-sm text-gray-500"
+                      >
+                        No PVP kills recorded
+                      </td>
+                    </tr>
+                  )}
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          {/* PVP Deaths */}
+          <div className="bg-white rounded-lg shadow">
+            <div className="px-6 py-4 border-b border-gray-200">
+              <h2 className="text-xl font-semibold text-gray-900">
+                PVP Deaths ({characterData.statistics.pvp.deaths})
+              </h2>
+            </div>
+            <div className="overflow-x-auto">
+              <table className="min-w-full divide-y divide-gray-200">
+                <thead className="bg-gray-50">
+                  <tr>
+                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                      Killer
+                    </th>
+                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                      Killed at Level
+                    </th>
+                  </tr>
+                </thead>
+                <tbody className="bg-white divide-y divide-gray-200">
+                  {characterData.appearances.pvp.deaths.map((death: any) => (
+                    <tr key={death.id}>
+                      <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
+                        <Link
+                          href={`/character/${encodeURIComponent(death.killer)}`}
+                          className="text-blue-600 hover:text-blue-800 hover:underline"
+                        >
+                          {death.killer}
+                        </Link>
+                        {death.klevel && (
+                          <span className="text-gray-500 ml-1">
+                            ({death.klevel})
+                          </span>
+                        )}
+                        {death.krace && death.kclass && (
+                          <span className="text-gray-500 ml-1">
+                            {death.krace}/{death.kclass}
+                          </span>
+                        )}
+                      </td>
+                      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                        {death.vlevel || '-'}
+                      </td>
+                    </tr>
+                  ))}
+                  {characterData.appearances.pvp.deaths.length === 0 && (
+                    <tr>
+                      <td
+                        colSpan={2}
+                        className="px-6 py-4 text-center text-sm text-gray-500"
+                      >
+                        No PVP deaths recorded
+                      </td>
+                    </tr>
+                  )}
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
         {/* MVP Section */}
-        <div className="mb-8">
+        <div className="mt-2">
           {/* MVP Deaths */}
           <div className="bg-white rounded-lg shadow">
             <div className="px-6 py-4 border-b border-gray-200">
@@ -231,128 +305,6 @@ export default function CharacterPage({
                         className="px-6 py-4 text-center text-sm text-gray-500"
                       >
                         No MVP deaths recorded
-                      </td>
-                    </tr>
-                  )}
-                </tbody>
-              </table>
-            </div>
-          </div>
-        </div>
-
-        {/* PVP Section */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-          {/* PVP Kills */}
-          <div className="bg-white rounded-lg shadow">
-            <div className="px-6 py-4 border-b border-gray-200">
-              <h2 className="text-xl font-semibold text-gray-900">
-                PVP Kills ({characterData.statistics.pvp.kills})
-              </h2>
-            </div>
-            <div className="overflow-x-auto">
-              <table className="min-w-full divide-y divide-gray-200">
-                <thead className="bg-gray-50">
-                  <tr>
-                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                      Victim
-                    </th>
-                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                      Killed at Level
-                    </th>
-                  </tr>
-                </thead>
-                <tbody className="bg-white divide-y divide-gray-200">
-                  {characterData.appearances.pvp.kills
-                    .sort((a: any, b: any) => (b.klevel || 0) - (a.klevel || 0))
-                    .map((kill: any) => (
-                      <tr key={kill.id}>
-                        <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
-                          <Link
-                            href={`/character/${encodeURIComponent(kill.victim)}`}
-                            className="text-blue-600 hover:text-blue-800 hover:underline"
-                          >
-                            {kill.victim}
-                          </Link>
-                          {kill.vlevel && (
-                            <span className="text-gray-500 ml-1">
-                              ({kill.vlevel})
-                            </span>
-                          )}
-                        </td>
-                        <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                          {kill.klevel || '-'}
-                        </td>
-                      </tr>
-                    ))}
-                  {characterData.appearances.pvp.kills.length === 0 && (
-                    <tr>
-                      <td
-                        colSpan={2}
-                        className="px-6 py-4 text-center text-sm text-gray-500"
-                      >
-                        No PVP kills recorded
-                      </td>
-                    </tr>
-                  )}
-                </tbody>
-              </table>
-            </div>
-          </div>
-
-          {/* PVP Deaths */}
-          <div className="bg-white rounded-lg shadow">
-            <div className="px-6 py-4 border-b border-gray-200">
-              <h2 className="text-xl font-semibold text-gray-900">
-                PVP Deaths ({characterData.statistics.pvp.deaths})
-              </h2>
-            </div>
-            <div className="overflow-x-auto">
-              <table className="min-w-full divide-y divide-gray-200">
-                <thead className="bg-gray-50">
-                  <tr>
-                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                      Killer
-                    </th>
-                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                      Killed at Level
-                    </th>
-                  </tr>
-                </thead>
-                <tbody className="bg-white divide-y divide-gray-200">
-                  {characterData.appearances.pvp.deaths
-                    .sort((a: any, b: any) => (b.vlevel || 0) - (a.vlevel || 0))
-                    .map((death: any) => (
-                      <tr key={death.id}>
-                        <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
-                          <Link
-                            href={`/character/${encodeURIComponent(death.killer)}`}
-                            className="text-blue-600 hover:text-blue-800 hover:underline"
-                          >
-                            {death.killer}
-                          </Link>
-                          {death.klevel && (
-                            <span className="text-gray-500 ml-1">
-                              ({death.klevel})
-                            </span>
-                          )}
-                          {death.krace && death.kclass && (
-                            <span className="text-gray-500 ml-1">
-                              {death.krace}/{death.kclass}
-                            </span>
-                          )}
-                        </td>
-                        <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                          {death.vlevel || '-'}
-                        </td>
-                      </tr>
-                    ))}
-                  {characterData.appearances.pvp.deaths.length === 0 && (
-                    <tr>
-                      <td
-                        colSpan={2}
-                        className="px-6 py-4 text-center text-sm text-gray-500"
-                      >
-                        No PVP deaths recorded
                       </td>
                     </tr>
                   )}
