@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
+import { FormatPlayer } from '@/lib/utils';
 import { UserGroupIcon } from '@heroicons/react/24/outline';
 
 interface PvpRecord {
@@ -102,35 +103,18 @@ export default function PvpPage() {
               .map(record => (
                 <tr key={record.id} className="hover:bg-gray-50">
                   <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
-                    <Link
-                      href={`/character/${encodeURIComponent(record.killer)}`}
-                      className="text-blue-600 hover:text-blue-800 hover:underline"
-                    >
-                      {record.killer}
-                    </Link>
-                    {record.klevel && (
-                      <span className="text-gray-500 ml-1">
-                        ({record.klevel})
-                      </span>
-                    )}
-                    {record.krace && record.kclass && (
-                      <span className="text-gray-500 ml-1">
-                        {record.krace}/{record.kclass}
-                      </span>
-                    )}
+                    <FormatPlayer
+                      name={record.killer}
+                      level={record.klevel}
+                      race={record.krace}
+                      class={record.kclass}
+                    />
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                    <Link
-                      href={`/character/${encodeURIComponent(record.victim)}`}
-                      className="text-blue-600 hover:text-blue-800 hover:underline"
-                    >
-                      {record.victim}
-                    </Link>
-                    {record.vlevel && (
-                      <span className="text-gray-500 ml-1">
-                        ({record.vlevel})
-                      </span>
-                    )}
+                    <FormatPlayer
+                      name={record.victim}
+                      level={record.vlevel}
+                    />
                   </td>
                 </tr>
               ))}
@@ -155,25 +139,16 @@ export default function PvpPage() {
             {mvpData.map(record => (
               <tr key={record.id} className="hover:bg-gray-50">
                 <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
-                  <Link
-                    href={`/mob/${encodeURIComponent(record.killer)}`}
-                    className="text-red-600 hover:text-red-800 hover:underline"
-                  >
-                    {record.killer}
-                  </Link>
+                  <FormatPlayer
+                    name={record.killer}
+                    linkType="mob"
+                  />
                 </td>
                 <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                  <Link
-                    href={`/character/${encodeURIComponent(record.victim)}`}
-                    className="text-blue-600 hover:text-blue-800 hover:underline"
-                  >
-                    {record.victim}
-                  </Link>
-                  {record.vlevel && (
-                    <span className="text-gray-500 ml-1">
-                      ({record.vlevel})
-                    </span>
-                  )}
+                  <FormatPlayer
+                    name={record.victim}
+                    level={record.vlevel}
+                  />
                 </td>
               </tr>
             ))}

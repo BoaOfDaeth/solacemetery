@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
+import { FormatPlayer } from '@/lib/utils';
 
 interface CharacterData {
   character: string;
@@ -154,17 +155,10 @@ export default function CharacterPage({
                   {characterData.appearances.pvp.kills.map((kill: any) => (
                     <tr key={kill.id}>
                       <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
-                        <Link
-                          href={`/character/${encodeURIComponent(kill.victim)}`}
-                          className="text-blue-600 hover:text-blue-800 hover:underline"
-                        >
-                          {kill.victim}
-                        </Link>
-                        {kill.vlevel && (
-                          <span className="text-gray-500 ml-1">
-                            ({kill.vlevel})
-                          </span>
-                        )}
+                        <FormatPlayer
+                          name={kill.victim}
+                          level={kill.vlevel}
+                        />
                       </td>
                       <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                         {kill.klevel || '-'}
@@ -209,22 +203,12 @@ export default function CharacterPage({
                   {characterData.appearances.pvp.deaths.map((death: any) => (
                     <tr key={death.id}>
                       <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
-                        <Link
-                          href={`/character/${encodeURIComponent(death.killer)}`}
-                          className="text-blue-600 hover:text-blue-800 hover:underline"
-                        >
-                          {death.killer}
-                        </Link>
-                        {death.klevel && (
-                          <span className="text-gray-500 ml-1">
-                            ({death.klevel})
-                          </span>
-                        )}
-                        {death.krace && death.kclass && (
-                          <span className="text-gray-500 ml-1">
-                            {death.krace}/{death.kclass}
-                          </span>
-                        )}
+                        <FormatPlayer
+                          name={death.killer}
+                          level={death.klevel}
+                          race={death.krace}
+                          class={death.kclass}
+                        />
                       </td>
                       <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                         {death.vlevel || '-'}
@@ -272,12 +256,10 @@ export default function CharacterPage({
                   {characterData.appearances.mvp.deaths.map((death: any) => (
                     <tr key={death.id}>
                       <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
-                        <Link
-                          href={`/mob/${encodeURIComponent(death.killer)}`}
-                          className="text-blue-600 hover:text-blue-800 hover:underline"
-                        >
-                          {death.killer}
-                        </Link>
+                        <FormatPlayer
+                          name={death.killer}
+                          linkType="mob"
+                        />
                       </td>
                       <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                         {death.vlevel}

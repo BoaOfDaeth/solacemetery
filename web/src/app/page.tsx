@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { UserGroupIcon, BoltIcon } from '@heroicons/react/24/outline';
+import { FormatPlayer } from '@/lib/utils';
 
 interface Stats {
   mvp_records: number;
@@ -87,17 +88,11 @@ export default function Home() {
                   {stats.top_killers?.map((killer: any, index: number) => (
                     <tr key={killer.killer} className="hover:bg-gray-50">
                       <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
-                        <Link
-                          href={`/character/${encodeURIComponent(killer.killer)}`}
-                          className="text-blue-600 hover:text-blue-800 hover:underline"
-                        >
-                          {killer.killer}
-                        </Link>
-                        {killer.race && killer.class && (
-                          <span className="text-gray-500 ml-2">
-                            {killer.race}/{killer.class}
-                          </span>
-                        )}
+                        <FormatPlayer
+                          name={killer.killer}
+                          race={killer.race}
+                          class={killer.class}
+                        />
                       </td>
                       <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                         {killer.kills}

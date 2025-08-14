@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
+import { FormatPlayer } from '@/lib/utils';
 
 interface MobData {
   monster: string;
@@ -165,12 +166,10 @@ export default function MobPage({
                 {mobData.kills.map((kill: any) => (
                   <tr key={kill.id} className="hover:bg-gray-50">
                     <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
-                      <Link
-                        href={`/character/${encodeURIComponent(kill.victim)}`}
-                        className="text-blue-600 hover:text-blue-800 hover:underline"
-                      >
-                        {kill.victim}
-                      </Link>
+                      <FormatPlayer
+                        name={kill.victim}
+                        level={kill.vlevel}
+                      />
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                       {kill.vlevel || '-'}
