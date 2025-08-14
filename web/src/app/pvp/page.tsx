@@ -1,6 +1,7 @@
 import { FormatPlayer } from '@/lib/utils';
 import { query } from '@/lib/db';
 import Link from 'next/link';
+import PageHeader from '@/components/PageHeader';
 
 interface PvpRecord {
   id: number;
@@ -127,20 +128,12 @@ export default async function PvpPage({
   const page = parseInt(pageParam || '1');
   const limit = 50;
   
-  const { pvpRecords, pvpTotal, currentPage, pvpTotalPages } = await getPvpData(page, limit);
+  const { pvpRecords, currentPage, pvpTotalPages } = await getPvpData(page, limit);
 
   return (
     <div className="min-h-screen bg-gray-100">
       {/* Header */}
-      <div className="bg-white shadow">
-        <div className="max-w-7xl py-2 ml-7">
-          <div className="flex items-center justify-between">
-            <div>
-              <h1 className="text-2xl font-bold text-gray-900">Player vs Player records</h1>
-            </div>
-          </div>
-        </div>
-      </div>
+      <PageHeader title="Player vs Player records" />
 
       {/* PVP Table */}
       <div className="max-w-7xl mx-auto pb-8">

@@ -1,6 +1,7 @@
 import Link from 'next/link';
 import { query } from '@/lib/db';
 import { notFound } from 'next/navigation';
+import PageHeader from '@/components/PageHeader';
 
 interface SearchResult {
   character_name: string;
@@ -116,22 +117,10 @@ export default async function SearchPage({
   return (
     <div className="min-h-screen bg-gray-100">
       {/* Header */}
-      <div className="bg-white shadow">
-        <div className="max-w-7xl py-2 ml-7">
-          <div className="flex items-center">
-            <div>
-              <h1 className="text-2xl font-bold text-gray-900">
-                Search Results
-              </h1>
-              <p className="text-gray-600">
-                Found {searchData.total} character
-                {searchData.total !== 1 ? 's' : ''} for &quot;
-                {decodedQuery}&quot;
-              </p>
-            </div>
-          </div>
-        </div>
-      </div>
+      <PageHeader 
+        title="Search Results"
+        subtitle={`Found ${searchData.total} character${searchData.total !== 1 ? 's' : ''} for "${decodedQuery}"`}
+      />
 
       {/* Search Results */}
       <div className="max-w-7xl mx-auto pb-2">

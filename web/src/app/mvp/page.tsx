@@ -1,6 +1,7 @@
 import { FormatPlayer } from '@/lib/utils';
 import { query } from '@/lib/db';
 import Link from 'next/link';
+import PageHeader from '@/components/PageHeader';
 
 interface MvpRecord {
   id: number;
@@ -120,20 +121,12 @@ export default async function MvpPage({
   const page = parseInt(pageParam || '1');
   const limit = 50;
   
-  const { records, total, currentPage, totalPages } = await getMvpData(page, limit);
+  const { records, currentPage, totalPages } = await getMvpData(page, limit);
 
   return (
     <div className="min-h-screen bg-gray-100">
       {/* Header */}
-      <div className="bg-white shadow">
-        <div className="max-w-7xl py-2 ml-7">
-          <div className="flex items-center justify-between">
-            <div>
-              <h1 className="text-2xl font-bold text-gray-900">Mob vs Player records</h1>
-            </div>
-          </div>
-        </div>
-      </div>
+      <PageHeader title="Mob vs Player records" />
 
       {/* MVP Table */}
       <div className="max-w-7xl mx-auto pb-8">

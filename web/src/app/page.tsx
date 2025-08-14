@@ -1,6 +1,6 @@
-import Link from 'next/link';
 import { FormatPlayer } from '@/lib/utils';
 import { query } from '@/lib/db';
+import PageHeader from '@/components/PageHeader';
 
 interface Stats {
   mvp_records: number;
@@ -71,22 +71,16 @@ export default async function Home() {
   const stats = await getStats();
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-gray-100">
       {/* Header */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex justify-between items-center my-4">
-          <h1 className="text-3xl font-bold text-gray-900">
-            Solace MUD Stats
-          </h1>
-        </div>
-      </div>
+      <PageHeader title="Solace MUD Stats" />
 
       {/* Top Killers Tables */}
-      <div className="max-w-7xl mx-auto px-0 sm:px-4 lg:px-8 py-2">
+      <div className="max-w-7xl mx-auto px-0 sm:px-4 lg:px-8 pb-2">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-2">
           {/* Top 10 Player Killers */}
           <div className="bg-white shadow">
-            <div className="px-6 py-4 border-b border-gray-200">
+            <div className="px-6 py-2 border-b border-gray-200">
               <h3 className="text-lg font-medium text-gray-900">
                 Top 10 Player Killers
               </h3>
@@ -104,7 +98,7 @@ export default async function Home() {
                   </tr>
                 </thead>
                 <tbody className="bg-white divide-y divide-gray-200">
-                  {stats.top_killers?.map((killer: any, index: number) => (
+                  {stats.top_killers?.map((killer: any) => (
                     <tr key={killer.killer} className="hover:bg-gray-50">
                       <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
                         <FormatPlayer
@@ -135,7 +129,7 @@ export default async function Home() {
 
           {/* Top 10 Monster Killers */}
           <div className="bg-white shadow">
-            <div className="px-6 py-4 border-b border-gray-200">
+            <div className="px-6 py-2 border-b border-gray-200">
               <h3 className="text-lg font-medium text-gray-900">
                 Top 10 Mobs
               </h3>
@@ -153,7 +147,7 @@ export default async function Home() {
                   </tr>
                 </thead>
                 <tbody className="bg-white divide-y divide-gray-200">
-                  {stats.top_monster_killers?.map((mob: any, index: number) => (
+                  {stats.top_monster_killers?.map((mob: any) => (
                     <tr key={mob.killer} className="hover:bg-gray-50">
                       <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
                         <FormatPlayer
