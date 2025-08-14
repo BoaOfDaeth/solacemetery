@@ -61,20 +61,20 @@ export async function GET(request: NextRequest) {
 
       default:
         // Overview stats
-        const [mvpCount] = await query('SELECT COUNT(*) as count FROM MVP');
-        const [pvpCount] = await query('SELECT COUNT(*) as count FROM PVP');
-        const [uniqueKillers] = await query(
+        const mvpCount = await query('SELECT COUNT(*) as count FROM MVP');
+        const pvpCount = await query('SELECT COUNT(*) as count FROM PVP');
+        const uniqueKillers = await query(
           'SELECT COUNT(DISTINCT killer) as count FROM MVP'
         );
-        const [uniqueVictims] = await query(
+        const uniqueVictims = await query(
           'SELECT COUNT(DISTINCT victim) as count FROM MVP'
         );
 
         results = {
-          mvp_records: mvpCount.count,
-          pvp_records: pvpCount.count,
-          unique_killers: uniqueKillers.count,
-          unique_victims: uniqueVictims.count,
+          mvp_records: (mvpCount as any[])[0]?.count || 0,
+          pvp_records: (pvpCount as any[])[0]?.count || 0,
+          unique_killers: (uniqueKillers as any[])[0]?.count || 0,
+          unique_victims: (uniqueVictims as any[])[0]?.count || 0,
         };
     }
 

@@ -2,12 +2,14 @@
 
 import { useState, useEffect } from 'react';
 import { Tab } from '@headlessui/react';
+import Link from 'next/link';
 import {
   ChartBarIcon,
   UserGroupIcon,
   BoltIcon,
   ShieldCheckIcon,
   MagnifyingGlassIcon,
+  UserIcon,
 } from '@heroicons/react/24/outline';
 
 interface MVPRecord {
@@ -41,6 +43,8 @@ export default function Home() {
   const [stats, setStats] = useState<Stats | null>(null);
   const [loading, setLoading] = useState(true);
   const [searchTerm, setSearchTerm] = useState('');
+  const [characterSearch, setCharacterSearch] = useState('');
+  const [showCharacterSearch, setShowCharacterSearch] = useState(false);
 
   useEffect(() => {
     fetchData();
@@ -123,10 +127,80 @@ export default function Home() {
                   onChange={e => setSearchTerm(e.target.value)}
                 />
               </div>
+              <button
+                onClick={() => setShowCharacterSearch(!showCharacterSearch)}
+                className="flex items-center space-x-2 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
+              >
+                <UserIcon className="h-5 w-5" />
+                <span>Character Search</span>
+              </button>
             </div>
           </div>
         </div>
       </div>
+
+      {/* Character Search Modal */}
+      {showCharacterSearch && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+          <div className="bg-white rounded-lg p-6 w-full max-w-md mx-4">
+            <div className="flex justify-between items-center mb-4">
+              <h2 className="text-xl font-semibold text-gray-900">
+                Character Search
+              </h2>
+              <button
+                onClick={() => setShowCharacterSearch(false)}
+                className="text-gray-400 hover:text-gray-600"
+              >
+                <svg
+                  className="h-6 w-6"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M6 18L18 6M6 6l12 12"
+                  />
+                </svg>
+              </button>
+            </div>
+            <div className="mb-4">
+              <input
+                type="text"
+                placeholder="Enter character name..."
+                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                value={characterSearch}
+                onChange={e => setCharacterSearch(e.target.value)}
+                onKeyPress={e => {
+                  if (e.key === 'Enter' && characterSearch.trim()) {
+                    window.location.href = `/character/${encodeURIComponent(characterSearch.trim())}`;
+                  }
+                }}
+              />
+            </div>
+            <div className="flex space-x-3">
+              <button
+                onClick={() => {
+                  if (characterSearch.trim()) {
+                    window.location.href = `/character/${encodeURIComponent(characterSearch.trim())}`;
+                  }
+                }}
+                className="flex-1 bg-blue-600 text-white py-2 px-4 rounded-lg hover:bg-blue-700 transition-colors"
+              >
+                Search Character
+              </button>
+              <button
+                onClick={() => setShowCharacterSearch(false)}
+                className="flex-1 bg-gray-300 text-gray-700 py-2 px-4 rounded-lg hover:bg-gray-400 transition-colors"
+              >
+                Cancel
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
 
       {/* Stats Cards */}
       {stats && (
@@ -255,10 +329,20 @@ export default function Home() {
                             {record.id}
                           </td>
                           <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
-                            {record.killer}
+                            <Link
+                              href={`/character/${encodeURIComponent(record.killer)}`}
+                              className="text-blue-600 hover:text-blue-800 hover:underline"
+                            >
+                              {record.killer}
+                            </Link>
                           </td>
                           <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-                            {record.victim}
+                            <Link
+                              href={`/character/${encodeURIComponent(record.victim)}`}
+                              className="text-blue-600 hover:text-blue-800 hover:underline"
+                            >
+                              {record.victim}
+                            </Link>
                           </td>
                           <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
                             {record.vlevel || '-'}
@@ -314,10 +398,20 @@ export default function Home() {
                             {record.id}
                           </td>
                           <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
-                            {record.killer}
+                            <Link
+                              href={`/character/${encodeURIComponent(record.killer)}`}
+                              className="text-blue-600 hover:text-blue-800 hover:underline"
+                            >
+                              {record.killer}
+                            </Link>
                           </td>
                           <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-                            {record.victim}
+                            <Link
+                              href={`/character/${encodeURIComponent(record.victim)}`}
+                              className="text-blue-600 hover:text-blue-800 hover:underline"
+                            >
+                              {record.victim}
+                            </Link>
                           </td>
                           <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
                             {record.klevel || '-'}
