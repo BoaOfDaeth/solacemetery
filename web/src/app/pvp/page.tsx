@@ -18,7 +18,6 @@ export default function PvpPage() {
   const [pvpData, setPvpData] = useState<PvpRecord[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-  const [searchTerm, setSearchTerm] = useState('');
 
   useEffect(() => {
     const fetchPvpData = async () => {
@@ -39,12 +38,6 @@ export default function PvpPage() {
 
     fetchPvpData();
   }, []);
-
-  const filteredPvpData = pvpData.filter(
-    record =>
-      record.killer.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      record.victim.toLowerCase().includes(searchTerm.toLowerCase())
-  );
 
   if (loading) {
     return (
@@ -92,32 +85,6 @@ export default function PvpPage() {
         </div>
       </div>
 
-      {/* Search */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
-        <div className="bg-white rounded-lg shadow p-6">
-          <div className="flex items-center space-x-4">
-            <div className="flex-1">
-              <label htmlFor="search" className="sr-only">
-                Search PVP records
-              </label>
-              <div className="relative">
-                <input
-                  type="text"
-                  id="search"
-                  placeholder="Search by killer or victim name..."
-                  value={searchTerm}
-                  onChange={e => setSearchTerm(e.target.value)}
-                  className="block w-full pl-4 pr-10 py-2 border border-gray-300 rounded-md leading-5 bg-white placeholder-gray-500 focus:outline-none focus:placeholder-gray-400 focus:ring-1 focus:ring-blue-500 focus:border-blue-500"
-                />
-              </div>
-            </div>
-            <div className="text-sm text-gray-500">
-              {filteredPvpData.length} of {pvpData.length} records
-            </div>
-          </div>
-        </div>
-      </div>
-
       {/* PVP Table */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-8">
         <div className="bg-white rounded-lg shadow">
@@ -126,7 +93,7 @@ export default function PvpPage() {
               PVP Records (Player vs Player)
             </h3>
             <p className="text-sm text-gray-600">
-              Showing {filteredPvpData.length} records
+              Showing {pvpData.length} records
             </p>
           </div>
           <div className="overflow-x-auto">
@@ -142,7 +109,7 @@ export default function PvpPage() {
                 </tr>
               </thead>
               <tbody className="bg-white divide-y divide-gray-200">
-                {filteredPvpData
+                {pvpData
                   .sort((a, b) => (b.klevel || 0) - (a.klevel || 0))
                   .map(record => (
                     <tr key={record.id} className="hover:bg-gray-50">
@@ -179,7 +146,7 @@ export default function PvpPage() {
                       </td>
                     </tr>
                   ))}
-                {filteredPvpData.length === 0 && (
+                {pvpData.length === 0 && (
                   <tr>
                     <td
                       colSpan={2}
