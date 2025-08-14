@@ -105,7 +105,9 @@ export default async function SearchPage({
     notFound();
   }
 
-  const searchData = await getSearchResults(searchQuery);
+  // Decode the search query to handle spaces properly
+  const decodedQuery = decodeURIComponent(searchQuery);
+  const searchData = await getSearchResults(decodedQuery);
 
   if (!searchData) {
     notFound();
@@ -125,7 +127,7 @@ export default async function SearchPage({
               <p className="text-gray-600">
                 Found {searchData.total} character
                 {searchData.total !== 1 ? 's' : ''} for &quot;
-                {searchData.query}&quot;
+                {decodedQuery}&quot;
               </p>
             </div>
           </div>
@@ -171,7 +173,7 @@ export default async function SearchPage({
               No characters found
             </h3>
             <p className="text-gray-600 mb-4">
-              No characters found matching &quot;{searchData.query}&quot;
+              No characters found matching &quot;{decodedQuery}&quot;
             </p>
           </div>
         )}

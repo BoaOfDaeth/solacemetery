@@ -1,3 +1,4 @@
+import Link from 'next/link';
 import { FormatPlayer } from '@/lib/utils';
 import { query } from '@/lib/db';
 import { notFound } from 'next/navigation';
@@ -115,9 +116,14 @@ async function getCharacterData(name: string): Promise<CharacterData | null> {
 export default async function CharacterPage({ 
   params 
 }: { 
-  params: { name: string } 
+  params: Promise<{ name: string }> 
 }) {
-  const characterData = await getCharacterData(params.name);
+  // Await params before accessing its properties
+  const { name } = await params;
+  
+  // Decode the URL parameter to handle spaces properly
+  const decodedName = decodeURIComponent(name);
+  const characterData = await getCharacterData(decodedName);
 
   if (!characterData) {
     notFound();
@@ -129,7 +135,7 @@ export default async function CharacterPage({
         {/* Header */}
         <div className="mb-2">
           <h1 className="text-3xl font-bold text-gray-900">
-            {characterData.character}
+            {decodedName}
           </h1>
           {characterData.characterInfo.race &&
             characterData.characterInfo.class && (

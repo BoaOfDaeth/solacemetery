@@ -59,9 +59,14 @@ async function getMobData(name: string): Promise<MobData | null> {
 export default async function MobPage({ 
   params 
 }: { 
-  params: { name: string } 
+  params: Promise<{ name: string }> 
 }) {
-  const mobData = await getMobData(params.name);
+  // Await params before accessing its properties
+  const { name } = await params;
+  
+  // Decode the URL parameter to handle spaces properly
+  const decodedName = decodeURIComponent(name);
+  const mobData = await getMobData(decodedName);
 
   if (!mobData) {
     notFound();
@@ -73,7 +78,7 @@ export default async function MobPage({
         {/* Header */}
         <div className="mb-2">
           <h1 className="text-3xl font-bold text-gray-900">
-            {mobData.monster}
+            {decodedName}
           </h1>
         </div>
 
