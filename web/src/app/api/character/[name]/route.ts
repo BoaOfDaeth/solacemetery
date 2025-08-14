@@ -54,6 +54,14 @@ export async function GET(
         [characterName]
       );
 
+      // Get character's race and class from their first PVP kill
+      let characterRace = null;
+      let characterClass = null;
+      if ((pvpKills as any[]).length > 0) {
+        characterRace = (pvpKills as any[])[0].krace;
+        characterClass = (pvpKills as any[])[0].kclass;
+      }
+
       // Calculate statistics
       const totalMvpDeaths = (mvpDeaths as any[]).length;
       const totalPvpKills = (pvpKills as any[]).length;
@@ -61,6 +69,10 @@ export async function GET(
 
       const response = {
         character: characterName,
+        characterInfo: {
+          race: characterRace,
+          class: characterClass,
+        },
         statistics: {
           mvp: {
             deaths: totalMvpDeaths,

@@ -5,6 +5,10 @@ import Link from 'next/link';
 
 interface CharacterData {
   character: string;
+  characterInfo: {
+    race: string | null;
+    class: string | null;
+  };
   statistics: {
     mvp: {
       deaths: number;
@@ -132,7 +136,14 @@ export default function CharacterPage({
           <h1 className="text-3xl font-bold text-gray-900">
             {characterData.character}
           </h1>
-          <p className="text-gray-600 mt-2">
+          {characterData.characterInfo.race &&
+            characterData.characterInfo.class && (
+              <p className="text-gray-600 mt-2">
+                {characterData.characterInfo.race}{' '}
+                {characterData.characterInfo.class}
+              </p>
+            )}
+          <p className="text-gray-600 mt-1">
             Character Statistics & Appearances
           </p>
         </div>
@@ -246,42 +257,37 @@ export default function CharacterPage({
                       Victim
                     </th>
                     <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                      K Level
-                    </th>
-                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                      V Level
-                    </th>
-                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                      Race/Class
+                      Killed at Level
                     </th>
                   </tr>
                 </thead>
                 <tbody className="bg-white divide-y divide-gray-200">
-                  {characterData.appearances.pvp.kills.map((kill: any) => (
-                    <tr key={kill.id}>
-                      <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
-                        <Link
-                          href={`/character/${encodeURIComponent(kill.victim)}`}
-                          className="text-blue-600 hover:text-blue-800 hover:underline"
-                        >
-                          {kill.victim}
-                        </Link>
-                      </td>
-                      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                        {kill.klevel}
-                      </td>
-                      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                        {kill.vlevel}
-                      </td>
-                      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                        {kill.krace}/{kill.kclass}
-                      </td>
-                    </tr>
-                  ))}
+                  {characterData.appearances.pvp.kills
+                    .sort((a: any, b: any) => (b.klevel || 0) - (a.klevel || 0))
+                    .map((kill: any) => (
+                      <tr key={kill.id}>
+                        <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
+                          <Link
+                            href={`/character/${encodeURIComponent(kill.victim)}`}
+                            className="text-blue-600 hover:text-blue-800 hover:underline"
+                          >
+                            {kill.victim}
+                          </Link>
+                          {kill.vlevel && (
+                            <span className="text-gray-500 ml-1">
+                              ({kill.vlevel})
+                            </span>
+                          )}
+                        </td>
+                        <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                          {kill.klevel || '-'}
+                        </td>
+                      </tr>
+                    ))}
                   {characterData.appearances.pvp.kills.length === 0 && (
                     <tr>
                       <td
-                        colSpan={4}
+                        colSpan={2}
                         className="px-6 py-4 text-center text-sm text-gray-500"
                       >
                         No PVP kills recorded
@@ -308,42 +314,42 @@ export default function CharacterPage({
                       Killer
                     </th>
                     <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                      K Level
-                    </th>
-                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                      V Level
-                    </th>
-                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                      Race/Class
+                      Killed at Level
                     </th>
                   </tr>
                 </thead>
                 <tbody className="bg-white divide-y divide-gray-200">
-                  {characterData.appearances.pvp.deaths.map((death: any) => (
-                    <tr key={death.id}>
-                      <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
-                        <Link
-                          href={`/character/${encodeURIComponent(death.killer)}`}
-                          className="text-blue-600 hover:text-blue-800 hover:underline"
-                        >
-                          {death.killer}
-                        </Link>
-                      </td>
-                      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                        {death.klevel}
-                      </td>
-                      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                        {death.vlevel}
-                      </td>
-                      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                        {death.krace}/{death.kclass}
-                      </td>
-                    </tr>
-                  ))}
+                  {characterData.appearances.pvp.deaths
+                    .sort((a: any, b: any) => (b.vlevel || 0) - (a.vlevel || 0))
+                    .map((death: any) => (
+                      <tr key={death.id}>
+                        <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
+                          <Link
+                            href={`/character/${encodeURIComponent(death.killer)}`}
+                            className="text-blue-600 hover:text-blue-800 hover:underline"
+                          >
+                            {death.killer}
+                          </Link>
+                          {death.klevel && (
+                            <span className="text-gray-500 ml-1">
+                              ({death.klevel})
+                            </span>
+                          )}
+                          {death.krace && death.kclass && (
+                            <span className="text-gray-500 ml-1">
+                              {death.krace}/{death.kclass}
+                            </span>
+                          )}
+                        </td>
+                        <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                          {death.vlevel || '-'}
+                        </td>
+                      </tr>
+                    ))}
                   {characterData.appearances.pvp.deaths.length === 0 && (
                     <tr>
                       <td
-                        colSpan={4}
+                        colSpan={2}
                         className="px-6 py-4 text-center text-sm text-gray-500"
                       >
                         No PVP deaths recorded
