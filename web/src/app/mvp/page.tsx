@@ -1,5 +1,4 @@
 import { FormatPlayer } from '@/lib/utils';
-import { BoltIcon } from '@heroicons/react/24/outline';
 import { query } from '@/lib/db';
 
 interface MvpRecord {
@@ -34,7 +33,6 @@ export default async function MvpPage() {
       <div className="bg-white shadow">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
           <div className="flex items-center">
-            <BoltIcon className="h-8 w-8 text-red-500 mr-3" />
             <div>
               <h1 className="text-2xl font-bold text-gray-900">MVP Records</h1>
               <p className="text-gray-600">Monster vs Player combat records</p>

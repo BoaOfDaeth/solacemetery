@@ -1,5 +1,4 @@
 import Link from 'next/link';
-import { MagnifyingGlassIcon } from '@heroicons/react/24/outline';
 import { query } from '@/lib/db';
 import { notFound } from 'next/navigation';
 
@@ -119,7 +118,6 @@ export default async function SearchPage({
       <div className="bg-white shadow">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
           <div className="flex items-center">
-            <MagnifyingGlassIcon className="h-8 w-8 text-blue-500 mr-3" />
             <div>
               <h1 className="text-2xl font-bold text-gray-900">
                 Search Results
@@ -168,7 +166,6 @@ export default async function SearchPage({
           </table>
         ) : (
           <div className="text-center py-8">
-            <MagnifyingGlassIcon className="h-12 w-12 text-gray-400 mx-auto mb-4" />
             <h3 className="text-lg font-medium text-gray-900 mb-2">
               No characters found
             </h3>

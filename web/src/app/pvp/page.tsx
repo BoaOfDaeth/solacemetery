@@ -1,5 +1,4 @@
 import { FormatPlayer } from '@/lib/utils';
-import { UserGroupIcon } from '@heroicons/react/24/outline';
 import { query } from '@/lib/db';
 
 interface PvpRecord {
@@ -58,7 +57,6 @@ export default async function PvpPage() {
       <div className="bg-white shadow">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
           <div className="flex items-center">
-            <UserGroupIcon className="h-8 w-8 text-blue-500 mr-3" />
             <div>
               <h1 className="text-2xl font-bold text-gray-900">PVP Records</h1>
               <p className="text-gray-600">Player vs Player combat records</p>

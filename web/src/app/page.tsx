@@ -1,5 +1,4 @@
 import Link from 'next/link';
-import { UserGroupIcon, BoltIcon } from '@heroicons/react/24/outline';
 import { FormatPlayer } from '@/lib/utils';
 import { query } from '@/lib/db';
 
@@ -12,6 +11,10 @@ interface Stats {
     race?: string;
     class?: string;
   }>;
+  top_monster_killers?: Array<{
+    killer: string;
+    kills: number;
+  }>;
 }
 
 async function getStats(): Promise<Stats> {
@@ -21,7 +24,7 @@ async function getStats(): Promise<Stats> {
       'SELECT COUNT(*) as count FROM PVP WHERE killer != victim'
     );
 
-    // Get top 10 killers with their race and class
+    // Get top 10 player killers with their race and class
     const topKillers = await query(`
       SELECT 
         killer,
@@ -35,10 +38,22 @@ async function getStats(): Promise<Stats> {
       LIMIT 10
     `);
 
+    // Get top 10 monster killers
+    const topMonsterKillers = await query(`
+      SELECT 
+        killer,
+        COUNT(*) as kills
+      FROM MVP 
+      GROUP BY killer 
+      ORDER BY kills DESC 
+      LIMIT 10
+    `);
+
     return {
       mvp_records: (mvpCount as any[])[0]?.count || 0,
       pvp_records: (pvpCount as any[])[0]?.count || 0,
       top_killers: topKillers as any[],
+      top_monster_killers: topMonsterKillers as any[],
     };
   } catch (error) {
     console.error('Error fetching stats:', error);
@@ -46,6 +61,7 @@ async function getStats(): Promise<Stats> {
       mvp_records: 0,
       pvp_records: 0,
       top_killers: [],
+      top_monster_killers: [],
     };
   }
 }
@@ -66,53 +82,104 @@ export default async function Home() {
         </div>
       </div>
 
-      {/* Top Killers Table - Moved to top */}
+      {/* Top Killers Tables */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-2">
-        <div className="bg-white shadow">
-          <div className="px-6 py-4 border-b border-gray-200">
-            <h3 className="text-lg font-medium text-gray-900">
-              Top 10 Killers
-            </h3>
-          </div>
-          <div className="overflow-x-auto">
-            <table className="min-w-full divide-y divide-gray-200">
-              <thead className="bg-gray-50">
-                <tr>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                    Player
-                  </th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                    Kills
-                  </th>
-                </tr>
-              </thead>
-              <tbody className="bg-white divide-y divide-gray-200">
-                {stats.top_killers?.map((killer: any, index: number) => (
-                  <tr key={killer.killer} className="hover:bg-gray-50">
-                    <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
-                      <FormatPlayer
-                        name={killer.killer}
-                        race={killer.race}
-                        class={killer.class}
-                      />
-                    </td>
-                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                      {killer.kills}
-                    </td>
-                  </tr>
-                ))}
-                {(!stats.top_killers || stats.top_killers.length === 0) && (
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
+          {/* Top 10 Player Killers */}
+          <div className="bg-white shadow">
+            <div className="px-6 py-4 border-b border-gray-200">
+              <h3 className="text-lg font-medium text-gray-900">
+                Top 10 Player Killers
+              </h3>
+            </div>
+            <div className="overflow-x-auto">
+              <table className="min-w-full divide-y divide-gray-200">
+                <thead className="bg-gray-50">
                   <tr>
-                    <td
-                      colSpan={2}
-                      className="px-6 py-4 text-center text-sm text-gray-500"
-                    >
-                      No killer data available
-                    </td>
+                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                      Player
+                    </th>
+                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                      Kills
+                    </th>
                   </tr>
-                )}
-              </tbody>
-            </table>
+                </thead>
+                <tbody className="bg-white divide-y divide-gray-200">
+                  {stats.top_killers?.map((killer: any, index: number) => (
+                    <tr key={killer.killer} className="hover:bg-gray-50">
+                      <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
+                        <FormatPlayer
+                          name={killer.killer}
+                          race={killer.race}
+                          class={killer.class}
+                        />
+                      </td>
+                      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                        {killer.kills}
+                      </td>
+                    </tr>
+                  ))}
+                  {(!stats.top_killers || stats.top_killers.length === 0) && (
+                    <tr>
+                      <td
+                        colSpan={2}
+                        className="px-6 py-4 text-center text-sm text-gray-500"
+                      >
+                        No killer data available
+                      </td>
+                    </tr>
+                  )}
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          {/* Top 10 Monster Killers */}
+          <div className="bg-white shadow">
+            <div className="px-6 py-4 border-b border-gray-200">
+              <h3 className="text-lg font-medium text-gray-900">
+                Top 10 Monster Killers
+              </h3>
+            </div>
+            <div className="overflow-x-auto">
+              <table className="min-w-full divide-y divide-gray-200">
+                <thead className="bg-gray-50">
+                  <tr>
+                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                      Monster
+                    </th>
+                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                      Kills
+                    </th>
+                  </tr>
+                </thead>
+                <tbody className="bg-white divide-y divide-gray-200">
+                  {stats.top_monster_killers?.map((monster: any, index: number) => (
+                    <tr key={monster.killer} className="hover:bg-gray-50">
+                      <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
+                        <FormatPlayer
+                          name={monster.killer}
+                          linkType="mob"
+                        />
+                      </td>
+                      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                        {monster.kills}
+                      </td>
+                    </tr>
+                  ))}
+                  {(!stats.top_monster_killers || stats.top_monster_killers.length === 0) && (
+                    <tr>
+                      <td
+                        colSpan={2}
+                        className="px-6 py-4 text-center text-sm text-gray-500"
+                      >
+                        No monster killer data available
+                      </td>
+                    </tr>
+                  )}
+                </tbody>
+              </table>
+            </div>
           </div>
         </div>
       </div>
@@ -122,8 +189,7 @@ export default async function Home() {
         <div className="grid grid-cols-1 gap-6">
           <div className="bg-white shadow p-6">
             <div className="flex items-center">
-              <UserGroupIcon className="h-8 w-8 text-blue-500" />
-              <div className="ml-4">
+              <div>
                 <p className="text-sm font-medium text-gray-600">
                   PVP Records
                 </p>
