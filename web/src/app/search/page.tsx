@@ -4,7 +4,8 @@ import { notFound } from 'next/navigation';
 import PageHeader from '@/components/PageHeader';
 
 interface SearchResult {
-  character_name: string;
+  name: string;
+  type: 'character' | 'monster';
   source: string;
 }
 
@@ -24,40 +25,48 @@ async function getSearchResults(searchQuery: string): Promise<SearchData | null>
 
     // Search for characters in PVP table (as killers)
     const pvpKillers = await query(`
-      SELECT DISTINCT killer as character_name, 'pvp_killer' as source
+      SELECT DISTINCT killer as name, 'pvp_killer' as source
       FROM PVP 
       WHERE killer LIKE ? AND killer != victim
     `, [queryParam]);
 
     // Search for characters in PVP table (as victims)
     const pvpVictims = await query(`
-      SELECT DISTINCT victim as character_name, 'pvp_victim' as source
+      SELECT DISTINCT victim as name, 'pvp_victim' as source
       FROM PVP 
       WHERE victim LIKE ?
     `, [queryParam]);
 
     // Search for characters in MVP table (as victims)
     const mvpVictims = await query(`
-      SELECT DISTINCT victim as character_name, 'mvp_victim' as source
+      SELECT DISTINCT victim as name, 'mvp_victim' as source
       FROM MVP 
       WHERE victim LIKE ?
     `, [queryParam]);
 
+    // Search for monsters in MVP table (as killers)
+    const mvpKillers = await query(`
+      SELECT DISTINCT killer as name, 'mvp_killer' as source
+      FROM MVP 
+      WHERE killer LIKE ?
+    `, [queryParam]);
+
     // Combine all results and remove duplicates
     const allResults = [
-      ...(pvpKillers as any[]),
-      ...(pvpVictims as any[]),
-      ...(mvpVictims as any[])
+      ...(pvpKillers as any[]).map(r => ({ ...r, type: 'character' as const })),
+      ...(pvpVictims as any[]).map(r => ({ ...r, type: 'character' as const })),
+      ...(mvpVictims as any[]).map(r => ({ ...r, type: 'character' as const })),
+      ...(mvpKillers as any[]).map(r => ({ ...r, type: 'monster' as const }))
     ];
 
-    // Remove duplicates based on character_name
+    // Remove duplicates based on name and type
     const uniqueResults = allResults.filter((result, index, self) =>
-      index === self.findIndex(r => r.character_name === result.character_name)
+      index === self.findIndex(r => r.name === result.name && r.type === result.type)
     );
 
-    // Group sources for each character
+    // Group sources for each character/monster
     const groupedResults = uniqueResults.reduce((acc, result) => {
-      const existing = acc.find((r: SearchResult) => r.character_name === result.character_name);
+      const existing = acc.find((r: SearchResult) => r.name === result.name && r.type === result.type);
       if (existing) {
         existing.source += `,${result.source}`;
       } else {
@@ -77,22 +86,7 @@ async function getSearchResults(searchQuery: string): Promise<SearchData | null>
   }
 }
 
-function getSourceLabel(source: string) {
-  const sources = source.split(',');
-  const labels = sources.map(s => {
-    switch (s) {
-      case 'mvp_victim':
-        return 'MVP Victim';
-      case 'pvp_killer':
-        return 'PVP Killer';
-      case 'pvp_victim':
-        return 'PVP Victim';
-      default:
-        return s;
-    }
-  });
-  return labels.join(', ');
-}
+
 
 export default async function SearchPage({
   searchParams,
@@ -119,7 +113,7 @@ export default async function SearchPage({
       {/* Header */}
       <PageHeader 
         title="Search Results"
-        subtitle={`Found ${searchData.total} character${searchData.total !== 1 ? 's' : ''} for "${decodedQuery}"`}
+        subtitle={`Found ${searchData.total} result${searchData.total !== 1 ? 's' : ''} for "${decodedQuery}"`}
       />
 
       {/* Search Results */}
@@ -129,10 +123,10 @@ export default async function SearchPage({
             <thead className="bg-gray-50">
               <tr>
                 <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                  Character Name
+                  Name
                 </th>
                 <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                  Appears As
+                  Type
                 </th>
               </tr>
             </thead>
@@ -141,14 +135,23 @@ export default async function SearchPage({
                 <tr key={index} className="hover:bg-gray-50">
                   <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
                     <Link
-                      href={`/character/${encodeURIComponent(result.character_name)}`}
+                      href={result.type === 'character' 
+                        ? `/character/${encodeURIComponent(result.name)}`
+                        : `/mob/${encodeURIComponent(result.name)}`
+                      }
                       className="text-blue-600 hover:text-blue-800 hover:underline"
                     >
-                      {result.character_name}
+                      {result.name}
                     </Link>
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                    {getSourceLabel(result.source)}
+                    <span className={`inline-flex px-2 py-1 text-xs font-semibold rounded-full ${
+                      result.type === 'character' 
+                        ? 'bg-blue-100 text-blue-800' 
+                        : 'bg-red-100 text-red-800'
+                    }`}>
+                      {result.type === 'character' ? 'Character' : 'Monster'}
+                    </span>
                   </td>
                 </tr>
               ))}
@@ -157,10 +160,10 @@ export default async function SearchPage({
         ) : (
           <div className="text-center py-8">
             <h3 className="text-lg font-medium text-gray-900 mb-2">
-              No characters found
+              No results found
             </h3>
             <p className="text-gray-600 mb-4">
-              No characters found matching &quot;{decodedQuery}&quot;
+              No characters or monsters found matching &quot;{decodedQuery}&quot;
             </p>
           </div>
         )}
