@@ -111,9 +111,6 @@ export default async function MobPage({
                   <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                     Victim
                   </th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                    Level
-                  </th>
                 </tr>
               </thead>
               <tbody className="bg-white divide-y divide-gray-200">
@@ -124,9 +121,6 @@ export default async function MobPage({
                         name={kill.victim}
                         level={kill.vlevel}
                       />
-                    </td>
-                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                      {kill.vlevel || '-'}
                     </td>
                   </tr>
                 ))}
