@@ -157,16 +157,7 @@ export default async function SearchPage({
               ))}
             </tbody>
           </table>
-        ) : (
-          <div className="text-center py-8">
-            <h3 className="text-lg font-medium text-gray-900 mb-2">
-              No results found
-            </h3>
-            <p className="text-gray-600 mb-4">
-              No characters or monsters found matching &quot;{decodedQuery}&quot;
-            </p>
-          </div>
-        )}
+        ) : null}
       </div>
     </div>
   );
