@@ -17,15 +17,11 @@ WORKDIR /app
 COPY --from=deps /app/node_modules ./node_modules
 COPY . .
 
-# Accept build arguments for this stage
-ARG DATABASE_URL
-
 # Next.js collects completely anonymous telemetry data about general usage.
 # Learn more here: https://nextjs.org/telemetry
 ENV NEXT_TELEMETRY_DISABLED=1
 
 # Set build-time environment variables
-ENV DATABASE_URL=${DATABASE_URL}
 ENV NODE_ENV=production
 
 RUN npm run build
@@ -34,12 +30,8 @@ RUN npm run build
 FROM base AS runner
 WORKDIR /app
 
-# Accept build arguments for this stage
-ARG DATABASE_URL
-
 ENV NODE_ENV=production
 ENV NEXT_TELEMETRY_DISABLED=1
-ENV DATABASE_URL=${DATABASE_URL}
 ENV PORT=3000
 ENV HOSTNAME="0.0.0.0"
 

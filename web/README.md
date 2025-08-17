@@ -1,60 +1,68 @@
-# Solacemetery Web App
+# Solacemetery Web Application
 
-## Docker Build
+A Next.js web application for the Solace MUD cemetery project.
 
-### Manual Docker Build
+### Running in production
 
-Build the Docker image with DATABASE_URL manually:
+To start the web application container:
 
-```bash
-docker build --build-arg DATABASE_URL="mysql://username:password@host:port/database" -t solacemetery .
-```
+1. **Navigate to the web directory:**
+   ```bash
+   cd web
+   ```
 
-### Using Makefile
+2. **Create environment file (pass production database credentials):**
+   ```bash
+   echo 'DATABASE_URL=mysql://solacemetery_user:solacemetery_password@host.docker.internal:3306/solace_db' > .env.prod
+   ```
 
-The Makefile automatically reads DATABASE_URL from `.env.local`:
+3. **Start the container:**
+   ```bash
+   make run
+   ```
 
-1. Create `.env.local` file:
-```bash
-echo "DATABASE_URL=mysql://username:password@host:port/database" > .env.local
-```
+Once the container is running, it is available on port 3000 by default.
 
-2. Build using make:
-```bash
-make build
-```
+## Local Development
 
-### Example DATABASE_URL formats
+### Database Setup
 
-```bash
-# Local development (database on host machine)
-DATABASE_URL=mysql://solacemetry_user:rootpassword@host.docker.internal:3306/solace_db
+To develop locally, you'll need to set up the MySQL database:
 
-# Container-to-host connection alternatives:
-# Option 1: host.docker.internal (macOS/Windows)
-DATABASE_URL=mysql://solacemetry_user:rootpassword@host.docker.internal:3306/solace_db
+1. **Navigate to the mysql directory:**
+   ```bash
+   cd mysql
+   ```
 
-# Option 2: Host IP address (Linux)
-DATABASE_URL=mysql://solacemetry_user:rootpassword@172.17.0.1:3306/solace_db
+2. **Add your database schema:**
+   - Place your `02-create-tables.sql` dump file in the `init/` directory
+   - This will automatically run when the database container starts
 
-# Option 3: Host network mode
-docker run --network host solacemetery
-```
+3. **Start the database container:**
+   ```bash
+   docker-compose up -d
+   ```
 
-### Running the Container
+### Running the Application Locally
 
-```bash
-# Standard run (use host.docker.internal in DATABASE_URL)
-docker run -p 3000:3000 solacemetery
+1. **Navigate back to the web directory:**
+   ```bash
+   cd web
+   ```
 
-# With host network (use localhost in DATABASE_URL)
-docker run --network host solacemetery
-```
+2. **Install dependencies:**
+   ```bash
+   npm install
+   ```
 
-### Available Make Commands
+3. **Create environment file for local development:**
+   ```bash
+   echo 'DATABASE_URL=mysql://solacemetery_user:solacemetery_password@localhost:3306/solace_db' > .env.local
+   ```
 
-```bash
-make help    # Show available commands
-make build   # Build Docker image (requires .env.local)
-make clean   # Remove Docker image
-```
+4. **Start the development server:**
+   ```bash
+   npm run dev
+   ```
+
+The application will be available at `http://localhost:3000` with hot reloading enabled.

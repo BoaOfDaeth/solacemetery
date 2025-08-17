@@ -1,4 +1,5 @@
 # Local development MySQL database
+name: solacemetery
 services:
   mysql:
     image: mysql:8.0.42
@@ -14,8 +15,8 @@ services:
       - "3306:3306"
     volumes:
       - mysql_data:/var/lib/mysql
-      - ./mysql/init:/docker-entrypoint-initdb.d
-      - ./mysql/conf:/etc/mysql/conf.d
+      - ./init:/docker-entrypoint-initdb.d
+      - ./conf:/etc/mysql/conf.d
     networks:
       - solacemetery_network
     command: --default-authentication-plugin=mysql_native_password
