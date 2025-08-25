@@ -2,6 +2,12 @@ import { FormatPlayer } from '@/lib/utils';
 import { query } from '@/lib/db';
 import PageHeader from '@/components/PageHeader';
 
+// Force dynamic rendering - this page should not be statically generated
+export const dynamic = 'force-dynamic';
+
+// Disable caching for this page
+export const fetchCache = 'force-no-store';
+
 interface Stats {
   mvp_records: number;
   pvp_records: number;

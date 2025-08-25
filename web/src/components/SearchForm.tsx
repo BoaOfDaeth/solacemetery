@@ -17,7 +17,8 @@ export default function SearchForm() {
           type="text"
           name="search"
           placeholder="Search..."
-          className="pl-4 pr-4 py-2 w-40 sm:w-48 md:w-64 border border-gray-300 text-sm bg-white text-gray-900 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+          className="pl-4 pr-4 py-2 w-40 sm:w-48 md:w-64 border border-gray-300 text-base bg-white text-gray-900 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent rounded-md"
+          style={{ fontSize: '16px' }} // Prevent zoom on iPhone
         />
       </div>
     </form>

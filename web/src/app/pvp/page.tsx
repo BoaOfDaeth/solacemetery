@@ -151,7 +151,6 @@ export default async function PvpPage({
             </thead>
             <tbody className="bg-white divide-y divide-gray-200">
               {pvpRecords
-                .sort((a, b) => (b.klevel || 0) - (a.klevel || 0))
                 .map(record => (
                   <tr key={record.id} className="hover:bg-gray-50">
                     <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">

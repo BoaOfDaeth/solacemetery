@@ -14,15 +14,11 @@ function createPool(): mysql.Pool {
     if (process.env.NODE_ENV === 'production') {
       throw new Error('DATABASE_URL environment variable is required in production');
     } else {
-      console.warn('DATABASE_URL not set - using local development defaults');
       // For local development, create a default connection string
       const defaultUrl = 'mysql://solacemetry_user:rootpassword@localhost:3306/solace_db';
-      console.log('Using default local connection:', defaultUrl);
       pool = mysql.createPool(defaultUrl);
     }
   } else {
-    console.log('Using DATABASE_URL connection string');
-    console.log('Database URL format:', DATABASE_URL.substring(0, 20) + '...');
     pool = mysql.createPool(DATABASE_URL);
   }
 
@@ -43,9 +39,6 @@ export async function query(sql: string, params?: unknown[]) {
     const [results] = await connectionPool.execute(sql, params);
     return results;
   } catch (error) {
-    console.error('Database query error:', error);
-    console.error('SQL:', sql);
-    console.error('Params:', params);
     throw error;
   }
 }
@@ -54,10 +47,8 @@ export async function getConnection() {
   const connectionPool = createPool();
   try {
     const connection = await connectionPool.getConnection();
-    console.log('Database connection successful');
     return connection;
   } catch (error) {
-    console.error('Database connection failed:', error);
     throw error;
   }
 }

@@ -2,6 +2,12 @@ import { FormatPlayer } from '@/lib/utils';
 import { query } from '@/lib/db';
 import { notFound } from 'next/navigation';
 
+// Force dynamic rendering - this page should not be statically generated
+export const dynamic = 'force-dynamic';
+
+// Disable caching for this page
+export const fetchCache = 'force-no-store';
+
 interface MobData {
   monster: string;
   statistics: {
@@ -68,13 +74,13 @@ export default async function MobPage({
       <div className="max-w-7xl mx-auto px-0 sm:px-6 lg:px-8">
         {/* Header */}
         <div className="mb-2 text-center sm:text-left">
-          <h1 className="text-2xl sm:text-3xl font-bold text-gray-900">
+          <h1 className="text-xl sm:text-2xl lg:text-3xl font-bold text-gray-900 px-4 sm:px-0 break-words">
             {decodedName}
           </h1>
         </div>
 
         {/* Statistics Cards */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-2 mb-2">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-2 mb-2 px-4 sm:px-0">
           <div className="bg-white shadow p-4">
             <h3 className="text-lg font-semibold text-gray-900 mb-2">
               Total Kills
@@ -95,8 +101,8 @@ export default async function MobPage({
         </div>
 
         {/* Victim List */}
-        <div className="bg-white shadow">
-          <div className="px-6 py-4 border-b border-gray-200">
+        <div className="bg-white shadow overflow-hidden">
+          <div className="px-4 sm:px-6 py-4 border-b border-gray-200">
             <h2 className="text-xl font-semibold text-gray-900">
               Victim List ({mobData.statistics.totalKills})
             </h2>
@@ -108,7 +114,7 @@ export default async function MobPage({
             <table className="min-w-full divide-y divide-gray-200">
               <thead className="bg-gray-50">
                 <tr>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  <th className="px-3 sm:px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                     Victim
                   </th>
                 </tr>
@@ -116,10 +122,12 @@ export default async function MobPage({
               <tbody className="bg-white divide-y divide-gray-200">
                 {mobData.kills.map((kill: any) => (
                   <tr key={kill.id} className="hover:bg-gray-50">
-                    <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
+                    <td className="px-3 sm:px-6 py-4 text-sm font-medium text-gray-900 min-w-0">
                       <FormatPlayer
                         name={kill.victim}
                         level={kill.vlevel}
+                        truncate={true}
+                        maxLength={30}
                       />
                     </td>
                   </tr>
@@ -127,8 +135,8 @@ export default async function MobPage({
                 {mobData.kills.length === 0 && (
                   <tr>
                     <td
-                      colSpan={2}
-                      className="px-6 py-4 text-center text-sm text-gray-500"
+                      colSpan={1}
+                      className="px-3 sm:px-6 py-4 text-center text-sm text-gray-500"
                     >
                       No victims recorded
                     </td>

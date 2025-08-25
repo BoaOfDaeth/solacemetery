@@ -5,7 +5,7 @@ interface PageHeaderProps {
 
 export default function PageHeader({ title, subtitle }: PageHeaderProps) {
   return (
-    <div className="flex flex-col items-center justify-center py-2 ml-7 mb-2">
+    <div className="flex flex-col items-center justify-center py-2 mb-2">
       <h1 className="text-2xl font-bold text-gray-900 text-center">{title}</h1>
       {subtitle && <p className="text-gray-600 mt-1 text-center">{subtitle}</p>}
     </div>

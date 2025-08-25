@@ -3,6 +3,12 @@ import { query } from '@/lib/db';
 import Link from 'next/link';
 import PageHeader from '@/components/PageHeader';
 
+// Force dynamic rendering - this page should not be statically generated
+export const dynamic = 'force-dynamic';
+
+// Disable caching for this page
+export const fetchCache = 'force-no-store';
+
 interface MvpRecord {
   id: number;
   killer: string;
@@ -130,49 +136,54 @@ export default async function MvpPage({
 
       {/* MVP Table */}
       <div className="max-w-7xl mx-auto pb-8">
-        <div className="bg-white shadow">
-          <table className="min-w-full divide-y divide-gray-200">
-            <thead className="bg-gray-50">
-              <tr>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                  Mob
-                </th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                  Victim
-                </th>
-              </tr>
-            </thead>
-            <tbody className="bg-white divide-y divide-gray-200">
-              {records
-                .sort((a, b) => (b.vlevel || 0) - (a.vlevel || 0))
-                .map(record => (
-                  <tr key={record.id} className="hover:bg-gray-50">
-                    <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
-                      <FormatPlayer
-                        name={record.killer}
-                        linkType="mob"
-                      />
-                    </td>
-                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                      <FormatPlayer
-                        name={record.victim}
-                        level={record.vlevel}
-                      />
+        <div className="bg-white shadow overflow-hidden">
+          <div className="overflow-x-auto">
+            <table className="min-w-full divide-y divide-gray-200">
+              <thead className="bg-gray-50">
+                <tr>
+                  <th className="px-3 sm:px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                    Mob
+                  </th>
+                  <th className="px-3 sm:px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                    Victim
+                  </th>
+                </tr>
+              </thead>
+              <tbody className="bg-white divide-y divide-gray-200">
+                {records
+                  .map(record => (
+                    <tr key={record.id} className="hover:bg-gray-50">
+                      <td className="px-3 sm:px-6 py-4 text-sm font-medium text-gray-900 min-w-0">
+                        <FormatPlayer
+                          name={record.killer}
+                          linkType="mob"
+                          truncate={true}
+                          maxLength={25}
+                        />
+                      </td>
+                      <td className="px-3 sm:px-6 py-4 text-sm text-gray-500 min-w-0">
+                        <FormatPlayer
+                          name={record.victim}
+                          level={record.vlevel}
+                          truncate={true}
+                          maxLength={20}
+                        />
+                      </td>
+                    </tr>
+                  ))}
+                {records.length === 0 && (
+                  <tr>
+                    <td
+                      colSpan={2}
+                      className="px-3 sm:px-6 py-4 text-center text-sm text-gray-500"
+                    >
+                      No MVP records found
                     </td>
                   </tr>
-                ))}
-              {records.length === 0 && (
-                <tr>
-                  <td
-                    colSpan={2}
-                    className="px-6 py-4 text-center text-sm text-gray-500"
-                  >
-                    No MVP records found
-                  </td>
-                </tr>
-              )}
-            </tbody>
-          </table>
+                )}
+              </tbody>
+            </table>
+          </div>
           
           {totalPages > 1 && (
             <Pagination currentPage={currentPage} totalPages={totalPages} />
