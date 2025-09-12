@@ -213,6 +213,24 @@ export default async function Home() {
           </div>
         </div>
       </div>
+
+      {/* Server Time */}
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-8">
+        <div className="text-center">
+          <p className="text-sm text-gray-500 opacity-0">
+            Server Time: {new Date().toLocaleString('en-US', {
+              weekday: 'short',
+              month: 'short',
+              day: '2-digit',
+              hour: '2-digit',
+              minute: '2-digit',
+              second: '2-digit',
+              year: 'numeric',
+              hour12: false
+            }).replace(/,/g, '')}
+          </p>
+        </div>
+      </div>
     </div>
   );
 }

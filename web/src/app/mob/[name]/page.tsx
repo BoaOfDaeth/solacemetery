@@ -22,7 +22,7 @@ async function getMobData(name: string): Promise<MobData | null> {
   try {
     // Get all kills by this monster
     const kills = await query(`
-      SELECT id, victim, vlevel
+      SELECT id, victim, vlevel, time
       FROM MVP 
       WHERE killer = ?
       ORDER BY id DESC
@@ -123,12 +123,19 @@ export default async function MobPage({
                 {mobData.kills.map((kill: any) => (
                   <tr key={kill.id} className="hover:bg-gray-50">
                     <td className="px-3 sm:px-6 py-4 text-sm font-medium text-gray-900 min-w-0">
-                      <FormatPlayer
-                        name={kill.victim}
-                        level={kill.vlevel}
-                        truncate={true}
-                        maxLength={30}
-                      />
+                      <div className="flex flex-col">
+                        <FormatPlayer
+                          name={kill.victim}
+                          level={kill.vlevel}
+                          truncate={true}
+                          maxLength={30}
+                        />
+                        {kill.time && (
+                          <div className="text-xs text-gray-400 mt-0.5">
+                            {kill.time}
+                          </div>
+                        )}
+                      </div>
                     </td>
                   </tr>
                 ))}

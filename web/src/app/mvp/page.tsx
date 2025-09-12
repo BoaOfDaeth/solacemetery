@@ -14,6 +14,7 @@ interface MvpRecord {
   killer: string;
   victim: string;
   vlevel?: number;
+  time?: string | null;
 }
 
 interface MvpData {
@@ -39,7 +40,7 @@ async function getMvpData(page: number = 1, limit: number = 50): Promise<MvpData
 
     // Get paginated data
     const mvpData = await query(`
-      SELECT id, killer, victim, vlevel
+      SELECT id, killer, victim, vlevel, time
       FROM MVP 
       ORDER BY id DESC
       LIMIT ${limit} OFFSET ${offset}
@@ -154,12 +155,19 @@ export default async function MvpPage({
                   .map(record => (
                     <tr key={record.id} className="hover:bg-gray-50">
                       <td className="px-3 sm:px-6 py-4 text-sm font-medium text-gray-900 min-w-0">
-                        <FormatPlayer
-                          name={record.killer}
-                          linkType="mob"
-                          truncate={true}
-                          maxLength={25}
-                        />
+                        <div className="flex flex-col">
+                          <FormatPlayer
+                            name={record.killer}
+                            linkType="mob"
+                            truncate={true}
+                            maxLength={25}
+                          />
+                          {record.time && (
+                            <div className="text-xs text-gray-400 mt-0.5">
+                              {record.time}
+                            </div>
+                          )}
+                        </div>
                       </td>
                       <td className="px-3 sm:px-6 py-4 text-sm text-gray-500 min-w-0">
                         <FormatPlayer

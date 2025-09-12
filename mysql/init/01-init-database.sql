@@ -8,8 +8,8 @@ CREATE DATABASE IF NOT EXISTS `solace_db` CHARACTER SET utf8mb4 COLLATE utf8mb4_
 USE `solace_db`;
 
 -- Create additional user with specific permissions
-CREATE USER IF NOT EXISTS 'solacemetry_user'@'%' IDENTIFIED BY 'solacemetry_password';
-GRANT ALL PRIVILEGES ON `solace_db`.* TO 'solacemetry_user'@'%';
+CREATE USER IF NOT EXISTS 'solacemetery_user'@'%' IDENTIFIED BY 'solacemetery_password';
+GRANT ALL PRIVILEGES ON `solace_db`.* TO 'solacemetery_user'@'%';
 
 -- Flush privileges to apply changes
 FLUSH PRIVILEGES;

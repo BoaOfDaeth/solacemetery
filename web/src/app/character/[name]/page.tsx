@@ -40,7 +40,7 @@ async function getCharacterData(name: string): Promise<CharacterData | null> {
 
     // Get PVP kills
     const pvpKills = await query(`
-      SELECT id, victim, vlevel, klevel
+      SELECT id, victim, vlevel, klevel, time
       FROM PVP 
       WHERE killer = ? AND killer != victim
       ORDER BY id DESC
@@ -48,7 +48,7 @@ async function getCharacterData(name: string): Promise<CharacterData | null> {
 
     // Get PVP deaths
     const pvpDeaths = await query(`
-      SELECT id, killer, klevel, krace, kclass, vlevel
+      SELECT id, killer, klevel, krace, kclass, vlevel, time
       FROM PVP 
       WHERE victim = ? AND killer != victim
       ORDER BY id DESC
@@ -56,7 +56,7 @@ async function getCharacterData(name: string): Promise<CharacterData | null> {
 
     // Get MVP deaths
     const mvpDeaths = await query(`
-      SELECT id, killer, vlevel
+      SELECT id, killer, vlevel, time
       FROM MVP 
       WHERE victim = ?
       ORDER BY id DESC
@@ -157,11 +157,18 @@ export default async function CharacterPage({
                 <tbody className="bg-white divide-y divide-gray-200">
                   {characterData.appearances.pvp.kills.map((kill: any) => (
                     <tr key={kill.id}>
-                      <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
-                        <FormatPlayer
-                          name={kill.victim}
-                          level={kill.vlevel}
-                        />
+                      <td className="px-6 py-4 text-sm font-medium text-gray-900">
+                        <div className="flex flex-col">
+                          <FormatPlayer
+                            name={kill.victim}
+                            level={kill.vlevel}
+                          />
+                          {kill.time && (
+                            <div className="text-xs text-gray-400 mt-0.5">
+                              {kill.time}
+                            </div>
+                          )}
+                        </div>
                       </td>
                       <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                         {kill.klevel || '-'}
@@ -205,13 +212,20 @@ export default async function CharacterPage({
                 <tbody className="bg-white divide-y divide-gray-200">
                   {characterData.appearances.pvp.deaths.map((death: any) => (
                     <tr key={death.id}>
-                      <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
-                        <FormatPlayer
-                          name={death.killer}
-                          level={death.klevel}
-                          race={death.krace}
-                          class={death.kclass}
-                        />
+                      <td className="px-6 py-4 text-sm font-medium text-gray-900">
+                        <div className="flex flex-col">
+                          <FormatPlayer
+                            name={death.killer}
+                            level={death.klevel}
+                            race={death.krace}
+                            class={death.kclass}
+                          />
+                          {death.time && (
+                            <div className="text-xs text-gray-400 mt-0.5">
+                              {death.time}
+                            </div>
+                          )}
+                        </div>
                       </td>
                       <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                         {death.vlevel || '-'}
@@ -258,11 +272,18 @@ export default async function CharacterPage({
                 <tbody className="bg-white divide-y divide-gray-200">
                   {characterData.appearances.mvp.deaths.map((death: any) => (
                     <tr key={death.id}>
-                      <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
-                        <FormatPlayer
-                          name={death.killer}
-                          linkType="mob"
-                        />
+                      <td className="px-6 py-4 text-sm font-medium text-gray-900">
+                        <div className="flex flex-col">
+                          <FormatPlayer
+                            name={death.killer}
+                            linkType="mob"
+                          />
+                          {death.time && (
+                            <div className="text-xs text-gray-400 mt-0.5">
+                              {death.time}
+                            </div>
+                          )}
+                        </div>
                       </td>
                       <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                         {death.vlevel}

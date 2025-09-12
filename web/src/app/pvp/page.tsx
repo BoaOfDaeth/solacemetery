@@ -11,6 +11,7 @@ interface PvpRecord {
   vlevel?: number;
   krace?: string;
   kclass?: string;
+  time?: string | null;
 }
 
 
@@ -39,7 +40,7 @@ async function getPvpData(page: number = 1, limit: number = 50): Promise<PvpData
 
     // Get paginated PVP data
     const pvpData = await query(`
-      SELECT id, killer, victim, klevel, vlevel, krace, kclass
+      SELECT id, killer, victim, klevel, vlevel, krace, kclass, time
       FROM PVP 
       WHERE killer != victim
       ORDER BY id DESC
@@ -153,15 +154,22 @@ export default async function PvpPage({
               {pvpRecords
                 .map(record => (
                   <tr key={record.id} className="hover:bg-gray-50">
-                    <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
-                      <FormatPlayer
-                        name={record.killer}
-                        level={record.klevel}
-                        race={record.krace}
-                        class={record.kclass}
-                      />
+                    <td className="px-6 py-4 text-sm font-medium text-gray-900">
+                      <div className="flex flex-col">
+                        <FormatPlayer
+                          name={record.killer}
+                          level={record.klevel}
+                          race={record.krace}
+                          class={record.kclass}
+                        />
+                        {record.time && (
+                          <div className="text-xs text-gray-400 mt-0.5">
+                            {record.time}
+                          </div>
+                        )}
+                      </div>
                     </td>
-                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                    <td className="px-6 py-4 text-sm text-gray-500">
                       <FormatPlayer
                         name={record.victim}
                         level={record.vlevel}
