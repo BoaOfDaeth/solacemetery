@@ -1,6 +1,7 @@
 import { FormatPlayer, getDataCutoffDate, getTimeFilterClauseWithAnd } from '@/lib/utils';
 import { query } from '@/lib/db';
 import { notFound } from 'next/navigation';
+import ModernTable from '@/components/ModernTable';
 
 interface CharacterData {
   character: string;
@@ -142,174 +143,105 @@ export default async function CharacterPage({
         {/* PVP Section */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-2">
           {/* PVP Kills */}
-          <div className="bg-card border border-border rounded-xl shadow-sm overflow-hidden">
-            <div className="px-6 py-4 border-b border-border bg-muted/30">
-              <h2 className="text-lg font-semibold text-foreground">
-                PVP Kills ({characterData.statistics.pvp.kills})
-              </h2>
-            </div>
-            <div className="overflow-x-auto">
-              <table className="min-w-full divide-y divide-border">
-                <thead className="bg-muted/50">
-                  <tr>
-                    <th className="px-6 py-3 text-left text-xs font-medium text-muted-foreground uppercase tracking-wider">
-                      Victim
-                    </th>
-                    <th className="px-6 py-3 text-left text-xs font-medium text-muted-foreground uppercase tracking-wider">
-                      Killed at Level
-                    </th>
-                  </tr>
-                </thead>
-                <tbody className="bg-card divide-y divide-border">
-                  {characterData.appearances.pvp.kills.map((kill: any) => (
-                    <tr key={kill.id}>
-                      <td className="px-6 py-4 text-sm font-medium text-foreground">
-                        <div className="flex flex-col">
-                          <FormatPlayer
-                            name={kill.victim}
-                            level={kill.vlevel}
-                          />
-                          {kill.time && (
-                            <div className="text-xs text-muted-foreground mt-0.5">
-                              {kill.time}
-                            </div>
-                          )}
-                        </div>
-                      </td>
-                      <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-muted-foreground">
-                        {kill.klevel || '-'}
-                      </td>
-                    </tr>
-                  ))}
-                  {characterData.appearances.pvp.kills.length === 0 && (
-                    <tr>
-                      <td
-                        colSpan={2}
-                        className="px-6 py-4 text-center text-sm font-medium text-muted-foreground"
-                      >
-                        No PVP kills recorded
-                      </td>
-                    </tr>
-                  )}
-                </tbody>
-              </table>
-            </div>
-          </div>
+          <ModernTable
+            title={`PVP Kills (${characterData.statistics.pvp.kills})`}
+            columns={[
+              { key: 'victim', label: 'Victim' },
+              { key: 'klevel', label: 'Killed at Level' }
+            ]}
+            data={characterData.appearances.pvp.kills}
+            renderCell={(key, value, row) => {
+              if (key === 'victim') {
+                return (
+                  <div className="flex flex-col">
+                    <FormatPlayer
+                      name={row.victim}
+                      level={row.vlevel}
+                    />
+                    {row.time && (
+                      <div className="text-xs text-muted-foreground mt-0.5">
+                        {row.time}
+                      </div>
+                    )}
+                  </div>
+                );
+              }
+              if (key === 'klevel') {
+                return <span className="text-muted-foreground">{row.klevel || '-'}</span>;
+              }
+              return value;
+            }}
+            className="border-0 shadow-none"
+          />
 
           {/* PVP Deaths */}
-          <div className="bg-white shadow">
-            <div className="px-6 py-4 border-b border-gray-200">
-              <h2 className="text-xl font-semibold text-gray-900">
-                PVP Deaths ({characterData.statistics.pvp.deaths})
-              </h2>
-            </div>
-            <div className="overflow-x-auto">
-              <table className="min-w-full divide-y divide-gray-200">
-                <thead className="bg-gray-50">
-                  <tr>
-                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                      Killer
-                    </th>
-                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                      Killed at Level
-                    </th>
-                  </tr>
-                </thead>
-                <tbody className="bg-white divide-y divide-gray-200">
-                  {characterData.appearances.pvp.deaths.map((death: any) => (
-                    <tr key={death.id}>
-                      <td className="px-6 py-4 text-sm font-medium text-gray-900">
-                        <div className="flex flex-col">
-                          <FormatPlayer
-                            name={death.killer}
-                            level={death.klevel}
-                            race={death.krace}
-                            class={death.kclass}
-                          />
-                          {death.time && (
-                            <div className="text-xs text-gray-400 mt-0.5">
-                              {death.time}
-                            </div>
-                          )}
-                        </div>
-                      </td>
-                      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                        {death.vlevel || '-'}
-                      </td>
-                    </tr>
-                  ))}
-                  {characterData.appearances.pvp.deaths.length === 0 && (
-                    <tr>
-                      <td
-                        colSpan={2}
-                        className="px-6 py-4 text-center text-sm font-medium text-muted-foreground"
-                      >
-                        No PVP deaths recorded
-                      </td>
-                    </tr>
-                  )}
-                </tbody>
-              </table>
-            </div>
-          </div>
+          <ModernTable
+            title={`PVP Deaths (${characterData.statistics.pvp.deaths})`}
+            columns={[
+              { key: 'killer', label: 'Killer' },
+              { key: 'vlevel', label: 'Killed at Level' }
+            ]}
+            data={characterData.appearances.pvp.deaths}
+            renderCell={(key, value, row) => {
+              if (key === 'killer') {
+                return (
+                  <div className="flex flex-col">
+                    <FormatPlayer
+                      name={row.killer}
+                      level={row.klevel}
+                      race={row.krace}
+                      class={row.kclass}
+                    />
+                    {row.time && (
+                      <div className="text-xs text-muted-foreground mt-0.5">
+                        {row.time}
+                      </div>
+                    )}
+                  </div>
+                );
+              }
+              if (key === 'vlevel') {
+                return <span className="text-muted-foreground">{row.vlevel || '-'}</span>;
+              }
+              return value;
+            }}
+            className="border-0 shadow-none"
+          />
         </div>
 
         {/* MVP Section */}
         <div className="mt-2">
           {/* MVP Deaths */}
-          <div className="bg-white shadow">
-            <div className="px-6 py-4 border-b border-gray-200">
-              <h2 className="text-xl font-semibold text-gray-900">
-                MVP Deaths ({characterData.statistics.mvp.deaths})
-              </h2>
-            </div>
-            <div className="overflow-x-auto">
-              <table className="min-w-full divide-y divide-gray-200">
-                <thead className="bg-gray-50">
-                  <tr>
-                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                      Killer
-                    </th>
-                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                      Level
-                    </th>
-                  </tr>
-                </thead>
-                <tbody className="bg-white divide-y divide-gray-200">
-                  {characterData.appearances.mvp.deaths.map((death: any) => (
-                    <tr key={death.id}>
-                      <td className="px-6 py-4 text-sm font-medium text-gray-900">
-                        <div className="flex flex-col">
-                          <FormatPlayer
-                            name={death.killer}
-                            linkType="mob"
-                          />
-                          {death.time && (
-                            <div className="text-xs text-gray-400 mt-0.5">
-                              {death.time}
-                            </div>
-                          )}
-                        </div>
-                      </td>
-                      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                        {death.vlevel}
-                      </td>
-                    </tr>
-                  ))}
-                  {characterData.appearances.mvp.deaths.length === 0 && (
-                    <tr>
-                      <td
-                        colSpan={2}
-                        className="px-6 py-4 text-center text-sm font-medium text-muted-foreground"
-                      >
-                        No MVP deaths recorded
-                      </td>
-                    </tr>
-                  )}
-                </tbody>
-              </table>
-            </div>
-          </div>
+          <ModernTable
+            title={`MVP Deaths (${characterData.statistics.mvp.deaths})`}
+            columns={[
+              { key: 'killer', label: 'Killer' },
+              { key: 'vlevel', label: 'Level' }
+            ]}
+            data={characterData.appearances.mvp.deaths}
+            renderCell={(key, value, row) => {
+              if (key === 'killer') {
+                return (
+                  <div className="flex flex-col">
+                    <FormatPlayer
+                      name={row.killer}
+                      linkType="mob"
+                    />
+                    {row.time && (
+                      <div className="text-xs text-muted-foreground mt-0.5">
+                        {row.time}
+                      </div>
+                    )}
+                  </div>
+                );
+              }
+              if (key === 'vlevel') {
+                return <span className="text-muted-foreground">{row.vlevel}</span>;
+              }
+              return value;
+            }}
+            className="border-0 shadow-none"
+          />
         </div>
       </div>
     </div>

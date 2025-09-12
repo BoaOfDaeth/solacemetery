@@ -127,16 +127,9 @@ export default async function SearchPage({
   return (
     <div className="min-h-screen bg-background">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-6 pb-8">
-        {/* Search Results Header */}
-        <div className="mb-4">
-          <p className="text-sm text-muted-foreground">
-            {searchData.total} result{searchData.total !== 1 ? 's' : ''} for "{decodedQuery}"
-          </p>
-        </div>
-        
         <div className="bg-card border border-border rounded-xl shadow-sm overflow-hidden">
           <ModernTable
-        title=""
+        title={`${searchData.total} result${searchData.total !== 1 ? 's' : ''} for "${decodedQuery}"`}
         columns={[
           { key: 'name', label: 'Name' },
           { key: 'type', label: 'Type' }

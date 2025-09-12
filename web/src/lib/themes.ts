@@ -212,7 +212,7 @@ export const themes: Record<string, Theme> = {
   },
 };
 
-export const defaultTheme = themes.dark.name;
+export const defaultTheme = themes.sunset.name;
 
 export function applyTheme(themeName: string) {
   const theme = themes[themeName] || themes[defaultTheme];

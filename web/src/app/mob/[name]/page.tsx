@@ -1,6 +1,7 @@
 import { FormatPlayer, getDataCutoffDate, getTimeFilterClauseWithAnd } from '@/lib/utils';
 import { query } from '@/lib/db';
 import { notFound } from 'next/navigation';
+import ModernTable from '@/components/ModernTable';
 
 // Force dynamic rendering - this page should not be statically generated
 export const dynamic = 'force-dynamic';
@@ -105,58 +106,35 @@ export default async function MobPage({
         </div>
 
         {/* Victim List */}
-        <div className="bg-card border border-border rounded-xl shadow-sm overflow-hidden">
-          <div className="px-4 sm:px-6 py-4 border-b border-border bg-muted/30">
-            <h2 className="text-lg font-semibold text-foreground">
-              Victim List ({mobData.statistics.totalKills})
-            </h2>
-            <p className="text-sm text-muted-foreground mt-1">
-              All characters killed by this monster
-            </p>
-          </div>
-          <div className="overflow-x-auto">
-            <table className="min-w-full divide-y divide-border">
-              <thead className="bg-muted/50">
-                <tr>
-                  <th className="px-3 sm:px-6 py-3 text-left text-xs font-medium text-muted-foreground uppercase tracking-wider">
-                    Victim
-                  </th>
-                </tr>
-              </thead>
-              <tbody className="bg-card divide-y divide-border">
-                {mobData.kills.map((kill: any) => (
-                  <tr key={kill.id} className="hover:bg-accent/50 transition-colors duration-150">
-                    <td className="px-3 sm:px-6 py-4 text-sm font-medium text-foreground min-w-0">
-                      <div className="flex flex-col">
-                        <FormatPlayer
-                          name={kill.victim}
-                          level={kill.vlevel}
-                          truncate={true}
-                          maxLength={30}
-                        />
-                        {kill.time && (
-                          <div className="text-xs text-muted-foreground mt-0.5">
-                            {kill.time}
-                          </div>
-                        )}
-                      </div>
-                    </td>
-                  </tr>
-                ))}
-                {mobData.kills.length === 0 && (
-                  <tr>
-                    <td
-                      colSpan={1}
-                      className="px-3 sm:px-6 py-4 text-center text-sm font-medium text-muted-foreground"
-                    >
-                      No victims recorded
-                    </td>
-                  </tr>
-                )}
-              </tbody>
-            </table>
-          </div>
-        </div>
+        <ModernTable
+          title={`Victim List (${mobData.statistics.totalKills})`}
+          description="All characters killed by this monster"
+          columns={[
+            { key: 'victim', label: 'Victim' }
+          ]}
+          data={mobData.kills}
+          renderCell={(key, value, row) => {
+            if (key === 'victim') {
+              return (
+                <div className="flex flex-col">
+                  <FormatPlayer
+                    name={row.victim}
+                    level={row.vlevel}
+                    truncate={true}
+                    maxLength={30}
+                  />
+                  {row.time && (
+                    <div className="text-xs text-muted-foreground mt-0.5">
+                      {row.time}
+                    </div>
+                  )}
+                </div>
+              );
+            }
+            return value;
+          }}
+          className="border-0 shadow-none"
+        />
       </div>
     </div>
   );

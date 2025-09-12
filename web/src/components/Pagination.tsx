@@ -50,7 +50,7 @@ export default function Pagination({ currentPage, totalPages, basePath = '' }: P
   };
 
   return (
-    <div className="bg-card px-4 py-3 flex items-center justify-between border-t border-border sm:px-6">
+    <div className="flex items-center justify-between px-4 py-3 sm:px-6">
       <div className="flex-1 flex justify-between sm:hidden">
         {currentPage > 1 ? (
           <Link
@@ -80,16 +80,16 @@ export default function Pagination({ currentPage, totalPages, basePath = '' }: P
       <div className="hidden sm:flex-1 sm:flex sm:items-center sm:justify-between">
         <div>
           <p className="text-sm text-muted-foreground">
-            Showing page             <span className="font-medium text-foreground">{currentPage}</span> of{' '}
+            Showing page <span className="font-medium text-foreground">{currentPage}</span> of{' '}
             <span className="font-medium text-foreground">{totalPages}</span>
           </p>
         </div>
         <div>
-          <nav className="relative z-0 inline-flex rounded-md shadow-sm -space-x-px" aria-label="Pagination">
+          <nav className="relative z-0 inline-flex rounded-md -space-x-px" aria-label="Pagination">
             {currentPage > 1 ? (
               <Link
                 href={getPageUrl(currentPage - 1)}
-                className="relative inline-flex items-center px-2 py-2 rounded-l-md border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50"
+                className="relative inline-flex items-center px-2 py-2 rounded-l-md border border-border bg-background text-sm font-medium text-muted-foreground hover:bg-accent transition-colors duration-200"
               >
                 <span className="sr-only">Previous</span>
                 <svg className="h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
@@ -97,7 +97,7 @@ export default function Pagination({ currentPage, totalPages, basePath = '' }: P
                 </svg>
               </Link>
             ) : (
-              <span className="relative inline-flex items-center px-2 py-2 rounded-l-md border border-gray-300 bg-gray-100 text-sm font-medium text-gray-400 cursor-not-allowed">
+              <span className="relative inline-flex items-center px-2 py-2 rounded-l-md border border-border bg-muted text-sm font-medium text-muted-foreground cursor-not-allowed">
                 <span className="sr-only">Previous</span>
                 <svg className="h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
                   <path fillRule="evenodd" d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z" clipRule="evenodd" />
@@ -110,7 +110,7 @@ export default function Pagination({ currentPage, totalPages, basePath = '' }: P
                 return (
                   <span
                     key={`dots-${index}`}
-                    className="relative inline-flex items-center px-4 py-2 border border-gray-300 bg-white text-sm font-medium text-gray-700"
+                    className="relative inline-flex items-center px-4 py-2 border border-border bg-background text-sm font-medium text-muted-foreground"
                   >
                     ...
                   </span>
@@ -124,10 +124,10 @@ export default function Pagination({ currentPage, totalPages, basePath = '' }: P
                 <Link
                   key={pageNumber}
                   href={getPageUrl(pageNumber)}
-                  className={`relative inline-flex items-center px-4 py-2 border text-sm font-medium ${
+                  className={`relative inline-flex items-center px-4 py-2 border text-sm font-medium transition-colors duration-200 ${
                     isCurrentPage
-                      ? 'z-10 bg-blue-50 border-blue-500 text-blue-600'
-                      : 'bg-white border-gray-300 text-gray-500 hover:bg-gray-50'
+                      ? 'z-10 bg-primary border-primary text-primary-foreground'
+                      : 'bg-background border-border text-muted-foreground hover:bg-accent hover:text-foreground'
                   }`}
                 >
                   {pageNumber}
@@ -138,7 +138,7 @@ export default function Pagination({ currentPage, totalPages, basePath = '' }: P
             {currentPage < totalPages ? (
               <Link
                 href={getPageUrl(currentPage + 1)}
-                className="relative inline-flex items-center px-2 py-2 rounded-r-md border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50"
+                className="relative inline-flex items-center px-2 py-2 rounded-r-md border border-border bg-background text-sm font-medium text-muted-foreground hover:bg-accent transition-colors duration-200"
               >
                 <span className="sr-only">Next</span>
                 <svg className="h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
@@ -146,7 +146,7 @@ export default function Pagination({ currentPage, totalPages, basePath = '' }: P
                 </svg>
               </Link>
             ) : (
-              <span className="relative inline-flex items-center px-2 py-2 rounded-r-md border border-gray-300 bg-gray-100 text-sm font-medium text-gray-400 cursor-not-allowed">
+              <span className="relative inline-flex items-center px-2 py-2 rounded-r-md border border-border bg-muted text-sm font-medium text-muted-foreground cursor-not-allowed">
                 <span className="sr-only">Next</span>
                 <svg className="h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
                   <path fillRule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clipRule="evenodd" />
