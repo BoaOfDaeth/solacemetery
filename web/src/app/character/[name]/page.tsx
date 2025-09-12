@@ -159,7 +159,7 @@ export default async function CharacterPage({
                       level={row.vlevel}
                     />
                     {row.time && (
-                      <div className="text-xs text-muted-foreground mt-0.5">
+                      <div className="text-xs text-muted-foreground mt-0.5 truncate font-medium">
                         {row.time}
                       </div>
                     )}
@@ -193,7 +193,7 @@ export default async function CharacterPage({
                       class={row.kclass}
                     />
                     {row.time && (
-                      <div className="text-xs text-muted-foreground mt-0.5">
+                      <div className="text-xs text-muted-foreground mt-0.5 truncate font-medium">
                         {row.time}
                       </div>
                     )}
@@ -228,7 +228,7 @@ export default async function CharacterPage({
                       linkType="mob"
                     />
                     {row.time && (
-                      <div className="text-xs text-muted-foreground mt-0.5">
+                      <div className="text-xs text-muted-foreground mt-0.5 truncate font-medium">
                         {row.time}
                       </div>
                     )}

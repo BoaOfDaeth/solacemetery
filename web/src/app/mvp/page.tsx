@@ -104,7 +104,7 @@ export default async function MvpPage({
                   maxLength={25}
                 />
                 {row.time && (
-                  <div className="text-xs text-muted-foreground mt-1">
+                  <div className="text-xs text-muted-foreground mt-0.5 truncate font-medium">
                     {row.time}
                   </div>
                 )}

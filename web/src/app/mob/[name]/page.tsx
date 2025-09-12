@@ -124,7 +124,7 @@ export default async function MobPage({
                     maxLength={30}
                   />
                   {row.time && (
-                    <div className="text-xs text-muted-foreground mt-0.5">
+                    <div className="text-xs text-muted-foreground mt-0.5 truncate font-medium">
                       {row.time}
                     </div>
                   )}
