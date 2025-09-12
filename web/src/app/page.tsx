@@ -163,7 +163,7 @@ export default async function Home() {
             title="Top 10 Mobs"
             columns={[
               { key: 'mob', label: 'Mob' },
-              { key: 'levels', label: 'Levels Summary', className: 'text-right' }
+              { key: 'levels', label: 'Levels Sum', className: 'text-right' }
             ]}
             data={stats.top_monster_killers || []}
             renderCell={(key, value, row) => {
