@@ -115,7 +115,7 @@ export default async function Home() {
             value={stats.top_killers?.[0]?.kills || 0}
             description={stats.top_killers?.[0]?.killer || "No data"}
             icon={
-              <Icon icon="game-icons:scythe" className="w-6 h-6 text-red-700" />
+              <Icon icon="game-icons:scythe" className="w-6 h-6 text-primary" />
             }
           />
         </div>

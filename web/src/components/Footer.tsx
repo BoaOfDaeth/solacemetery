@@ -1,35 +1,6 @@
-'use client';
-
-import { useTheme } from './ThemeProvider';
 import { Icon } from '@iconify/react';
-import { useEffect, useState } from 'react';
-
-const themeIcons: Record<string, string> = {
-  light: 'tabler:sun',
-  dark: 'tabler:moon',
-  solace: 'tabler:sword',
-};
 
 export default function Footer() {
-  const [isClient, setIsClient] = useState(false);
-  
-  useEffect(() => {
-    setIsClient(true);
-  }, []);
-
-  // Always call useTheme hook to maintain hook order
-  let currentTheme = 'solace';
-  let setTheme = () => {};
-  let availableThemes = {};
-  
-  try {
-    const themeContext = useTheme();
-    currentTheme = themeContext.currentTheme;
-    setTheme = themeContext.setTheme;
-    availableThemes = themeContext.availableThemes;
-  } catch (error) {
-    // Theme context not available during SSR
-  }
 
   return (
     <footer className="border-t border-border bg-card/50 backdrop-blur-sm">
@@ -47,29 +18,6 @@ export default function Footer() {
             <span className="text-sm">GitHub</span>
           </a>
           
-          {/* Theme Picker - Only show on client side */}
-          {isClient && (
-            <div className="flex items-center space-x-1">
-              {Object.entries(availableThemes).map(([key, theme]) => (
-                <button
-                  key={key}
-                  onClick={() => setTheme(key)}
-                  className={`p-2 rounded-lg transition-all duration-200 cursor-pointer ${
-                    currentTheme === key
-                      ? 'bg-primary text-primary-foreground shadow-sm'
-                      : 'text-muted-foreground hover:text-foreground hover:bg-accent'
-                  }`}
-                  title={theme.displayName}
-                  aria-label={`Switch to ${theme.displayName} theme`}
-                >
-                  <Icon 
-                    icon={themeIcons[key] || 'tabler:sword'} 
-                    className="w-4 h-4" 
-                  />
-                </button>
-              ))}
-            </div>
-          )}
         </div>
       </div>
     </footer>

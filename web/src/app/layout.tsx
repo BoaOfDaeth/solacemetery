@@ -3,7 +3,6 @@ import { Geist, Geist_Mono } from 'next/font/google';
 import Link from 'next/link';
 import Image from 'next/image';
 import SearchForm from '@/components/SearchForm';
-import { ThemeProvider } from '@/components/ThemeProvider';
 import Footer from '@/components/Footer';
 import './globals.css';
 
@@ -32,9 +31,8 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased min-h-screen flex flex-col`}
       >
-        <ThemeProvider>
-          {/* Modern Navigation */}
-          <nav className="sticky top-0 z-50 w-full border-b border-border/40 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
+        {/* Modern Navigation */}
+        <nav className="sticky top-0 z-50 w-full border-b border-border/40 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
             <div className="max-w-7xl mx-auto px-3 sm:px-4 lg:px-6">
               <div className="flex items-center justify-between h-14 sm:h-16">
                 {/* Logo/Brand */}
@@ -89,12 +87,11 @@ export default function RootLayout({
                 </div>
               </div>
             </div>
-          </nav>
-          <main className="flex-1">
-            {children}
-          </main>
-          <Footer />
-        </ThemeProvider>
+        </nav>
+        <main className="flex-1">
+          {children}
+        </main>
+        <Footer />
       </body>
     </html>
   );

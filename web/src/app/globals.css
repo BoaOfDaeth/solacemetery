@@ -1,32 +1,32 @@
 @import 'tailwindcss';
 
 :root {
-  /* Default theme colors - will be overridden by ThemeProvider */
-  --background: #fafafa;
-  --foreground: #0f172a;
-  --card: #ffffff;
-  --card-foreground: #0f172a;
-  --popover: #ffffff;
-  --popover-foreground: #0f172a;
-  --primary: #3b82f6;
-  --primary-foreground: #ffffff;
-  --secondary: #f1f5f9;
-  --secondary-foreground: #0f172a;
-  --muted: #f8fafc;
-  --muted-foreground: #64748b;
-  --accent: #f1f5f9;
-  --accent-foreground: #0f172a;
-  --destructive: #ef4444;
-  --destructive-foreground: #ffffff;
-  --border: #e2e8f0;
-  --input: #e2e8f0;
-  --ring: #3b82f6;
+  /* Solace theme colors - hardcoded for server-side rendering */
+  --background: #1a1a1a;
+  --foreground: #e5e5e5;
+  --card: #2a2a2a;
+  --card-foreground: #e5e5e5;
+  --popover: #2a2a2a;
+  --popover-foreground: #e5e5e5;
+  --primary: #d4af37;
+  --primary-foreground: #1a1a1a;
+  --secondary: #3a3a3a;
+  --secondary-foreground: #e5e5e5;
+  --muted: #3a3a3a;
+  --muted-foreground: #a3a3a3;
+  --accent: #3a3a3a;
+  --accent-foreground: #e5e5e5;
+  --destructive: #dc2626;
+  --destructive-foreground: #e5e5e5;
+  --border: #4a4a4a;
+  --input: #4a4a4a;
+  --ring: #d4af37;
   --radius: 0.5rem;
   
-  /* Default gradients - will be overridden by ThemeProvider */
-  --gradient-primary: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-  --gradient-secondary: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
-  --gradient-accent: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+  /* Solace theme gradients */
+  --gradient-primary: linear-gradient(135deg, #d4af37 0%, #b8860b 100%);
+  --gradient-secondary: linear-gradient(135deg, #fbbf24 0%, #d4af37 100%);
+  --gradient-accent: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
   
   /* Shadows */
   --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
