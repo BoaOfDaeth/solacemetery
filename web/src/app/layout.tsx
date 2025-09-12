@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import { Geist, Geist_Mono } from 'next/font/google';
 import Link from 'next/link';
+import Image from 'next/image';
 import SearchForm from '@/components/SearchForm';
 import { ThemeProvider } from '@/components/ThemeProvider';
 import Footer from '@/components/Footer';
@@ -38,8 +39,14 @@ export default function RootLayout({
               <div className="flex items-center justify-between h-14 sm:h-16">
                 {/* Logo/Brand */}
                 <Link href="/" className="flex items-center space-x-2 hover:opacity-80 transition-opacity duration-200 flex-shrink-0">
-                  <div className="w-7 h-7 sm:w-8 sm:h-8 rounded-lg bg-gradient-to-br from-primary to-primary/80 flex items-center justify-center">
-                    <span className="text-primary-foreground font-bold text-xs sm:text-sm">S</span>
+                  <div className="w-7 h-7 sm:w-8 sm:h-8 rounded-lg overflow-hidden flex items-center justify-center">
+                    <Image
+                      src="/images/head.png"
+                      alt="Solace MUD Logo"
+                      width={32}
+                      height={32}
+                      className="w-full h-full object-cover"
+                    />
                   </div>
                   <span className="font-semibold text-foreground hidden md:block text-sm sm:text-base">Solace MUD Stats</span>
                 </Link>
