@@ -94,7 +94,7 @@ export default async function Home() {
     <div className="min-h-screen bg-background">
       {/* Statistics Overview */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-6 pb-8">
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 mb-8">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 mb-6">
           <StatsCard
             title="PVP Records"
             value={stats.pvp_records.toLocaleString()}
@@ -114,7 +114,7 @@ export default async function Home() {
             value={stats.top_killers?.[0]?.kills || 0}
             description={stats.top_killers?.[0]?.killer || "No data"}
             icon={
-              <Icon icon="game-icons:scythe" className="w-6 h-6 text-primary" />
+              <Icon icon="game-icons:scythe" className="w-6 h-6 text-red-700" />
             }
           />
         </div>
