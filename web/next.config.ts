@@ -12,7 +12,7 @@ const nextConfig: NextConfig = {
   // Optimize for production
   experimental: {
     // Enable optimizations
-    optimizePackageImports: ['@headlessui/react'],
+    optimizePackageImports: [],
   },
 
   // Environment variables that should be available at build time

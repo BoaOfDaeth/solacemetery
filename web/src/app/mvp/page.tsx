@@ -1,6 +1,5 @@
-import { FormatPlayer, getDataCutoffDate, getTimeFilterClause, getTimeFilterClauseWithAnd } from '@/lib/utils';
+import { FormatPlayer, getDataCutoffDate, getTimeFilterClause } from '@/lib/utils';
 import { query } from '@/lib/db';
-import Link from 'next/link';
 import Pagination from '@/components/Pagination';
 import ModernTable from '@/components/ModernTable';
 

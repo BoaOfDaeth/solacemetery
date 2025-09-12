@@ -1,6 +1,6 @@
 import { ReactNode } from 'react';
-import PageHeader from './PageHeader';
-import PageLayout from './PageLayout';
+import PageHeader from '@/components/PageHeader';
+import PageLayout from '@/components/PageLayout';
 
 interface TablePageLayoutProps {
   title: string;
