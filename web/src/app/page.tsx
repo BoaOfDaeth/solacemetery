@@ -1,4 +1,4 @@
-import { FormatPlayer } from '@/lib/utils';
+import { FormatPlayer, getDataCutoffDate } from '@/lib/utils';
 import { query } from '@/lib/db';
 import PageHeader from '@/components/PageHeader';
 
@@ -25,10 +25,21 @@ interface Stats {
 
 async function getStats(): Promise<Stats> {
   try {
-    const mvpCount = await query('SELECT COUNT(*) as count FROM MVP');
-    const pvpCount = await query(
-      'SELECT COUNT(*) as count FROM PVP WHERE killer != victim'
-    );
+    const cutoffDate = getDataCutoffDate();
+    const cutoffTimeString = cutoffDate.toISOString().slice(0, 19).replace('T', ' ');
+    
+    const mvpCount = await query(`
+      SELECT COUNT(*) as count 
+      FROM MVP 
+      WHERE time IS NULL OR STR_TO_DATE(time, '%a %b %d %H:%i:%s %Y') <= ?
+    `, [cutoffTimeString]);
+    
+    const pvpCount = await query(`
+      SELECT COUNT(*) as count 
+      FROM PVP 
+      WHERE killer != victim 
+      AND (time IS NULL OR STR_TO_DATE(time, '%a %b %d %H:%i:%s %Y') <= ?)
+    `, [cutoffTimeString]);
 
     // Get top 10 player killers with their race and class
     const topKillers = await query(`
@@ -39,10 +50,11 @@ async function getStats(): Promise<Stats> {
         MAX(kclass) as class
       FROM PVP 
       WHERE killer != victim 
+      AND (time IS NULL OR STR_TO_DATE(time, '%a %b %d %H:%i:%s %Y') <= ?)
       GROUP BY killer 
       ORDER BY kills DESC 
       LIMIT 10
-    `);
+    `, [cutoffTimeString]);
 
     // Get top 10 monster killers
     const topMonsterKillers = await query(`
@@ -51,10 +63,11 @@ async function getStats(): Promise<Stats> {
         SUM(vlevel) as total_levels
       FROM MVP 
       WHERE vlevel IS NOT NULL
+      AND (time IS NULL OR STR_TO_DATE(time, '%a %b %d %H:%i:%s %Y') <= ?)
       GROUP BY killer 
       ORDER BY total_levels DESC 
       LIMIT 10
-    `);
+    `, [cutoffTimeString]);
 
     return {
       mvp_records: (mvpCount as any[])[0]?.count || 0,
@@ -217,8 +230,8 @@ export default async function Home() {
       {/* Server Time */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-8">
         <div className="text-center">
-          <p className="text-sm text-gray-500 opacity-0">
-            Server Time: {new Date().toLocaleString('en-US', {
+          <p className="text-sm text-gray-500 opacity-0 hover:opacity-100 transition-opacity duration-200">
+            Data Cutoff Time: {getDataCutoffDate().toLocaleString('en-US', {
               weekday: 'short',
               month: 'short',
               day: '2-digit',
@@ -226,7 +239,8 @@ export default async function Home() {
               minute: '2-digit',
               second: '2-digit',
               year: 'numeric',
-              hour12: false
+              hour12: false,
+              // timeZone: 'UTC'
             }).replace(/,/g, '')}
           </p>
         </div>

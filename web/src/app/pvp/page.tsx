@@ -1,4 +1,4 @@
-import { FormatPlayer } from '@/lib/utils';
+import { FormatPlayer, getDataCutoffDate } from '@/lib/utils';
 import { query } from '@/lib/db';
 import Link from 'next/link';
 import PageHeader from '@/components/PageHeader';
@@ -27,13 +27,15 @@ interface PvpData {
 async function getPvpData(page: number = 1, limit: number = 50): Promise<PvpData> {
   try {
     const offset = (page - 1) * limit;
+    const cutoffTime = getDataCutoffDate();
     
     // Get total count
     const pvpTotalCount = await query(`
       SELECT COUNT(*) as count
       FROM PVP
       WHERE killer != victim
-    `);
+      AND (time IS NULL OR UNIX_TIMESTAMP(STR_TO_DATE(time, '%a %b %d %H:%i:%s %Y')) <= UNIX_TIMESTAMP(?))
+    `, [cutoffTime]);
     
     const pvpTotal = (pvpTotalCount as any[])[0]?.count || 0;
     const pvpTotalPages = Math.ceil(pvpTotal / limit);
@@ -43,9 +45,10 @@ async function getPvpData(page: number = 1, limit: number = 50): Promise<PvpData
       SELECT id, killer, victim, klevel, vlevel, krace, kclass, time
       FROM PVP 
       WHERE killer != victim
+      AND (time IS NULL OR UNIX_TIMESTAMP(STR_TO_DATE(time, '%a %b %d %H:%i:%s %Y')) <= UNIX_TIMESTAMP(?))
       ORDER BY id DESC
       LIMIT ${limit} OFFSET ${offset}
-    `);
+    `, [cutoffTime]);
 
     return {
       pvpRecords: pvpData as PvpRecord[],

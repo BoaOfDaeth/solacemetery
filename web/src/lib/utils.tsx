@@ -1,5 +1,37 @@
 import Link from 'next/link';
 
+// Constants
+export const DATA_FRESHNESS_THRESHOLD_MINUTES = 30;
+
+/**
+ * Get the cutoff time for data freshness filtering
+ * Returns a time string that is 30 minutes ago from current server time
+ */
+export function getDataCutoffTime(): string {
+  const now = new Date();
+  const cutoffTime = new Date(now.getTime() - (DATA_FRESHNESS_THRESHOLD_MINUTES * 60 * 1000));
+  
+  return cutoffTime.toLocaleString('en-US', {
+    weekday: 'short',
+    month: 'short',
+    day: '2-digit',
+    hour: '2-digit',
+    minute: '2-digit',
+    second: '2-digit',
+    year: 'numeric',
+    hour12: false
+  }).replace(/,/g, '');
+}
+
+/**
+ * Get the cutoff time as a Date object for proper comparison
+ * Database and server run on the same host, so no timezone adjustment needed
+ */
+export function getDataCutoffDate(): Date {
+  const now = new Date();
+  return new Date(now.getTime() - (DATA_FRESHNESS_THRESHOLD_MINUTES * 60 * 1000));
+}
+
 interface PlayerData {
   name: string;
   level?: number;

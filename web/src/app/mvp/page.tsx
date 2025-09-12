@@ -1,4 +1,4 @@
-import { FormatPlayer } from '@/lib/utils';
+import { FormatPlayer, getDataCutoffDate } from '@/lib/utils';
 import { query } from '@/lib/db';
 import Link from 'next/link';
 import PageHeader from '@/components/PageHeader';
@@ -28,12 +28,14 @@ interface MvpData {
 async function getMvpData(page: number = 1, limit: number = 50): Promise<MvpData> {
   try {
     const offset = (page - 1) * limit;
+    const cutoffTime = getDataCutoffDate();
     
     // Get total count
     const totalCount = await query(`
       SELECT COUNT(*) as count
       FROM MVP
-    `);
+      WHERE time IS NULL OR UNIX_TIMESTAMP(STR_TO_DATE(time, '%a %b %d %H:%i:%s %Y')) <= UNIX_TIMESTAMP(?)
+    `, [cutoffTime]);
     
     const total = (totalCount as any[])[0]?.count || 0;
     const totalPages = Math.ceil(total / limit);
@@ -42,9 +44,10 @@ async function getMvpData(page: number = 1, limit: number = 50): Promise<MvpData
     const mvpData = await query(`
       SELECT id, killer, victim, vlevel, time
       FROM MVP 
+      WHERE time IS NULL OR UNIX_TIMESTAMP(STR_TO_DATE(time, '%a %b %d %H:%i:%s %Y')) <= UNIX_TIMESTAMP(?)
       ORDER BY id DESC
       LIMIT ${limit} OFFSET ${offset}
-    `);
+    `, [cutoffTime]);
 
     return {
       records: mvpData as MvpRecord[],

@@ -1,4 +1,4 @@
-import { FormatPlayer } from '@/lib/utils';
+import { FormatPlayer, getDataCutoffDate } from '@/lib/utils';
 import { query } from '@/lib/db';
 import { notFound } from 'next/navigation';
 
@@ -20,13 +20,16 @@ interface MobData {
 
 async function getMobData(name: string): Promise<MobData | null> {
   try {
+    const cutoffTime = getDataCutoffDate();
+    
     // Get all kills by this monster
     const kills = await query(`
       SELECT id, victim, vlevel, time
       FROM MVP 
       WHERE killer = ?
+      AND (time IS NULL OR time <= ?)
       ORDER BY id DESC
-    `, [name]);
+    `, [name, cutoffTime]);
 
     // Calculate statistics in a single query for better performance
     const stats = await query(`
@@ -36,7 +39,8 @@ async function getMobData(name: string): Promise<MobData | null> {
         AVG(vlevel) as avg_level
       FROM MVP 
       WHERE killer = ?
-    `, [name]);
+      AND (time IS NULL OR time <= ?)
+    `, [name, cutoffTime]);
 
     return {
       monster: name,

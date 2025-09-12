@@ -1,4 +1,4 @@
-import { FormatPlayer } from '@/lib/utils';
+import { FormatPlayer, getDataCutoffDate } from '@/lib/utils';
 import { query } from '@/lib/db';
 import { notFound } from 'next/navigation';
 
@@ -30,45 +30,51 @@ interface CharacterData {
 
 async function getCharacterData(name: string): Promise<CharacterData | null> {
   try {
+    const cutoffTime = getDataCutoffDate();
+    
     // Get character info
     const characterInfo = await query(`
       SELECT DISTINCT krace as race, kclass as class
       FROM PVP 
       WHERE killer = ? 
+      AND (time IS NULL OR time <= ?)
       LIMIT 1
-    `, [name]);
+    `, [name, cutoffTime]);
 
     // Get PVP kills
     const pvpKills = await query(`
       SELECT id, victim, vlevel, klevel, time
       FROM PVP 
       WHERE killer = ? AND killer != victim
+      AND (time IS NULL OR time <= ?)
       ORDER BY id DESC
-    `, [name]);
+    `, [name, cutoffTime]);
 
     // Get PVP deaths
     const pvpDeaths = await query(`
       SELECT id, killer, klevel, krace, kclass, vlevel, time
       FROM PVP 
       WHERE victim = ? AND killer != victim
+      AND (time IS NULL OR time <= ?)
       ORDER BY id DESC
-    `, [name]);
+    `, [name, cutoffTime]);
 
     // Get MVP deaths
     const mvpDeaths = await query(`
       SELECT id, killer, vlevel, time
       FROM MVP 
       WHERE victim = ?
+      AND (time IS NULL OR time <= ?)
       ORDER BY id DESC
-    `, [name]);
+    `, [name, cutoffTime]);
 
     // Calculate statistics in a single query for better performance
     const stats = await query(`
       SELECT 
-        (SELECT COUNT(*) FROM PVP WHERE killer = ? AND killer != victim) as pvp_kills,
-        (SELECT COUNT(*) FROM PVP WHERE victim = ? AND killer != victim) as pvp_deaths,
-        (SELECT COUNT(*) FROM MVP WHERE victim = ?) as mvp_deaths
-    `, [name, name, name]);
+        (SELECT COUNT(*) FROM PVP WHERE killer = ? AND killer != victim AND (time IS NULL OR time <= ?)) as pvp_kills,
+        (SELECT COUNT(*) FROM PVP WHERE victim = ? AND killer != victim AND (time IS NULL OR time <= ?)) as pvp_deaths,
+        (SELECT COUNT(*) FROM MVP WHERE victim = ? AND (time IS NULL OR time <= ?)) as mvp_deaths
+    `, [name, cutoffTime, name, cutoffTime, name, cutoffTime]);
 
     return {
       character: name,
