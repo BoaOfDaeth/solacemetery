@@ -61,6 +61,7 @@ async function getStats(): Promise<Stats> {
     const topMonsterKillers = await query(`
       SELECT 
         killer,
+        COUNT(*) as kills,
         SUM(vlevel) as total_levels
       FROM MVP 
       WHERE vlevel IS NOT NULL
@@ -166,10 +167,20 @@ export default async function Home() {
               if (key === 'mob') {
                 return (
                   <div className="font-medium text-foreground">
-                    <FormatPlayer
-                      name={row.killer}
-                      linkType="mob"
-                    />
+                    <div className="flex flex-col min-w-0">
+                      <div className="flex items-center min-w-0">
+                        <a
+                          href={`/mob/${encodeURIComponent(row.killer)}`}
+                          className="text-primary hover:text-primary/80 hover:underline font-medium truncate"
+                          title={row.killer}
+                        >
+                          {row.killer}
+                        </a>
+                      </div>
+                      <div className="text-xs text-muted-foreground mt-0.5 truncate font-medium">
+                        {row.kills || 0} players killed
+                      </div>
+                    </div>
                   </div>
                 );
               }

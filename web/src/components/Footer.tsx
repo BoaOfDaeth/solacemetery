@@ -53,28 +53,25 @@ export default function Footer() {
           
           {/* Theme Picker - Only show on client side */}
           {isClient && (
-            <div className="flex items-center space-x-3">
-              <span className="text-sm text-muted-foreground">Theme:</span>
-              <div className="flex items-center space-x-1">
-                {Object.entries(availableThemes).map(([key, theme]) => (
-                  <button
-                    key={key}
-                    onClick={() => setTheme(key)}
-                    className={`p-2 rounded-lg transition-all duration-200 ${
-                      currentTheme === key
-                        ? 'bg-primary text-primary-foreground shadow-sm'
-                        : 'text-muted-foreground hover:text-foreground hover:bg-accent'
-                    }`}
-                    title={theme.displayName}
-                    aria-label={`Switch to ${theme.displayName} theme`}
-                  >
-                    <Icon 
-                      icon={themeIcons[key] || 'tabler:palette'} 
-                      className="w-4 h-4" 
-                    />
-                  </button>
-                ))}
-              </div>
+            <div className="flex items-center space-x-1">
+              {Object.entries(availableThemes).map(([key, theme]) => (
+                <button
+                  key={key}
+                  onClick={() => setTheme(key)}
+                  className={`p-2 rounded-lg transition-all duration-200 cursor-pointer ${
+                    currentTheme === key
+                      ? 'bg-primary text-primary-foreground shadow-sm'
+                      : 'text-muted-foreground hover:text-foreground hover:bg-accent'
+                  }`}
+                  title={theme.displayName}
+                  aria-label={`Switch to ${theme.displayName} theme`}
+                >
+                  <Icon 
+                    icon={themeIcons[key] || 'tabler:palette'} 
+                    className="w-4 h-4" 
+                  />
+                </button>
+              ))}
             </div>
           )}
         </div>
