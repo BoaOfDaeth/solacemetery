@@ -7,10 +7,6 @@ import { useEffect, useState } from 'react';
 const themeIcons: Record<string, string> = {
   light: 'tabler:sun',
   dark: 'tabler:moon',
-  ocean: 'tabler:wave',
-  forest: 'tabler:trees',
-  sunset: 'tabler:sunset',
-  purple: 'tabler:palette',
   solace: 'tabler:sword',
 };
 
@@ -67,7 +63,7 @@ export default function Footer() {
                   aria-label={`Switch to ${theme.displayName} theme`}
                 >
                   <Icon 
-                    icon={themeIcons[key] || 'tabler:palette'} 
+                    icon={themeIcons[key] || 'tabler:sword'} 
                     className="w-4 h-4" 
                   />
                 </button>
