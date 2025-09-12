@@ -1,7 +1,7 @@
 @import 'tailwindcss';
 
 :root {
-  /* Light theme colors */
+  /* Default theme colors - will be overridden by ThemeProvider */
   --background: #fafafa;
   --foreground: #0f172a;
   --card: #ffffff;
@@ -23,7 +23,7 @@
   --ring: #3b82f6;
   --radius: 0.5rem;
   
-  /* Custom gradients */
+  /* Default gradients - will be overridden by ThemeProvider */
   --gradient-primary: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
   --gradient-secondary: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
   --gradient-accent: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
@@ -56,29 +56,7 @@
   --font-mono: var(--font-geist-mono);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #fafafa;
-    --card: #111827;
-    --card-foreground: #fafafa;
-    --popover: #111827;
-    --popover-foreground: #fafafa;
-    --primary: #60a5fa;
-    --primary-foreground: #0f172a;
-    --secondary: #1f2937;
-    --secondary-foreground: #fafafa;
-    --muted: #1f2937;
-    --muted-foreground: #9ca3af;
-    --accent: #1f2937;
-    --accent-foreground: #fafafa;
-    --destructive: #f87171;
-    --destructive-foreground: #0f172a;
-    --border: #374151;
-    --input: #374151;
-    --ring: #60a5fa;
-  }
-}
+/* Dark mode media query is now handled by ThemeProvider */
 
 * {
   border-color: var(--border);
