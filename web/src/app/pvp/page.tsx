@@ -1,7 +1,6 @@
 import { FormatPlayer, getDataCutoffDate, getTimeFilterClauseWithAnd } from '@/lib/utils';
 import { query } from '@/lib/db';
 import Link from 'next/link';
-import TablePageLayout from '@/components/TablePageLayout';
 import Pagination from '@/components/Pagination';
 import ModernTable from '@/components/ModernTable';
 
@@ -85,11 +84,10 @@ export default async function PvpPage({
   const { pvpRecords, currentPage, pvpTotalPages } = await getPvpData(page, limit);
 
   return (
-    <TablePageLayout 
-      title="Player vs Player" 
-      subtitle="PVP Records"
-    >
-      <ModernTable
+    <div className="min-h-screen bg-background">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-6 pb-8">
+        <div className="bg-card border border-border rounded-xl shadow-sm overflow-hidden">
+          <ModernTable
         title=""
         columns={[
           { key: 'killer', label: 'Killer' },
@@ -124,12 +122,14 @@ export default async function PvpPage({
           }
           return value;
         }}
-        className="border-0 shadow-none"
-      />
-      
-      {pvpTotalPages > 1 && (
-        <Pagination currentPage={currentPage} totalPages={pvpTotalPages} basePath="/pvp" />
-      )}
-    </TablePageLayout>
+            className="border-0 shadow-none"
+          />
+        </div>
+        
+        {pvpTotalPages > 1 && (
+          <Pagination currentPage={currentPage} totalPages={pvpTotalPages} basePath="/pvp" />
+        )}
+      </div>
+    </div>
   );
 }

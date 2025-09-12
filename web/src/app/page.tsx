@@ -92,14 +92,8 @@ export default async function Home() {
 
   return (
     <div className="min-h-screen bg-background">
-      {/* Header */}
-      <PageHeader 
-        title="Solace MUD Stats" 
-        subtitle="Combat Statistics"
-      />
-
       {/* Statistics Overview */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-8">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-6 pb-8">
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 mb-8">
           <StatsCard
             title="PVP Records"

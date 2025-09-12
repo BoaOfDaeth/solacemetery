@@ -1,7 +1,6 @@
 import { FormatPlayer, getDataCutoffDate, getTimeFilterClause, getTimeFilterClauseWithAnd } from '@/lib/utils';
 import { query } from '@/lib/db';
 import Link from 'next/link';
-import TablePageLayout from '@/components/TablePageLayout';
 import Pagination from '@/components/Pagination';
 import ModernTable from '@/components/ModernTable';
 
@@ -84,11 +83,10 @@ export default async function MvpPage({
   const { records, currentPage, totalPages } = await getMvpData(page, limit);
 
   return (
-    <TablePageLayout 
-      title="Mob vs Player" 
-      subtitle="MVP Records"
-    >
-      <ModernTable
+    <div className="min-h-screen bg-background">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-6 pb-8">
+        <div className="bg-card border border-border rounded-xl shadow-sm overflow-hidden">
+          <ModernTable
         title=""
         columns={[
           { key: 'mob', label: 'Mob' },
@@ -125,12 +123,14 @@ export default async function MvpPage({
           }
           return value;
         }}
-        className="border-0 shadow-none"
-      />
-      
-      {totalPages > 1 && (
-        <Pagination currentPage={currentPage} totalPages={totalPages} basePath="/mvp" />
-      )}
-    </TablePageLayout>
+            className="border-0 shadow-none"
+          />
+        </div>
+        
+        {totalPages > 1 && (
+          <Pagination currentPage={currentPage} totalPages={totalPages} basePath="/mvp" />
+        )}
+      </div>
+    </div>
   );
 }

@@ -1,7 +1,6 @@
 import Link from 'next/link';
 import { query } from '@/lib/db';
 import { notFound } from 'next/navigation';
-import TablePageLayout from '@/components/TablePageLayout';
 import Pagination from '@/components/Pagination';
 import ModernTable from '@/components/ModernTable';
 
@@ -126,11 +125,17 @@ export default async function SearchPage({
   }
 
   return (
-    <TablePageLayout 
-      title="Search Results"
-      subtitle={`${searchData.total} result${searchData.total !== 1 ? 's' : ''} for "${decodedQuery}"`}
-    >
-      <ModernTable
+    <div className="min-h-screen bg-background">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-6 pb-8">
+        {/* Search Results Header */}
+        <div className="mb-4">
+          <p className="text-sm text-muted-foreground">
+            {searchData.total} result{searchData.total !== 1 ? 's' : ''} for "{decodedQuery}"
+          </p>
+        </div>
+        
+        <div className="bg-card border border-border rounded-xl shadow-sm overflow-hidden">
+          <ModernTable
         title=""
         columns={[
           { key: 'name', label: 'Name' },
@@ -164,16 +169,18 @@ export default async function SearchPage({
           }
           return value;
         }}
-        className="border-0 shadow-none"
-      />
-      
-      {searchData.totalPages > 1 && (
-        <Pagination 
-          currentPage={searchData.currentPage} 
-          totalPages={searchData.totalPages} 
-          basePath={`/search?q=${encodeURIComponent(decodedQuery)}`}
-        />
-      )}
-    </TablePageLayout>
+            className="border-0 shadow-none"
+          />
+        </div>
+        
+        {searchData.totalPages > 1 && (
+          <Pagination 
+            currentPage={searchData.currentPage} 
+            totalPages={searchData.totalPages} 
+            basePath={`/search?q=${encodeURIComponent(decodedQuery)}`}
+          />
+        )}
+      </div>
+    </div>
   );
 }
