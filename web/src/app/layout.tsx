@@ -1,7 +1,9 @@
 import type { Metadata } from 'next';
 import { Geist, Geist_Mono } from 'next/font/google';
 import Link from 'next/link';
+import Image from 'next/image';
 import SearchForm from '@/components/SearchForm';
+import Footer from '@/components/Footer';
 import './globals.css';
 
 const geistSans = Geist({
@@ -27,39 +29,69 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+        className={`${geistSans.variable} ${geistMono.variable} antialiased min-h-screen flex flex-col`}
       >
-        {/* Navigation */}
-        <nav className="bg-gray-800 shadow-lg">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="flex items-center justify-between h-16">
-              <div className="flex items-center space-x-4 sm:space-x-8">
-                <Link
-                  href="/"
-                  className="text-white hover:text-gray-300 px-2 sm:px-3 py-2 text-sm font-medium"
-                >
-                  Stats
+        {/* Modern Navigation */}
+        <nav className="sticky top-0 z-50 w-full border-b border-border/40 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
+            <div className="max-w-7xl mx-auto px-3 sm:px-4 lg:px-6">
+              <div className="flex items-center justify-between h-14 sm:h-16">
+                {/* Logo/Brand */}
+                <Link href="/" className="flex items-center space-x-2 hover:opacity-80 transition-opacity duration-200 flex-shrink-0">
+                  <div className="w-7 h-7 sm:w-8 sm:h-8 rounded-lg overflow-hidden flex items-center justify-center">
+                    <Image
+                      src="/images/head.png"
+                      alt="Solace MUD Logo"
+                      width={32}
+                      height={32}
+                      className="w-full h-full object-cover"
+                    />
+                  </div>
+                  <span className="font-semibold text-foreground hidden md:block text-sm sm:text-base">Solace MUD Stats</span>
                 </Link>
-                <Link
-                  href="/pvp"
-                  className="text-gray-300 hover:text-white px-2 sm:px-3 py-2 text-sm font-medium"
-                >
-                  PVP
-                </Link>
-                <Link
-                  href="/mvp"
-                  className="text-gray-300 hover:text-white px-2 sm:px-3 py-2 text-sm font-medium"
-                >
-                  MVP
-                </Link>
-              </div>
-              <div className="flex items-center">
-                <SearchForm />
+                
+                {/* Center Navigation Links - Hidden on mobile */}
+                <div className="hidden sm:flex items-center space-x-1">
+                  <Link
+                    href="/pvp"
+                    className="relative px-2 sm:px-3 py-2 text-sm font-medium text-muted-foreground hover:text-foreground transition-colors duration-200 rounded-md hover:bg-accent/50"
+                  >
+                    <span className="relative z-10">PVP</span>
+                  </Link>
+                  <Link
+                    href="/mvp"
+                    className="relative px-2 sm:px-3 py-2 text-sm font-medium text-muted-foreground hover:text-foreground transition-colors duration-200 rounded-md hover:bg-accent/50"
+                  >
+                    <span className="relative z-10">MVP</span>
+                  </Link>
+                </div>
+                
+                {/* Search - Takes remaining space */}
+                <div className="flex items-center flex-1 max-w-xs sm:max-w-sm lg:max-w-md ml-2 sm:ml-4">
+                  <SearchForm />
+                </div>
+                
+                {/* Mobile Navigation Links - Show on mobile */}
+                <div className="flex sm:hidden items-center space-x-1 ml-2">
+                  <Link
+                    href="/pvp"
+                    className="relative px-2 py-2 text-xs font-medium text-muted-foreground hover:text-foreground transition-colors duration-200 rounded-md hover:bg-accent/50"
+                  >
+                    <span className="relative z-10">PVP</span>
+                  </Link>
+                  <Link
+                    href="/mvp"
+                    className="relative px-2 py-2 text-xs font-medium text-muted-foreground hover:text-foreground transition-colors duration-200 rounded-md hover:bg-accent/50"
+                  >
+                    <span className="relative z-10">MVP</span>
+                  </Link>
+                </div>
               </div>
             </div>
-          </div>
         </nav>
-        {children}
+        <main className="flex-1">
+          {children}
+        </main>
+        <Footer />
       </body>
     </html>
   );

@@ -32,6 +32,22 @@ export function getDataCutoffDate(): Date {
   return new Date(now.getTime() - (DATA_FRESHNESS_THRESHOLD_MINUTES * 60 * 1000));
 }
 
+/**
+ * SQL time filtering clause for database queries
+ * Returns the WHERE clause condition for filtering records by time cutoff
+ */
+export function getTimeFilterClause(): string {
+  return 'time IS NULL OR UNIX_TIMESTAMP(STR_TO_DATE(time, \'%a %b %d %H:%i:%s %Y\')) <= UNIX_TIMESTAMP(?)';
+}
+
+/**
+ * SQL time filtering clause for database queries with additional conditions
+ * Returns the WHERE clause condition for filtering records by time cutoff with AND
+ */
+export function getTimeFilterClauseWithAnd(): string {
+  return `AND (${getTimeFilterClause()})`;
+}
+
 interface PlayerData {
   name: string;
   level?: number;
@@ -69,19 +85,19 @@ export function FormatPlayer({
       <div className="flex items-center min-w-0">
         <Link
           href={linkHref}
-          className="text-blue-600 hover:text-blue-800 hover:underline truncate"
+          className="text-primary hover:text-primary/80 hover:underline font-medium truncate"
           title={name} // Show full name on hover
         >
           {displayName}
         </Link>
         {level && (
-          <span className="text-gray-500 ml-1 flex-shrink-0">
+          <span className="text-muted-foreground ml-1 flex-shrink-0 font-medium">
             ({level})
           </span>
         )}
       </div>
       {race && playerClass && (
-        <div className="text-xs text-gray-500 mt-0.5 truncate">
+        <div className="text-xs text-muted-foreground mt-0.5 truncate font-medium">
           {race} {playerClass}
         </div>
       )}

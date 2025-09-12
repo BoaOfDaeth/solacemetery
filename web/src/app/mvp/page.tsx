@@ -1,7 +1,8 @@
-import { FormatPlayer, getDataCutoffDate } from '@/lib/utils';
+import { FormatPlayer, getDataCutoffDate, getTimeFilterClause, getTimeFilterClauseWithAnd } from '@/lib/utils';
 import { query } from '@/lib/db';
 import Link from 'next/link';
-import PageHeader from '@/components/PageHeader';
+import Pagination from '@/components/Pagination';
+import ModernTable from '@/components/ModernTable';
 
 // Force dynamic rendering - this page should not be statically generated
 export const dynamic = 'force-dynamic';
@@ -34,7 +35,7 @@ async function getMvpData(page: number = 1, limit: number = 50): Promise<MvpData
     const totalCount = await query(`
       SELECT COUNT(*) as count
       FROM MVP
-      WHERE time IS NULL OR UNIX_TIMESTAMP(STR_TO_DATE(time, '%a %b %d %H:%i:%s %Y')) <= UNIX_TIMESTAMP(?)
+      WHERE ${getTimeFilterClause()}
     `, [cutoffTime]);
     
     const total = (totalCount as any[])[0]?.count || 0;
@@ -44,7 +45,7 @@ async function getMvpData(page: number = 1, limit: number = 50): Promise<MvpData
     const mvpData = await query(`
       SELECT id, killer, victim, vlevel, time
       FROM MVP 
-      WHERE time IS NULL OR UNIX_TIMESTAMP(STR_TO_DATE(time, '%a %b %d %H:%i:%s %Y')) <= UNIX_TIMESTAMP(?)
+      WHERE ${getTimeFilterClause()}
       ORDER BY id DESC
       LIMIT ${limit} OFFSET ${offset}
     `, [cutoffTime]);
@@ -68,58 +69,6 @@ async function getMvpData(page: number = 1, limit: number = 50): Promise<MvpData
   }
 }
 
-function Pagination({ currentPage, totalPages }: { currentPage: number; totalPages: number }) {
-  const maxVisiblePages = 5;
-  let startPage = Math.max(1, currentPage - Math.floor(maxVisiblePages / 2));
-  const endPage = Math.min(totalPages, startPage + maxVisiblePages - 1);
-  
-  if (endPage - startPage + 1 < maxVisiblePages) {
-    startPage = Math.max(1, endPage - maxVisiblePages + 1);
-  }
-
-  const pages = [];
-  for (let i = startPage; i <= endPage; i++) {
-    pages.push(i);
-  }
-
-  return (
-          <div className="flex items-center justify-center px-6 py-4 border-t border-gray-200">
-        <div className="flex items-center space-x-2">
-          {currentPage > 1 && (
-            <Link
-              href={`/mvp?page=1`}
-              className="px-3 py-2 text-sm font-medium text-gray-500 bg-white border border-gray-300 hover:bg-gray-50"
-            >
-              First
-            </Link>
-          )}
-          
-          {pages.map(page => (
-            <Link
-              key={page}
-              href={`/mvp?page=${page}`}
-              className={`px-3 py-2 text-sm font-medium ${
-                page === currentPage
-                  ? 'text-blue-600 bg-blue-50 border border-blue-300'
-                  : 'text-gray-500 bg-white border border-gray-300 hover:bg-gray-50'
-              }`}
-            >
-              {page}
-            </Link>
-          ))}
-          
-          {currentPage < totalPages && (
-            <Link
-              href={`/mvp?page=${totalPages}`}
-              className="px-3 py-2 text-sm font-medium text-gray-500 bg-white border border-gray-300 hover:bg-gray-50"
-            >
-              Last
-            </Link>
-          )}
-        </div>
-      </div>
-  );
-}
 
 export default async function MvpPage({
   searchParams,
@@ -134,72 +83,53 @@ export default async function MvpPage({
   const { records, currentPage, totalPages } = await getMvpData(page, limit);
 
   return (
-    <div className="min-h-screen bg-gray-100">
-      {/* Header */}
-      <PageHeader title="Mob vs Player records" />
-
-      {/* MVP Table */}
-      <div className="max-w-7xl mx-auto pb-8">
-        <div className="bg-white shadow overflow-hidden">
-          <div className="overflow-x-auto">
-            <table className="min-w-full divide-y divide-gray-200">
-              <thead className="bg-gray-50">
-                <tr>
-                  <th className="px-3 sm:px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                    Mob
-                  </th>
-                  <th className="px-3 sm:px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                    Victim
-                  </th>
-                </tr>
-              </thead>
-              <tbody className="bg-white divide-y divide-gray-200">
-                {records
-                  .map(record => (
-                    <tr key={record.id} className="hover:bg-gray-50">
-                      <td className="px-3 sm:px-6 py-4 text-sm font-medium text-gray-900 min-w-0">
-                        <div className="flex flex-col">
-                          <FormatPlayer
-                            name={record.killer}
-                            linkType="mob"
-                            truncate={true}
-                            maxLength={25}
-                          />
-                          {record.time && (
-                            <div className="text-xs text-gray-400 mt-0.5">
-                              {record.time}
-                            </div>
-                          )}
-                        </div>
-                      </td>
-                      <td className="px-3 sm:px-6 py-4 text-sm text-gray-500 min-w-0">
-                        <FormatPlayer
-                          name={record.victim}
-                          level={record.vlevel}
-                          truncate={true}
-                          maxLength={20}
-                        />
-                      </td>
-                    </tr>
-                  ))}
-                {records.length === 0 && (
-                  <tr>
-                    <td
-                      colSpan={2}
-                      className="px-3 sm:px-6 py-4 text-center text-sm text-gray-500"
-                    >
-                      No MVP records found
-                    </td>
-                  </tr>
+    <div className="bg-background">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
+        <div className="bg-card border border-border rounded-xl shadow-sm overflow-hidden">
+          <ModernTable
+        title="Mob vs Player Records"
+        columns={[
+          { key: 'mob', label: 'Mob' },
+          { key: 'victim', label: 'Victim' }
+        ]}
+        data={records}
+        renderCell={(key, value, row) => {
+          if (key === 'mob') {
+            return (
+              <div className="flex flex-col">
+                <FormatPlayer
+                  name={row.killer}
+                  linkType="mob"
+                  truncate={true}
+                  maxLength={25}
+                />
+                {row.time && (
+                  <div className="text-xs text-muted-foreground mt-1">
+                    {row.time}
+                  </div>
                 )}
-              </tbody>
-            </table>
-          </div>
-          
-          {totalPages > 1 && (
-            <Pagination currentPage={currentPage} totalPages={totalPages} />
-          )}
+              </div>
+            );
+          }
+          if (key === 'victim') {
+            return (
+              <FormatPlayer
+                name={row.victim}
+                level={row.vlevel}
+                truncate={true}
+                maxLength={20}
+              />
+            );
+          }
+          return value;
+        }}
+            className="border-0 shadow-none"
+          />
         </div>
+        
+        {totalPages > 1 && (
+          <Pagination currentPage={currentPage} totalPages={totalPages} basePath="/mvp" />
+        )}
       </div>
     </div>
   );
