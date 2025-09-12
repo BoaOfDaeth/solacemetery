@@ -144,7 +144,7 @@ export default async function Home() {
               if (key === 'kills') {
                 return (
                   <div className="text-right">
-                    <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-primary/10 text-primary">
+                    <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-primary/10 text-primary select-none">
                       {value}
                     </span>
                   </div>
@@ -176,7 +176,7 @@ export default async function Home() {
               if (key === 'levels') {
                 return (
                   <div className="text-right">
-                    <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-destructive/10 text-destructive">
+                    <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-destructive/10 text-destructive select-none">
                       {row.total_levels}
                     </span>
                   </div>

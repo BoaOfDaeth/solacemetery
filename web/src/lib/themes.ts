@@ -210,9 +210,39 @@ export const themes: Record<string, Theme> = {
       accent: 'linear-gradient(135deg, #e879f9 0%, #d946ef 100%)',
     },
   },
+  solace: {
+    name: 'solace',
+    displayName: 'Solace',
+    colors: {
+      background: '#1a1a1a',
+      foreground: '#e5e5e5',
+      card: '#2a2a2a',
+      cardForeground: '#e5e5e5',
+      popover: '#2a2a2a',
+      popoverForeground: '#e5e5e5',
+      primary: '#d4af37',
+      primaryForeground: '#1a1a1a',
+      secondary: '#3a3a3a',
+      secondaryForeground: '#e5e5e5',
+      muted: '#3a3a3a',
+      mutedForeground: '#a3a3a3',
+      accent: '#3a3a3a',
+      accentForeground: '#e5e5e5',
+      destructive: '#dc2626',
+      destructiveForeground: '#e5e5e5',
+      border: '#4a4a4a',
+      input: '#4a4a4a',
+      ring: '#d4af37',
+    },
+    gradients: {
+      primary: 'linear-gradient(135deg, #d4af37 0%, #b8860b 100%)',
+      secondary: 'linear-gradient(135deg, #fbbf24 0%, #d4af37 100%)',
+      accent: 'linear-gradient(135deg, #f59e0b 0%, #d97706 100%)',
+    },
+  },
 };
 
-export const defaultTheme = themes.sunset.name;
+export const defaultTheme = 'solace';
 
 export function applyTheme(themeName: string) {
   const theme = themes[themeName] || themes[defaultTheme];
