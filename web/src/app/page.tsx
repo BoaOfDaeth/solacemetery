@@ -93,8 +93,8 @@ export default async function Home() {
   return (
     <div className="min-h-screen bg-background">
       {/* Statistics Overview */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-6 pb-8">
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 mb-6">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mb-4">
           <StatsCard
             title="PVP Records"
             value={stats.pvp_records.toLocaleString()}
@@ -120,7 +120,7 @@ export default async function Home() {
         </div>
 
         {/* Leaderboards */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
           {/* Top 10 Player Killers */}
           <ModernTable
             title="Top 10 Player Killers"
@@ -189,7 +189,7 @@ export default async function Home() {
       </div>
 
       {/* Data Freshness Info */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-8">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
         <div className="text-center">
           <p className="text-sm text-muted-foreground opacity-0 hover:opacity-100 transition-opacity duration-200 cursor-default">
             Data Cutoff Time: {getDataCutoffDate().toLocaleString('en-US', {

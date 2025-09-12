@@ -21,7 +21,7 @@ export default function StatsCard({
   className = "" 
 }: StatsCardProps) {
   return (
-    <div className={`bg-card border border-border rounded-xl p-6 shadow-sm hover:shadow-md transition-all duration-200 ${className}`}>
+    <div className={`bg-card border border-border rounded-xl p-4 shadow-sm hover:shadow-md transition-all duration-200 ${className}`}>
       <div className="flex items-center justify-between h-full">
         <div className="flex-1">
           <p className="text-sm font-medium text-muted-foreground mb-1">{title}</p>

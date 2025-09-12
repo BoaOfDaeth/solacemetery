@@ -125,10 +125,10 @@ export default async function CharacterPage({
   }
 
   return (
-    <div className="min-h-screen bg-background py-2">
-      <div className="max-w-7xl mx-auto px-0 sm:px-6 lg:px-8">
+    <div className="min-h-screen bg-background">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
         {/* Header */}
-        <div className="mb-2 text-center sm:text-left">
+        <div className="mb-4 text-center sm:text-left">
           <h1 className="text-3xl font-bold text-foreground">
             {decodedName}
           </h1>
@@ -141,7 +141,7 @@ export default async function CharacterPage({
             )}
         </div>
         {/* PVP Section */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-2">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
           {/* PVP Kills */}
           <ModernTable
             title={`PVP Kills (${characterData.statistics.pvp.kills})`}
@@ -210,7 +210,7 @@ export default async function CharacterPage({
         </div>
 
         {/* MVP Section */}
-        <div className="mt-2">
+        <div className="mt-4">
           {/* MVP Deaths */}
           <ModernTable
             title={`MVP Deaths (${characterData.statistics.mvp.deaths})`}

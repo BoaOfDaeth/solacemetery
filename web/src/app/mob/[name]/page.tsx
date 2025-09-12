@@ -75,17 +75,17 @@ export default async function MobPage({
   }
 
   return (
-    <div className="min-h-screen bg-background py-2">
-      <div className="max-w-7xl mx-auto px-0 sm:px-6 lg:px-8">
+    <div className="min-h-screen bg-background">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
         {/* Header */}
-        <div className="mb-2 text-center sm:text-left">
-          <h1 className="text-xl sm:text-2xl lg:text-3xl font-bold text-foreground px-4 sm:px-0 break-words">
+        <div className="mb-4 text-center sm:text-left">
+          <h1 className="text-xl sm:text-2xl lg:text-3xl font-bold text-foreground break-words">
             {decodedName}
           </h1>
         </div>
 
         {/* Statistics Cards */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-2 mb-2 px-4 sm:px-0">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
           <div className="bg-card border border-border rounded-xl shadow-sm p-4">
             <h3 className="text-lg font-semibold text-foreground mb-2">
               Total Kills
