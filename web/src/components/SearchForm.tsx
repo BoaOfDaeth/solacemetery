@@ -33,7 +33,7 @@ export default function SearchForm() {
         <input
           type="text"
           name="search"
-          placeholder="Search..."
+          placeholder="Search characters or mobs..."
           className="w-full pl-7 sm:pl-10 pr-3 sm:pr-4 py-1.5 sm:py-2 text-base bg-background border border-input rounded-md sm:rounded-lg text-foreground placeholder-muted-foreground focus:outline-none focus:ring-1 sm:focus:ring-2 focus:ring-ring focus:border-transparent transition-all duration-200 hover:border-ring/50"
         />
         

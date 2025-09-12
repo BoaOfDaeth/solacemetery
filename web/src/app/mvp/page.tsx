@@ -86,7 +86,7 @@ export default async function MvpPage({
       <div className="max-w-7xl mx-auto px-2 sm:px-4 lg:px-6 py-4">
         <div className="bg-card border border-border rounded-xl shadow-sm overflow-hidden">
           <ModernTable
-        title="Mob vs Player Records"
+        title="Mob achievements"
         columns={[
           { key: 'mob', label: 'Mob' },
           { key: 'victim', label: 'Victim' }

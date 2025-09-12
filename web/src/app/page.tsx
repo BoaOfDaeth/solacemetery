@@ -97,7 +97,7 @@ export default async function Home() {
       <div className="max-w-7xl mx-auto px-2 sm:px-4 lg:px-6 py-4">
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mb-4">
           <StatsCard
-            title="PVP Records"
+            title="Players killed by players"
             value={stats.pvp_records.toLocaleString()}
             href="/pvp"
             icon={
@@ -105,7 +105,7 @@ export default async function Home() {
             }
           />
           <StatsCard
-            title="MVP Records"
+            title="Players killed by mobs"
             value={stats.mvp_records.toLocaleString()}
             href="/mvp"
             icon={
@@ -163,7 +163,7 @@ export default async function Home() {
             title="Top 10 Mobs"
             columns={[
               { key: 'mob', label: 'Mob' },
-              { key: 'levels', label: 'Player Levels Killed', className: 'text-right' }
+              { key: 'levels', label: 'Levels Summary', className: 'text-right' }
             ]}
             data={stats.top_monster_killers || []}
             renderCell={(key, value, row) => {

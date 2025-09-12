@@ -55,41 +55,9 @@ export default function RootLayout({
                 </span>
               </Link>
 
-              {/* Center Navigation Links - Hidden on mobile */}
-              <div className="hidden sm:flex items-center space-x-1">
-                <Link
-                  href="/pvp"
-                  className="relative px-2 sm:px-3 py-2 text-sm font-medium text-muted-foreground hover:text-foreground transition-colors duration-200 rounded-md hover:bg-accent/50"
-                >
-                  <span className="relative z-10">PVP</span>
-                </Link>
-                <Link
-                  href="/mvp"
-                  className="relative px-2 sm:px-3 py-2 text-sm font-medium text-muted-foreground hover:text-foreground transition-colors duration-200 rounded-md hover:bg-accent/50"
-                >
-                  <span className="relative z-10">MVP</span>
-                </Link>
-              </div>
-
               {/* Search - Takes remaining space */}
               <div className="flex items-center flex-1 max-w-xs sm:max-w-sm lg:max-w-md ml-2 sm:ml-4">
                 <SearchForm />
-              </div>
-
-              {/* Mobile Navigation Links - Show on mobile */}
-              <div className="flex sm:hidden items-center space-x-1 ml-2">
-                <Link
-                  href="/pvp"
-                  className="relative px-2 py-2 text-xs font-medium text-muted-foreground hover:text-foreground transition-colors duration-200 rounded-md hover:bg-accent/50"
-                >
-                  <span className="relative z-10">PVP</span>
-                </Link>
-                <Link
-                  href="/mvp"
-                  className="relative px-2 py-2 text-xs font-medium text-muted-foreground hover:text-foreground transition-colors duration-200 rounded-md hover:bg-accent/50"
-                >
-                  <span className="relative z-10">MVP</span>
-                </Link>
               </div>
             </div>
           </div>
