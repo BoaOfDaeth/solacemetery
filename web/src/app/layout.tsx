@@ -41,7 +41,7 @@ export default function RootLayout({
                   <div className="w-7 h-7 sm:w-8 sm:h-8 rounded-lg bg-gradient-to-br from-primary to-primary/80 flex items-center justify-center">
                     <span className="text-primary-foreground font-bold text-xs sm:text-sm">S</span>
                   </div>
-                  <span className="font-semibold text-foreground hidden md:block text-sm sm:text-base">Solace Stats</span>
+                  <span className="font-semibold text-foreground hidden md:block text-sm sm:text-base">Solace MUD Stats</span>
                 </Link>
                 
                 {/* Center Navigation Links - Hidden on mobile */}
