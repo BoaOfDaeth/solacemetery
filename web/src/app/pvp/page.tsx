@@ -3,6 +3,7 @@ import { query } from '@/lib/db';
 import Link from 'next/link';
 import TablePageLayout from '@/components/TablePageLayout';
 import Pagination from '@/components/Pagination';
+import ModernTable from '@/components/ModernTable';
 
 interface PvpRecord {
   id: number;
@@ -84,57 +85,47 @@ export default async function PvpPage({
   const { pvpRecords, currentPage, pvpTotalPages } = await getPvpData(page, limit);
 
   return (
-    <TablePageLayout title="Player vs Player records">
-      <table className="min-w-full divide-y divide-gray-200">
-        <thead className="bg-gray-50">
-          <tr>
-            <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-              Killer
-            </th>
-            <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-              Victim
-            </th>
-          </tr>
-        </thead>
-        <tbody className="bg-white divide-y divide-gray-200">
-          {pvpRecords
-            .map(record => (
-              <tr key={record.id} className="hover:bg-gray-50">
-                <td className="px-6 py-4 text-sm font-medium text-gray-900">
-                  <div className="flex flex-col">
-                    <FormatPlayer
-                      name={record.killer}
-                      level={record.klevel}
-                      race={record.krace}
-                      class={record.kclass}
-                    />
-                    {record.time && (
-                      <div className="text-xs text-gray-400 mt-0.5">
-                        {record.time}
-                      </div>
-                    )}
+    <TablePageLayout 
+      title="Player vs Player" 
+      subtitle="PVP Records"
+    >
+      <ModernTable
+        title=""
+        columns={[
+          { key: 'killer', label: 'Killer' },
+          { key: 'victim', label: 'Victim' }
+        ]}
+        data={pvpRecords}
+        renderCell={(key, value, row) => {
+          if (key === 'killer') {
+            return (
+              <div className="flex flex-col">
+                <FormatPlayer
+                  name={row.killer}
+                  level={row.klevel}
+                  race={row.krace}
+                  class={row.kclass}
+                />
+                {row.time && (
+                  <div className="text-xs text-muted-foreground mt-1">
+                    {row.time}
                   </div>
-                </td>
-                <td className="px-6 py-4 text-sm text-gray-500">
-                  <FormatPlayer
-                    name={record.victim}
-                    level={record.vlevel}
-                  />
-                </td>
-              </tr>
-            ))}
-          {pvpRecords.length === 0 && (
-            <tr>
-              <td
-                colSpan={2}
-                className="px-6 py-4 text-center text-sm text-gray-500"
-              >
-                No PVP records found
-              </td>
-            </tr>
-          )}
-        </tbody>
-      </table>
+                )}
+              </div>
+            );
+          }
+          if (key === 'victim') {
+            return (
+              <FormatPlayer
+                name={row.victim}
+                level={row.vlevel}
+              />
+            );
+          }
+          return value;
+        }}
+        className="border-0 shadow-none"
+      />
       
       {pvpTotalPages > 1 && (
         <Pagination currentPage={currentPage} totalPages={pvpTotalPages} basePath="/pvp" />

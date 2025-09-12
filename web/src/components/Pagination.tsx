@@ -50,38 +50,38 @@ export default function Pagination({ currentPage, totalPages, basePath = '' }: P
   };
 
   return (
-    <div className="bg-white px-4 py-3 flex items-center justify-between border-t border-gray-200 sm:px-6">
+    <div className="bg-card px-4 py-3 flex items-center justify-between border-t border-border sm:px-6">
       <div className="flex-1 flex justify-between sm:hidden">
         {currentPage > 1 ? (
           <Link
             href={getPageUrl(currentPage - 1)}
-            className="relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50"
+            className="relative inline-flex items-center px-4 py-2 border border-border text-sm font-medium rounded-lg text-foreground bg-background hover:bg-accent transition-colors duration-200"
           >
             Previous
           </Link>
         ) : (
-          <span className="relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-400 bg-gray-100 cursor-not-allowed">
+          <span className="relative inline-flex items-center px-4 py-2 border border-border text-sm font-medium rounded-lg text-muted-foreground bg-muted cursor-not-allowed">
             Previous
           </span>
         )}
         {currentPage < totalPages ? (
           <Link
             href={getPageUrl(currentPage + 1)}
-            className="ml-3 relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50"
+            className="ml-3 relative inline-flex items-center px-4 py-2 border border-border text-sm font-medium rounded-lg text-foreground bg-background hover:bg-accent transition-colors duration-200"
           >
             Next
           </Link>
         ) : (
-          <span className="ml-3 relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-400 bg-gray-100 cursor-not-allowed">
+          <span className="ml-3 relative inline-flex items-center px-4 py-2 border border-border text-sm font-medium rounded-lg text-muted-foreground bg-muted cursor-not-allowed">
             Next
           </span>
         )}
       </div>
       <div className="hidden sm:flex-1 sm:flex sm:items-center sm:justify-between">
         <div>
-          <p className="text-sm text-gray-700">
-            Showing page <span className="font-medium">{currentPage}</span> of{' '}
-            <span className="font-medium">{totalPages}</span>
+          <p className="text-sm text-muted-foreground">
+            Showing page             <span className="font-medium text-foreground">{currentPage}</span> of{' '}
+            <span className="font-medium text-foreground">{totalPages}</span>
           </p>
         </div>
         <div>

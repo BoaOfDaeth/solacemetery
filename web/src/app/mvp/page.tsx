@@ -3,6 +3,7 @@ import { query } from '@/lib/db';
 import Link from 'next/link';
 import TablePageLayout from '@/components/TablePageLayout';
 import Pagination from '@/components/Pagination';
+import ModernTable from '@/components/ModernTable';
 
 // Force dynamic rendering - this page should not be statically generated
 export const dynamic = 'force-dynamic';
@@ -83,61 +84,49 @@ export default async function MvpPage({
   const { records, currentPage, totalPages } = await getMvpData(page, limit);
 
   return (
-    <TablePageLayout title="Mob vs Player records">
-      <div className="overflow-x-auto">
-        <table className="min-w-full divide-y divide-gray-200">
-          <thead className="bg-gray-50">
-            <tr>
-              <th className="px-3 sm:px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                Mob
-              </th>
-              <th className="px-3 sm:px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                Victim
-              </th>
-            </tr>
-          </thead>
-          <tbody className="bg-white divide-y divide-gray-200">
-            {records
-              .map(record => (
-                <tr key={record.id} className="hover:bg-gray-50">
-                  <td className="px-3 sm:px-6 py-4 text-sm font-medium text-gray-900 min-w-0">
-                    <div className="flex flex-col">
-                      <FormatPlayer
-                        name={record.killer}
-                        linkType="mob"
-                        truncate={true}
-                        maxLength={25}
-                      />
-                      {record.time && (
-                        <div className="text-xs text-gray-400 mt-0.5">
-                          {record.time}
-                        </div>
-                      )}
-                    </div>
-                  </td>
-                  <td className="px-3 sm:px-6 py-4 text-sm text-gray-500 min-w-0">
-                    <FormatPlayer
-                      name={record.victim}
-                      level={record.vlevel}
-                      truncate={true}
-                      maxLength={20}
-                    />
-                  </td>
-                </tr>
-              ))}
-            {records.length === 0 && (
-              <tr>
-                <td
-                  colSpan={2}
-                  className="px-3 sm:px-6 py-4 text-center text-sm text-gray-500"
-                >
-                  No MVP records found
-                </td>
-              </tr>
-            )}
-          </tbody>
-        </table>
-      </div>
+    <TablePageLayout 
+      title="Mob vs Player" 
+      subtitle="MVP Records"
+    >
+      <ModernTable
+        title=""
+        columns={[
+          { key: 'mob', label: 'Mob' },
+          { key: 'victim', label: 'Victim' }
+        ]}
+        data={records}
+        renderCell={(key, value, row) => {
+          if (key === 'mob') {
+            return (
+              <div className="flex flex-col">
+                <FormatPlayer
+                  name={row.killer}
+                  linkType="mob"
+                  truncate={true}
+                  maxLength={25}
+                />
+                {row.time && (
+                  <div className="text-xs text-muted-foreground mt-1">
+                    {row.time}
+                  </div>
+                )}
+              </div>
+            );
+          }
+          if (key === 'victim') {
+            return (
+              <FormatPlayer
+                name={row.victim}
+                level={row.vlevel}
+                truncate={true}
+                maxLength={20}
+              />
+            );
+          }
+          return value;
+        }}
+        className="border-0 shadow-none"
+      />
       
       {totalPages > 1 && (
         <Pagination currentPage={currentPage} totalPages={totalPages} basePath="/mvp" />

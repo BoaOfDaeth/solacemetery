@@ -3,6 +3,7 @@ import { query } from '@/lib/db';
 import { notFound } from 'next/navigation';
 import TablePageLayout from '@/components/TablePageLayout';
 import Pagination from '@/components/Pagination';
+import ModernTable from '@/components/ModernTable';
 
 interface SearchResult {
   name: string;
@@ -127,52 +128,44 @@ export default async function SearchPage({
   return (
     <TablePageLayout 
       title="Search Results"
-      subtitle={`Found ${searchData.total} result${searchData.total !== 1 ? 's' : ''} for "${decodedQuery}"`}
+      subtitle={`${searchData.total} result${searchData.total !== 1 ? 's' : ''} for "${decodedQuery}"`}
     >
-      {searchData.results.length > 0 ? (
-        <table className="min-w-full divide-y divide-gray-200">
-          <thead className="bg-gray-50">
-            <tr>
-              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                Name
-              </th>
-              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                Type
-              </th>
-            </tr>
-          </thead>
-          <tbody className="divide-y divide-gray-200">
-            {searchData.results.map((result, index) => (
-              <tr key={index} className="hover:bg-gray-50">
-                <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
-                  <Link
-                    href={result.type === 'character' 
-                      ? `/character/${encodeURIComponent(result.name)}`
-                      : `/mob/${encodeURIComponent(result.name)}`
-                    }
-                    className="text-blue-600 hover:text-blue-800 hover:underline"
-                  >
-                    {result.name}
-                  </Link>
-                </td>
-                <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                  <span className={`inline-flex px-2 py-1 text-xs font-semibold rounded-full ${
-                    result.type === 'character' 
-                      ? 'bg-blue-100 text-blue-800' 
-                      : 'bg-red-100 text-red-800'
-                  }`}>
-                    {result.type === 'character' ? 'Character' : 'Monster'}
-                  </span>
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      ) : (
-        <div className="px-6 py-4 text-center text-sm text-gray-500">
-          No results found for "{decodedQuery}"
-        </div>
-      )}
+      <ModernTable
+        title=""
+        columns={[
+          { key: 'name', label: 'Name' },
+          { key: 'type', label: 'Type' }
+        ]}
+        data={searchData.results}
+        renderCell={(key, value, row) => {
+          if (key === 'name') {
+            return (
+              <Link
+                href={row.type === 'character' 
+                  ? `/character/${encodeURIComponent(row.name)}`
+                  : `/mob/${encodeURIComponent(row.name)}`
+                }
+                className="text-primary hover:text-primary/80 hover:underline font-medium"
+              >
+                {row.name}
+              </Link>
+            );
+          }
+          if (key === 'type') {
+            return (
+              <span className={`inline-flex px-2.5 py-0.5 text-xs font-medium rounded-full ${
+                row.type === 'character' 
+                  ? 'bg-primary/10 text-primary' 
+                  : 'bg-destructive/10 text-destructive'
+              }`}>
+                {row.type === 'character' ? 'Character' : 'Monster'}
+              </span>
+            );
+          }
+          return value;
+        }}
+        className="border-0 shadow-none"
+      />
       
       {searchData.totalPages > 1 && (
         <Pagination 

@@ -29,30 +29,41 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        {/* Navigation */}
-        <nav className="bg-gray-800 shadow-lg">
+        {/* Modern Navigation */}
+        <nav className="sticky top-0 z-50 w-full border-b border-border/40 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="flex items-center justify-between h-16">
-              <div className="flex items-center space-x-4 sm:space-x-8">
+              {/* Logo/Brand */}
+              <div className="flex items-center space-x-2">
+                <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-primary to-primary/80 flex items-center justify-center">
+                  <span className="text-primary-foreground font-bold text-sm">S</span>
+                </div>
+                <span className="font-semibold text-foreground hidden sm:block">Solace Stats</span>
+              </div>
+              
+              {/* Navigation Links */}
+              <div className="flex items-center space-x-1">
                 <Link
                   href="/"
-                  className="text-white hover:text-gray-300 px-2 sm:px-3 py-2 text-sm font-medium"
+                  className="relative px-3 py-2 text-sm font-medium text-muted-foreground hover:text-foreground transition-colors duration-200 rounded-md hover:bg-accent/50"
                 >
-                  Stats
+                  <span className="relative z-10">Stats</span>
                 </Link>
                 <Link
                   href="/pvp"
-                  className="text-gray-300 hover:text-white px-2 sm:px-3 py-2 text-sm font-medium"
+                  className="relative px-3 py-2 text-sm font-medium text-muted-foreground hover:text-foreground transition-colors duration-200 rounded-md hover:bg-accent/50"
                 >
-                  PVP
+                  <span className="relative z-10">PVP</span>
                 </Link>
                 <Link
                   href="/mvp"
-                  className="text-gray-300 hover:text-white px-2 sm:px-3 py-2 text-sm font-medium"
+                  className="relative px-3 py-2 text-sm font-medium text-muted-foreground hover:text-foreground transition-colors duration-200 rounded-md hover:bg-accent/50"
                 >
-                  MVP
+                  <span className="relative z-10">MVP</span>
                 </Link>
               </div>
+              
+              {/* Search */}
               <div className="flex items-center">
                 <SearchForm />
               </div>
