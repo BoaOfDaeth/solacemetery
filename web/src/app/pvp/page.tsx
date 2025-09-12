@@ -88,7 +88,7 @@ export default async function PvpPage({
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-6 pb-8">
         <div className="bg-card border border-border rounded-xl shadow-sm overflow-hidden">
           <ModernTable
-        title=""
+        title="Player vs Player Records"
         columns={[
           { key: 'killer', label: 'Killer' },
           { key: 'victim', label: 'Victim' }
