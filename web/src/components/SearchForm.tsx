@@ -11,12 +11,12 @@ export default function SearchForm() {
   };
 
   return (
-    <form onSubmit={handleSubmit} className="relative">
+    <form onSubmit={handleSubmit} className="relative w-full">
       <div className="relative group">
         {/* Search Icon */}
-        <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+        <div className="absolute inset-y-0 left-0 pl-2 sm:pl-3 flex items-center pointer-events-none">
           <svg
-            className="h-4 w-4 text-muted-foreground group-focus-within:text-primary transition-colors duration-200"
+            className="h-3.5 w-3.5 sm:h-4 sm:w-4 text-muted-foreground group-focus-within:text-primary transition-colors duration-200"
             fill="none"
             stroke="currentColor"
             viewBox="0 0 24 24"
@@ -33,13 +33,12 @@ export default function SearchForm() {
         <input
           type="text"
           name="search"
-          placeholder="Search players, mobs..."
-          className="pl-10 pr-4 py-2 w-40 sm:w-48 md:w-64 text-sm bg-background border border-input rounded-lg text-foreground placeholder-muted-foreground focus:outline-none focus:ring-2 focus:ring-ring focus:border-transparent transition-all duration-200 hover:border-ring/50"
-          style={{ fontSize: '16px' }} // Prevent zoom on iPhone
+          placeholder="Search..."
+          className="w-full pl-7 sm:pl-10 pr-3 sm:pr-4 py-1.5 sm:py-2 text-base bg-background border border-input rounded-md sm:rounded-lg text-foreground placeholder-muted-foreground focus:outline-none focus:ring-1 sm:focus:ring-2 focus:ring-ring focus:border-transparent transition-all duration-200 hover:border-ring/50"
         />
         
         {/* Focus ring effect */}
-        <div className="absolute inset-0 rounded-lg ring-0 ring-ring/20 group-focus-within:ring-2 transition-all duration-200 pointer-events-none" />
+        <div className="absolute inset-0 rounded-md sm:rounded-lg ring-0 ring-ring/20 group-focus-within:ring-1 sm:group-focus-within:ring-2 transition-all duration-200 pointer-events-none" />
       </div>
     </form>
   );
