@@ -4,6 +4,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 import SearchForm from '@/components/SearchForm';
 import Footer from '@/components/Footer';
+import logoImage from '/public/images/logo.png';
 import './globals.css';
 
 const geistSans = Geist({
@@ -39,7 +40,7 @@ export default function RootLayout({
                 <Link href="/" className="flex items-center space-x-2 hover:opacity-80 transition-opacity duration-200 flex-shrink-0">
                   <div className="w-7 h-7 sm:w-8 sm:h-8 rounded-lg overflow-hidden flex items-center justify-center">
                     <Image
-                      src="/images/head.png"
+                      src={logoImage}
                       alt="Solace MUD Logo"
                       width={32}
                       height={32}
