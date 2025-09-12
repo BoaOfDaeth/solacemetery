@@ -124,16 +124,16 @@ export default async function CharacterPage({
   }
 
   return (
-    <div className="min-h-screen bg-gray-100 py-2">
+    <div className="min-h-screen bg-background py-2">
       <div className="max-w-7xl mx-auto px-0 sm:px-6 lg:px-8">
         {/* Header */}
         <div className="mb-2 text-center sm:text-left">
-          <h1 className="text-3xl font-bold text-gray-900">
+          <h1 className="text-3xl font-bold text-foreground">
             {decodedName}
           </h1>
           {characterData.characterInfo.race &&
             characterData.characterInfo.class && (
-              <p className="font-bold sm:ml-2">
+              <p className="font-semibold text-muted-foreground sm:ml-2">
                 {characterData.characterInfo.race}{' '}
                 {characterData.characterInfo.class}
               </p>
@@ -142,41 +142,41 @@ export default async function CharacterPage({
         {/* PVP Section */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-2">
           {/* PVP Kills */}
-          <div className="bg-white shadow">
-            <div className="px-6 py-4 border-b border-gray-200">
-              <h2 className="text-xl font-semibold text-gray-900">
+          <div className="bg-card border border-border rounded-xl shadow-sm overflow-hidden">
+            <div className="px-6 py-4 border-b border-border bg-muted/30">
+              <h2 className="text-lg font-semibold text-foreground">
                 PVP Kills ({characterData.statistics.pvp.kills})
               </h2>
             </div>
             <div className="overflow-x-auto">
-              <table className="min-w-full divide-y divide-gray-200">
-                <thead className="bg-gray-50">
+              <table className="min-w-full divide-y divide-border">
+                <thead className="bg-muted/50">
                   <tr>
-                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                    <th className="px-6 py-3 text-left text-xs font-medium text-muted-foreground uppercase tracking-wider">
                       Victim
                     </th>
-                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                    <th className="px-6 py-3 text-left text-xs font-medium text-muted-foreground uppercase tracking-wider">
                       Killed at Level
                     </th>
                   </tr>
                 </thead>
-                <tbody className="bg-white divide-y divide-gray-200">
+                <tbody className="bg-card divide-y divide-border">
                   {characterData.appearances.pvp.kills.map((kill: any) => (
                     <tr key={kill.id}>
-                      <td className="px-6 py-4 text-sm font-medium text-gray-900">
+                      <td className="px-6 py-4 text-sm font-medium text-foreground">
                         <div className="flex flex-col">
                           <FormatPlayer
                             name={kill.victim}
                             level={kill.vlevel}
                           />
                           {kill.time && (
-                            <div className="text-xs text-gray-400 mt-0.5">
+                            <div className="text-xs text-muted-foreground mt-0.5">
                               {kill.time}
                             </div>
                           )}
                         </div>
                       </td>
-                      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                      <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-muted-foreground">
                         {kill.klevel || '-'}
                       </td>
                     </tr>
@@ -185,7 +185,7 @@ export default async function CharacterPage({
                     <tr>
                       <td
                         colSpan={2}
-                        className="px-6 py-4 text-center text-sm text-gray-500"
+                        className="px-6 py-4 text-center text-sm font-medium text-muted-foreground"
                       >
                         No PVP kills recorded
                       </td>
@@ -242,7 +242,7 @@ export default async function CharacterPage({
                     <tr>
                       <td
                         colSpan={2}
-                        className="px-6 py-4 text-center text-sm text-gray-500"
+                        className="px-6 py-4 text-center text-sm font-medium text-muted-foreground"
                       >
                         No PVP deaths recorded
                       </td>
@@ -300,7 +300,7 @@ export default async function CharacterPage({
                     <tr>
                       <td
                         colSpan={2}
-                        className="px-6 py-4 text-center text-sm text-gray-500"
+                        className="px-6 py-4 text-center text-sm font-medium text-muted-foreground"
                       >
                         No MVP deaths recorded
                       </td>

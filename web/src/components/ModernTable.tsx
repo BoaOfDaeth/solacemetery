@@ -54,7 +54,7 @@ export default function ModernTable({
                 {columns.map((column) => (
                   <td
                     key={column.key}
-                    className={`px-6 py-4 whitespace-nowrap text-sm ${column.className || ''}`}
+                    className={`px-6 py-4 whitespace-nowrap text-sm font-medium ${column.className || ''}`}
                   >
                     {renderCell ? renderCell(column.key, row[column.key], row) : row[column.key]}
                   </td>
