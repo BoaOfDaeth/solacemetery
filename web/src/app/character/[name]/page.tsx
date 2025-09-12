@@ -128,13 +128,13 @@ export default async function CharacterPage({
     <div className="bg-background">
       <div className="max-w-7xl mx-auto px-2 sm:px-4 lg:px-6 py-4">
         {/* Header */}
-        <div className="mb-4 text-center sm:text-left">
+        <div className="mb-4 text-center">
           <h1 className="text-3xl font-bold text-foreground">
             {decodedName}
           </h1>
           {characterData.characterInfo.race &&
             characterData.characterInfo.class && (
-              <p className="font-semibold text-muted-foreground sm:ml-2">
+              <p className="font-semibold text-muted-foreground">
                 {characterData.characterInfo.race}{' '}
                 {characterData.characterInfo.class}
               </p>
