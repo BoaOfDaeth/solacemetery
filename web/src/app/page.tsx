@@ -199,24 +199,6 @@ export default async function Home() {
         </div>
       </div>
 
-      {/* Data Freshness Info */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
-        <div className="text-center">
-          <p className="text-sm text-muted-foreground opacity-0 hover:opacity-100 transition-opacity duration-200 cursor-default">
-            Data Cutoff Time: {getDataCutoffDate().toLocaleString('en-US', {
-              weekday: 'short',
-              month: 'short',
-              day: '2-digit',
-              hour: '2-digit',
-              minute: '2-digit',
-              second: '2-digit',
-              year: 'numeric',
-              hour12: false,
-              // timeZone: 'UTC'
-            }).replace(/,/g, '')}
-          </p>
-        </div>
-      </div>
 
     </div>
   );

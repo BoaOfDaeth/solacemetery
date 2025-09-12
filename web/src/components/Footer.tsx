@@ -1,4 +1,5 @@
 import { Icon } from '@iconify/react';
+import { getDataCutoffDate } from '@/lib/utils';
 
 export default function Footer() {
 
@@ -17,6 +18,22 @@ export default function Footer() {
             <Icon icon="tabler:brand-github" className="w-5 h-5" />
             <span className="text-sm">GitHub</span>
           </a>
+          
+          {/* Data Cutoff Time */}
+          <div className="text-center sm:text-right">
+            <p className="text-xs text-muted-foreground">
+              Data Cutoff: {getDataCutoffDate().toLocaleString('en-US', {
+                weekday: 'short',
+                month: 'short',
+                day: '2-digit',
+                hour: '2-digit',
+                minute: '2-digit',
+                second: '2-digit',
+                year: 'numeric',
+                hour12: false,
+              }).replace(/,/g, '')}
+            </p>
+          </div>
           
         </div>
       </div>
