@@ -32,6 +32,22 @@ export function getDataCutoffDate(): Date {
   return new Date(now.getTime() - (DATA_FRESHNESS_THRESHOLD_MINUTES * 60 * 1000));
 }
 
+/**
+ * SQL time filtering clause for database queries
+ * Returns the WHERE clause condition for filtering records by time cutoff
+ */
+export function getTimeFilterClause(): string {
+  return 'time IS NULL OR UNIX_TIMESTAMP(STR_TO_DATE(time, \'%a %b %d %H:%i:%s %Y\')) <= UNIX_TIMESTAMP(?)';
+}
+
+/**
+ * SQL time filtering clause for database queries with additional conditions
+ * Returns the WHERE clause condition for filtering records by time cutoff with AND
+ */
+export function getTimeFilterClauseWithAnd(): string {
+  return `AND (${getTimeFilterClause()})`;
+}
+
 interface PlayerData {
   name: string;
   level?: number;

@@ -1,4 +1,4 @@
-import { FormatPlayer, getDataCutoffDate } from '@/lib/utils';
+import { FormatPlayer, getDataCutoffDate, getTimeFilterClause } from '@/lib/utils';
 import { query } from '@/lib/db';
 import PageHeader from '@/components/PageHeader';
 
@@ -30,14 +30,14 @@ async function getStats(): Promise<Stats> {
     const mvpCount = await query(`
       SELECT COUNT(*) as count 
       FROM MVP 
-      WHERE time IS NULL OR UNIX_TIMESTAMP(STR_TO_DATE(time, '%a %b %d %H:%i:%s %Y')) <= UNIX_TIMESTAMP(?)
+      WHERE ${getTimeFilterClause()}
     `, [cutoffDate]);
     
     const pvpCount = await query(`
       SELECT COUNT(*) as count 
       FROM PVP 
       WHERE killer != victim 
-      AND (time IS NULL OR UNIX_TIMESTAMP(STR_TO_DATE(time, '%a %b %d %H:%i:%s %Y')) <= UNIX_TIMESTAMP(?))
+      AND (${getTimeFilterClause()})
     `, [cutoffDate]);
 
     // Get top 10 player killers with their race and class
@@ -49,7 +49,7 @@ async function getStats(): Promise<Stats> {
         MAX(kclass) as class
       FROM PVP 
       WHERE killer != victim 
-      AND (time IS NULL OR UNIX_TIMESTAMP(STR_TO_DATE(time, '%a %b %d %H:%i:%s %Y')) <= UNIX_TIMESTAMP(?))
+      AND (${getTimeFilterClause()})
       GROUP BY killer 
       ORDER BY kills DESC 
       LIMIT 10
@@ -62,7 +62,7 @@ async function getStats(): Promise<Stats> {
         SUM(vlevel) as total_levels
       FROM MVP 
       WHERE vlevel IS NOT NULL
-      AND (time IS NULL OR UNIX_TIMESTAMP(STR_TO_DATE(time, '%a %b %d %H:%i:%s %Y')) <= UNIX_TIMESTAMP(?))
+      AND (${getTimeFilterClause()})
       GROUP BY killer 
       ORDER BY total_levels DESC 
       LIMIT 10

@@ -1,7 +1,8 @@
 import Link from 'next/link';
 import { query } from '@/lib/db';
 import { notFound } from 'next/navigation';
-import PageHeader from '@/components/PageHeader';
+import TablePageLayout from '@/components/TablePageLayout';
+import Pagination from '@/components/Pagination';
 
 interface SearchResult {
   name: string;
@@ -13,9 +14,11 @@ interface SearchData {
   query: string;
   results: SearchResult[];
   total: number;
+  currentPage: number;
+  totalPages: number;
 }
 
-async function getSearchResults(searchQuery: string): Promise<SearchData | null> {
+async function getSearchResults(searchQuery: string, page: number = 1, limit: number = 50): Promise<SearchData | null> {
   try {
     if (!searchQuery || searchQuery.trim().length === 0) {
       return null;
@@ -75,10 +78,20 @@ async function getSearchResults(searchQuery: string): Promise<SearchData | null>
       return acc;
     }, [] as SearchResult[]);
 
+    // Calculate pagination
+    const total = groupedResults.length;
+    const totalPages = Math.ceil(total / limit);
+    const offset = (page - 1) * limit;
+    
+    // Get paginated results
+    const paginatedResults = groupedResults.slice(offset, offset + limit);
+
     return {
       query: searchQuery.trim(),
-      results: groupedResults,
-      total: groupedResults.length,
+      results: paginatedResults,
+      total,
+      currentPage: page,
+      totalPages,
     };
   } catch (error) {
     console.error('Error fetching search results:', error);
@@ -91,10 +104,10 @@ async function getSearchResults(searchQuery: string): Promise<SearchData | null>
 export default async function SearchPage({
   searchParams,
 }: {
-  searchParams: Promise<{ q?: string }>;
+  searchParams: Promise<{ q?: string; page?: string }>;
 }) {
   // Await searchParams before accessing its properties
-  const { q: searchQuery } = await searchParams;
+  const { q: searchQuery, page: pageParam } = await searchParams;
   
   if (!searchQuery) {
     notFound();
@@ -102,63 +115,72 @@ export default async function SearchPage({
 
   // Decode the search query to handle spaces properly
   const decodedQuery = decodeURIComponent(searchQuery);
-  const searchData = await getSearchResults(decodedQuery);
+  const page = parseInt(pageParam || '1');
+  const limit = 50;
+  
+  const searchData = await getSearchResults(decodedQuery, page, limit);
 
   if (!searchData) {
     notFound();
   }
 
   return (
-    <div className="min-h-screen bg-gray-100">
-      {/* Header */}
-      <PageHeader 
-        title="Search Results"
-        subtitle={`Found ${searchData.total} result${searchData.total !== 1 ? 's' : ''} for "${decodedQuery}"`}
-      />
-
-      {/* Search Results */}
-      <div className="max-w-7xl mx-auto pb-2">
-        {searchData.results.length > 0 ? (
-          <table className="min-w-full divide-y divide-gray-200 bg-white">
-            <thead className="bg-gray-50">
-              <tr>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                  Name
-                </th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                  Type
-                </th>
+    <TablePageLayout 
+      title="Search Results"
+      subtitle={`Found ${searchData.total} result${searchData.total !== 1 ? 's' : ''} for "${decodedQuery}"`}
+    >
+      {searchData.results.length > 0 ? (
+        <table className="min-w-full divide-y divide-gray-200">
+          <thead className="bg-gray-50">
+            <tr>
+              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                Name
+              </th>
+              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                Type
+              </th>
+            </tr>
+          </thead>
+          <tbody className="divide-y divide-gray-200">
+            {searchData.results.map((result, index) => (
+              <tr key={index} className="hover:bg-gray-50">
+                <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
+                  <Link
+                    href={result.type === 'character' 
+                      ? `/character/${encodeURIComponent(result.name)}`
+                      : `/mob/${encodeURIComponent(result.name)}`
+                    }
+                    className="text-blue-600 hover:text-blue-800 hover:underline"
+                  >
+                    {result.name}
+                  </Link>
+                </td>
+                <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                  <span className={`inline-flex px-2 py-1 text-xs font-semibold rounded-full ${
+                    result.type === 'character' 
+                      ? 'bg-blue-100 text-blue-800' 
+                      : 'bg-red-100 text-red-800'
+                  }`}>
+                    {result.type === 'character' ? 'Character' : 'Monster'}
+                  </span>
+                </td>
               </tr>
-            </thead>
-            <tbody className="divide-y divide-gray-200">
-              {searchData.results.map((result, index) => (
-                <tr key={index} className="hover:bg-gray-50">
-                  <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
-                    <Link
-                      href={result.type === 'character' 
-                        ? `/character/${encodeURIComponent(result.name)}`
-                        : `/mob/${encodeURIComponent(result.name)}`
-                      }
-                      className="text-blue-600 hover:text-blue-800 hover:underline"
-                    >
-                      {result.name}
-                    </Link>
-                  </td>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                    <span className={`inline-flex px-2 py-1 text-xs font-semibold rounded-full ${
-                      result.type === 'character' 
-                        ? 'bg-blue-100 text-blue-800' 
-                        : 'bg-red-100 text-red-800'
-                    }`}>
-                      {result.type === 'character' ? 'Character' : 'Monster'}
-                    </span>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        ) : null}
-      </div>
-    </div>
+            ))}
+          </tbody>
+        </table>
+      ) : (
+        <div className="px-6 py-4 text-center text-sm text-gray-500">
+          No results found for "{decodedQuery}"
+        </div>
+      )}
+      
+      {searchData.totalPages > 1 && (
+        <Pagination 
+          currentPage={searchData.currentPage} 
+          totalPages={searchData.totalPages} 
+          basePath={`/search?q=${encodeURIComponent(decodedQuery)}`}
+        />
+      )}
+    </TablePageLayout>
   );
 }

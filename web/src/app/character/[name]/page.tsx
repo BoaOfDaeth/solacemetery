@@ -1,4 +1,4 @@
-import { FormatPlayer, getDataCutoffDate } from '@/lib/utils';
+import { FormatPlayer, getDataCutoffDate, getTimeFilterClauseWithAnd } from '@/lib/utils';
 import { query } from '@/lib/db';
 import { notFound } from 'next/navigation';
 
@@ -37,7 +37,7 @@ async function getCharacterData(name: string): Promise<CharacterData | null> {
       SELECT DISTINCT krace as race, kclass as class
       FROM PVP 
       WHERE killer = ? 
-      AND (time IS NULL OR UNIX_TIMESTAMP(STR_TO_DATE(time, '%a %b %d %H:%i:%s %Y')) <= UNIX_TIMESTAMP(?))
+      ${getTimeFilterClauseWithAnd()}
       LIMIT 1
     `, [name, cutoffTime]);
 
@@ -46,7 +46,7 @@ async function getCharacterData(name: string): Promise<CharacterData | null> {
       SELECT id, victim, vlevel, klevel, time
       FROM PVP 
       WHERE killer = ? AND killer != victim
-      AND (time IS NULL OR UNIX_TIMESTAMP(STR_TO_DATE(time, '%a %b %d %H:%i:%s %Y')) <= UNIX_TIMESTAMP(?))
+      ${getTimeFilterClauseWithAnd()}
       ORDER BY id DESC
     `, [name, cutoffTime]);
 
@@ -55,7 +55,7 @@ async function getCharacterData(name: string): Promise<CharacterData | null> {
       SELECT id, killer, klevel, krace, kclass, vlevel, time
       FROM PVP 
       WHERE victim = ? AND killer != victim
-      AND (time IS NULL OR UNIX_TIMESTAMP(STR_TO_DATE(time, '%a %b %d %H:%i:%s %Y')) <= UNIX_TIMESTAMP(?))
+      ${getTimeFilterClauseWithAnd()}
       ORDER BY id DESC
     `, [name, cutoffTime]);
 
@@ -64,16 +64,16 @@ async function getCharacterData(name: string): Promise<CharacterData | null> {
       SELECT id, killer, vlevel, time
       FROM MVP 
       WHERE victim = ?
-      AND (time IS NULL OR UNIX_TIMESTAMP(STR_TO_DATE(time, '%a %b %d %H:%i:%s %Y')) <= UNIX_TIMESTAMP(?))
+      ${getTimeFilterClauseWithAnd()}
       ORDER BY id DESC
     `, [name, cutoffTime]);
 
     // Calculate statistics in a single query for better performance
     const stats = await query(`
       SELECT 
-        (SELECT COUNT(*) FROM PVP WHERE killer = ? AND killer != victim AND (time IS NULL OR UNIX_TIMESTAMP(STR_TO_DATE(time, '%a %b %d %H:%i:%s %Y')) <= UNIX_TIMESTAMP(?))) as pvp_kills,
-        (SELECT COUNT(*) FROM PVP WHERE victim = ? AND killer != victim AND (time IS NULL OR UNIX_TIMESTAMP(STR_TO_DATE(time, '%a %b %d %H:%i:%s %Y')) <= UNIX_TIMESTAMP(?))) as pvp_deaths,
-        (SELECT COUNT(*) FROM MVP WHERE victim = ? AND (time IS NULL OR UNIX_TIMESTAMP(STR_TO_DATE(time, '%a %b %d %H:%i:%s %Y')) <= UNIX_TIMESTAMP(?))) as mvp_deaths
+        (SELECT COUNT(*) FROM PVP WHERE killer = ? AND killer != victim ${getTimeFilterClauseWithAnd()}) as pvp_kills,
+        (SELECT COUNT(*) FROM PVP WHERE victim = ? AND killer != victim ${getTimeFilterClauseWithAnd()}) as pvp_deaths,
+        (SELECT COUNT(*) FROM MVP WHERE victim = ? ${getTimeFilterClauseWithAnd()}) as mvp_deaths
     `, [name, cutoffTime, name, cutoffTime, name, cutoffTime]);
 
     return {

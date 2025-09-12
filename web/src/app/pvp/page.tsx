@@ -1,7 +1,8 @@
-import { FormatPlayer, getDataCutoffDate } from '@/lib/utils';
+import { FormatPlayer, getDataCutoffDate, getTimeFilterClauseWithAnd } from '@/lib/utils';
 import { query } from '@/lib/db';
 import Link from 'next/link';
-import PageHeader from '@/components/PageHeader';
+import TablePageLayout from '@/components/TablePageLayout';
+import Pagination from '@/components/Pagination';
 
 interface PvpRecord {
   id: number;
@@ -34,7 +35,7 @@ async function getPvpData(page: number = 1, limit: number = 50): Promise<PvpData
       SELECT COUNT(*) as count
       FROM PVP
       WHERE killer != victim
-      AND (time IS NULL OR UNIX_TIMESTAMP(STR_TO_DATE(time, '%a %b %d %H:%i:%s %Y')) <= UNIX_TIMESTAMP(?))
+      ${getTimeFilterClauseWithAnd()}
     `, [cutoffTime]);
     
     const pvpTotal = (pvpTotalCount as any[])[0]?.count || 0;
@@ -45,7 +46,7 @@ async function getPvpData(page: number = 1, limit: number = 50): Promise<PvpData
       SELECT id, killer, victim, klevel, vlevel, krace, kclass, time
       FROM PVP 
       WHERE killer != victim
-      AND (time IS NULL OR UNIX_TIMESTAMP(STR_TO_DATE(time, '%a %b %d %H:%i:%s %Y')) <= UNIX_TIMESTAMP(?))
+      ${getTimeFilterClauseWithAnd()}
       ORDER BY id DESC
       LIMIT ${limit} OFFSET ${offset}
     `, [cutoffTime]);
@@ -69,58 +70,6 @@ async function getPvpData(page: number = 1, limit: number = 50): Promise<PvpData
   }
 }
 
-function Pagination({ currentPage, totalPages }: { currentPage: number; totalPages: number }) {
-  const maxVisiblePages = 5;
-  let startPage = Math.max(1, currentPage - Math.floor(maxVisiblePages / 2));
-  const endPage = Math.min(totalPages, startPage + maxVisiblePages - 1);
-  
-  if (endPage - startPage + 1 < maxVisiblePages) {
-    startPage = Math.max(1, endPage - maxVisiblePages + 1);
-  }
-
-  const pages = [];
-  for (let i = startPage; i <= endPage; i++) {
-    pages.push(i);
-  }
-
-  return (
-    <div className="flex items-center justify-center px-6 py-4 border-t border-gray-200">
-      <div className="flex items-center space-x-2">
-        {currentPage > 1 && (
-          <Link
-            href={`/pvp?page=1`}
-            className="px-3 py-2 text-sm font-medium text-gray-500 bg-white border border-gray-300 hover:bg-gray-50"
-          >
-            First
-          </Link>
-        )}
-        
-        {pages.map(page => (
-          <Link
-            key={page}
-            href={`/pvp?page=${page}`}
-            className={`px-3 py-2 text-sm font-medium ${
-              page === currentPage
-                ? 'text-blue-600 bg-blue-50 border border-blue-300'
-                : 'text-gray-500 bg-white border border-gray-300 hover:bg-gray-50'
-            }`}
-          >
-            {page}
-          </Link>
-        ))}
-        
-        {currentPage < totalPages && (
-          <Link
-            href={`/pvp?page=${totalPages}`}
-            className="px-3 py-2 text-sm font-medium text-gray-500 bg-white border border-gray-300 hover:bg-gray-50"
-          >
-            Last
-          </Link>
-        )}
-      </div>
-    </div>
-  );
-}
 
 export default async function PvpPage({
   searchParams,
@@ -135,71 +84,61 @@ export default async function PvpPage({
   const { pvpRecords, currentPage, pvpTotalPages } = await getPvpData(page, limit);
 
   return (
-    <div className="min-h-screen bg-gray-100">
-      {/* Header */}
-      <PageHeader title="Player vs Player records" />
-
-      {/* PVP Table */}
-      <div className="max-w-7xl mx-auto pb-8">
-        <div className="bg-white shadow">
-          <table className="min-w-full divide-y divide-gray-200">
-            <thead className="bg-gray-50">
-              <tr>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                  Killer
-                </th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                  Victim
-                </th>
-              </tr>
-            </thead>
-            <tbody className="bg-white divide-y divide-gray-200">
-              {pvpRecords
-                .map(record => (
-                  <tr key={record.id} className="hover:bg-gray-50">
-                    <td className="px-6 py-4 text-sm font-medium text-gray-900">
-                      <div className="flex flex-col">
-                        <FormatPlayer
-                          name={record.killer}
-                          level={record.klevel}
-                          race={record.krace}
-                          class={record.kclass}
-                        />
-                        {record.time && (
-                          <div className="text-xs text-gray-400 mt-0.5">
-                            {record.time}
-                          </div>
-                        )}
+    <TablePageLayout title="Player vs Player records">
+      <table className="min-w-full divide-y divide-gray-200">
+        <thead className="bg-gray-50">
+          <tr>
+            <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+              Killer
+            </th>
+            <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+              Victim
+            </th>
+          </tr>
+        </thead>
+        <tbody className="bg-white divide-y divide-gray-200">
+          {pvpRecords
+            .map(record => (
+              <tr key={record.id} className="hover:bg-gray-50">
+                <td className="px-6 py-4 text-sm font-medium text-gray-900">
+                  <div className="flex flex-col">
+                    <FormatPlayer
+                      name={record.killer}
+                      level={record.klevel}
+                      race={record.krace}
+                      class={record.kclass}
+                    />
+                    {record.time && (
+                      <div className="text-xs text-gray-400 mt-0.5">
+                        {record.time}
                       </div>
-                    </td>
-                    <td className="px-6 py-4 text-sm text-gray-500">
-                      <FormatPlayer
-                        name={record.victim}
-                        level={record.vlevel}
-                      />
-                    </td>
-                  </tr>
-                ))}
-              {pvpRecords.length === 0 && (
-                <tr>
-                  <td
-                    colSpan={2}
-                    className="px-6 py-4 text-center text-sm text-gray-500"
-                  >
-                    No PVP records found
-                  </td>
-                </tr>
-              )}
-            </tbody>
-          </table>
-          
-          {pvpTotalPages > 1 && (
-            <Pagination currentPage={currentPage} totalPages={pvpTotalPages} />
+                    )}
+                  </div>
+                </td>
+                <td className="px-6 py-4 text-sm text-gray-500">
+                  <FormatPlayer
+                    name={record.victim}
+                    level={record.vlevel}
+                  />
+                </td>
+              </tr>
+            ))}
+          {pvpRecords.length === 0 && (
+            <tr>
+              <td
+                colSpan={2}
+                className="px-6 py-4 text-center text-sm text-gray-500"
+              >
+                No PVP records found
+              </td>
+            </tr>
           )}
-        </div>
-      </div>
-
-
-    </div>
+        </tbody>
+      </table>
+      
+      {pvpTotalPages > 1 && (
+        <Pagination currentPage={currentPage} totalPages={pvpTotalPages} basePath="/pvp" />
+      )}
+    </TablePageLayout>
   );
 }
