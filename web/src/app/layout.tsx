@@ -3,6 +3,7 @@ import { Geist, Geist_Mono } from 'next/font/google';
 import Link from 'next/link';
 import SearchForm from '@/components/SearchForm';
 import { ThemeProvider } from '@/components/ThemeProvider';
+import Footer from '@/components/Footer';
 import './globals.css';
 
 const geistSans = Geist({
@@ -28,7 +29,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+        className={`${geistSans.variable} ${geistMono.variable} antialiased min-h-screen flex flex-col`}
       >
         <ThemeProvider>
           {/* Modern Navigation */}
@@ -82,7 +83,10 @@ export default function RootLayout({
               </div>
             </div>
           </nav>
-          {children}
+          <main className="flex-1">
+            {children}
+          </main>
+          <Footer />
         </ThemeProvider>
       </body>
     </html>

@@ -16,9 +16,12 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
   const [isLoaded, setIsLoaded] = useState(false);
 
   useEffect(() => {
-    // Use the configured default theme
-    setCurrentTheme(defaultTheme);
-    applyTheme(defaultTheme);
+    // Get theme from localStorage or use default
+    const storedTheme = getStoredTheme();
+    const initialTheme = storedTheme || defaultTheme;
+    
+    setCurrentTheme(initialTheme);
+    applyTheme(initialTheme);
     setIsLoaded(true);
   }, []);
 
