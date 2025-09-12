@@ -27,7 +27,7 @@ async function getMobData(name: string): Promise<MobData | null> {
       SELECT id, victim, vlevel, time
       FROM MVP 
       WHERE killer = ?
-      AND (time IS NULL OR time <= ?)
+      AND (time IS NULL OR UNIX_TIMESTAMP(STR_TO_DATE(time, '%a %b %d %H:%i:%s %Y')) <= UNIX_TIMESTAMP(?))
       ORDER BY id DESC
     `, [name, cutoffTime]);
 
@@ -39,7 +39,7 @@ async function getMobData(name: string): Promise<MobData | null> {
         AVG(vlevel) as avg_level
       FROM MVP 
       WHERE killer = ?
-      AND (time IS NULL OR time <= ?)
+      AND (time IS NULL OR UNIX_TIMESTAMP(STR_TO_DATE(time, '%a %b %d %H:%i:%s %Y')) <= UNIX_TIMESTAMP(?))
     `, [name, cutoffTime]);
 
     return {

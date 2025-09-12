@@ -26,20 +26,19 @@ interface Stats {
 async function getStats(): Promise<Stats> {
   try {
     const cutoffDate = getDataCutoffDate();
-    const cutoffTimeString = cutoffDate.toISOString().slice(0, 19).replace('T', ' ');
     
     const mvpCount = await query(`
       SELECT COUNT(*) as count 
       FROM MVP 
-      WHERE time IS NULL OR STR_TO_DATE(time, '%a %b %d %H:%i:%s %Y') <= ?
-    `, [cutoffTimeString]);
+      WHERE time IS NULL OR UNIX_TIMESTAMP(STR_TO_DATE(time, '%a %b %d %H:%i:%s %Y')) <= UNIX_TIMESTAMP(?)
+    `, [cutoffDate]);
     
     const pvpCount = await query(`
       SELECT COUNT(*) as count 
       FROM PVP 
       WHERE killer != victim 
-      AND (time IS NULL OR STR_TO_DATE(time, '%a %b %d %H:%i:%s %Y') <= ?)
-    `, [cutoffTimeString]);
+      AND (time IS NULL OR UNIX_TIMESTAMP(STR_TO_DATE(time, '%a %b %d %H:%i:%s %Y')) <= UNIX_TIMESTAMP(?))
+    `, [cutoffDate]);
 
     // Get top 10 player killers with their race and class
     const topKillers = await query(`
@@ -50,11 +49,11 @@ async function getStats(): Promise<Stats> {
         MAX(kclass) as class
       FROM PVP 
       WHERE killer != victim 
-      AND (time IS NULL OR STR_TO_DATE(time, '%a %b %d %H:%i:%s %Y') <= ?)
+      AND (time IS NULL OR UNIX_TIMESTAMP(STR_TO_DATE(time, '%a %b %d %H:%i:%s %Y')) <= UNIX_TIMESTAMP(?))
       GROUP BY killer 
       ORDER BY kills DESC 
       LIMIT 10
-    `, [cutoffTimeString]);
+    `, [cutoffDate]);
 
     // Get top 10 monster killers
     const topMonsterKillers = await query(`
@@ -63,11 +62,11 @@ async function getStats(): Promise<Stats> {
         SUM(vlevel) as total_levels
       FROM MVP 
       WHERE vlevel IS NOT NULL
-      AND (time IS NULL OR STR_TO_DATE(time, '%a %b %d %H:%i:%s %Y') <= ?)
+      AND (time IS NULL OR UNIX_TIMESTAMP(STR_TO_DATE(time, '%a %b %d %H:%i:%s %Y')) <= UNIX_TIMESTAMP(?))
       GROUP BY killer 
       ORDER BY total_levels DESC 
       LIMIT 10
-    `, [cutoffTimeString]);
+    `, [cutoffDate]);
 
     return {
       mvp_records: (mvpCount as any[])[0]?.count || 0,
