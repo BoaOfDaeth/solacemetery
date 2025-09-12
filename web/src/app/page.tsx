@@ -99,6 +99,7 @@ export default async function Home() {
           <StatsCard
             title="PVP Records"
             value={stats.pvp_records.toLocaleString()}
+            href="/pvp"
             icon={
               <Icon icon="game-icons:backstab" className="w-6 h-6 text-primary" />
             }
@@ -106,6 +107,7 @@ export default async function Home() {
           <StatsCard
             title="MVP Records"
             value={stats.mvp_records.toLocaleString()}
+            href="/mvp"
             icon={
               <Icon icon="game-icons:crab-claw" className="w-6 h-6 text-primary" />
             }
@@ -114,6 +116,7 @@ export default async function Home() {
             title="Top Killer"
             value={stats.top_killers?.[0]?.kills || 0}
             description={stats.top_killers?.[0]?.killer || "No data"}
+            href={stats.top_killers?.[0]?.killer ? `/character/${encodeURIComponent(stats.top_killers[0].killer)}` : undefined}
             icon={
               <Icon icon="game-icons:scythe" className="w-6 h-6 text-primary" />
             }
