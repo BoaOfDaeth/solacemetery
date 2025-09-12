@@ -22,7 +22,7 @@ export default function StatsCard({
 }: StatsCardProps) {
   return (
     <div className={`bg-card border border-border rounded-xl p-6 shadow-sm hover:shadow-md transition-all duration-200 ${className}`}>
-      <div className="flex items-center justify-between">
+      <div className="flex items-center justify-between h-full">
         <div className="flex-1">
           <p className="text-sm font-medium text-muted-foreground mb-1">{title}</p>
           <div className="flex items-baseline space-x-2">
@@ -40,7 +40,7 @@ export default function StatsCard({
           )}
         </div>
         {icon && (
-          <div className="flex-shrink-0 ml-4">
+          <div className="flex-shrink-0 ml-4 flex items-center">
             <div className="w-12 h-12 rounded-lg bg-primary/10 flex items-center justify-center">
               {icon}
             </div>
