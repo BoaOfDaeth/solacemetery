@@ -9,7 +9,8 @@ WORKDIR /app
 
 # Install dependencies based on the preferred package manager
 COPY package.json package-lock.json* ./
-RUN npm ci --only=production
+RUN npm ci --omit=dev --no-audit --no-fund && \
+    npm cache clean --force
 
 # Rebuild the source code only when needed
 FROM base AS builder
@@ -24,6 +25,7 @@ ENV NEXT_TELEMETRY_DISABLED=1
 # Set build-time environment variables
 ENV NODE_ENV=production
 
+# Build the application
 RUN npm run build
 
 # Production image, copy all the files and run next
