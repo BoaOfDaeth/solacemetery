@@ -80,9 +80,16 @@ function parseHelpFile(filePath: string, category: string): HelpArticle[] {
         cleanContent = body.replace(/Syntax:\s*.+?(?:\n|$)/i, '').trim();
       }
       
+      // Create kebab-case slug from first 5 words of title
+      const titleWords = title.split(/\s+/).slice(0, 5);
+      const slug = titleWords
+        .join('-')
+        .replace(/[^a-zA-Z0-9-]/g, '') // Keep only alphanumeric and hyphens
+        .toLowerCase();
+      
       // Create article
       const article: HelpArticle = {
-        id: `${category}_${title.replace(/\s+/g, '_')}_${level}`,
+        id: slug,
         level,
         content: cleanContent,
         category,
