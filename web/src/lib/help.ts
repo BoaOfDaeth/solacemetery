@@ -36,6 +36,11 @@ let helpCache: HelpCache = {
 // Cache duration: 1 minute
 const CACHE_DURATION_MS = 60 * 1000;
 
+// Hardcoded filtering constants
+const RESTRICTED_CATEGORIES = ['unused', 'abyss', 'other'];
+const MIN_LEVEL = 0;
+const MAX_LEVEL = 36;
+
 /**
  * Parse a single help file and extract articles
  */
@@ -110,12 +115,30 @@ function parseAllHelpFiles(): HelpData {
       if (!file.endsWith('.are')) continue;
       
       const category = file.replace('.are', '').replace('helps_', '');
+      
+      // Skip if category is in restricted list
+      if (RESTRICTED_CATEGORIES.includes(category)) {
+        console.log(`Skipping category: ${category} (restricted)`);
+        continue;
+      }
+      
       const filePath = path.join(helpDir, file);
       
       console.log(`Parsing help file: ${file} (category: ${category})`);
       const fileArticles = parseHelpFile(filePath, category);
       
-      articles.push(...fileArticles);
+      // Filter articles by level range
+      const filteredArticles = fileArticles.filter(article => {
+        if (article.level < MIN_LEVEL) {
+          return false;
+        }
+        if (article.level > MAX_LEVEL) {
+          return false;
+        }
+        return true;
+      });
+      
+      articles.push(...filteredArticles);
       categories.push(category);
     }
     
