@@ -13,7 +13,7 @@ export interface HelpArticle {
 
 // Parsed help data structure
 export interface HelpData {
-  articles: HelpArticle[];
+  articlesMap: Map<string, HelpArticle>;
   categories: string[];
   totalArticles: number;
   lastUpdated: Date;
@@ -65,10 +65,8 @@ function parseHelpFile(filePath: string, category: string): HelpArticle[] {
       const level = parseInt(headerMatch[1]);
       const keywordLine = headerMatch[2].trim();
       
-      // Extract title (remove quotes but keep as single string)
-      const title = keywordLine
-        .replace(/^['"]|['"]$/g, '') // Remove surrounding quotes
-        .trim() || 'Untitled';
+      // Extract title (keep as-is, don't remove quotes)
+      const title = keywordLine.trim() || 'Untitled';
       
       // Extract syntax if present (look for "Syntax:" in content)
       const syntaxMatch = body.match(/Syntax:\s*(.+?)(?:\n|$)/i);
@@ -78,6 +76,18 @@ function parseHelpFile(filePath: string, category: string): HelpArticle[] {
       let cleanContent = body;
       if (syntaxMatch) {
         cleanContent = body.replace(/Syntax:\s*.+?(?:\n|$)/i, '').trim();
+      }
+      
+      // Skip articles with no content
+      if (!cleanContent || cleanContent.trim().length === 0) {
+        console.warn(`Skipping article with no content: ${title}`);
+        continue;
+      }
+      
+      // Skip articles with title less than 2 characters
+      if (!title || title.trim().length < 2) {
+        console.warn(`Skipping article with title too short: "${title}"`);
+        continue;
       }
       
       // Create kebab-case slug from first 5 words of title
@@ -111,8 +121,8 @@ function parseHelpFile(filePath: string, category: string): HelpArticle[] {
  * Parse all help files and return structured data
  */
 function parseAllHelpFiles(): HelpData {
-  const helpDir = path.join(process.cwd(), '..', 'help');
-  const articles: HelpArticle[] = [];
+  const helpDir = path.join(process.cwd(), '..', 'solace-helpdev');
+  const articlesMap = new Map<string, HelpArticle>();
   const categories: string[] = [];
   
   try {
@@ -134,34 +144,57 @@ function parseAllHelpFiles(): HelpData {
       console.log(`Parsing help file: ${file} (category: ${category})`);
       const fileArticles = parseHelpFile(filePath, category);
       
-      // Filter articles by level range
-      const filteredArticles = fileArticles.filter(article => {
-        if (article.level < MIN_LEVEL) {
-          return false;
-        }
-        if (article.level > MAX_LEVEL) {
-          return false;
-        }
-        return true;
-      });
+      // Filter articles by level range and add to map
+      let categoryHasArticles = false;
       
-      articles.push(...filteredArticles);
-      categories.push(category);
+      for (const article of fileArticles) {
+        if (article.level < MIN_LEVEL || article.level > MAX_LEVEL) {
+          continue;
+        }
+        
+        // Skip articles with no content
+        if (!article.content || article.content.trim().length === 0) {
+          console.warn(`Skipping article with no content: ${article.id}`);
+          continue;
+        }
+        
+        // Skip articles with title less than 2 characters
+        if (!article.title || article.title.trim().length < 2) {
+          console.warn(`Skipping article with title too short: "${article.title}"`);
+          continue;
+        }
+        
+        // Check for ID uniqueness
+        if (articlesMap.has(article.id)) {
+          console.warn(`Duplicate ID found: ${article.id}. Skipping duplicate.`);
+          continue;
+        }
+        
+        articlesMap.set(article.id, article);
+        categoryHasArticles = true;
+      }
+      
+      // Only add category if it has valid articles
+      if (categoryHasArticles) {
+        categories.push(category);
+      } else {
+        console.warn(`Skipping empty category: ${category}`);
+      }
     }
     
     // Sort categories alphabetically
     categories.sort();
     
     return {
-      articles,
+      articlesMap,
       categories,
-      totalArticles: articles.length,
+      totalArticles: articlesMap.size,
       lastUpdated: new Date()
     };
   } catch (error) {
     console.error('Error reading help directory:', error);
     return {
-      articles: [],
+      articlesMap: new Map(),
       categories: [],
       totalArticles: 0,
       lastUpdated: new Date()
@@ -248,9 +281,17 @@ export function searchHelpArticles(query: string): HelpArticle[] {
   const data = getHelpData();
   const searchTerm = query.toLowerCase();
   
-  return data.articles.filter(article => {
+  return Array.from(data.articlesMap.values()).filter(article => {
     // Search only in title
     return article.title.toLowerCase().includes(searchTerm);
   });
+}
+
+/**
+ * Get article by ID
+ */
+export function getArticleById(id: string): HelpArticle | undefined {
+  const data = getHelpData();
+  return data.articlesMap.get(id);
 }
 

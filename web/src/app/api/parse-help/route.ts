@@ -21,7 +21,10 @@ export async function GET(request: NextRequest) {
     // Otherwise return all help data
     const helpData = getHelpData();
     return NextResponse.json({
-      ...helpData,
+      articles: Array.from(helpData.articlesMap.values()),
+      categories: helpData.categories,
+      totalArticles: helpData.totalArticles,
+      lastUpdated: helpData.lastUpdated,
       timestamp: new Date().toISOString(),
       status: 'success'
     });
