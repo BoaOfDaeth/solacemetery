@@ -1,0 +1,3 @@
+[submodule "solace-helpdev"]
+	path = web/solace-helpdev
+	url = git@github.com:Solace-MUD/solace-helpdev.git
