@@ -118,7 +118,7 @@ function parseHelpFile(filePath: string, category: string): HelpArticle[] {
  * Parse all help files and return structured data
  */
 function parseAllHelpFiles(): HelpData {
-  const helpDir = path.join(process.cwd(), '..', 'solace-helpdev');
+  const helpDir = path.join(process.cwd(), 'solace-helpdev');
   const articlesMap = new Map<string, HelpArticle>();
   const categories: string[] = [];
   
