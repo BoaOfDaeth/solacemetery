@@ -172,59 +172,15 @@ export function getHelpData(): HelpData {
 }
 
 /**
- * Search help articles by keyword
+ * Search help articles by keyword (title only)
  */
-export function searchHelpArticles(query: string, level?: number): HelpArticle[] {
+export function searchHelpArticles(query: string): HelpArticle[] {
   const data = getHelpData();
   const searchTerm = query.toLowerCase();
   
   return data.articles.filter(article => {
-    // Filter by level if specified
-    if (level !== undefined && article.level !== level) {
-      return false;
-    }
-    
-    // Search in title and content
-    const titleMatch = article.title.toLowerCase().includes(searchTerm);
-    const contentMatch = article.content.toLowerCase().includes(searchTerm);
-    
-    return titleMatch || contentMatch;
+    // Search only in title
+    return article.title.toLowerCase().includes(searchTerm);
   });
 }
 
-/**
- * Get articles by category
- */
-export function getArticlesByCategory(category: string): HelpArticle[] {
-  const data = getHelpData();
-  return data.articles.filter(article => article.category === category);
-}
-
-/**
- * Get articles by level
- */
-export function getArticlesByLevel(level: number): HelpArticle[] {
-  const data = getHelpData();
-  return data.articles.filter(article => article.level === level);
-}
-
-/**
- * Get article by ID
- */
-export function getArticleById(id: string): HelpArticle | undefined {
-  const data = getHelpData();
-  return data.articles.find(article => article.id === id);
-}
-
-/**
- * Get cache statistics
- */
-export function getCacheStats() {
-  return {
-    hasData: !!helpCache.data,
-    lastFetch: helpCache.lastFetch,
-    isExpired: isCacheExpired(),
-    cacheAge: Date.now() - helpCache.lastFetch.getTime(),
-    totalArticles: helpCache.data?.totalArticles || 0
-  };
-}
