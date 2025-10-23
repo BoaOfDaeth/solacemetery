@@ -23,14 +23,14 @@ export interface HelpData {
 interface HelpCache {
   data: HelpData | null;
   lastFetch: Date;
-  isExpired: boolean;
+  isRefreshing: boolean;
 }
 
 // Global cache instance
 let helpCache: HelpCache = {
   data: null,
   lastFetch: new Date(0),
-  isExpired: true
+  isRefreshing: false
 };
 
 // Cache duration: 1 minute
@@ -149,26 +149,66 @@ function isCacheExpired(): boolean {
 }
 
 /**
- * Get help data with caching
+ * Background refresh function
+ */
+async function refreshCacheInBackground(): Promise<void> {
+  if (helpCache.isRefreshing) {
+    return; // Already refreshing
+  }
+  
+  helpCache.isRefreshing = true;
+  
+  try {
+    console.log('Background refresh: Parsing help files');
+    const data = parseAllHelpFiles();
+    
+    // Update cache with new data
+    helpCache = {
+      data,
+      lastFetch: new Date(),
+      isRefreshing: false
+    };
+    
+    console.log('Background refresh: Cache updated successfully');
+  } catch (error) {
+    console.error('Background refresh failed:', error);
+    helpCache.isRefreshing = false;
+  }
+}
+
+/**
+ * Get help data with stale-while-revalidate caching
  */
 export function getHelpData(): HelpData {
-  // Check if cache is valid
-  if (helpCache.data && !isCacheExpired()) {
+  // If no data exists, parse immediately
+  if (!helpCache.data) {
+    console.log('No cache data: Parsing help files immediately');
+    const data = parseAllHelpFiles();
+    
+    helpCache = {
+      data,
+      lastFetch: new Date(),
+      isRefreshing: false
+    };
+    
+    return data;
+  }
+  
+  // If cache is still valid, return it
+  if (!isCacheExpired()) {
     return helpCache.data;
   }
   
-  // Parse fresh data
-  console.log('Parsing help files (cache expired or empty)');
-  const data = parseAllHelpFiles();
+  // Cache is expired - return stale data and refresh in background
+  console.log('Cache expired: Returning stale data and refreshing in background');
   
-  // Update cache
-  helpCache = {
-    data,
-    lastFetch: new Date(),
-    isExpired: false
-  };
+  // Start background refresh (don't await)
+  refreshCacheInBackground().catch(error => {
+    console.error('Background refresh error:', error);
+  });
   
-  return data;
+  // Return stale data immediately
+  return helpCache.data;
 }
 
 /**
