@@ -34,9 +34,9 @@ const helpCache: HelpCache = {
 // Environment-based filtering constants
 const isProduction = process.env.NODE_ENV === 'production';
 
-const RESTRICTED_CATEGORIES = isProduction ? ['unused', 'abyss', 'other'] : [];
+const RESTRICTED_CATEGORIES = isProduction ? ['unused', 'abyss', 'unused', 'immortal', 'rom'] : [];
 const MIN_LEVEL = isProduction ? 0 : -Infinity;
-const MAX_LEVEL = isProduction ? 36 : Infinity;
+const MAX_LEVEL = isProduction ? 35 : Infinity;
 
 /**
  * Parse a single help file and extract articles
@@ -62,8 +62,8 @@ function parseHelpFile(filePath: string, category: string): HelpArticle[] {
       const level = parseInt(headerMatch[1]);
       const keywordLine = headerMatch[2].trim();
       
-      // Extract title (keep as-is, don't remove quotes)
-      const title = keywordLine.trim() || 'Untitled';
+      // Extract title (convert to lowercase, keep quotes)
+      const title = keywordLine.trim().toLowerCase() || 'untitled';
       
       // Extract syntax if present (look for "Syntax:" in content)
       const syntaxMatch = body.match(/Syntax:\s*(.+?)(?:\n|$)/i);

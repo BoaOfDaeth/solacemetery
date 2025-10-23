@@ -16,18 +16,18 @@ export default async function HelpArticlePage({ params }: HelpArticlePageProps) 
   }
 
   return (
-    <div className="min-h-screen bg-background">
-      <div className="container mx-auto px-4 py-8 max-w-4xl">
+    <div className="bg-background">
+      <div className="max-w-7xl mx-auto px-2 sm:px-4 lg:px-6 py-2">
         {/* Header */}
-        <div className="mb-8">
-          <h1 className="text-4xl font-bold text-foreground mb-4">
+        <div className="text-center">
+          <h1 className="text-3xl font-bold text-foreground mb-2">
             {article.title}
           </h1>
           
           {article.syntax && (
-            <div className="bg-muted/50 border border-border rounded-lg p-4 mb-6">
+            <div className="mb-4">
               <h3 className="text-sm font-medium text-muted-foreground mb-2">Syntax:</h3>
-              <code className="text-sm font-mono bg-background px-2 py-1 rounded border">
+              <code className="bg-muted/30 text-sm font-mono bg-background px-2 py-1 rounded border">
                 {article.syntax}
               </code>
             </div>
@@ -35,8 +35,8 @@ export default async function HelpArticlePage({ params }: HelpArticlePageProps) 
         </div>
 
         {/* Content */}
-        <div className="prose prose-lg max-w-none">
-          <div className="whitespace-pre-wrap text-foreground leading-relaxed">
+        <div className="prose prose-lg max-w-none ">
+          <div className="whitespace-pre-wrap text-foreground leading-relaxed font-mono text-sm bg-muted/30 p-4 rounded-lg border">
             {article.content}
           </div>
         </div>
