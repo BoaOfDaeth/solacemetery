@@ -22,24 +22,21 @@ export interface HelpData {
 // Cache structure
 interface HelpCache {
   data: HelpData | null;
-  lastFetch: Date;
-  isRefreshing: boolean;
+  isInitialized: boolean;
 }
 
 // Global cache instance
-let helpCache: HelpCache = {
+const helpCache: HelpCache = {
   data: null,
-  lastFetch: new Date(0),
-  isRefreshing: false
+  isInitialized: false
 };
 
-// Cache duration: 1 minute
-const CACHE_DURATION_MS = 60 * 1000;
+// Environment-based filtering constants
+const isProduction = process.env.NODE_ENV === 'production';
 
-// Hardcoded filtering constants
-const RESTRICTED_CATEGORIES = ['unused', 'abyss', 'other'];
-const MIN_LEVEL = 0;
-const MAX_LEVEL = 36;
+const RESTRICTED_CATEGORIES = isProduction ? ['unused', 'abyss', 'other'] : [];
+const MIN_LEVEL = isProduction ? 0 : -Infinity;
+const MAX_LEVEL = isProduction ? 36 : Infinity;
 
 /**
  * Parse a single help file and extract articles
@@ -203,75 +200,18 @@ function parseAllHelpFiles(): HelpData {
 }
 
 /**
- * Check if cache is expired
- */
-function isCacheExpired(): boolean {
-  const now = new Date();
-  const timeDiff = now.getTime() - helpCache.lastFetch.getTime();
-  return timeDiff > CACHE_DURATION_MS;
-}
-
-/**
- * Background refresh function
- */
-async function refreshCacheInBackground(): Promise<void> {
-  if (helpCache.isRefreshing) {
-    return; // Already refreshing
-  }
-  
-  helpCache.isRefreshing = true;
-  
-  try {
-    console.log('Background refresh: Parsing help files');
-    const data = parseAllHelpFiles();
-    
-    // Update cache with new data
-    helpCache = {
-      data,
-      lastFetch: new Date(),
-      isRefreshing: false
-    };
-    
-    console.log('Background refresh: Cache updated successfully');
-  } catch (error) {
-    console.error('Background refresh failed:', error);
-    helpCache.isRefreshing = false;
-  }
-}
-
-/**
- * Get help data with stale-while-revalidate caching
+ * Get help data (parse once, cache forever)
  */
 export function getHelpData(): HelpData {
-  // If no data exists, parse immediately
-  if (!helpCache.data) {
-    console.log('No cache data: Parsing help files immediately');
-    const data = parseAllHelpFiles();
-    
-    helpCache = {
-      data,
-      lastFetch: new Date(),
-      isRefreshing: false
-    };
-    
-    return data;
+  // Parse once on first request, then cache forever
+  if (!helpCache.isInitialized) {
+    console.log('Initializing help data cache...');
+    helpCache.data = parseAllHelpFiles();
+    helpCache.isInitialized = true;
+    console.log(`Help data cache initialized with ${helpCache.data.totalArticles} articles`);
   }
   
-  // If cache is still valid, return it
-  if (!isCacheExpired()) {
-    return helpCache.data;
-  }
-  
-  // Cache is expired - return stale data and refresh in background
-  console.log('Cache expired: Returning stale data and refreshing in background');
-  
-  // Start background refresh (don't await)
-  refreshCacheInBackground().catch(error => {
-    console.error('Background refresh error:', error);
-  });
-  
-  // Return stale data immediately
-  return helpCache.data;
+  return helpCache.data!;
 }
 
 /**
