@@ -3,11 +3,13 @@ import { query } from '@/lib/db';
 import { notFound } from 'next/navigation';
 import Pagination from '@/components/Pagination';
 import ModernTable from '@/components/ModernTable';
+import { searchHelpArticles } from '@/lib/help';
 
 interface SearchResult {
   name: string;
-  type: 'character' | 'monster';
+  type: 'character' | 'monster' | 'help';
   source: string;
+  id?: string; // For help articles
 }
 
 interface SearchData {
@@ -54,12 +56,22 @@ async function getSearchResults(searchQuery: string, page: number = 1, limit: nu
       WHERE killer LIKE ?
     `, [queryParam]);
 
+    // Search for help articles
+    const helpArticles = searchHelpArticles(searchQuery.trim());
+    const helpResults = helpArticles.map(article => ({
+      name: article.title,
+      type: 'help' as const,
+      source: 'help_article',
+      id: article.id
+    }));
+
     // Combine all results and remove duplicates
     const allResults = [
       ...(pvpKillers as any[]).map(r => ({ ...r, type: 'character' as const })),
       ...(pvpVictims as any[]).map(r => ({ ...r, type: 'character' as const })),
       ...(mvpVictims as any[]).map(r => ({ ...r, type: 'character' as const })),
-      ...(mvpKillers as any[]).map(r => ({ ...r, type: 'monster' as const }))
+      ...(mvpKillers as any[]).map(r => ({ ...r, type: 'monster' as const })),
+      ...helpResults
     ];
 
     // Remove duplicates based on name and type
@@ -138,12 +150,18 @@ export default async function SearchPage({
         data={searchData.results}
         renderCell={(key, value, row) => {
           if (key === 'name') {
+            let href = '';
+            if (row.type === 'character') {
+              href = `/character/${encodeURIComponent(row.name)}`;
+            } else if (row.type === 'monster') {
+              href = `/mob/${encodeURIComponent(row.name)}`;
+            } else if (row.type === 'help') {
+              href = `/help/${row.id}`;
+            }
+            
             return (
               <Link
-                href={row.type === 'character' 
-                  ? `/character/${encodeURIComponent(row.name)}`
-                  : `/mob/${encodeURIComponent(row.name)}`
-                }
+                href={href}
                 className="text-primary hover:text-primary/80 hover:underline font-medium"
               >
                 {row.name}
@@ -155,9 +173,11 @@ export default async function SearchPage({
               <span className={`inline-flex px-2.5 py-0.5 text-xs font-medium rounded-full ${
                 row.type === 'character' 
                   ? 'bg-primary/10 text-primary' 
-                  : 'bg-destructive/10 text-destructive'
+                  : row.type === 'monster'
+                  ? 'bg-destructive/10 text-destructive'
+                  : 'bg-secondary/10 text-secondary-foreground'
               }`}>
-                {row.type === 'character' ? 'Character' : 'Monster'}
+                {row.type === 'character' ? 'Character' : row.type === 'monster' ? 'Monster' : 'Help'}
               </span>
             );
           }

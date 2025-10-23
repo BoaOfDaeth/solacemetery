@@ -34,7 +34,7 @@ const helpCache: HelpCache = {
 // Environment-based filtering constants
 const isProduction = process.env.NODE_ENV === 'production';
 
-const RESTRICTED_CATEGORIES = isProduction ? ['unused', 'abyss', 'unused', 'immortal', 'rom'] : [];
+const RESTRICTED_CATEGORIES = isProduction ? ['unused', 'abyss', 'immortal', 'rom', 'system'] : [];
 const MIN_LEVEL = isProduction ? 0 : -Infinity;
 const MAX_LEVEL = isProduction ? 35 : Infinity;
 
