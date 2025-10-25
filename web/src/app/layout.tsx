@@ -92,7 +92,7 @@ export default function RootLayout({
         </nav>
 
         {/* Navigation Bar - Desktop only */}
-        <div className="hidden lg:block border-b border-border/40 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
+        <div className="hidden lg:block">
           <Navigation items={navigationItems} variant="header" />
         </div>
 
