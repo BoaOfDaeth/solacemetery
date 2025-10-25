@@ -1,4 +1,5 @@
 import { notFound } from 'next/navigation';
+import Link from 'next/link';
 import { getArticleById } from '@/lib/help';
 
 interface HelpArticlePageProps {
@@ -23,6 +24,15 @@ export default async function HelpArticlePage({ params }: HelpArticlePageProps) 
           <h1 className="text-3xl font-bold text-foreground mb-2">
             {article.title}
           </h1>
+          
+          <div className="mb-4">
+            <Link 
+              href={`/help/category/${article.category}`}
+              className="inline-block px-3 py-1 bg-primary/10 text-primary rounded-full text-sm font-medium hover:bg-primary/20 transition-colors"
+            >
+              {article.category}
+            </Link>
+          </div>
           
           {article.syntax && (
             <div className="mb-4">
