@@ -92,7 +92,7 @@ export default function RootLayout({
         </nav>
 
         {/* Navigation Bar - Desktop only */}
-        <div className="hidden lg:block">
+        <div className="hidden lg:block py-2">
           <Navigation items={navigationItems} variant="header" />
         </div>
 
@@ -101,8 +101,10 @@ export default function RootLayout({
           <Navigation items={navigationItems} variant="floating" />
         </div>
 
-        <main id="main" className="flex-1 pt-4">
-          {children}
+        <main id="main" className="flex-1">
+          <div className="pt-4 lg:pt-2">
+            {children}
+          </div>
         </main>
         <Footer />
       </body>

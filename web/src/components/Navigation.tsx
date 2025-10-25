@@ -135,8 +135,8 @@ export default function Navigation({
 
   // Header variant - desktop navigation bar
   return (
-    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-      <div className="flex items-center justify-center h-18">
+    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-2">
+      <div className="flex items-center justify-center h-8">
         <nav className="flex items-center space-x-1">
           {items.map((item, index) => (
             <Link
