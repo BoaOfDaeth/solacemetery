@@ -102,7 +102,7 @@ export default function RootLayout({
         </div>
 
         <main id="main" className="flex-1">
-          <div className="pt-4 lg:pt-2">
+          <div className="py-2 lg:pt-2">
             {children}
           </div>
         </main>
