@@ -131,14 +131,14 @@ export default function Navigation({
             role="dialog"
             aria-modal="true"
             id={dialogId}
-            className="fixed bottom-4 right-4 z-40 w-64 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 rounded-2xl shadow-2xl border border-border/40 transform transition-all duration-300 ease-out"
+            className="fixed bottom-4 right-4 z-40 w-50 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 rounded-2xl shadow-2xl border border-border/40 transform transition-all duration-300 ease-out"
           >
             {/* Menu content */}
             <div className="p-3">
               <nav className="space-y-1">
-                {items.map((item, index) => (
+                {items.slice().reverse().map((item, index) => (
                   <CompactMobileNavItem
-                    key={index}
+                    key={items.length - 1 - index}
                     item={item}
                     onClose={closeDrawer}
                   />

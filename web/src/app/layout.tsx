@@ -34,15 +34,23 @@ export default function RootLayout({
       href: '/',
     },
     {
-      label: 'PVP',
+      label: 'Player kills',
       href: '/pvp',
     },
     {
-      label: 'MVP',
+      label: 'Mob kills',
       href: '/mvp',
     },
     {
-      label: 'Help',
+      label: 'Classes',
+      href: '/classes',
+    },
+    {
+      label: 'Races',
+      href: '/races',
+    },
+    {
+      label: 'Help articles',
       href: '/help',
     },
   ];
@@ -93,7 +101,9 @@ export default function RootLayout({
           <Navigation items={navigationItems} variant="floating" />
         </div>
 
-        <main id="main" className="flex-1">{children}</main>
+        <main id="main" className="flex-1">
+          {children}
+        </main>
         <Footer />
       </body>
     </html>
