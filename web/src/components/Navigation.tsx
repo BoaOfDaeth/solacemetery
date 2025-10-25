@@ -173,7 +173,7 @@ export default function Navigation({
               {item.children ? (
                 <>
                   <button
-                    className="flex items-center px-3 py-2 text-sm font-medium text-neutral-700 rounded-lg hover:bg-neutral-100 focus:outline-none focus:ring-2 focus:ring-primary/20"
+                    className="flex items-center px-3 py-2 text-sm font-medium text-primary rounded-lg hover:bg-primary/10 focus:outline-none focus:ring-2 focus:ring-primary/20 transition-colors"
                     onClick={() => handleDropdownToggle(index)}
                     aria-haspopup="menu"
                     aria-expanded={openDropdown === index}
@@ -202,7 +202,7 @@ export default function Navigation({
                     id={`${menuId}-${index}`}
                     role="menu"
                     aria-label={`${item.label} submenu`}
-                    className={`absolute left-0 mt-2 w-64 rounded-2xl border border-neutral-200 bg-white shadow-xl transition-opacity duration-200 ${
+                    className={`absolute left-0 mt-2 w-64 rounded-2xl border border-border bg-card shadow-xl transition-opacity duration-200 ${
                       openDropdown === index
                         ? 'opacity-100 pointer-events-auto'
                         : 'opacity-0 pointer-events-none'
@@ -213,7 +213,7 @@ export default function Navigation({
                         <Link
                           key={childIndex}
                           href={child.href || '#'}
-                          className="block px-4 py-2 text-sm text-neutral-700 hover:bg-neutral-100 focus:outline-none focus:ring-2 focus:ring-primary/20"
+                          className="block px-4 py-2 text-sm text-card-foreground hover:bg-primary/10 focus:outline-none focus:ring-2 focus:ring-primary/20 transition-colors"
                           role="menuitem"
                         >
                           {child.label}
@@ -225,7 +225,7 @@ export default function Navigation({
               ) : (
                 <Link
                   href={item.href || '#'}
-                  className="px-3 py-2 text-sm font-medium text-neutral-700 rounded-lg hover:bg-neutral-100 focus:outline-none focus:ring-2 focus:ring-primary/20"
+                  className="px-3 py-2 text-sm font-medium text-primary rounded-lg hover:bg-primary/10 focus:outline-none focus:ring-2 focus:ring-primary/20 transition-colors"
                 >
                   {item.label}
                 </Link>

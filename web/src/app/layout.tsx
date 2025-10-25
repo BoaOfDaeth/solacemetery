@@ -30,7 +30,7 @@ export default function RootLayout({
 }>) {
   const navigationItems = [
     {
-      label: 'Home',
+      label: 'Overview',
       href: '/',
     },
     {
