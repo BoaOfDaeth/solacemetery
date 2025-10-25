@@ -20,15 +20,6 @@ export default async function CategoryPage({ params }: CategoryPageProps) {
   return (
     <div className="bg-background">
       <div className="max-w-7xl mx-auto px-2 sm:px-4 lg:px-6">
-        {/* Header */}
-        <div className="mb-8">
-          <h1 className="text-4xl font-bold text-foreground mb-2 capitalize">
-            {category}
-          </h1>
-          <p className="text-muted-foreground text-lg">
-            {articles.length} article{articles.length !== 1 ? 's' : ''} in this category
-          </p>
-        </div>
 
         {/* Articles Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
