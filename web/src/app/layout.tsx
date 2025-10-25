@@ -3,6 +3,7 @@ import { Geist, Geist_Mono } from 'next/font/google';
 import Link from 'next/link';
 import Image from 'next/image';
 import SearchForm from '@/components/SearchForm';
+import Navigation from '@/components/Navigation';
 import Footer from '@/components/Footer';
 import logoImage from '@/public/images/logo.png';
 import './globals.css';
@@ -27,12 +28,31 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const navigationItems = [
+    {
+      label: 'Home',
+      href: '/',
+    },
+    {
+      label: 'PVP',
+      href: '/pvp',
+    },
+    {
+      label: 'MVP',
+      href: '/mvp',
+    },
+    {
+      label: 'Help',
+      href: '/help',
+    },
+  ];
+
   return (
     <html lang="en">
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased min-h-screen flex flex-col`}
       >
-        {/* Modern Navigation */}
+        {/* Original Header with Search */}
         <nav className="sticky top-0 z-50 w-full border-b border-border/40 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
           <div className="max-w-7xl mx-auto px-2 sm:px-4 lg:px-6">
             <div className="flex items-center justify-between h-14 sm:h-16">
@@ -62,7 +82,18 @@ export default function RootLayout({
             </div>
           </div>
         </nav>
-        <main className="flex-1">{children}</main>
+
+        {/* Navigation Bar - Desktop only */}
+        <div className="hidden lg:block border-b border-border/40 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
+          <Navigation items={navigationItems} variant="header" />
+        </div>
+
+        {/* Floating Mobile Menu Button */}
+        <div className="lg:hidden fixed bottom-6 right-6 z-50">
+          <Navigation items={navigationItems} variant="floating" />
+        </div>
+
+        <main id="main" className="flex-1">{children}</main>
         <Footer />
       </body>
     </html>
