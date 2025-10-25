@@ -101,7 +101,7 @@ export default function RootLayout({
           <Navigation items={navigationItems} variant="floating" />
         </div>
 
-        <main id="main" className="flex-1">
+        <main id="main" className="flex-1 pt-4">
           {children}
         </main>
         <Footer />
