@@ -5,7 +5,7 @@ export interface RaceClassCombo {
   maxStats: CharacterStats;
 }
 
-export const raceClassStats: Record<Race, Record<Class, RaceClassCombo>> = {
+export const raceClassStats: Record<Race, Partial<Record<Class, RaceClassCombo>>> = {
   [Race.HUMAN]: {
     [Class.FIGHTER]: {
       maxStats: { strength: 0, intelligence: 0, wisdom: 0, dexterity: 0, constitution: 0 }
@@ -44,38 +44,32 @@ export const raceClassStats: Record<Race, Record<Class, RaceClassCombo>> = {
 
   [Race.HALF_ELF]: {
     [Class.FIGHTER]: {
-      maxStats: { strength: 0, intelligence: 0, wisdom: 0, dexterity: 0, constitution: 0 }
+      maxStats: { strength: 21, intelligence: 21, wisdom: 21, dexterity: 21, constitution: 19 }
     },
     [Class.KNIGHT]: {
-      maxStats: { strength: 0, intelligence: 0, wisdom: 0, dexterity: 0, constitution: 0 }
+      maxStats: { strength: 21, intelligence: 21, wisdom: 21, dexterity: 21, constitution: 19 }
     },
     [Class.RANGER]: {
-      maxStats: { strength: 0, intelligence: 0, wisdom: 0, dexterity: 0, constitution: 0 }
+      maxStats: { strength: 21, intelligence: 21, wisdom: 21, dexterity: 21, constitution: 19 }
     },
     [Class.CLERIC]: {
-      maxStats: { strength: 0, intelligence: 0, wisdom: 0, dexterity: 0, constitution: 0 }
+      maxStats: { strength: 19, intelligence: 21, wisdom: 23, dexterity: 21, constitution: 19 }
     },
     [Class.DRUID]: {
-      maxStats: { strength: 0, intelligence: 0, wisdom: 0, dexterity: 0, constitution: 0 }
+      maxStats: { strength: 19, intelligence: 21, wisdom: 23, dexterity: 21, constitution: 19 }
     },
     [Class.THIEF]: {
-      maxStats: { strength: 0, intelligence: 0, wisdom: 0, dexterity: 0, constitution: 0 }
+      maxStats: { strength: 19, intelligence: 21, wisdom: 21, dexterity: 23, constitution: 19 }
     },
     [Class.ASSASSIN]: {
-      maxStats: { strength: 0, intelligence: 0, wisdom: 0, dexterity: 0, constitution: 0 }
+      maxStats: { strength: 19, intelligence: 21, wisdom: 21, dexterity: 23, constitution: 19 }
     },
     [Class.TRANSMUTER]: {
-      maxStats: { strength: 0, intelligence: 0, wisdom: 0, dexterity: 0, constitution: 0 }
+      maxStats: { strength: 19, intelligence: 23, wisdom: 21, dexterity: 21, constitution: 19 }
     },
     [Class.INVOKER]: {
-      maxStats: { strength: 0, intelligence: 0, wisdom: 0, dexterity: 0, constitution: 0 }
+      maxStats: { strength: 19, intelligence: 23, wisdom: 21, dexterity: 21, constitution: 19 }
     },
-    [Class.NECROMANCER]: {
-      maxStats: { strength: 0, intelligence: 0, wisdom: 0, dexterity: 0, constitution: 0 }
-    },
-    [Class.OUTCAST]: {
-      maxStats: { strength: 0, intelligence: 0, wisdom: 0, dexterity: 0, constitution: 0 }
-    }
   },
 
   [Race.DWARF]: {
