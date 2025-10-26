@@ -1,11 +1,12 @@
-import { Race, CharacterStats } from './types';
+import { RaceData, CharacterStats } from './types';
+import { Race, Alignment, Class } from './enums';
 
 // Maximum stat cap for all races
 const MAX_STAT = 25;
 
-export const races: Record<string, Race> = {
-  Human: {
-    name: 'Human',
+export const races: Record<Race, RaceData> = {
+  [Race.HUMAN]: {
+    name: Race.HUMAN,
     description: 'The most common race of the world, humans are versatile and adaptable. They have no racial restrictions and can excel in any class or alignment.',
     features: 'No racial restrictions, balanced stat growth, fastest learning rate, can be any alignment',
     maxStats: {
@@ -16,12 +17,12 @@ export const races: Record<string, Race> = {
       constitution: MAX_STAT,
     },
     xpPenalty: 0,
-    allowedAlignments: ['Good', 'Neutral', 'Evil'],
-    availableClasses: ['Fighter', 'Knight', 'Ranger', 'Cleric', 'Druid', 'Thief', 'Assassin', 'Transmuter', 'Invoker', 'Necromancer', 'Outcast'],
+    allowedAlignments: [Alignment.GOOD, Alignment.NEUTRAL, Alignment.EVIL],
+    availableClasses: [Class.FIGHTER, Class.KNIGHT, Class.RANGER, Class.CLERIC, Class.DRUID, Class.THIEF, Class.ASSASSIN, Class.TRANSMUTER, Class.INVOKER, Class.NECROMANCER, Class.OUTCAST],
   },
 
-  'Half-Elf': {
-    name: 'Half-Elf',
+  [Race.HALF_ELF]: {
+    name: Race.HALF_ELF,
     description: 'Offspring of humans and elves, half-elves combine the best traits of both races. They are more intelligent than humans but less physically strong.',
     features: 'Enhanced intelligence, natural magic affinity, longer lifespan than humans, keen senses',
     maxStats: {
@@ -32,12 +33,12 @@ export const races: Record<string, Race> = {
       constitution: 22,
     },
     xpPenalty: 5,
-    allowedAlignments: ['Good', 'Neutral', 'Evil'],
-    availableClasses: ['Fighter', 'Knight', 'Ranger', 'Cleric', 'Druid', 'Thief', 'Assassin', 'Transmuter', 'Invoker', 'Necromancer', 'Outcast'],
+    allowedAlignments: [Alignment.GOOD, Alignment.NEUTRAL, Alignment.EVIL],
+    availableClasses: [Class.FIGHTER, Class.KNIGHT, Class.RANGER, Class.CLERIC, Class.DRUID, Class.THIEF, Class.ASSASSIN, Class.TRANSMUTER, Class.INVOKER, Class.NECROMANCER, Class.OUTCAST],
   },
 
-  Dwarf: {
-    name: 'Dwarf',
+  [Race.DWARF]: {
+    name: Race.DWARF,
     description: 'Short and stout fellows, dwarves are natural warriors and craftsmen. They are incredibly strong and tough, with natural resistance to magic.',
     features: 'Exceptional strength and constitution, natural magic resistance, darkvision, stonecunning, weapon proficiency',
     maxStats: {
@@ -48,12 +49,12 @@ export const races: Record<string, Race> = {
       constitution: MAX_STAT,
     },
     xpPenalty: 10,
-    allowedAlignments: ['Good', 'Neutral'],
-    availableClasses: ['Fighter', 'Knight', 'Ranger', 'Cleric', 'Druid', 'Thief', 'Assassin', 'Transmuter', 'Invoker', 'Outcast'],
+    allowedAlignments: [Alignment.GOOD, Alignment.NEUTRAL],
+    availableClasses: [Class.FIGHTER, Class.KNIGHT, Class.RANGER, Class.CLERIC, Class.DRUID, Class.THIEF, Class.ASSASSIN, Class.TRANSMUTER, Class.INVOKER, Class.OUTCAST],
   },
 
-  Elf: {
-    name: 'Elf',
+  [Race.ELF]: {
+    name: Race.ELF,
     description: 'Graceful and intelligent, elves are masters of magic and archery. They are not very strong physically but possess exceptional mental capabilities.',
     features: 'Superior intelligence and wisdom, natural magic ability, enhanced dexterity, immunity to sleep, keen senses',
     maxStats: {
@@ -64,12 +65,12 @@ export const races: Record<string, Race> = {
       constitution: 20,
     },
     xpPenalty: 20,
-    allowedAlignments: ['Good'],
-    availableClasses: ['Fighter', 'Knight', 'Ranger', 'Cleric', 'Druid', 'Thief', 'Assassin', 'Transmuter', 'Invoker', 'Outcast'],
+    allowedAlignments: [Alignment.GOOD],
+    availableClasses: [Class.FIGHTER, Class.KNIGHT, Class.RANGER, Class.CLERIC, Class.DRUID, Class.THIEF, Class.ASSASSIN, Class.TRANSMUTER, Class.INVOKER, Class.OUTCAST],
   },
 
-  'Wild-Elf': {
-    name: 'Wild-Elf',
+  [Race.WILD_ELF]: {
+    name: Race.WILD_ELF,
     description: 'Cross breed between Dark and normal Elves, wild elves combine the magical prowess of elves with some of the darker traits of their ancestors.',
     features: 'Enhanced magical abilities, natural stealth, forest affinity, resistance to charm effects, wild magic',
     maxStats: {
@@ -80,12 +81,12 @@ export const races: Record<string, Race> = {
       constitution: 21,
     },
     xpPenalty: 20,
-    allowedAlignments: ['Good', 'Neutral'],
-    availableClasses: ['Fighter', 'Knight', 'Ranger', 'Cleric', 'Druid', 'Thief', 'Assassin', 'Transmuter', 'Invoker', 'Outcast'],
+    allowedAlignments: [Alignment.GOOD, Alignment.NEUTRAL],
+    availableClasses: [Class.FIGHTER, Class.KNIGHT, Class.RANGER, Class.CLERIC, Class.DRUID, Class.THIEF, Class.ASSASSIN, Class.TRANSMUTER, Class.INVOKER, Class.OUTCAST],
   },
 
-  'Dark-Elf': {
-    name: 'Dark-Elf',
+  [Race.DARK_ELF]: {
+    name: Race.DARK_ELF,
     description: 'Frail but exceptionally intelligent, dark elves are masters of dark magic and subterfuge. They excel as clerics and mages.',
     features: 'Superior intelligence, natural dark magic affinity, enhanced magical abilities, darkvision, spell resistance',
     maxStats: {
@@ -96,12 +97,12 @@ export const races: Record<string, Race> = {
       constitution: 18,
     },
     xpPenalty: 20,
-    allowedAlignments: ['Evil'],
-    availableClasses: ['Fighter', 'Knight', 'Ranger', 'Cleric', 'Druid', 'Thief', 'Assassin', 'Transmuter', 'Invoker', 'Necromancer', 'Outcast'],
+    allowedAlignments: [Alignment.EVIL],
+    availableClasses: [Class.FIGHTER, Class.KNIGHT, Class.RANGER, Class.CLERIC, Class.DRUID, Class.THIEF, Class.ASSASSIN, Class.TRANSMUTER, Class.INVOKER, Class.NECROMANCER, Class.OUTCAST],
   },
 
-  Kender: {
-    name: 'Kender',
+  [Race.KENDER]: {
+    name: Race.KENDER,
     description: 'Small, nimble kleptomaniacs with an insatiable curiosity. Kender are naturally stealthy and have an uncanny ability to "find" things.',
     features: 'Natural stealth abilities, kleptomania (finds random items), fear immunity, enhanced dexterity, natural luck',
     maxStats: {
@@ -112,12 +113,12 @@ export const races: Record<string, Race> = {
       constitution: 18,
     },
     xpPenalty: 10,
-    allowedAlignments: ['Good'],
-    availableClasses: ['Fighter', 'Knight', 'Ranger', 'Cleric', 'Druid', 'Thief', 'Assassin', 'Transmuter', 'Invoker', 'Outcast'],
+    allowedAlignments: [Alignment.GOOD],
+    availableClasses: [Class.FIGHTER, Class.KNIGHT, Class.RANGER, Class.CLERIC, Class.DRUID, Class.THIEF, Class.ASSASSIN, Class.TRANSMUTER, Class.INVOKER, Class.OUTCAST],
   },
 
-  'Half-Kender': {
-    name: 'Half-Kender',
+  [Race.HALF_KENDER]: {
+    name: Race.HALF_KENDER,
     description: 'Offspring of humans and kenders, half-kenders inherit some of the kender traits while maintaining human versatility.',
     features: 'Enhanced dexterity, natural curiosity, improved luck, some stealth abilities, balanced traits',
     maxStats: {
@@ -128,12 +129,12 @@ export const races: Record<string, Race> = {
       constitution: 20,
     },
     xpPenalty: 10,
-    allowedAlignments: ['Good', 'Neutral'],
-    availableClasses: ['Fighter', 'Knight', 'Ranger', 'Cleric', 'Druid', 'Thief', 'Assassin', 'Transmuter', 'Invoker', 'Outcast'],
+    allowedAlignments: [Alignment.GOOD, Alignment.NEUTRAL],
+    availableClasses: [Class.FIGHTER, Class.KNIGHT, Class.RANGER, Class.CLERIC, Class.DRUID, Class.THIEF, Class.ASSASSIN, Class.TRANSMUTER, Class.INVOKER, Class.OUTCAST],
   },
 
-  Gnome: {
-    name: 'Gnome',
+  [Race.GNOME]: {
+    name: Race.GNOME,
     description: 'Short and smart inventors by nature, gnomes are masters of tinkering and mechanical devices. They are always neutral in alignment.',
     features: 'Superior intelligence, natural inventing abilities, mechanical aptitude, illusion resistance, tinkering skills',
     maxStats: {
@@ -144,12 +145,12 @@ export const races: Record<string, Race> = {
       constitution: 20,
     },
     xpPenalty: 10,
-    allowedAlignments: ['Neutral'],
-    availableClasses: ['Fighter', 'Knight', 'Ranger', 'Cleric', 'Druid', 'Thief', 'Assassin', 'Transmuter', 'Invoker', 'Outcast'],
+    allowedAlignments: [Alignment.NEUTRAL],
+    availableClasses: [Class.FIGHTER, Class.KNIGHT, Class.RANGER, Class.CLERIC, Class.DRUID, Class.THIEF, Class.ASSASSIN, Class.TRANSMUTER, Class.INVOKER, Class.OUTCAST],
   },
 
-  Minotaur: {
-    name: 'Minotaur',
+  [Race.MINOTAUR]: {
+    name: Race.MINOTAUR,
     description: 'Big, strong, and slow, minotaurs are excellent warriors with incredible physical power. They can be of any alignment.',
     features: 'Exceptional strength and constitution, natural weapon proficiency, intimidating presence, enhanced carrying capacity',
     maxStats: {
@@ -160,12 +161,12 @@ export const races: Record<string, Race> = {
       constitution: MAX_STAT,
     },
     xpPenalty: 25,
-    allowedAlignments: ['Good', 'Neutral', 'Evil'],
-    availableClasses: ['Fighter', 'Knight', 'Ranger', 'Cleric', 'Druid', 'Thief', 'Assassin', 'Transmuter', 'Invoker', 'Necromancer', 'Outcast'],
+    allowedAlignments: [Alignment.GOOD, Alignment.NEUTRAL, Alignment.EVIL],
+    availableClasses: [Class.FIGHTER, Class.KNIGHT, Class.RANGER, Class.CLERIC, Class.DRUID, Class.THIEF, Class.ASSASSIN, Class.TRANSMUTER, Class.INVOKER, Class.NECROMANCER, Class.OUTCAST],
   },
 
-  Draconian: {
-    name: 'Draconian',
+  [Race.DRACONIAN]: {
+    name: Race.DRACONIAN,
     description: 'Dragon offspring corrupted by dark magic, draconians are powerful but always evil. They possess draconic abilities and resistances.',
     features: 'Draconic abilities, natural armor, breath weapon potential, magic resistance, enhanced physical capabilities',
     maxStats: {
@@ -176,24 +177,24 @@ export const races: Record<string, Race> = {
       constitution: MAX_STAT,
     },
     xpPenalty: 20,
-    allowedAlignments: ['Evil'],
-    availableClasses: ['Fighter', 'Knight', 'Ranger', 'Cleric', 'Druid', 'Thief', 'Assassin', 'Transmuter', 'Invoker', 'Necromancer', 'Outcast'],
+    allowedAlignments: [Alignment.EVIL],
+    availableClasses: [Class.FIGHTER, Class.KNIGHT, Class.RANGER, Class.CLERIC, Class.DRUID, Class.THIEF, Class.ASSASSIN, Class.TRANSMUTER, Class.INVOKER, Class.NECROMANCER, Class.OUTCAST],
   },
 };
 
 // Helper function to get race by name
-export function getRace(name: string): Race | undefined {
-  return races[name];
+export function getRace(name: Race | string): RaceData | undefined {
+  return races[name as Race];
 }
 
 // Helper function to get all races
-export function getAllRaces(): Race[] {
+export function getAllRaces(): RaceData[] {
   return Object.values(races);
 }
 
 // Helper function to get races by alignment
-export function getRacesByAlignment(alignment: string): Race[] {
+export function getRacesByAlignment(alignment: Alignment): RaceData[] {
   return Object.values(races).filter(race => 
-    race.allowedAlignments.includes(alignment as any)
+    race.allowedAlignments.includes(alignment)
   );
 }

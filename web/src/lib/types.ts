@@ -1,3 +1,5 @@
+import { Alignment, Race, Class } from './enums';
+
 // Character stats interface
 export interface CharacterStats {
   strength: number;
@@ -7,34 +9,31 @@ export interface CharacterStats {
   constitution: number;
 }
 
-// Alignment type
-export type Alignment = 'Good' | 'Neutral' | 'Evil';
-
 // Race interface
-export interface Race {
-  name: string;
+export interface RaceData {
+  name: Race;
   description: string;
   features: string;
   maxStats: CharacterStats;
   xpPenalty: number; // Percentage penalty (0-25)
   allowedAlignments: Alignment[];
-  availableClasses: string[];
+  availableClasses: Class[];
 }
 
 // Class interface
-export interface Class {
-  name: string;
+export interface ClassData {
+  name: Class;
   description: string;
   features: string;
   xpPenalty: number; // Percentage penalty (0-25)
   allowedAlignments: Alignment[];
-  compatibleRaces: string[];
+  compatibleRaces: Race[];
 }
 
 // Race/Class combination validation
 export interface RaceClassCombo {
-  race: string;
-  class: string;
+  race: Race;
+  class: Class;
   totalXpPenalty: number;
   isValid: boolean;
 }
