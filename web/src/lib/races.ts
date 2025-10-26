@@ -39,7 +39,11 @@ export const races: Record<Race, RaceData> = {
     title: 'Half-Elf',
     slug: 'half-elf',
     description: 'Offspring of humans and elves.',
-    features: ['Has +2 to maximum of primary characteristic', 'Can sneak and move quietly', 'Can see in the darkness'],
+    features: [
+      'Has +2 to maximum of primary characteristic',
+      'Can sneak and move quietly',
+      'Can see in the darkness',
+    ],
     xpPenalty: 5,
     allowedAlignments: [Alignment.GOOD, Alignment.NEUTRAL, Alignment.EVIL],
     maxStats: {
@@ -104,7 +108,12 @@ export const races: Record<Race, RaceData> = {
     title: 'Elf',
     slug: 'elf',
     description: 'Not very strong, but exceedingly smart.',
-    features: [],
+    features: [
+      'Can sneak and move quietly',
+      'Can see in the darkness',
+      'Skilled in swordsmanship if class allows',
+      'Natural ability to blend in with the forests and detect others who are so blended',
+    ],
     xpPenalty: 20,
     allowedAlignments: [Alignment.GOOD],
     maxStats: {
@@ -127,8 +136,18 @@ export const races: Record<Race, RaceData> = {
     ],
     reference: [
       { label: 'forest blending', url: '/help/forest-blending-awareness' },
+      { label: 'sword dancing', url: '/help/sword-dancing' },
     ],
-    resistances: [],
+    resistances: [
+      {
+        damtype: 'negative energy',
+        value: -20,
+      },
+      {
+        damtype: 'holy attacks',
+        value: 15,
+      },
+    ],
   },
 
   [Race.WILD_ELF]: {
@@ -136,7 +155,12 @@ export const races: Record<Race, RaceData> = {
     title: 'Wild-Elf',
     slug: 'wild-elf',
     description: 'Cross breed between Dark and normal Elves.',
-    features: [],
+    features: [
+      'Can sneak and move quietly',
+      'Can see in the darkness',
+      'Skilled in swordsmanship if class allows',
+      'Natural ability to blend in with the forests and detect others who are so blended',
+    ],
     xpPenalty: 20,
     allowedAlignments: [Alignment.GOOD, Alignment.NEUTRAL],
     maxStats: {
@@ -157,8 +181,18 @@ export const races: Record<Race, RaceData> = {
     ],
     reference: [
       { label: 'forest blending', url: '/help/forest-blending-awareness' },
+      { label: 'sword dancing', url: '/help/sword-dancing' },
     ],
-    resistances: [],
+    resistances: [
+      {
+        damtype: 'negative energy',
+        value: -15,
+      },
+      {
+        damtype: 'holy attacks',
+        value: 10,
+      },
+    ],
   },
 
   [Race.DARK_ELF]: {
@@ -166,7 +200,12 @@ export const races: Record<Race, RaceData> = {
     title: 'Dark-Elf',
     slug: 'dark-elf',
     description: 'Frail, make excellent clerics and mages.',
-    features: [],
+    features: [
+      'Can sneak and move quietly',
+      'Can see in the darkness',
+      'Skilled in swordsmanship if class allows',
+      'Necromancers who are dark-elves automatically have an innate mastery of the negative channel skill',
+    ], 
     xpPenalty: 20,
     allowedAlignments: [Alignment.EVIL],
     maxStats: {
@@ -187,8 +226,20 @@ export const races: Record<Race, RaceData> = {
       Class.NECROMANCER,
       Class.OUTCAST,
     ],
-    reference: [],
-    resistances: [],
+    reference: [
+      { label: 'negative channel', url: '/help/negative-channel' },
+      { label: 'sword dancing', url: '/help/sword-dancing' },
+    ],
+    resistances: [
+      {
+        damtype: 'negative energy',
+        value: 15,
+      },
+      {
+        damtype: 'holy attacks',
+        value: -20,
+      },
+    ],
   },
 
   [Race.KENDER]: {

@@ -186,7 +186,7 @@ export default async function RacePage({ params }: RacePageProps) {
               Experience Penalty
             </h3>
             <p className="text-muted-foreground text-lg">
-              {race.xpPenalty === 0 ? 'No penalty' : `${race.xpPenalty}% penalty`}
+              {race.xpPenalty === 0 ? 'No penalty' : `${race.xpPenalty}%`}
             </p>
           </div>
         </div>
