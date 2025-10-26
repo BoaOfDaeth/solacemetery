@@ -43,6 +43,24 @@ export default async function ClassPage({ params }: ClassPageProps) {
         <div className="mb-4 text-center">
           <h1 className="text-3xl font-bold text-foreground mb-2">{cls.name}</h1>
           <p className="text-muted-foreground">{cls.description}</p>
+          {cls.reference.length > 0 && (
+            <div>
+              <span className="text-sm text-muted-foreground">See also: </span>
+              {cls.reference.map((ref, index) => (
+                <span key={index}>
+                  <Link
+                    href={ref.url}
+                    className="text-sm text-primary hover:text-primary/80 hover:underline"
+                  >
+                    {ref.label}
+                  </Link>
+                  {index < cls.reference.length - 1 && (
+                    <span className="text-sm text-muted-foreground">, </span>
+                  )}
+                </span>
+              ))}
+            </div>
+          )}
         </div>
 
 

@@ -8,14 +8,18 @@ export const classes: Record<Class, ClassData> = {
     features: [],
     xpPenalty: 0,
     allowedAlignments: [Alignment.GOOD, Alignment.NEUTRAL, Alignment.EVIL],
+    reference: [
+      { label: 'specialization', url: '/help/specialization-specialize' },
+    ],
   },
 
   [Class.KNIGHT]: {
     name: Class.KNIGHT,
-    description: 'Seekers of full knighthood - refer to \'knight\' help.',
+    description: "Seekers of full knighthood - refer to 'knight' help.",
     features: [],
     xpPenalty: 20,
     allowedAlignments: [Alignment.GOOD],
+    reference: [],
   },
 
   [Class.RANGER]: {
@@ -24,14 +28,17 @@ export const classes: Record<Class, ClassData> = {
     features: [],
     xpPenalty: 10,
     allowedAlignments: [Alignment.GOOD, Alignment.NEUTRAL],
+    reference: [
+      { label: 'specialization', url: '/help/specialization-specialize' },
+    ],
   },
-
   [Class.CLERIC]: {
     name: Class.CLERIC,
-    description: 'Followers of the Gods - refer to \'cleric\' help.',
+    description: "Followers of the Gods - refer to 'cleric' help.",
     features: [],
     xpPenalty: 0,
     allowedAlignments: [Alignment.GOOD, Alignment.NEUTRAL, Alignment.EVIL],
+    reference: [{ label: 'worship', url: '/help/worship' }],
   },
 
   [Class.DRUID]: {
@@ -40,14 +47,16 @@ export const classes: Record<Class, ClassData> = {
     features: [],
     xpPenalty: 0,
     allowedAlignments: [Alignment.GOOD, Alignment.NEUTRAL],
+    reference: [{ label: 'kinship', url: '/help/animal-kinship-kinship' }],
   },
 
   [Class.THIEF]: {
     name: Class.THIEF,
-    description: 'The skilled stealer of other people\'s belongings.',
+    description: "The skilled stealer of other people's belongings.",
     features: [],
     xpPenalty: 0,
     allowedAlignments: [Alignment.GOOD, Alignment.NEUTRAL, Alignment.EVIL],
+    reference: [],
   },
 
   [Class.ASSASSIN]: {
@@ -56,6 +65,7 @@ export const classes: Record<Class, ClassData> = {
     features: [],
     xpPenalty: 15,
     allowedAlignments: [Alignment.GOOD, Alignment.NEUTRAL, Alignment.EVIL],
+    reference: [{ label: 'wayfollow', url: '/help/wayfollow-waypath' }],
   },
 
   [Class.TRANSMUTER]: {
@@ -64,6 +74,10 @@ export const classes: Record<Class, ClassData> = {
     features: [],
     xpPenalty: 0,
     allowedAlignments: [Alignment.GOOD, Alignment.NEUTRAL, Alignment.EVIL],
+    reference: [
+      { label: 'magicmajor', url: '/help/magicmajor' },
+      { label: 'forms', url: '/help/forms' },
+    ],
   },
 
   [Class.INVOKER]: {
@@ -72,6 +86,7 @@ export const classes: Record<Class, ClassData> = {
     features: [],
     xpPenalty: 0,
     allowedAlignments: [Alignment.GOOD, Alignment.NEUTRAL, Alignment.EVIL],
+    reference: [],
   },
 
   [Class.NECROMANCER]: {
@@ -80,14 +95,17 @@ export const classes: Record<Class, ClassData> = {
     features: [],
     xpPenalty: 0,
     allowedAlignments: [Alignment.EVIL],
+    reference: [],
   },
 
   [Class.OUTCAST]: {
     name: Class.OUTCAST,
-    description: 'Knight outcasts who turn on good and follow the black magics.',
+    description:
+      'Knight outcasts who turn on good and follow the black magics.',
     features: [],
     xpPenalty: 15,
     allowedAlignments: [Alignment.EVIL],
+    reference: [],
   },
 };
 
@@ -103,7 +121,7 @@ export function getAllClasses(): ClassData[] {
 
 // Helper function to get classes by alignment
 export function getClassesByAlignment(alignment: Alignment): ClassData[] {
-  return Object.values(classes).filter(cls => 
+  return Object.values(classes).filter(cls =>
     cls.allowedAlignments.includes(alignment)
   );
 }

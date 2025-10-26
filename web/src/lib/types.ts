@@ -20,6 +20,12 @@ export interface RaceData {
   availableClasses: Class[];
 }
 
+// Reference link interface
+export interface ReferenceLink {
+  label: string;
+  url: string;
+}
+
 // Class interface
 export interface ClassData {
   name: Class;
@@ -27,4 +33,5 @@ export interface ClassData {
   features: string[];
   xpPenalty: number; // Percentage penalty (0-25)
   allowedAlignments: Alignment[];
+  reference: ReferenceLink[];
 }
