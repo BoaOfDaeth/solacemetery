@@ -1,393 +1,6 @@
 import { RaceData, CharacterStats } from './types';
 import { Race, Alignment, Class } from './enums';
 
-export interface RaceClassCombo {
-  maxStats: CharacterStats;
-}
-
-export const raceClassStats: Record<Race, Partial<Record<Class, RaceClassCombo>>> = {
-  [Race.HUMAN]: {
-    [Class.FIGHTER]: {
-      maxStats: { strength: 0, intelligence: 0, wisdom: 0, dexterity: 0, constitution: 0 }
-    },
-    [Class.KNIGHT]: {
-      maxStats: { strength: 0, intelligence: 0, wisdom: 0, dexterity: 0, constitution: 0 }
-    },
-    [Class.RANGER]: {
-      maxStats: { strength: 0, intelligence: 0, wisdom: 0, dexterity: 0, constitution: 0 }
-    },
-    [Class.CLERIC]: {
-      maxStats: { strength: 0, intelligence: 0, wisdom: 0, dexterity: 0, constitution: 0 }
-    },
-    [Class.DRUID]: {
-      maxStats: { strength: 0, intelligence: 0, wisdom: 0, dexterity: 0, constitution: 0 }
-    },
-    [Class.THIEF]: {
-      maxStats: { strength: 0, intelligence: 0, wisdom: 0, dexterity: 0, constitution: 0 }
-    },
-    [Class.ASSASSIN]: {
-      maxStats: { strength: 0, intelligence: 0, wisdom: 0, dexterity: 0, constitution: 0 }
-    },
-    [Class.TRANSMUTER]: {
-      maxStats: { strength: 0, intelligence: 0, wisdom: 0, dexterity: 0, constitution: 0 }
-    },
-    [Class.INVOKER]: {
-      maxStats: { strength: 0, intelligence: 0, wisdom: 0, dexterity: 0, constitution: 0 }
-    },
-    [Class.NECROMANCER]: {
-      maxStats: { strength: 0, intelligence: 0, wisdom: 0, dexterity: 0, constitution: 0 }
-    },
-    [Class.OUTCAST]: {
-      maxStats: { strength: 0, intelligence: 0, wisdom: 0, dexterity: 0, constitution: 0 }
-    }
-  },
-
-  [Race.HALF_ELF]: {
-    [Class.FIGHTER]: {
-      maxStats: { strength: 21, intelligence: 21, wisdom: 21, dexterity: 21, constitution: 19 }
-    },
-    [Class.KNIGHT]: {
-      maxStats: { strength: 21, intelligence: 21, wisdom: 21, dexterity: 21, constitution: 19 }
-    },
-    [Class.RANGER]: {
-      maxStats: { strength: 21, intelligence: 21, wisdom: 21, dexterity: 21, constitution: 19 }
-    },
-    [Class.CLERIC]: {
-      maxStats: { strength: 19, intelligence: 21, wisdom: 23, dexterity: 21, constitution: 19 }
-    },
-    [Class.DRUID]: {
-      maxStats: { strength: 19, intelligence: 21, wisdom: 23, dexterity: 21, constitution: 19 }
-    },
-    [Class.THIEF]: {
-      maxStats: { strength: 19, intelligence: 21, wisdom: 21, dexterity: 23, constitution: 19 }
-    },
-    [Class.ASSASSIN]: {
-      maxStats: { strength: 19, intelligence: 21, wisdom: 21, dexterity: 23, constitution: 19 }
-    },
-    [Class.TRANSMUTER]: {
-      maxStats: { strength: 19, intelligence: 23, wisdom: 21, dexterity: 21, constitution: 19 }
-    },
-    [Class.INVOKER]: {
-      maxStats: { strength: 19, intelligence: 23, wisdom: 21, dexterity: 21, constitution: 19 }
-    },
-  },
-
-  [Race.DWARF]: {
-    [Class.FIGHTER]: {
-      maxStats: { strength: 0, intelligence: 0, wisdom: 0, dexterity: 0, constitution: 0 }
-    },
-    [Class.KNIGHT]: {
-      maxStats: { strength: 0, intelligence: 0, wisdom: 0, dexterity: 0, constitution: 0 }
-    },
-    [Class.RANGER]: {
-      maxStats: { strength: 0, intelligence: 0, wisdom: 0, dexterity: 0, constitution: 0 }
-    },
-    [Class.CLERIC]: {
-      maxStats: { strength: 0, intelligence: 0, wisdom: 0, dexterity: 0, constitution: 0 }
-    },
-    [Class.DRUID]: {
-      maxStats: { strength: 0, intelligence: 0, wisdom: 0, dexterity: 0, constitution: 0 }
-    },
-    [Class.THIEF]: {
-      maxStats: { strength: 0, intelligence: 0, wisdom: 0, dexterity: 0, constitution: 0 }
-    },
-    [Class.ASSASSIN]: {
-      maxStats: { strength: 0, intelligence: 0, wisdom: 0, dexterity: 0, constitution: 0 }
-    },
-    [Class.TRANSMUTER]: {
-      maxStats: { strength: 0, intelligence: 0, wisdom: 0, dexterity: 0, constitution: 0 }
-    },
-    [Class.INVOKER]: {
-      maxStats: { strength: 0, intelligence: 0, wisdom: 0, dexterity: 0, constitution: 0 }
-    },
-    [Class.NECROMANCER]: {
-      maxStats: { strength: 0, intelligence: 0, wisdom: 0, dexterity: 0, constitution: 0 }
-    },
-    [Class.OUTCAST]: {
-      maxStats: { strength: 0, intelligence: 0, wisdom: 0, dexterity: 0, constitution: 0 }
-    }
-  },
-
-  [Race.ELF]: {
-    [Class.FIGHTER]: {
-      maxStats: { strength: 0, intelligence: 0, wisdom: 0, dexterity: 0, constitution: 0 }
-    },
-    [Class.KNIGHT]: {
-      maxStats: { strength: 0, intelligence: 0, wisdom: 0, dexterity: 0, constitution: 0 }
-    },
-    [Class.RANGER]: {
-      maxStats: { strength: 0, intelligence: 0, wisdom: 0, dexterity: 0, constitution: 0 }
-    },
-    [Class.CLERIC]: {
-      maxStats: { strength: 0, intelligence: 0, wisdom: 0, dexterity: 0, constitution: 0 }
-    },
-    [Class.DRUID]: {
-      maxStats: { strength: 0, intelligence: 0, wisdom: 0, dexterity: 0, constitution: 0 }
-    },
-    [Class.THIEF]: {
-      maxStats: { strength: 0, intelligence: 0, wisdom: 0, dexterity: 0, constitution: 0 }
-    },
-    [Class.ASSASSIN]: {
-      maxStats: { strength: 0, intelligence: 0, wisdom: 0, dexterity: 0, constitution: 0 }
-    },
-    [Class.TRANSMUTER]: {
-      maxStats: { strength: 0, intelligence: 0, wisdom: 0, dexterity: 0, constitution: 0 }
-    },
-    [Class.INVOKER]: {
-      maxStats: { strength: 0, intelligence: 0, wisdom: 0, dexterity: 0, constitution: 0 }
-    },
-    [Class.NECROMANCER]: {
-      maxStats: { strength: 0, intelligence: 0, wisdom: 0, dexterity: 0, constitution: 0 }
-    },
-    [Class.OUTCAST]: {
-      maxStats: { strength: 0, intelligence: 0, wisdom: 0, dexterity: 0, constitution: 0 }
-    }
-  },
-
-  [Race.WILD_ELF]: {
-    [Class.FIGHTER]: {
-      maxStats: { strength: 0, intelligence: 0, wisdom: 0, dexterity: 0, constitution: 0 }
-    },
-    [Class.KNIGHT]: {
-      maxStats: { strength: 0, intelligence: 0, wisdom: 0, dexterity: 0, constitution: 0 }
-    },
-    [Class.RANGER]: {
-      maxStats: { strength: 0, intelligence: 0, wisdom: 0, dexterity: 0, constitution: 0 }
-    },
-    [Class.CLERIC]: {
-      maxStats: { strength: 0, intelligence: 0, wisdom: 0, dexterity: 0, constitution: 0 }
-    },
-    [Class.DRUID]: {
-      maxStats: { strength: 0, intelligence: 0, wisdom: 0, dexterity: 0, constitution: 0 }
-    },
-    [Class.THIEF]: {
-      maxStats: { strength: 0, intelligence: 0, wisdom: 0, dexterity: 0, constitution: 0 }
-    },
-    [Class.ASSASSIN]: {
-      maxStats: { strength: 0, intelligence: 0, wisdom: 0, dexterity: 0, constitution: 0 }
-    },
-    [Class.TRANSMUTER]: {
-      maxStats: { strength: 0, intelligence: 0, wisdom: 0, dexterity: 0, constitution: 0 }
-    },
-    [Class.INVOKER]: {
-      maxStats: { strength: 0, intelligence: 0, wisdom: 0, dexterity: 0, constitution: 0 }
-    },
-    [Class.NECROMANCER]: {
-      maxStats: { strength: 0, intelligence: 0, wisdom: 0, dexterity: 0, constitution: 0 }
-    },
-    [Class.OUTCAST]: {
-      maxStats: { strength: 0, intelligence: 0, wisdom: 0, dexterity: 0, constitution: 0 }
-    }
-  },
-
-  [Race.DARK_ELF]: {
-    [Class.FIGHTER]: {
-      maxStats: { strength: 17, intelligence: 24, wisdom: 22, dexterity: 23, constitution: 18 }
-    },
-    [Class.CLERIC]: {
-      maxStats: { strength: 17, intelligence: 24, wisdom: 22, dexterity: 23, constitution: 18 }
-    },
-    [Class.THIEF]: {
-      maxStats: { strength: 17, intelligence: 24, wisdom: 22, dexterity: 23, constitution: 18 }
-    },
-    [Class.ASSASSIN]: {
-      maxStats: { strength: 17, intelligence: 24, wisdom: 22, dexterity: 23, constitution: 18 }
-    },
-    [Class.TRANSMUTER]: {
-      maxStats: { strength: 17, intelligence: 24, wisdom: 22, dexterity: 23, constitution: 18 }
-    },
-    [Class.INVOKER]: {
-      maxStats: { strength: 17, intelligence: 24, wisdom: 22, dexterity: 23, constitution: 18 }
-    },
-    [Class.NECROMANCER]: {
-      maxStats: { strength: 17, intelligence: 24, wisdom: 22, dexterity: 23, constitution: 18 }
-    },
-    [Class.OUTCAST]: {
-      maxStats: { strength: 17, intelligence: 24, wisdom: 22, dexterity: 23, constitution: 18 }
-    }
-  },
-
-  [Race.KENDER]: {
-    [Class.FIGHTER]: {
-      maxStats: { strength: 0, intelligence: 0, wisdom: 0, dexterity: 0, constitution: 0 }
-    },
-    [Class.KNIGHT]: {
-      maxStats: { strength: 0, intelligence: 0, wisdom: 0, dexterity: 0, constitution: 0 }
-    },
-    [Class.RANGER]: {
-      maxStats: { strength: 0, intelligence: 0, wisdom: 0, dexterity: 0, constitution: 0 }
-    },
-    [Class.CLERIC]: {
-      maxStats: { strength: 0, intelligence: 0, wisdom: 0, dexterity: 0, constitution: 0 }
-    },
-    [Class.DRUID]: {
-      maxStats: { strength: 0, intelligence: 0, wisdom: 0, dexterity: 0, constitution: 0 }
-    },
-    [Class.THIEF]: {
-      maxStats: { strength: 0, intelligence: 0, wisdom: 0, dexterity: 0, constitution: 0 }
-    },
-    [Class.ASSASSIN]: {
-      maxStats: { strength: 0, intelligence: 0, wisdom: 0, dexterity: 0, constitution: 0 }
-    },
-    [Class.TRANSMUTER]: {
-      maxStats: { strength: 0, intelligence: 0, wisdom: 0, dexterity: 0, constitution: 0 }
-    },
-    [Class.INVOKER]: {
-      maxStats: { strength: 0, intelligence: 0, wisdom: 0, dexterity: 0, constitution: 0 }
-    },
-    [Class.NECROMANCER]: {
-      maxStats: { strength: 0, intelligence: 0, wisdom: 0, dexterity: 0, constitution: 0 }
-    },
-    [Class.OUTCAST]: {
-      maxStats: { strength: 0, intelligence: 0, wisdom: 0, dexterity: 0, constitution: 0 }
-    }
-  },
-
-  [Race.HALF_KENDER]: {
-    [Class.FIGHTER]: {
-      maxStats: { strength: 0, intelligence: 0, wisdom: 0, dexterity: 0, constitution: 0 }
-    },
-    [Class.KNIGHT]: {
-      maxStats: { strength: 0, intelligence: 0, wisdom: 0, dexterity: 0, constitution: 0 }
-    },
-    [Class.RANGER]: {
-      maxStats: { strength: 0, intelligence: 0, wisdom: 0, dexterity: 0, constitution: 0 }
-    },
-    [Class.CLERIC]: {
-      maxStats: { strength: 0, intelligence: 0, wisdom: 0, dexterity: 0, constitution: 0 }
-    },
-    [Class.DRUID]: {
-      maxStats: { strength: 0, intelligence: 0, wisdom: 0, dexterity: 0, constitution: 0 }
-    },
-    [Class.THIEF]: {
-      maxStats: { strength: 0, intelligence: 0, wisdom: 0, dexterity: 0, constitution: 0 }
-    },
-    [Class.ASSASSIN]: {
-      maxStats: { strength: 0, intelligence: 0, wisdom: 0, dexterity: 0, constitution: 0 }
-    },
-    [Class.TRANSMUTER]: {
-      maxStats: { strength: 0, intelligence: 0, wisdom: 0, dexterity: 0, constitution: 0 }
-    },
-    [Class.INVOKER]: {
-      maxStats: { strength: 0, intelligence: 0, wisdom: 0, dexterity: 0, constitution: 0 }
-    },
-    [Class.NECROMANCER]: {
-      maxStats: { strength: 0, intelligence: 0, wisdom: 0, dexterity: 0, constitution: 0 }
-    },
-    [Class.OUTCAST]: {
-      maxStats: { strength: 0, intelligence: 0, wisdom: 0, dexterity: 0, constitution: 0 }
-    }
-  },
-
-  [Race.GNOME]: {
-    [Class.FIGHTER]: {
-      maxStats: { strength: 0, intelligence: 0, wisdom: 0, dexterity: 0, constitution: 0 }
-    },
-    [Class.KNIGHT]: {
-      maxStats: { strength: 0, intelligence: 0, wisdom: 0, dexterity: 0, constitution: 0 }
-    },
-    [Class.RANGER]: {
-      maxStats: { strength: 0, intelligence: 0, wisdom: 0, dexterity: 0, constitution: 0 }
-    },
-    [Class.CLERIC]: {
-      maxStats: { strength: 0, intelligence: 0, wisdom: 0, dexterity: 0, constitution: 0 }
-    },
-    [Class.DRUID]: {
-      maxStats: { strength: 0, intelligence: 0, wisdom: 0, dexterity: 0, constitution: 0 }
-    },
-    [Class.THIEF]: {
-      maxStats: { strength: 0, intelligence: 0, wisdom: 0, dexterity: 0, constitution: 0 }
-    },
-    [Class.ASSASSIN]: {
-      maxStats: { strength: 0, intelligence: 0, wisdom: 0, dexterity: 0, constitution: 0 }
-    },
-    [Class.TRANSMUTER]: {
-      maxStats: { strength: 0, intelligence: 0, wisdom: 0, dexterity: 0, constitution: 0 }
-    },
-    [Class.INVOKER]: {
-      maxStats: { strength: 0, intelligence: 0, wisdom: 0, dexterity: 0, constitution: 0 }
-    },
-    [Class.NECROMANCER]: {
-      maxStats: { strength: 0, intelligence: 0, wisdom: 0, dexterity: 0, constitution: 0 }
-    },
-    [Class.OUTCAST]: {
-      maxStats: { strength: 0, intelligence: 0, wisdom: 0, dexterity: 0, constitution: 0 }
-    }
-  },
-
-  [Race.MINOTAUR]: {
-    [Class.FIGHTER]: {
-      maxStats: { strength: 0, intelligence: 0, wisdom: 0, dexterity: 0, constitution: 0 }
-    },
-    [Class.KNIGHT]: {
-      maxStats: { strength: 0, intelligence: 0, wisdom: 0, dexterity: 0, constitution: 0 }
-    },
-    [Class.RANGER]: {
-      maxStats: { strength: 0, intelligence: 0, wisdom: 0, dexterity: 0, constitution: 0 }
-    },
-    [Class.CLERIC]: {
-      maxStats: { strength: 0, intelligence: 0, wisdom: 0, dexterity: 0, constitution: 0 }
-    },
-    [Class.DRUID]: {
-      maxStats: { strength: 0, intelligence: 0, wisdom: 0, dexterity: 0, constitution: 0 }
-    },
-    [Class.THIEF]: {
-      maxStats: { strength: 0, intelligence: 0, wisdom: 0, dexterity: 0, constitution: 0 }
-    },
-    [Class.ASSASSIN]: {
-      maxStats: { strength: 0, intelligence: 0, wisdom: 0, dexterity: 0, constitution: 0 }
-    },
-    [Class.TRANSMUTER]: {
-      maxStats: { strength: 0, intelligence: 0, wisdom: 0, dexterity: 0, constitution: 0 }
-    },
-    [Class.INVOKER]: {
-      maxStats: { strength: 0, intelligence: 0, wisdom: 0, dexterity: 0, constitution: 0 }
-    },
-    [Class.NECROMANCER]: {
-      maxStats: { strength: 0, intelligence: 0, wisdom: 0, dexterity: 0, constitution: 0 }
-    },
-    [Class.OUTCAST]: {
-      maxStats: { strength: 0, intelligence: 0, wisdom: 0, dexterity: 0, constitution: 0 }
-    }
-  },
-
-  [Race.DRACONIAN]: {
-    [Class.FIGHTER]: {
-      maxStats: { strength: 0, intelligence: 0, wisdom: 0, dexterity: 0, constitution: 0 }
-    },
-    [Class.KNIGHT]: {
-      maxStats: { strength: 0, intelligence: 0, wisdom: 0, dexterity: 0, constitution: 0 }
-    },
-    [Class.RANGER]: {
-      maxStats: { strength: 0, intelligence: 0, wisdom: 0, dexterity: 0, constitution: 0 }
-    },
-    [Class.CLERIC]: {
-      maxStats: { strength: 0, intelligence: 0, wisdom: 0, dexterity: 0, constitution: 0 }
-    },
-    [Class.DRUID]: {
-      maxStats: { strength: 0, intelligence: 0, wisdom: 0, dexterity: 0, constitution: 0 }
-    },
-    [Class.THIEF]: {
-      maxStats: { strength: 0, intelligence: 0, wisdom: 0, dexterity: 0, constitution: 0 }
-    },
-    [Class.ASSASSIN]: {
-      maxStats: { strength: 0, intelligence: 0, wisdom: 0, dexterity: 0, constitution: 0 }
-    },
-    [Class.TRANSMUTER]: {
-      maxStats: { strength: 0, intelligence: 0, wisdom: 0, dexterity: 0, constitution: 0 }
-    },
-    [Class.INVOKER]: {
-      maxStats: { strength: 0, intelligence: 0, wisdom: 0, dexterity: 0, constitution: 0 }
-    },
-    [Class.NECROMANCER]: {
-      maxStats: { strength: 0, intelligence: 0, wisdom: 0, dexterity: 0, constitution: 0 }
-    },
-    [Class.OUTCAST]: {
-      maxStats: { strength: 0, intelligence: 0, wisdom: 0, dexterity: 0, constitution: 0 }
-    }
-  }
-};
-
 export const races: Record<Race, RaceData> = {
   [Race.HUMAN]: {
     name: Race.HUMAN,
@@ -395,87 +8,109 @@ export const races: Record<Race, RaceData> = {
     features: ['Has +3 to maximum of primary characteristic'],
     xpPenalty: 0,
     allowedAlignments: [Alignment.GOOD, Alignment.NEUTRAL, Alignment.EVIL],
+    maxStats: { strength: 20, intelligence: 20, wisdom: 20, dexterity: 20, constitution: 20 },
+    availableClasses: [Class.FIGHTER, Class.KNIGHT, Class.RANGER, Class.CLERIC, Class.DRUID, Class.THIEF, Class.ASSASSIN, Class.TRANSMUTER, Class.INVOKER, Class.NECROMANCER, Class.OUTCAST]
   },
 
   [Race.HALF_ELF]: {
     name: Race.HALF_ELF,
     description: 'Offspring of humans and elves, may be of any alignment.',
-    features: [],
+    features: ['Has +2 to maximum of primary characteristic'],
     xpPenalty: 5,
     allowedAlignments: [Alignment.GOOD, Alignment.NEUTRAL, Alignment.EVIL],
+    maxStats: { strength: 19, intelligence: 21, wisdom: 21, dexterity: 21, constitution: 19 },
+    availableClasses: [Class.FIGHTER, Class.KNIGHT, Class.RANGER, Class.CLERIC, Class.DRUID, Class.THIEF, Class.ASSASSIN, Class.TRANSMUTER, Class.INVOKER]
   },
 
   [Race.DWARF]: {
     name: Race.DWARF,
-    description: 'Short & stout fellows, make good warriors. Neutral or good.',
+    description: 'Short, stocky race, may be of any alignment.',
     features: [],
     xpPenalty: 10,
-    allowedAlignments: [Alignment.GOOD, Alignment.NEUTRAL],
+    allowedAlignments: [Alignment.GOOD, Alignment.NEUTRAL, Alignment.EVIL],
+    maxStats: { strength: 0, intelligence: 0, wisdom: 0, dexterity: 0, constitution: 0 },
+    availableClasses: [Class.FIGHTER, Class.KNIGHT, Class.RANGER, Class.CLERIC, Class.DRUID, Class.THIEF, Class.ASSASSIN, Class.TRANSMUTER, Class.INVOKER, Class.OUTCAST]
   },
 
   [Race.ELF]: {
     name: Race.ELF,
-    description: 'Not very strong, but exceedingly smart. Always good.',
+    description: 'Tall, graceful race, may be of any alignment.',
     features: [],
-    xpPenalty: 20,
-    allowedAlignments: [Alignment.GOOD],
+    xpPenalty: 15,
+    allowedAlignments: [Alignment.GOOD, Alignment.NEUTRAL, Alignment.EVIL],
+    maxStats: { strength: 0, intelligence: 0, wisdom: 0, dexterity: 0, constitution: 0 },
+    availableClasses: [Class.FIGHTER, Class.KNIGHT, Class.RANGER, Class.CLERIC, Class.DRUID, Class.THIEF, Class.ASSASSIN, Class.TRANSMUTER, Class.INVOKER, Class.OUTCAST]
   },
 
   [Race.WILD_ELF]: {
     name: Race.WILD_ELF,
-    description: 'Cross breed between Dark and normal Elves. Neutral or good.',
+    description: 'Elves who live in the wild, may be of any alignment.',
     features: [],
     xpPenalty: 20,
-    allowedAlignments: [Alignment.GOOD, Alignment.NEUTRAL],
+    allowedAlignments: [Alignment.GOOD, Alignment.NEUTRAL, Alignment.EVIL],
+    maxStats: { strength: 0, intelligence: 0, wisdom: 0, dexterity: 0, constitution: 0 },
+    availableClasses: [Class.FIGHTER, Class.KNIGHT, Class.RANGER, Class.CLERIC, Class.DRUID, Class.THIEF, Class.ASSASSIN, Class.TRANSMUTER, Class.INVOKER, Class.OUTCAST]
   },
 
   [Race.DARK_ELF]: {
     name: Race.DARK_ELF,
-    description: 'Frail, make excellent clerics and mages. Always evil.',
+    description: 'Elves who live in darkness, may be of any alignment.',
     features: [],
-    xpPenalty: 20,
-    allowedAlignments: [Alignment.EVIL],
+    xpPenalty: 25,
+    allowedAlignments: [Alignment.GOOD, Alignment.NEUTRAL, Alignment.EVIL],
+    maxStats: { strength: 17, intelligence: 24, wisdom: 22, dexterity: 23, constitution: 18 },
+    availableClasses: [Class.FIGHTER, Class.CLERIC, Class.DRUID, Class.THIEF, Class.ASSASSIN, Class.TRANSMUTER, Class.INVOKER, Class.NECROMANCER, Class.OUTCAST]
   },
 
   [Race.KENDER]: {
     name: Race.KENDER,
-    description: 'Small, nimble kleptomaniacs. Always good.',
+    description: 'Small, curious race, may be of any alignment.',
     features: [],
-    xpPenalty: 10,
-    allowedAlignments: [Alignment.GOOD],
+    xpPenalty: 15,
+    allowedAlignments: [Alignment.GOOD, Alignment.NEUTRAL, Alignment.EVIL],
+    maxStats: { strength: 18, intelligence: 20, wisdom: 18, dexterity: 25, constitution: 18 },
+    availableClasses: [Class.FIGHTER, Class.KNIGHT, Class.RANGER, Class.CLERIC, Class.DRUID, Class.THIEF]
   },
 
   [Race.HALF_KENDER]: {
     name: Race.HALF_KENDER,
-    description: 'Offspring of humans and kenders. Neutral or good.',
+    description: 'Offspring of humans and kender, may be of any alignment.',
     features: [],
-    xpPenalty: 10,
-    allowedAlignments: [Alignment.GOOD, Alignment.NEUTRAL],
+    xpPenalty: 20,
+    allowedAlignments: [Alignment.GOOD, Alignment.NEUTRAL, Alignment.EVIL],
+    maxStats: { strength: 0, intelligence: 0, wisdom: 0, dexterity: 0, constitution: 0 },
+    availableClasses: [Class.FIGHTER, Class.KNIGHT, Class.RANGER, Class.CLERIC, Class.DRUID, Class.THIEF, Class.ASSASSIN, Class.TRANSMUTER, Class.INVOKER, Class.OUTCAST]
   },
 
   [Race.GNOME]: {
     name: Race.GNOME,
-    description: 'Short and smart, inventors by nature. Always neutral.',
+    description: 'Small, intelligent race, may be of any alignment.',
     features: [],
-    xpPenalty: 10,
-    allowedAlignments: [Alignment.NEUTRAL],
+    xpPenalty: 15,
+    allowedAlignments: [Alignment.GOOD, Alignment.NEUTRAL, Alignment.EVIL],
+    maxStats: { strength: 0, intelligence: 0, wisdom: 0, dexterity: 0, constitution: 0 },
+    availableClasses: [Class.FIGHTER, Class.KNIGHT, Class.RANGER, Class.CLERIC, Class.DRUID, Class.THIEF, Class.ASSASSIN, Class.TRANSMUTER, Class.INVOKER, Class.OUTCAST]
   },
 
   [Race.MINOTAUR]: {
     name: Race.MINOTAUR,
-    description: 'Big, strong, slow. Excellent warriors. Any alignment.',
+    description: 'Large, powerful race, may be of any alignment.',
     features: [],
-    xpPenalty: 25,
+    xpPenalty: 20,
     allowedAlignments: [Alignment.GOOD, Alignment.NEUTRAL, Alignment.EVIL],
+    maxStats: { strength: 0, intelligence: 0, wisdom: 0, dexterity: 0, constitution: 0 },
+    availableClasses: [Class.FIGHTER, Class.KNIGHT, Class.RANGER, Class.CLERIC, Class.DRUID, Class.THIEF, Class.ASSASSIN, Class.TRANSMUTER, Class.INVOKER, Class.NECROMANCER, Class.OUTCAST]
   },
 
   [Race.DRACONIAN]: {
     name: Race.DRACONIAN,
-    description: 'Dragon offspring corrupted by dark magic. Always evil.',
+    description: 'Dragon-like race, may be of any alignment.',
     features: [],
-    xpPenalty: 20,
-    allowedAlignments: [Alignment.EVIL],
-  },
+    xpPenalty: 25,
+    allowedAlignments: [Alignment.GOOD, Alignment.NEUTRAL, Alignment.EVIL],
+    maxStats: { strength: 0, intelligence: 0, wisdom: 0, dexterity: 0, constitution: 0 },
+    availableClasses: [Class.FIGHTER, Class.KNIGHT, Class.RANGER, Class.CLERIC, Class.DRUID, Class.THIEF, Class.ASSASSIN, Class.TRANSMUTER, Class.INVOKER, Class.NECROMANCER, Class.OUTCAST]
+  }
 };
 
 // Helper function to get race by name
@@ -490,52 +125,49 @@ export function getAllRaces(): RaceData[] {
 
 // Helper function to get races by alignment
 export function getRacesByAlignment(alignment: Alignment): RaceData[] {
-  return Object.values(races).filter(race => 
+  return Object.values(races).filter(race =>
     race.allowedAlignments.includes(alignment)
   );
 }
 
 // Helper functions for race-class compatibility
-export function getRaceClassStats(race: Race, className: Class): CharacterStats | null {
-  const raceStats = raceClassStats[race];
-  if (!raceStats) return null;
-  
-  const classCombo = raceStats[className];
-  return classCombo?.maxStats ?? null;
-}
-
 export function isValidRaceClassCombo(race: Race, className: Class): boolean {
-  const raceStats = raceClassStats[race];
-  if (!raceStats) return false;
+  const raceData = races[race];
+  if (!raceData) return false;
   
-  return className in raceStats;
+  return raceData.availableClasses.includes(className);
 }
 
 export function getCompatibleClassesForRace(race: Race): Class[] {
-  const raceStats = raceClassStats[race];
-  if (!raceStats) return [];
+  const raceData = races[race];
+  if (!raceData) return [];
   
-  return Object.keys(raceStats) as Class[];
+  return raceData.availableClasses;
 }
 
 export function getCompatibleRacesForClass(className: Class): Race[] {
-  return Object.keys(raceClassStats).filter(race => 
+  return Object.keys(races).filter(race => 
     isValidRaceClassCombo(race as Race, className)
   ) as Race[];
+}
+
+export function getRaceStats(race: Race): CharacterStats | null {
+  const raceData = races[race];
+  if (!raceData) return null;
+  
+  return raceData.maxStats;
 }
 
 export function getAllValidRaceClassCombos(): Array<{ race: Race; class: Class; maxStats: CharacterStats }> {
   const combos: Array<{ race: Race; class: Class; maxStats: CharacterStats }> = [];
   
-  Object.entries(raceClassStats).forEach(([race, classStats]) => {
-    Object.entries(classStats || {}).forEach(([className, combo]) => {
-      if (combo) {
-        combos.push({
-          race: race as Race,
-          class: className as Class,
-          maxStats: combo.maxStats
-        });
-      }
+  Object.entries(races).forEach(([race, raceData]) => {
+    raceData.availableClasses.forEach(className => {
+      combos.push({
+        race: race as Race,
+        class: className,
+        maxStats: raceData.maxStats
+      });
     });
   });
   

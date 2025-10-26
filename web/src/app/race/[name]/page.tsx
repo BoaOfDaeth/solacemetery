@@ -1,5 +1,5 @@
 import { notFound } from 'next/navigation';
-import { getRace, getAllRaces, getCompatibleClassesForRace, getRaceClassStats } from '@/lib/races';
+import { getRace, getAllRaces, getCompatibleClassesForRace } from '@/lib/races';
 import { getClass } from '@/lib/classes';
 import { Icon } from '@iconify/react';
 import StatsCard from '@/components/StatsCard';

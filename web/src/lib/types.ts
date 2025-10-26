@@ -16,6 +16,8 @@ export interface RaceData {
   features: string[];
   xpPenalty: number; // Percentage penalty (0-25)
   allowedAlignments: Alignment[];
+  maxStats: CharacterStats;
+  availableClasses: Class[];
 }
 
 // Class interface
@@ -25,12 +27,4 @@ export interface ClassData {
   features: string[];
   xpPenalty: number; // Percentage penalty (0-25)
   allowedAlignments: Alignment[];
-}
-
-// Race/Class combination validation
-export interface RaceClassCombo {
-  race: Race;
-  class: Class;
-  totalXpPenalty: number;
-  isValid: boolean;
 }
