@@ -370,7 +370,10 @@ export const races: Record<Race, RaceData> = {
     title: 'Minotaur',
     slug: 'minotaur',
     description: 'Large, powerful race.',
-    features: [],
+    features: [
+      'Receive deathblow skill, if fighters',
+      'Learn enhanced damage, bash and several other skills at expert level, if class allows',
+    ],
     xpPenalty: 25,
     allowedAlignments: [Alignment.GOOD, Alignment.NEUTRAL, Alignment.EVIL],
     maxStats: {
@@ -387,8 +390,35 @@ export const races: Record<Race, RaceData> = {
       Class.DRUID,
       Class.OUTCAST,
     ],
-    reference: [],
-    resistances: [],
+    reference: [
+      { label: 'deathblow', url: '/help/deathblow' },
+    ],
+    resistances: [
+      {
+        damtype: 'bashing',
+        value: 20,
+      },
+      {
+        damtype: 'piercing',
+        value: 15,
+      },
+      {
+        damtype: 'slashing',
+        value: 21,
+      },
+      {
+        damtype: 'fire',
+        value: -25,
+      },
+      {
+        damtype: 'cold',
+        value: 20,
+      },
+      {
+        damtype: 'acidic attacks',
+        value: 10,
+      },
+    ],
   },
 
   [Race.AURAK]: {
