@@ -18,6 +18,7 @@ const nextConfig: NextConfig = {
   // Environment variables that should be available at build time
   env: {
     CUSTOM_KEY: process.env.CUSTOM_KEY,
+    BUILD_DATE: process.env.BUILD_DATE,
   },
 };
 

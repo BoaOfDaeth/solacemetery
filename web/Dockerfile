@@ -24,6 +24,8 @@ ENV NEXT_TELEMETRY_DISABLED=1
 
 # Set build-time environment variables
 ENV NODE_ENV=production
+ARG BUILD_DATE
+ENV BUILD_DATE=${BUILD_DATE}
 
 # Build the application
 RUN npm run build

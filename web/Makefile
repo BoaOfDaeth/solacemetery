@@ -13,7 +13,7 @@ help:
 # Build Docker image
 build:
 	@echo "Building Docker image with tag 'solacemetery'..."
-	@docker build -t solacemetery .
+	@docker build --build-arg BUILD_DATE="$$(date -u +"%Y-%m-%dT%H:%M:%SZ")" -t solacemetery .
 
 # Run Docker container
 run: build

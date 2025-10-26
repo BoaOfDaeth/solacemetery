@@ -33,6 +33,35 @@ export function getDataCutoffDate(): Date {
 }
 
 /**
+ * Get the build date from environment variable
+ * Returns a formatted date string showing when the container was built
+ */
+export function getBuildDate(): string {
+  const buildDate = process.env.BUILD_DATE;
+  
+  if (!buildDate) {
+    return 'Unknown';
+  }
+  
+  try {
+    const date = new Date(buildDate);
+    return date.toLocaleString('en-US', {
+      weekday: 'short',
+      month: 'short',
+      day: '2-digit',
+      hour: '2-digit',
+      minute: '2-digit',
+      second: '2-digit',
+      year: 'numeric',
+      hour12: false,
+    }).replace(/,/g, '');
+  } catch (error) {
+    console.error('Error parsing build date:', error);
+    return 'Invalid';
+  }
+}
+
+/**
  * SQL time filtering clause for database queries
  * Returns the WHERE clause condition for filtering records by time cutoff
  */

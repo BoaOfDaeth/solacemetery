@@ -1,4 +1,4 @@
-import { getDataCutoffDate } from '@/lib/utils';
+import { getDataCutoffDate, getBuildDate } from '@/lib/utils';
 
 export default function Footer() {
   // Calculate timestamp once on server side
@@ -13,6 +13,9 @@ export default function Footer() {
     year: 'numeric',
     hour12: false,
   }).replace(/,/g, '');
+  
+  // Get build date
+  const buildDate = getBuildDate();
 
   return (
     <footer className="border-t border-border bg-card/50 backdrop-blur-sm">
@@ -38,10 +41,13 @@ export default function Footer() {
             </a>
           </div>
           
-          {/* Data Cutoff Time */}
+          {/* Data Cutoff Time and Build Date */}
           <div className="text-center sm:text-right">
             <p className="text-xs text-muted-foreground">
               Data served as of: {formattedDate}
+            </p>
+            <p className="text-xs text-muted-foreground">
+              Last app build: {buildDate}
             </p>
           </div>
           
