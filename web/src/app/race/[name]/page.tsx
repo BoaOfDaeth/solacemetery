@@ -1,5 +1,5 @@
 import { notFound } from 'next/navigation';
-import { getRace, getAllRaces } from '@/lib/races';
+import { getRace, getAllRaces, getCompatibleClassesForRace, getRaceClassStats } from '@/lib/races';
 import { getClass } from '@/lib/classes';
 import { Icon } from '@iconify/react';
 import StatsCard from '@/components/StatsCard';
@@ -96,13 +96,19 @@ export default async function RacePage({ params }: RacePageProps) {
         </div>
 
         {/* Race Features */}
-        <div className="bg-card border border-border rounded-xl shadow-sm p-6 mb-6">
-          <h2 className="text-xl font-semibold text-foreground mb-4 flex items-center">
-            <Icon icon="game-icons:magic-swirl" className="w-5 h-5 mr-2 text-primary" />
-            Special Features
-          </h2>
-          <p className="text-muted-foreground leading-relaxed">{race.features}</p>
-        </div>
+        {race.features.length > 0 && (
+          <div className="bg-card border border-border rounded-xl shadow-sm p-6 mb-6">
+            <h2 className="text-xl font-semibold text-foreground mb-4 flex items-center">
+              <Icon icon="game-icons:magic-swirl" className="w-5 h-5 mr-2 text-primary" />
+              Special Features
+            </h2>
+            <ul className="text-muted-foreground leading-relaxed">
+              {race.features.map((feature, index) => (
+                <li key={index} className="mb-1">• {feature}</li>
+              ))}
+            </ul>
+          </div>
+        )}
 
         {/* Race Statistics */}
         <div className="bg-card border border-border rounded-xl shadow-sm overflow-hidden mb-6">

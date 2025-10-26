@@ -13,21 +13,18 @@ export interface CharacterStats {
 export interface RaceData {
   name: Race;
   description: string;
-  features: string;
-  maxStats: CharacterStats;
+  features: string[];
   xpPenalty: number; // Percentage penalty (0-25)
   allowedAlignments: Alignment[];
-  availableClasses: Class[];
 }
 
 // Class interface
 export interface ClassData {
   name: Class;
   description: string;
-  features: string;
+  features: string[];
   xpPenalty: number; // Percentage penalty (0-25)
   allowedAlignments: Alignment[];
-  compatibleRaces: Race[];
 }
 
 // Race/Class combination validation

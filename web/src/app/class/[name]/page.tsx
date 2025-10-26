@@ -1,6 +1,6 @@
 import { notFound } from 'next/navigation';
 import { getClass, getAllClasses } from '@/lib/classes';
-import { getRace } from '@/lib/races';
+import { getCompatibleRacesForClass, getRace } from '@/lib/races';
 import { Icon } from '@iconify/react';
 import StatsCard from '@/components/StatsCard';
 import ModernTable from '@/components/ModernTable';
@@ -26,7 +26,8 @@ export default async function ClassPage({ params }: ClassPageProps) {
     notFound();
   }
 
-  const compatibleRaces = cls.compatibleRaces.map(raceName => getRace(raceName)).filter(Boolean);
+  const compatibleRaceNames = getCompatibleRacesForClass(cls.name);
+  const compatibleRaces = compatibleRaceNames.map(raceName => getRace(raceName)).filter(Boolean);
 
   // Prepare compatible races data for table
   const racesData = compatibleRaces.map(race => ({
@@ -56,7 +57,7 @@ export default async function ClassPage({ params }: ClassPageProps) {
           />
           <StatsCard
             title="Compatible Races"
-            value={cls.compatibleRaces.length}
+            value={compatibleRaces.length}
             icon={
               <Icon icon="game-icons:race-car" className="w-6 h-6 text-primary" />
             }
@@ -87,13 +88,19 @@ export default async function ClassPage({ params }: ClassPageProps) {
         </div>
 
         {/* Class Features */}
-        <div className="bg-card border border-border rounded-xl shadow-sm p-6 mb-6">
-          <h2 className="text-xl font-semibold text-foreground mb-4 flex items-center">
-            <Icon icon="game-icons:magic-swirl" className="w-5 h-5 mr-2 text-primary" />
-            Special Features
-          </h2>
-          <p className="text-muted-foreground leading-relaxed">{cls.features}</p>
-        </div>
+        {cls.features.length > 0 && (
+          <div className="bg-card border border-border rounded-xl shadow-sm p-6 mb-6">
+            <h2 className="text-xl font-semibold text-foreground mb-4 flex items-center">
+              <Icon icon="game-icons:magic-swirl" className="w-5 h-5 mr-2 text-primary" />
+              Special Features
+            </h2>
+            <ul className="text-muted-foreground leading-relaxed">
+              {cls.features.map((feature, index) => (
+                <li key={index} className="mb-1">• {feature}</li>
+              ))}
+            </ul>
+          </div>
+        )}
 
         {/* Class Information Grid */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
