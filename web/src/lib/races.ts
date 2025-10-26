@@ -31,6 +31,7 @@ export const races: Record<Race, RaceData> = {
       Class.OUTCAST,
     ],
     reference: [],
+    resistances: [],
   },
 
   [Race.HALF_ELF]: {
@@ -38,7 +39,7 @@ export const races: Record<Race, RaceData> = {
     title: 'Half-Elf',
     slug: 'half-elf',
     description: 'Offspring of humans and elves.',
-    features: ['Has +2 to maximum of primary characteristic'],
+    features: ['Has +2 to maximum of primary characteristic', 'Can sneak and move quietly', 'Can see in the darkness'],
     xpPenalty: 5,
     allowedAlignments: [Alignment.GOOD, Alignment.NEUTRAL, Alignment.EVIL],
     maxStats: {
@@ -60,6 +61,16 @@ export const races: Record<Race, RaceData> = {
       Class.INVOKER,
     ],
     reference: [],
+    resistances: [
+      {
+        damtype: 'negative energy',
+        value: -10,
+      },
+      {
+        damtype: 'holy attacks',
+        value: 7,
+      },
+    ],
   },
 
   [Race.DWARF]: {
@@ -85,6 +96,7 @@ export const races: Record<Race, RaceData> = {
       Class.ASSASSIN,
     ],
     reference: [],
+    resistances: [],
   },
 
   [Race.ELF]: {
@@ -116,6 +128,7 @@ export const races: Record<Race, RaceData> = {
     reference: [
       { label: 'forest blending', url: '/help/forest-blending-awareness' },
     ],
+    resistances: [],
   },
 
   [Race.WILD_ELF]: {
@@ -145,6 +158,7 @@ export const races: Record<Race, RaceData> = {
     reference: [
       { label: 'forest blending', url: '/help/forest-blending-awareness' },
     ],
+    resistances: [],
   },
 
   [Race.DARK_ELF]: {
@@ -174,6 +188,7 @@ export const races: Record<Race, RaceData> = {
       Class.OUTCAST,
     ],
     reference: [],
+    resistances: [],
   },
 
   [Race.KENDER]: {
@@ -193,6 +208,7 @@ export const races: Record<Race, RaceData> = {
     },
     availableClasses: [Class.FIGHTER, Class.RANGER, Class.THIEF],
     reference: [],
+    resistances: [],
   },
 
   [Race.HALF_KENDER]: {
@@ -222,6 +238,7 @@ export const races: Record<Race, RaceData> = {
       Class.INVOKER,
     ],
     reference: [],
+    resistances: [],
   },
 
   [Race.GNOME]: {
@@ -248,6 +265,7 @@ export const races: Record<Race, RaceData> = {
       Class.INVOKER,
     ],
     reference: [],
+    resistances: [],
   },
 
   [Race.MINOTAUR]: {
@@ -273,6 +291,7 @@ export const races: Record<Race, RaceData> = {
       Class.OUTCAST,
     ],
     reference: [],
+    resistances: [],
   },
 
   [Race.AURAK]: {
@@ -299,6 +318,7 @@ export const races: Record<Race, RaceData> = {
       Class.OUTCAST,
     ],
     reference: [],
+    resistances: [],
   },
 
   [Race.BAAZ]: {
@@ -323,6 +343,7 @@ export const races: Record<Race, RaceData> = {
       Class.OUTCAST,
     ],
     reference: [],
+    resistances: [],
   },
 
   [Race.BOZAK]: {
@@ -349,6 +370,7 @@ export const races: Record<Race, RaceData> = {
       Class.OUTCAST,
     ],
     reference: [],
+    resistances: [],
   },
 
   [Race.KAPAK]: {
@@ -368,6 +390,7 @@ export const races: Record<Race, RaceData> = {
     },
     availableClasses: [Class.FIGHTER, Class.CLERIC, Class.OUTCAST],
     reference: [],
+    resistances: [],
   },
 
   [Race.SIVAK]: {
@@ -388,6 +411,7 @@ export const races: Record<Race, RaceData> = {
     },
     availableClasses: [Class.FIGHTER, Class.OUTCAST],
     reference: [],
+    resistances: [],
   },
 };
 

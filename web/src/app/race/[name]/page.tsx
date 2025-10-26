@@ -135,6 +135,32 @@ export default async function RacePage({ params }: RacePageProps) {
           </div>
         )}
 
+        {/* Race Resistances */}
+        {race.resistances.length > 0 && (
+          <div className="bg-card border border-border rounded-xl shadow-sm p-4 sm:p-6 mb-2 lg:mb-4">
+            <h2 className="text-xl font-semibold text-foreground mb-4 flex items-center">
+              <Icon icon="game-icons:shield" className="w-5 h-5 mr-2 text-primary" />
+              Resistances
+            </h2>
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
+              {race.resistances.map((resistance, index) => (
+                <div key={index} className="flex justify-between items-center p-3 bg-muted/50 rounded-lg">
+                  <span className="text-sm font-medium text-foreground capitalize">
+                    {resistance.damtype}
+                  </span>
+                  <span className={`text-sm font-bold ${
+                    resistance.value > 0 ? 'text-primary' : 
+                    resistance.value < 0 ? 'text-destructive' : 
+                    'text-muted-foreground'
+                  }`}>
+                    {resistance.value > 0 ? '+' : ''}{resistance.value}%
+                  </span>
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
+
         {/* Race Information */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-2 lg:gap-4 mb-2 lg:mb-4">
           <div className="bg-card border border-border rounded-xl shadow-sm p-4 sm:p-6">

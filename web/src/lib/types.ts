@@ -9,6 +9,12 @@ export interface CharacterStats {
   constitution: number;
 }
 
+// Resistance interface
+export interface Resistance {
+  damtype: string;
+  value: number;
+}
+
 // Race interface
 export interface RaceData {
   name: Race;
@@ -21,6 +27,7 @@ export interface RaceData {
   maxStats: CharacterStats;
   availableClasses: Class[];
   reference: ReferenceLink[];
+  resistances: Resistance[];
 }
 
 // Reference link interface
