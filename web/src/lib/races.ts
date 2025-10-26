@@ -182,37 +182,28 @@ export const raceClassStats: Record<Race, Partial<Record<Class, RaceClassCombo>>
 
   [Race.DARK_ELF]: {
     [Class.FIGHTER]: {
-      maxStats: { strength: 0, intelligence: 0, wisdom: 0, dexterity: 0, constitution: 0 }
-    },
-    [Class.KNIGHT]: {
-      maxStats: { strength: 0, intelligence: 0, wisdom: 0, dexterity: 0, constitution: 0 }
-    },
-    [Class.RANGER]: {
-      maxStats: { strength: 0, intelligence: 0, wisdom: 0, dexterity: 0, constitution: 0 }
+      maxStats: { strength: 17, intelligence: 24, wisdom: 22, dexterity: 23, constitution: 18 }
     },
     [Class.CLERIC]: {
-      maxStats: { strength: 0, intelligence: 0, wisdom: 0, dexterity: 0, constitution: 0 }
-    },
-    [Class.DRUID]: {
-      maxStats: { strength: 0, intelligence: 0, wisdom: 0, dexterity: 0, constitution: 0 }
+      maxStats: { strength: 17, intelligence: 24, wisdom: 22, dexterity: 23, constitution: 18 }
     },
     [Class.THIEF]: {
-      maxStats: { strength: 0, intelligence: 0, wisdom: 0, dexterity: 0, constitution: 0 }
+      maxStats: { strength: 17, intelligence: 24, wisdom: 22, dexterity: 23, constitution: 18 }
     },
     [Class.ASSASSIN]: {
-      maxStats: { strength: 0, intelligence: 0, wisdom: 0, dexterity: 0, constitution: 0 }
+      maxStats: { strength: 17, intelligence: 24, wisdom: 22, dexterity: 23, constitution: 18 }
     },
     [Class.TRANSMUTER]: {
-      maxStats: { strength: 0, intelligence: 0, wisdom: 0, dexterity: 0, constitution: 0 }
+      maxStats: { strength: 17, intelligence: 24, wisdom: 22, dexterity: 23, constitution: 18 }
     },
     [Class.INVOKER]: {
-      maxStats: { strength: 0, intelligence: 0, wisdom: 0, dexterity: 0, constitution: 0 }
+      maxStats: { strength: 17, intelligence: 24, wisdom: 22, dexterity: 23, constitution: 18 }
     },
     [Class.NECROMANCER]: {
-      maxStats: { strength: 0, intelligence: 0, wisdom: 0, dexterity: 0, constitution: 0 }
+      maxStats: { strength: 17, intelligence: 24, wisdom: 22, dexterity: 23, constitution: 18 }
     },
     [Class.OUTCAST]: {
-      maxStats: { strength: 0, intelligence: 0, wisdom: 0, dexterity: 0, constitution: 0 }
+      maxStats: { strength: 17, intelligence: 24, wisdom: 22, dexterity: 23, constitution: 18 }
     }
   },
 
