@@ -1,5 +1,5 @@
 import { notFound } from 'next/navigation';
-import { getRace, getAllRaces } from '@/lib/races';
+import { getRaceBySlug, getAllRaces } from '@/lib/races';
 import { getClass } from '@/lib/classes';
 import { Icon } from '@iconify/react';
 import StatsCard from '@/components/StatsCard';
@@ -13,15 +13,14 @@ interface RacePageProps {
 export async function generateStaticParams() {
   const races = getAllRaces();
   return races.map((race) => ({
-    name: race.name.toLowerCase().replace(/\s+/g, '-'),
+    slug: race.slug,
   }));
 }
 
 export default async function RacePage({ params }: RacePageProps) {
   const { name } = await params;
-  const raceName = name.replace(/-/g, ' ').replace(/\b\w/g, l => l.toUpperCase());
   
-  const race = getRace(raceName);
+  const race = getRaceBySlug(name);
   if (!race) {
     notFound();
   }
@@ -31,6 +30,8 @@ export default async function RacePage({ params }: RacePageProps) {
   // Prepare available classes data for table
   const classesData = availableClasses.map(cls => ({
     name: cls!.name,
+    title: cls!.title,
+    slug: cls!.slug,
     description: cls!.description,
     xpPenalty: cls!.xpPenalty === 0 ? 'No penalty' : `${cls!.xpPenalty}%`,
     alignments: cls!.allowedAlignments.join(', '),
@@ -41,7 +42,7 @@ export default async function RacePage({ params }: RacePageProps) {
       <div className="max-w-7xl mx-auto px-2 sm:px-4 lg:px-6 lg:mb-2">
         {/* Race Header */}
         <div className="mb-4 text-center">
-          <h1 className="text-3xl font-bold text-foreground mb-2">{race.name}</h1>
+          <h1 className="text-3xl font-bold text-foreground mb-2">{race.title}</h1>
           <p className="text-muted-foreground">{race.description}</p>
         </div>
 
@@ -160,7 +161,7 @@ export default async function RacePage({ params }: RacePageProps) {
             if (key === 'name') {
               return (
                 <Link
-                  href={`/class/${row.name.toLowerCase().replace(/\s+/g, '-')}`}
+                  href={`/class/${row.slug}`}
                   className="text-primary hover:text-primary/80 hover:underline font-medium"
                 >
                   {value}

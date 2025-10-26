@@ -8,6 +8,8 @@ export default async function RacesPage() {
   // Prepare races data for table
   const racesData = races.map(race => ({
     name: race.name,
+    title: race.title,
+    slug: race.slug,
     description: race.description,
     xpPenalty: race.xpPenalty === 0 ? 'No penalty' : `${race.xpPenalty}%`,
     alignments: race.allowedAlignments.join(', '),
@@ -31,7 +33,7 @@ export default async function RacesPage() {
             if (key === 'name') {
               return (
                 <Link
-                  href={`/race/${row.name.toLowerCase().replace(/\s+/g, '-')}`}
+                  href={`/race/${row.slug}`}
                   className="text-primary hover:text-primary/80 hover:underline font-medium"
                 >
                   {value}

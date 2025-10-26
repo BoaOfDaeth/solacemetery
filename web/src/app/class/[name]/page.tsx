@@ -1,5 +1,5 @@
 import { notFound } from 'next/navigation';
-import { getClass, getAllClasses } from '@/lib/classes';
+import { getClassBySlug, getAllClasses } from '@/lib/classes';
 import { getCompatibleRacesForClass, getRace } from '@/lib/races';
 import { Icon } from '@iconify/react';
 import ModernTable from '@/components/ModernTable';
@@ -12,15 +12,14 @@ interface ClassPageProps {
 export async function generateStaticParams() {
   const classes = getAllClasses();
   return classes.map((cls) => ({
-    name: cls.name.toLowerCase().replace(/\s+/g, '-'),
+    name: cls.slug,
   }));
 }
 
 export default async function ClassPage({ params }: ClassPageProps) {
   const { name } = await params;
-  const className = name.replace(/-/g, ' ').replace(/\b\w/g, l => l.toUpperCase());
   
-  const cls = getClass(className);
+  const cls = getClassBySlug(name);
   if (!cls) {
     notFound();
   }
@@ -31,6 +30,8 @@ export default async function ClassPage({ params }: ClassPageProps) {
   // Prepare compatible races data for table
   const racesData = compatibleRaces.map(race => ({
     name: race!.name,
+    title: race!.title,
+    slug: race!.slug,
     description: race!.description,
     xpPenalty: race!.xpPenalty === 0 ? 'No penalty' : `${race!.xpPenalty}%`,
     alignments: race!.allowedAlignments.join(', '),
@@ -41,7 +42,7 @@ export default async function ClassPage({ params }: ClassPageProps) {
       <div className="max-w-7xl mx-auto px-2 sm:px-4 lg:px-6 lg:mb-2">
         {/* Class Header */}
         <div className="mb-4 text-center">
-          <h1 className="text-3xl font-bold text-foreground mb-2">{cls.name}</h1>
+          <h1 className="text-3xl font-bold text-foreground mb-2">{cls.title}</h1>
           <p className="text-muted-foreground">{cls.description}</p>
           {cls.reference.length > 0 && (
             <div>
@@ -123,7 +124,7 @@ export default async function ClassPage({ params }: ClassPageProps) {
             if (key === 'name') {
               return (
                 <Link
-                  href={`/race/${row.name.toLowerCase().replace(/\s+/g, '-')}`}
+                  href={`/race/${row.slug}`}
                   className="text-primary hover:text-primary/80 hover:underline font-medium"
                 >
                   {value}

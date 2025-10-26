@@ -9,6 +9,8 @@ export default async function ClassesPage() {
   // Prepare classes data for table
   const classesData = classes.map(cls => ({
     name: cls.name,
+    title: cls.title,
+    slug: cls.slug,
     description: cls.description,
     xpPenalty: cls.xpPenalty === 0 ? 'No penalty' : `${cls.xpPenalty}%`,
     alignments: cls.allowedAlignments.join(', '),
@@ -32,7 +34,7 @@ export default async function ClassesPage() {
             if (key === 'name') {
               return (
                 <Link
-                  href={`/class/${row.name.toLowerCase().replace(/\s+/g, '-')}`}
+                  href={`/class/${row.slug}`}
                   className="text-primary hover:text-primary/80 hover:underline font-medium"
                 >
                   {value}

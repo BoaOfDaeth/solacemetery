@@ -4,6 +4,8 @@ import { Race, Alignment, Class } from './enums';
 export const races: Record<Race, RaceData> = {
   [Race.HUMAN]: {
     name: Race.HUMAN,
+    title: 'Human',
+    slug: 'human',
     description: 'The most common race of the world, may be of any alignment.',
     features: ['Has +3 to maximum of primary characteristic'],
     xpPenalty: 0,
@@ -14,6 +16,8 @@ export const races: Record<Race, RaceData> = {
 
   [Race.HALF_ELF]: {
     name: Race.HALF_ELF,
+    title: 'Half-Elf',
+    slug: 'half-elf',
     description: 'Offspring of humans and elves, may be of any alignment.',
     features: ['Has +2 to maximum of primary characteristic'],
     xpPenalty: 5,
@@ -24,6 +28,8 @@ export const races: Record<Race, RaceData> = {
 
   [Race.DWARF]: {
     name: Race.DWARF,
+    title: 'Dwarf',
+    slug: 'dwarf',
     description: 'Short & stout fellows, make good warriors. Neutral or good.',
     features: [],
     xpPenalty: 10,
@@ -34,6 +40,8 @@ export const races: Record<Race, RaceData> = {
 
   [Race.ELF]: {
     name: Race.ELF,
+    title: 'Elf',
+    slug: 'elf',
     description: 'Not very strong, but exceedingly smart. Always good.',
     features: [],
     xpPenalty: 20,
@@ -44,6 +52,8 @@ export const races: Record<Race, RaceData> = {
 
   [Race.WILD_ELF]: {
     name: Race.WILD_ELF,
+    title: 'Wild-Elf',
+    slug: 'wild-elf',
     description: 'Cross breed between Dark and normal Elves. Neutral or good.',
     features: [],
     xpPenalty: 20,
@@ -54,6 +64,8 @@ export const races: Record<Race, RaceData> = {
 
   [Race.DARK_ELF]: {
     name: Race.DARK_ELF,
+    title: 'Dark-Elf',
+    slug: 'dark-elf',
     description: 'Frail, make excellent clerics and mages. Always evil.',
     features: [],
     xpPenalty: 20,
@@ -64,6 +76,8 @@ export const races: Record<Race, RaceData> = {
 
   [Race.KENDER]: {
     name: Race.KENDER,
+    title: 'Kender',
+    slug: 'kender',
     description: 'Small, nimble kleptomaniacs. Always good.',
     features: [],
     xpPenalty: 10,
@@ -74,6 +88,8 @@ export const races: Record<Race, RaceData> = {
 
   [Race.HALF_KENDER]: {
     name: Race.HALF_KENDER,
+    title: 'Half-Kender',
+    slug: 'half-kender',
     description: 'Offspring of humans and kenders. Neutral or good.',
     features: ['Has +1 to maximum of primary characteristic'],
     xpPenalty: 10,
@@ -84,6 +100,8 @@ export const races: Record<Race, RaceData> = {
 
   [Race.GNOME]: {
     name: Race.GNOME,
+    title: 'Gnome',
+    slug: 'gnome',
     description: 'Short and smart, inventors by nature. Always neutral. ',
     features: [],
     xpPenalty: 10,
@@ -94,6 +112,8 @@ export const races: Record<Race, RaceData> = {
 
   [Race.MINOTAUR]: {
     name: Race.MINOTAUR,
+    title: 'Minotaur',
+    slug: 'minotaur',
     description: 'Large, powerful race, may be of any alignment.',
     features: [],
     xpPenalty: 25,
@@ -104,6 +124,8 @@ export const races: Record<Race, RaceData> = {
 
   [Race.AURAK]: {
     name: Race.AURAK,
+    title: 'Aurak',
+    slug: 'aurak',
     description: 'Draconian subrace. Wingless, proficient in magic.',
     features: [],
     xpPenalty: 20,
@@ -114,6 +136,8 @@ export const races: Record<Race, RaceData> = {
 
   [Race.BAAZ]: {
     name: Race.BAAZ,
+    title: 'Baaz',
+    slug: 'baaz',
     description: 'Draconian subrace. Slender but agile, decent thieves.',
     features: [],
     xpPenalty: 20,
@@ -124,6 +148,8 @@ export const races: Record<Race, RaceData> = {
 
   [Race.BOZAK]: {
     name: Race.BOZAK,
+    title: 'Bozak',
+    slug: 'bozak',
     description: 'Draconian subrace. Strong and unnaturally wise.',
     features: [],
     xpPenalty: 20,
@@ -134,6 +160,8 @@ export const races: Record<Race, RaceData> = {
 
   [Race.KAPAK]: {
     name: Race.KAPAK,
+    title: 'Kapak',
+    slug: 'kapak',
     description: 'Draconian subrace. All-rounders, capable of spitting acid.',
     features: [],
     xpPenalty: 20,
@@ -144,6 +172,8 @@ export const races: Record<Race, RaceData> = {
 
   [Race.SIVAK]: {
     name: Race.SIVAK,
+    title: 'Sivak',
+    slug: 'sivak',
     description: 'Draconian subrace. Strongest, able to fly in the sky, larger than others.',
     features: [],
     xpPenalty: 20,
@@ -156,6 +186,11 @@ export const races: Record<Race, RaceData> = {
 // Helper function to get race by name
 export function getRace(name: Race | string): RaceData | undefined {
   return races[name as Race];
+}
+
+// Helper function to get race by slug
+export function getRaceBySlug(slug: string): RaceData | undefined {
+  return Object.values(races).find(race => race.slug === slug);
 }
 
 // Helper function to get all races

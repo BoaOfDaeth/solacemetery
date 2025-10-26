@@ -4,6 +4,8 @@ import { Class, Alignment } from './enums';
 export const classes: Record<Class, ClassData> = {
   [Class.FIGHTER]: {
     name: Class.FIGHTER,
+    title: 'Fighter',
+    slug: 'fighter',
     description: 'Best all around fighters, little magic ability.',
     features: [],
     xpPenalty: 0,
@@ -15,6 +17,8 @@ export const classes: Record<Class, ClassData> = {
 
   [Class.KNIGHT]: {
     name: Class.KNIGHT,
+    title: 'Knight',
+    slug: 'knight',
     description: "Seekers of full knighthood - refer to 'knight' help.",
     features: [],
     xpPenalty: 20,
@@ -24,6 +28,8 @@ export const classes: Record<Class, ClassData> = {
 
   [Class.RANGER]: {
     name: Class.RANGER,
+    title: 'Ranger',
+    slug: 'ranger',
     description: 'Forest warriors, learned in woodlore and survival.',
     features: [],
     xpPenalty: 10,
@@ -34,6 +40,8 @@ export const classes: Record<Class, ClassData> = {
   },
   [Class.CLERIC]: {
     name: Class.CLERIC,
+    title: 'Cleric',
+    slug: 'cleric',
     description: "Followers of the Gods - refer to 'cleric' help.",
     features: [],
     xpPenalty: 0,
@@ -43,6 +51,8 @@ export const classes: Record<Class, ClassData> = {
 
   [Class.DRUID]: {
     name: Class.DRUID,
+    title: 'Druid',
+    slug: 'druid',
     description: 'Disciples of natural magic and control.',
     features: [],
     xpPenalty: 0,
@@ -52,6 +62,8 @@ export const classes: Record<Class, ClassData> = {
 
   [Class.THIEF]: {
     name: Class.THIEF,
+    title: 'Thief',
+    slug: 'thief',
     description: "The skilled stealer of other people's belongings.",
     features: [],
     xpPenalty: 0,
@@ -61,6 +73,8 @@ export const classes: Record<Class, ClassData> = {
 
   [Class.ASSASSIN]: {
     name: Class.ASSASSIN,
+    title: 'Assassin',
+    slug: 'assassin',
     description: 'Specialists in stealth and unarmed killing.',
     features: [],
     xpPenalty: 15,
@@ -70,6 +84,8 @@ export const classes: Record<Class, ClassData> = {
 
   [Class.TRANSMUTER]: {
     name: Class.TRANSMUTER,
+    title: 'Transmuter',
+    slug: 'transmuter',
     description: 'Specialist mages who are masters of alteration magic.',
     features: [],
     xpPenalty: 0,
@@ -82,6 +98,8 @@ export const classes: Record<Class, ClassData> = {
 
   [Class.INVOKER]: {
     name: Class.INVOKER,
+    title: 'Invoker',
+    slug: 'invoker',
     description: 'Specialist mages who are masters of energy manipulation.',
     features: [],
     xpPenalty: 0,
@@ -91,6 +109,8 @@ export const classes: Record<Class, ClassData> = {
 
   [Class.NECROMANCER]: {
     name: Class.NECROMANCER,
+    title: 'Necromancer',
+    slug: 'necromancer',
     description: 'Specialist mages who practice the black magics, always evil.',
     features: [],
     xpPenalty: 0,
@@ -100,6 +120,8 @@ export const classes: Record<Class, ClassData> = {
 
   [Class.OUTCAST]: {
     name: Class.OUTCAST,
+    title: 'Outcast',
+    slug: 'outcast',
     description:
       'Knight outcasts who turn on good and follow the black magics.',
     features: [],
@@ -112,6 +134,11 @@ export const classes: Record<Class, ClassData> = {
 // Helper function to get class by name
 export function getClass(name: Class | string): ClassData | undefined {
   return classes[name as Class];
+}
+
+// Helper function to get class by slug
+export function getClassBySlug(slug: string): ClassData | undefined {
+  return Object.values(classes).find(cls => cls.slug === slug);
 }
 
 // Helper function to get all classes

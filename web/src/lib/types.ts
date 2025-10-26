@@ -12,6 +12,8 @@ export interface CharacterStats {
 // Race interface
 export interface RaceData {
   name: Race;
+  title: string; // Display title for frontend
+  slug: string; // URL slug identifier
   description: string;
   features: string[];
   xpPenalty: number; // Percentage penalty (0-25)
@@ -29,6 +31,8 @@ export interface ReferenceLink {
 // Class interface
 export interface ClassData {
   name: Class;
+  title: string; // Display title for frontend
+  slug: string; // URL slug identifier
   description: string;
   features: string[];
   xpPenalty: number; // Percentage penalty (0-25)
