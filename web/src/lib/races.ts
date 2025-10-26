@@ -390,9 +390,7 @@ export const races: Record<Race, RaceData> = {
       Class.DRUID,
       Class.OUTCAST,
     ],
-    reference: [
-      { label: 'deathblow', url: '/help/deathblow' },
-    ],
+    reference: [{ label: 'deathblow', url: '/help/deathblow' }],
     resistances: [
       {
         damtype: 'bashing',
@@ -426,7 +424,10 @@ export const races: Record<Race, RaceData> = {
     title: 'Aurak',
     slug: 'aurak',
     description: 'Draconian subrace. Wingless, proficient in magic.',
-    features: [],
+    features: [
+      'Has natural ability to regenerate health',
+      'Expert level of enhanced damage, if class allows',
+    ],
     xpPenalty: 20,
     allowedAlignments: [Alignment.EVIL],
     maxStats: {
@@ -444,8 +445,35 @@ export const races: Record<Race, RaceData> = {
       Class.NECROMANCER,
       Class.OUTCAST,
     ],
-    reference: [],
-    resistances: [],
+    reference: [
+      { label: 'regeneration', url: '/help/imbue-regeneration-regeneration' },
+    ],
+    resistances: [
+      {
+        damtype: 'bashing',
+        value: 10,
+      },
+      {
+        damtype: 'piercing',
+        value: 10,
+      },
+      {
+        damtype: 'slashing',
+        value: 10,
+      },
+      {
+        damtype: 'poison',
+        value: 20,
+      },
+      {
+        damtype: 'holy attacks',
+        value: -20,
+      },
+      {
+        damtype: 'diseases',
+        value: 10,
+      },
+    ],
   },
 
   [Race.BAAZ]: {
