@@ -24,79 +24,79 @@ export const races: Record<Race, RaceData> = {
 
   [Race.DWARF]: {
     name: Race.DWARF,
-    description: 'Short, stocky race, may be of any alignment.',
+    description: 'Short & stout fellows, make good warriors. Neutral or good.',
     features: [],
     xpPenalty: 10,
-    allowedAlignments: [Alignment.GOOD, Alignment.NEUTRAL, Alignment.EVIL],
-    maxStats: { strength: 0, intelligence: 0, wisdom: 0, dexterity: 0, constitution: 0 },
-    availableClasses: [Class.FIGHTER, Class.KNIGHT, Class.RANGER, Class.CLERIC, Class.DRUID, Class.THIEF, Class.ASSASSIN, Class.TRANSMUTER, Class.INVOKER, Class.OUTCAST]
+    allowedAlignments: [Alignment.GOOD, Alignment.NEUTRAL],
+    maxStats: { strength: 22, intelligence: 19, wisdom: 20, dexterity: 18, constitution: 25 },
+    availableClasses: [Class.FIGHTER, Class.KNIGHT, Class.CLERIC, Class.THIEF, Class.ASSASSIN]
   },
 
   [Race.ELF]: {
     name: Race.ELF,
-    description: 'Tall, graceful race, may be of any alignment.',
+    description: 'Not very strong, but exceedingly smart. Always good.',
     features: [],
-    xpPenalty: 15,
-    allowedAlignments: [Alignment.GOOD, Alignment.NEUTRAL, Alignment.EVIL],
-    maxStats: { strength: 0, intelligence: 0, wisdom: 0, dexterity: 0, constitution: 0 },
-    availableClasses: [Class.FIGHTER, Class.KNIGHT, Class.RANGER, Class.CLERIC, Class.DRUID, Class.THIEF, Class.ASSASSIN, Class.TRANSMUTER, Class.INVOKER, Class.OUTCAST]
+    xpPenalty: 20,
+    allowedAlignments: [Alignment.GOOD],
+    maxStats: { strength: 17, intelligence: 24, wisdom: 25, dexterity: 23, constitution: 16 },
+    availableClasses: [Class.FIGHTER, Class.KNIGHT, Class.RANGER, Class.CLERIC, Class.DRUID, Class.THIEF, Class.ASSASSIN, Class.TRANSMUTER, Class.INVOKER]
   },
 
   [Race.WILD_ELF]: {
     name: Race.WILD_ELF,
-    description: 'Elves who live in the wild, may be of any alignment.',
+    description: 'Cross breed between Dark and normal Elves. Neutral or good.',
     features: [],
     xpPenalty: 20,
-    allowedAlignments: [Alignment.GOOD, Alignment.NEUTRAL, Alignment.EVIL],
-    maxStats: { strength: 0, intelligence: 0, wisdom: 0, dexterity: 0, constitution: 0 },
-    availableClasses: [Class.FIGHTER, Class.KNIGHT, Class.RANGER, Class.CLERIC, Class.DRUID, Class.THIEF, Class.ASSASSIN, Class.TRANSMUTER, Class.INVOKER, Class.OUTCAST]
+    allowedAlignments: [Alignment.GOOD, Alignment.NEUTRAL],
+    maxStats: { strength: 18, intelligence: 23, wisdom: 23, dexterity: 24, constitution: 17 },
+    availableClasses: [Class.FIGHTER, Class.RANGER, Class.CLERIC, Class.DRUID, Class.THIEF, Class.TRANSMUTER, Class.INVOKER]
   },
 
   [Race.DARK_ELF]: {
     name: Race.DARK_ELF,
-    description: 'Elves who live in darkness, may be of any alignment.',
+    description: 'Frail, make excellent clerics and mages. Always evil.',
     features: [],
-    xpPenalty: 25,
-    allowedAlignments: [Alignment.GOOD, Alignment.NEUTRAL, Alignment.EVIL],
+    xpPenalty: 20,
+    allowedAlignments: [Alignment.EVIL],
     maxStats: { strength: 17, intelligence: 24, wisdom: 22, dexterity: 23, constitution: 18 },
     availableClasses: [Class.FIGHTER, Class.CLERIC, Class.DRUID, Class.THIEF, Class.ASSASSIN, Class.TRANSMUTER, Class.INVOKER, Class.NECROMANCER, Class.OUTCAST]
   },
 
   [Race.KENDER]: {
     name: Race.KENDER,
-    description: 'Small, curious race, may be of any alignment.',
+    description: 'Small, nimble kleptomaniacs. Always good.',
     features: [],
-    xpPenalty: 15,
-    allowedAlignments: [Alignment.GOOD, Alignment.NEUTRAL, Alignment.EVIL],
+    xpPenalty: 10,
+    allowedAlignments: [Alignment.GOOD],
     maxStats: { strength: 18, intelligence: 20, wisdom: 18, dexterity: 25, constitution: 18 },
-    availableClasses: [Class.FIGHTER, Class.KNIGHT, Class.RANGER, Class.CLERIC, Class.DRUID, Class.THIEF]
+    availableClasses: [Class.FIGHTER, Class.RANGER, Class.THIEF]
   },
 
   [Race.HALF_KENDER]: {
     name: Race.HALF_KENDER,
-    description: 'Offspring of humans and kender, may be of any alignment.',
+    description: 'Offspring of humans and kenders. Neutral or good.',
     features: [],
-    xpPenalty: 20,
-    allowedAlignments: [Alignment.GOOD, Alignment.NEUTRAL, Alignment.EVIL],
-    maxStats: { strength: 0, intelligence: 0, wisdom: 0, dexterity: 0, constitution: 0 },
-    availableClasses: [Class.FIGHTER, Class.KNIGHT, Class.RANGER, Class.CLERIC, Class.DRUID, Class.THIEF, Class.ASSASSIN, Class.TRANSMUTER, Class.INVOKER, Class.OUTCAST]
+    xpPenalty: 10,
+    allowedAlignments: [Alignment.GOOD, Alignment.NEUTRAL],
+    maxStats: { strength: 20, intelligence: 20, wisdom: 19, dexterity: 23, constitution: 19 },
+    availableClasses: [Class.FIGHTER, Class.KNIGHT, Class.RANGER, Class.CLERIC, Class.DRUID, Class.THIEF, Class.ASSASSIN, Class.TRANSMUTER, Class.INVOKER]
   },
 
   [Race.GNOME]: {
     name: Race.GNOME,
-    description: 'Small, intelligent race, may be of any alignment.',
+    description: 'Short and smart, inventors by nature. Always neutral. ',
     features: [],
-    xpPenalty: 15,
-    allowedAlignments: [Alignment.GOOD, Alignment.NEUTRAL, Alignment.EVIL],
-    maxStats: { strength: 0, intelligence: 0, wisdom: 0, dexterity: 0, constitution: 0 },
-    availableClasses: [Class.FIGHTER, Class.KNIGHT, Class.RANGER, Class.CLERIC, Class.DRUID, Class.THIEF, Class.ASSASSIN, Class.TRANSMUTER, Class.INVOKER, Class.OUTCAST]
+    xpPenalty: 10,
+    allowedAlignments: [Alignment.NEUTRAL],
+    maxStats: { strength: 18, intelligence: 25, wisdom: 23, dexterity: 18, constitution: 20 },
+    availableClasses: [Class.FIGHTER, Class.CLERIC, Class.DRUID, Class.THIEF, Class.TRANSMUTER, Class.INVOKER]
   },
 
   [Race.MINOTAUR]: {
     name: Race.MINOTAUR,
     description: 'Large, powerful race, may be of any alignment.',
     features: [],
-    xpPenalty: 20,
+    xpPenalty: 25,
     allowedAlignments: [Alignment.GOOD, Alignment.NEUTRAL, Alignment.EVIL],
     maxStats: { strength: 0, intelligence: 0, wisdom: 0, dexterity: 0, constitution: 0 },
     availableClasses: [Class.FIGHTER, Class.KNIGHT, Class.RANGER, Class.CLERIC, Class.DRUID, Class.THIEF, Class.ASSASSIN, Class.TRANSMUTER, Class.INVOKER, Class.NECROMANCER, Class.OUTCAST]
@@ -106,7 +106,7 @@ export const races: Record<Race, RaceData> = {
     name: Race.DRACONIAN,
     description: 'Dragon-like race, may be of any alignment.',
     features: [],
-    xpPenalty: 25,
+    xpPenalty: 20,
     allowedAlignments: [Alignment.GOOD, Alignment.NEUTRAL, Alignment.EVIL],
     maxStats: { strength: 0, intelligence: 0, wisdom: 0, dexterity: 0, constitution: 0 },
     availableClasses: [Class.FIGHTER, Class.KNIGHT, Class.RANGER, Class.CLERIC, Class.DRUID, Class.THIEF, Class.ASSASSIN, Class.TRANSMUTER, Class.INVOKER, Class.NECROMANCER, Class.OUTCAST]
