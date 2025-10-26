@@ -20,6 +20,7 @@ export interface RaceData {
   allowedAlignments: Alignment[];
   maxStats: CharacterStats;
   availableClasses: Class[];
+  reference: ReferenceLink[];
 }
 
 // Reference link interface

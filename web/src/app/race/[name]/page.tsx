@@ -44,6 +44,24 @@ export default async function RacePage({ params }: RacePageProps) {
         <div className="mb-4 text-center">
           <h1 className="text-3xl font-bold text-foreground mb-2">{race.title}</h1>
           <p className="text-muted-foreground">{race.description}</p>
+          {race.reference.length > 0 && (
+            <div>
+              <span className="text-sm text-muted-foreground">See also: </span>
+              {race.reference.map((ref, index) => (
+                <span key={index}>
+                  <Link
+                    href={ref.url}
+                    className="text-sm text-primary hover:text-primary/80 hover:underline"
+                  >
+                    {ref.label}
+                  </Link>
+                  {index < race.reference.length - 1 && (
+                    <span className="text-sm text-muted-foreground">, </span>
+                  )}
+                </span>
+              ))}
+            </div>
+          )}
         </div>
 
         {/* Race Statistics */}
