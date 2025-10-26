@@ -203,7 +203,7 @@ export const races: Record<Race, RaceData> = {
     features: [
       'Can sneak and move quietly',
       'Can see in the darkness',
-      'Skilled in swordsmanship if class allows',
+      'Skilled in swordsmanship, if class allows',
       'Necromancers who are dark-elves automatically have an innate mastery of the negative channel skill',
     ], 
     xpPenalty: 20,
@@ -247,7 +247,14 @@ export const races: Record<Race, RaceData> = {
     title: 'Kender',
     slug: 'kender',
     description: 'Small, nimble kleptomaniacs.',
-    features: [],
+    features: [
+      'Can carve hoopaks from the wood',
+      'Have special skills when using hoopak',
+      'Learn stealing at expert level, if thieves',
+      'Learn dodging at decent level, if class allows',
+      'Expert level of staff',
+      'Can taunt others into a fight',
+    ],
     xpPenalty: 10,
     allowedAlignments: [Alignment.GOOD],
     maxStats: {
@@ -258,8 +265,26 @@ export const races: Record<Race, RaceData> = {
       constitution: 18,
     },
     availableClasses: [Class.FIGHTER, Class.RANGER, Class.THIEF],
-    reference: [],
-    resistances: [],
+    reference: [
+      { label: 'carve hoopak', url: '/help/carve-hoopak' },
+      { label: 'taunt', url: '/help/taunt' },
+      { label: 'thrust', url: '/help/thrust' },
+      { label: 'whirl', url: '/help/whirl' },
+    ],
+    resistances: [
+      {
+        damtype: 'acidic attacks',
+        value: 15,
+      },
+      {
+        damtype: 'poison',
+        value: -15,
+      },
+      {
+        damtype: 'diseases',
+        value: -15,
+      },
+    ],
   },
 
   [Race.HALF_KENDER]: {
