@@ -544,7 +544,12 @@ export const races: Record<Race, RaceData> = {
     title: 'Bozak',
     slug: 'bozak',
     description: 'Draconian subrace. Strong and unnaturally wise.',
-    features: [],
+    features: [
+      'Has natural ability to regenerate health',
+      'Expert level of enhanced damage, if class allows',
+      'Can use their wings to evade attempts at tripping, crushing, and other bashing attacks',
+      'Reduced movement cost and lag on mountains',
+    ],
     xpPenalty: 20,
     allowedAlignments: [Alignment.EVIL],
     maxStats: {
@@ -563,7 +568,32 @@ export const races: Record<Race, RaceData> = {
       Class.OUTCAST,
     ],
     reference: [],
-    resistances: [],
+    resistances: [
+      {
+        damtype: 'bashing',
+        value: 10,
+      },
+      {
+        damtype: 'piercing',
+        value: 10,
+      },
+      {
+        damtype: 'slashing',
+        value: 10,
+      },
+      {
+        damtype: 'poison',
+        value: 20,
+      },
+      {
+        damtype: 'holy attacks',
+        value: -20,
+      },
+      {
+        damtype: 'diseases',
+        value: 10,
+      },
+    ],
   },
 
   [Race.KAPAK]: {
