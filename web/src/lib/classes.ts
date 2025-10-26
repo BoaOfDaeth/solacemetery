@@ -15,7 +15,7 @@ export const classes: Record<Class, ClassData> = {
     description: 'Seekers of full knighthood - refer to \'knight\' help.',
     features: [],
     xpPenalty: 20,
-    allowedAlignments: [Alignment.GOOD, Alignment.NEUTRAL, Alignment.EVIL],
+    allowedAlignments: [Alignment.GOOD],
   },
 
   [Class.RANGER]: {
@@ -23,7 +23,7 @@ export const classes: Record<Class, ClassData> = {
     description: 'Forest warriors, learned in woodlore and survival.',
     features: [],
     xpPenalty: 10,
-    allowedAlignments: [Alignment.GOOD, Alignment.NEUTRAL, Alignment.EVIL],
+    allowedAlignments: [Alignment.GOOD, Alignment.NEUTRAL],
   },
 
   [Class.CLERIC]: {
@@ -39,7 +39,7 @@ export const classes: Record<Class, ClassData> = {
     description: 'Disciples of natural magic and control.',
     features: [],
     xpPenalty: 0,
-    allowedAlignments: [Alignment.GOOD, Alignment.NEUTRAL, Alignment.EVIL],
+    allowedAlignments: [Alignment.GOOD, Alignment.NEUTRAL],
   },
 
   [Class.THIEF]: {

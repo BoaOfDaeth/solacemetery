@@ -149,7 +149,6 @@ export default async function RacePage({ params }: RacePageProps) {
         {/* Available Classes */}
         <ModernTable
           title="Available Classes"
-          description={`Classes that ${race.name} can choose`}
           columns={[
             { key: 'name', label: 'Class' },
             { key: 'description', label: 'Description', hideOnMobile: true },
