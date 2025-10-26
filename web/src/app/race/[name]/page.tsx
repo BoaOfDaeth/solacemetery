@@ -38,18 +38,45 @@ export default async function RacePage({ params }: RacePageProps) {
 
   return (
     <div className="bg-background">
-      <div className="max-w-7xl mx-auto px-2 sm:px-4 lg:px-6">
+      <div className="max-w-7xl mx-auto px-2 sm:px-4 lg:px-6 lg:mb-2">
         {/* Race Header */}
-        <div className="mb-6">
+        <div className="mb-4">
           <h1 className="text-3xl font-bold text-foreground mb-2">{race.name}</h1>
           <p className="text-muted-foreground">{race.description}</p>
         </div>
 
-
+        {/* Race Statistics */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-2 sm:gap-4 mb-2 lg:mb-4">
+          <StatsCard
+            title="Strength"
+            value={race.maxStats.strength}
+            icon={<Icon icon="game-icons:muscle-up" className="w-6 h-6 text-primary" />}
+          />
+          <StatsCard
+            title="Intelligence"
+            value={race.maxStats.intelligence}
+            icon={<Icon icon="game-icons:brain" className="w-6 h-6 text-primary" />}
+          />
+          <StatsCard
+            title="Wisdom"
+            value={race.maxStats.wisdom}
+            icon={<Icon icon="game-icons:wisdom" className="w-6 h-6 text-primary" />}
+          />
+          <StatsCard
+            title="Dexterity"
+            value={race.maxStats.dexterity}
+            icon={<Icon icon="game-icons:running-shoe" className="w-6 h-6 text-primary" />}
+          />
+          <StatsCard
+            title="Constitution"
+            value={race.maxStats.constitution}
+            icon={<Icon icon="game-icons:heart-shield" className="w-6 h-6 text-primary" />}
+          />
+        </div>
 
         {/* Race Features */}
         {race.features.length > 0 && (
-          <div className="bg-card border border-border rounded-xl shadow-sm p-6 mb-6">
+          <div className="bg-card border border-border rounded-xl shadow-sm p-4 sm:p-6 mb-2 lg:mb-4">
             <h2 className="text-xl font-semibold text-foreground mb-4 flex items-center">
               <Icon icon="game-icons:magic-swirl" className="w-5 h-5 mr-2 text-primary" />
               Special Features
@@ -62,48 +89,9 @@ export default async function RacePage({ params }: RacePageProps) {
           </div>
         )}
 
-        {/* Race Statistics */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4 mb-6">
-          <StatsCard
-            title="Strength"
-            value={race.maxStats.strength}
-            icon={
-              <Icon icon="game-icons:muscle-up" className="w-6 h-6 text-primary" />
-            }
-          />
-          <StatsCard
-            title="Intelligence"
-            value={race.maxStats.intelligence}
-            icon={
-              <Icon icon="game-icons:brain" className="w-6 h-6 text-primary" />
-            }
-          />
-          <StatsCard
-            title="Wisdom"
-            value={race.maxStats.wisdom}
-            icon={
-              <Icon icon="game-icons:wisdom" className="w-6 h-6 text-primary" />
-            }
-          />
-          <StatsCard
-            title="Dexterity"
-            value={race.maxStats.dexterity}
-            icon={
-              <Icon icon="game-icons:running-shoe" className="w-6 h-6 text-primary" />
-            }
-          />
-          <StatsCard
-            title="Constitution"
-            value={race.maxStats.constitution}
-            icon={
-              <Icon icon="game-icons:heart-shield" className="w-6 h-6 text-primary" />
-            }
-          />
-        </div>
-
-        {/* Race Information Grid */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
-          <div className="bg-card border border-border rounded-xl shadow-sm p-6">
+        {/* Race Information */}
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-2 lg:gap-4 mb-2 lg:mb-4">
+          <div className="bg-card border border-border rounded-xl shadow-sm p-4 sm:p-6">
             <h3 className="text-lg font-semibold text-foreground mb-3 flex items-center">
               <Icon icon="game-icons:balance-scale" className="w-5 h-5 mr-2 text-primary" />
               Allowed Alignments
@@ -124,7 +112,7 @@ export default async function RacePage({ params }: RacePageProps) {
             </div>
           </div>
           
-          <div className="bg-card border border-border rounded-xl shadow-sm p-6">
+          <div className="bg-card border border-border rounded-xl shadow-sm p-4 sm:p-6 ">
             <h3 className="text-lg font-semibold text-foreground mb-3 flex items-center">
               <Icon icon="game-icons:fast-arrow" className="w-5 h-5 mr-2 text-primary" />
               Experience Penalty
@@ -136,58 +124,37 @@ export default async function RacePage({ params }: RacePageProps) {
         </div>
 
         {/* Available Classes */}
-        <div className="bg-card border border-border rounded-xl shadow-sm overflow-hidden">
-          <ModernTable
-            title="Available Classes"
-            description={`Classes that ${race.name} can choose`}
-            columns={[
-              { key: 'name', label: 'Class' },
-              { key: 'description', label: 'Description' },
-              { key: 'xpPenalty', label: 'XP Penalty' },
-              { key: 'alignments', label: 'Alignments' },
-            ]}
-            data={classesData}
-            renderCell={(key, value, row) => {
-              if (key === 'name') {
-                return (
-                  <div className="font-medium text-foreground">
-                    <Link
-                      href={`/class/${row.name.toLowerCase().replace(/\s+/g, '-')}`}
-                      className="text-primary hover:text-primary/80 hover:underline"
-                    >
-                      {value}
-                    </Link>
-                  </div>
-                );
-              }
-              if (key === 'description') {
-                return (
-                  <div className="max-w-md">
-                    <p className="text-sm text-muted-foreground line-clamp-2">
-                      {value}
-                    </p>
-                  </div>
-                );
-              }
-              if (key === 'xpPenalty') {
-                return (
-                  <div>
-                    {value}
-                  </div>
-                );
-              }
-              if (key === 'alignments') {
-                return (
-                  <div>
-                    {row.alignments}
-                  </div>
-                );
-              }
-              return value;
-            }}
-            className="border-0 shadow-none"
-          />
-        </div>
+        <ModernTable
+          title="Available Classes"
+          description={`Classes that ${race.name} can choose`}
+          columns={[
+            { key: 'name', label: 'Class' },
+            { key: 'description', label: 'Description', hideOnMobile: true },
+            { key: 'xpPenalty', label: 'XP' },
+            { key: 'alignments', label: 'Alignments' },
+          ]}
+          data={classesData}
+          renderCell={(key, value, row) => {
+            if (key === 'name') {
+              return (
+                <Link
+                  href={`/class/${row.name.toLowerCase().replace(/\s+/g, '-')}`}
+                  className="text-primary hover:text-primary/80 hover:underline font-medium"
+                >
+                  {value}
+                </Link>
+              );
+            }
+            if (key === 'description') {
+              return (
+                <span className="text-sm text-muted-foreground line-clamp-2 max-w-md block">
+                  {value}
+                </span>
+              );
+            }
+            return value;
+          }}
+        />
       </div>
     </div>
   );
