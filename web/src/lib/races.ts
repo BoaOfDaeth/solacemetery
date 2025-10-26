@@ -113,6 +113,7 @@ export const races: Record<Race, RaceData> = {
       'Can see in the darkness',
       'Skilled in swordsmanship if class allows',
       'Natural ability to blend in with the forests and detect others who are so blended',
+      'Moves easier in forests',
     ],
     xpPenalty: 20,
     allowedAlignments: [Alignment.GOOD],
@@ -160,6 +161,7 @@ export const races: Record<Race, RaceData> = {
       'Can see in the darkness',
       'Skilled in swordsmanship if class allows',
       'Natural ability to blend in with the forests and detect others who are so blended',
+      'Moves easier in forests',
     ],
     xpPenalty: 20,
     allowedAlignments: [Alignment.GOOD, Alignment.NEUTRAL],
@@ -205,6 +207,7 @@ export const races: Record<Race, RaceData> = {
       'Can see in the darkness',
       'Skilled in swordsmanship, if class allows',
       'Necromancers who are dark-elves automatically have an innate mastery of the negative channel skill',
+      'Moves easier in forests',
     ],
     xpPenalty: 20,
     allowedAlignments: [Alignment.EVIL],
@@ -255,6 +258,7 @@ export const races: Record<Race, RaceData> = {
       'Expert level of staff',
       'Can taunt others into a fight',
       'Not allowed to join any clan',
+      'Not very good at climbing mountains',
     ],
     xpPenalty: 10,
     allowedAlignments: [Alignment.GOOD],
@@ -338,7 +342,10 @@ export const races: Record<Race, RaceData> = {
     title: 'Gnome',
     slug: 'gnome',
     description: 'Short and smart, inventors by nature.',
-    features: ['Can use staves and wands at expert level'],
+    features: [
+      'Can use staves and wands at expert level',
+      'Not very good at climbing mountains',
+    ],
     xpPenalty: 10,
     allowedAlignments: [Alignment.NEUTRAL],
     maxStats: {
@@ -427,6 +434,7 @@ export const races: Record<Race, RaceData> = {
     features: [
       'Has natural ability to regenerate health',
       'Expert level of enhanced damage, if class allows',
+      'Reduced movement cost and lag on mountains',
     ],
     xpPenalty: 20,
     allowedAlignments: [Alignment.EVIL],
@@ -481,7 +489,12 @@ export const races: Record<Race, RaceData> = {
     title: 'Baaz',
     slug: 'baaz',
     description: 'Draconian subrace. Slender but agile, decent thieves.',
-    features: [],
+    features: [
+      'Has natural ability to regenerate health',
+      'Expert level of enhanced damage, if class allows',
+      'Can use their wings to evade attempts at tripping, crushing, and other bashing attacks',
+      'Somehow have a lower movement lag everywhere',
+    ],
     xpPenalty: 20,
     allowedAlignments: [Alignment.EVIL],
     maxStats: {
@@ -498,7 +511,32 @@ export const races: Record<Race, RaceData> = {
       Class.OUTCAST,
     ],
     reference: [],
-    resistances: [],
+    resistances: [
+      {
+        damtype: 'bashing',
+        value: 10,
+      },
+      {
+        damtype: 'piercing',
+        value: 10,
+      },
+      {
+        damtype: 'slashing',
+        value: 10,
+      },
+      {
+        damtype: 'poison',
+        value: 20,
+      },
+      {
+        damtype: 'holy attacks',
+        value: -20,
+      },
+      {
+        damtype: 'diseases',
+        value: 10,
+      },
+    ],
   },
 
   [Race.BOZAK]: {
