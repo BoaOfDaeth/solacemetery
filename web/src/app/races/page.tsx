@@ -19,7 +19,7 @@ export default async function RacesPage() {
         {/* Races Table */}
         <div className="bg-card border border-border rounded-xl shadow-sm overflow-hidden">
           <div className="px-6 py-4 border-b border-border">
-            <h1 className="text-xl font-semibold text-foreground">Available races of Krynn</h1>
+            <h1 className="text-xl font-semibold text-foreground">Available races</h1>
           </div>
           <div className="overflow-x-auto">
             <table className="min-w-full divide-y divide-border">
