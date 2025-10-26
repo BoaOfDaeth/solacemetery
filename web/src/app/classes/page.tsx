@@ -1,5 +1,6 @@
 import { getAllClasses } from '@/lib/classes';
 import { getCompatibleRacesForClass } from '@/lib/races';
+import ModernTable from '@/components/ModernTable';
 import Link from 'next/link';
 
 export default async function ClassesPage() {
@@ -17,61 +18,37 @@ export default async function ClassesPage() {
   return (
     <div className="bg-background">
       <div className="max-w-7xl mx-auto px-2 sm:px-4 lg:px-6">
-        {/* Classes Table */}
-        <div className="bg-card border border-border rounded-xl shadow-sm overflow-hidden">
-          <div className="px-6 py-4 border-b border-border">
-            <h1 className="text-xl font-semibold text-foreground">Available classes</h1>
-          </div>
-          <div className="overflow-x-auto">
-            <table className="min-w-full divide-y divide-border">
-              <thead className="bg-muted/50">
-                <tr>
-                  <th className="px-3 sm:px-6 py-2 text-left text-xs font-medium text-muted-foreground uppercase tracking-wider">Class</th>
-                  <th className="px-3 sm:px-6 py-2 text-left text-xs font-medium text-muted-foreground uppercase tracking-wider">Description</th>
-                  <th className="px-3 sm:px-6 py-2 text-left text-xs font-medium text-muted-foreground uppercase tracking-wider">XP Penalty</th>
-                  <th className="px-3 sm:px-6 py-2 text-left text-xs font-medium text-muted-foreground uppercase tracking-wider">Alignments</th>
-                  <th className="px-3 sm:px-6 py-2 text-left text-xs font-medium text-muted-foreground uppercase tracking-wider">Compatible Races</th>
-                </tr>
-              </thead>
-              <tbody className="bg-card divide-y divide-border">
-                {classesData.map((row, index) => (
-                  <tr key={index} className="hover:bg-accent/50 transition-colors duration-150">
-                    <td className="px-3 sm:px-6 py-3 text-sm font-medium">
-                      <div className="font-medium text-foreground">
-                        <Link 
-                          href={`/class/${row.name.toLowerCase().replace(/\s+/g, '-')}`}
-                          className="text-primary hover:text-primary/80 hover:underline"
-                        >
-                          {row.name}
-                        </Link>
-                      </div>
-                    </td>
-                    <td className="px-3 sm:px-6 py-3 text-sm font-medium">
-                      <div className="max-w-md">
-                        <p className="text-sm text-muted-foreground line-clamp-2">
-                          {row.description}
-                        </p>
-                      </div>
-                    </td>
-                    <td className="px-3 sm:px-6 py-3 text-sm font-medium text-right">
-                      {row.xpPenalty}
-                    </td>
-                    <td className="px-3 sm:px-6 py-3 text-sm font-medium">
-                      {row.alignments}
-                    </td>
-                    <td className="px-3 sm:px-6 py-3 text-sm font-medium">
-                      <div className="text-right">
-                        <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-primary/10 text-primary select-none">
-                          {row.compatibleRaces}
-                        </span>
-                      </div>
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
-        </div>
+        <ModernTable
+          title="Available classes"
+          columns={[
+            { key: 'name', label: 'Class' },
+            { key: 'description', label: 'Description', hideOnMobile: true },
+            { key: 'xpPenalty', label: 'XP' },
+            { key: 'alignments', label: 'Alignments' },
+            { key: 'compatibleRaces', label: 'Races' },
+          ]}
+          data={classesData}
+          renderCell={(key, value, row) => {
+            if (key === 'name') {
+              return (
+                <Link
+                  href={`/class/${row.name.toLowerCase().replace(/\s+/g, '-')}`}
+                  className="text-primary hover:text-primary/80 hover:underline font-medium"
+                >
+                  {value}
+                </Link>
+              );
+            }
+            if (key === 'description') {
+              return (
+                <span className="text-sm text-muted-foreground line-clamp-2 max-w-md block">
+                  {value}
+                </span>
+              );
+            }
+            return value;
+          }}
+        />
       </div>
     </div>
   );

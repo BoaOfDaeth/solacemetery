@@ -4,6 +4,7 @@ interface Column {
   key: string;
   label: string;
   className?: string;
+  hideOnMobile?: boolean;
 }
 
 interface ModernTableProps {
@@ -41,7 +42,7 @@ export default function ModernTable({
                 {columns.map((column) => (
                   <th
                     key={column.key}
-                    className={`px-3 sm:px-6 py-2 text-left text-xs font-medium text-muted-foreground uppercase tracking-wider ${column.className || ''}`}
+                    className={`px-3 sm:px-6 py-2 text-left text-xs font-medium text-muted-foreground uppercase tracking-wider ${column.hideOnMobile ? 'hidden sm:table-cell' : ''} ${column.className || ''}`}
                   >
                     {column.label}
                   </th>
@@ -54,7 +55,7 @@ export default function ModernTable({
                 {columns.map((column) => (
                   <td
                     key={column.key}
-                    className={`px-3 sm:px-6 py-3 text-sm font-medium ${column.className || ''}`}
+                    className={`px-3 sm:px-6 py-3 text-sm font-medium ${column.hideOnMobile ? 'hidden sm:table-cell' : ''} ${column.className || ''}`}
                   >
                     {renderCell ? renderCell(column.key, row[column.key], row) : row[column.key]}
                   </td>

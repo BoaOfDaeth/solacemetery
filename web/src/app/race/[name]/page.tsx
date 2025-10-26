@@ -1,5 +1,5 @@
 import { notFound } from 'next/navigation';
-import { getRace, getAllRaces, getCompatibleClassesForRace } from '@/lib/races';
+import { getRace, getAllRaces } from '@/lib/races';
 import { getClass } from '@/lib/classes';
 import { Icon } from '@iconify/react';
 import StatsCard from '@/components/StatsCard';
@@ -28,21 +28,12 @@ export default async function RacePage({ params }: RacePageProps) {
 
   const availableClasses = race.availableClasses.map(className => getClass(className)).filter(Boolean);
 
-  // Prepare stats data for table
-  const statsData = [
-    { stat: 'Strength', value: race.maxStats.strength, max: 25 },
-    { stat: 'Intelligence', value: race.maxStats.intelligence, max: 25 },
-    { stat: 'Wisdom', value: race.maxStats.wisdom, max: 25 },
-    { stat: 'Dexterity', value: race.maxStats.dexterity, max: 25 },
-    { stat: 'Constitution', value: race.maxStats.constitution, max: 25 },
-  ];
-
   // Prepare available classes data for table
   const classesData = availableClasses.map(cls => ({
-    name: cls.name,
-    description: cls.description,
-    xpPenalty: cls.xpPenalty === 0 ? 'No penalty' : `${cls.xpPenalty}% penalty`,
-    alignments: cls.allowedAlignments.join(', '),
+    name: cls!.name,
+    description: cls!.description,
+    xpPenalty: cls!.xpPenalty === 0 ? 'No penalty' : `${cls!.xpPenalty}%`,
+    alignments: cls!.allowedAlignments.join(', '),
   }));
 
   return (
@@ -51,49 +42,10 @@ export default async function RacePage({ params }: RacePageProps) {
         {/* Race Header */}
         <div className="mb-6">
           <h1 className="text-3xl font-bold text-foreground mb-2">{race.name}</h1>
-          <p className="text-muted-foreground">Race Information</p>
+          <p className="text-muted-foreground">{race.description}</p>
         </div>
 
-        {/* Race Statistics Cards */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
-          <StatsCard
-            title="XP Penalty"
-            value={race.xpPenalty === 0 ? 'None' : `${race.xpPenalty}%`}
-            icon={
-              <Icon icon="game-icons:fast-arrow" className="w-6 h-6 text-primary" />
-            }
-          />
-          <StatsCard
-            title="Available Classes"
-            value={race.availableClasses.length}
-            icon={
-              <Icon icon="game-icons:swordman" className="w-6 h-6 text-primary" />
-            }
-          />
-          <StatsCard
-            title="Allowed Alignments"
-            value={race.allowedAlignments.length}
-            icon={
-              <Icon icon="game-icons:balance-scale" className="w-6 h-6 text-primary" />
-            }
-          />
-          <StatsCard
-            title="Max Stats"
-            value="25"
-            icon={
-              <Icon icon="game-icons:muscle-up" className="w-6 h-6 text-primary" />
-            }
-          />
-        </div>
 
-        {/* Race Description */}
-        <div className="bg-card border border-border rounded-xl shadow-sm p-6 mb-6">
-          <h2 className="text-xl font-semibold text-foreground mb-4 flex items-center">
-            <Icon icon="game-icons:scroll-quill" className="w-5 h-5 mr-2 text-primary" />
-            Description
-          </h2>
-          <p className="text-muted-foreground leading-relaxed">{race.description}</p>
-        </div>
 
         {/* Race Features */}
         {race.features.length > 0 && (
@@ -111,32 +63,41 @@ export default async function RacePage({ params }: RacePageProps) {
         )}
 
         {/* Race Statistics */}
-        <div className="bg-card border border-border rounded-xl shadow-sm overflow-hidden mb-6">
-          <ModernTable
-            title="Maximum Statistics"
-            description="Maximum stat values this race can achieve"
-            columns={[
-              { key: 'stat', label: 'Statistic' },
-              { key: 'value', label: 'Maximum Value' },
-              { key: 'max', label: 'Cap' },
-            ]}
-            data={statsData}
-            renderCell={(key, value, row) => {
-              if (key === 'value') {
-                const isMax = value === 25;
-                return (
-                  <div className="text-right">
-                    <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${
-                      isMax ? 'bg-green-100 text-green-800' : 'bg-blue-100 text-blue-800'
-                    } select-none`}>
-                      {value}
-                    </span>
-                  </div>
-                );
-              }
-              return value;
-            }}
-            className="border-0 shadow-none"
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4 mb-6">
+          <StatsCard
+            title="Strength"
+            value={race.maxStats.strength}
+            icon={
+              <Icon icon="game-icons:muscle-up" className="w-6 h-6 text-primary" />
+            }
+          />
+          <StatsCard
+            title="Intelligence"
+            value={race.maxStats.intelligence}
+            icon={
+              <Icon icon="game-icons:brain" className="w-6 h-6 text-primary" />
+            }
+          />
+          <StatsCard
+            title="Wisdom"
+            value={race.maxStats.wisdom}
+            icon={
+              <Icon icon="game-icons:wisdom" className="w-6 h-6 text-primary" />
+            }
+          />
+          <StatsCard
+            title="Dexterity"
+            value={race.maxStats.dexterity}
+            icon={
+              <Icon icon="game-icons:running-shoe" className="w-6 h-6 text-primary" />
+            }
+          />
+          <StatsCard
+            title="Constitution"
+            value={race.maxStats.constitution}
+            icon={
+              <Icon icon="game-icons:heart-shield" className="w-6 h-6 text-primary" />
+            }
           />
         </div>
 
@@ -178,7 +139,7 @@ export default async function RacePage({ params }: RacePageProps) {
         <div className="bg-card border border-border rounded-xl shadow-sm overflow-hidden">
           <ModernTable
             title="Available Classes"
-            description="Classes that this race can choose"
+            description={`Classes that ${race.name} can choose`}
             columns={[
               { key: 'name', label: 'Class' },
               { key: 'description', label: 'Description' },
@@ -190,7 +151,7 @@ export default async function RacePage({ params }: RacePageProps) {
               if (key === 'name') {
                 return (
                   <div className="font-medium text-foreground">
-                    <Link 
+                    <Link
                       href={`/class/${row.name.toLowerCase().replace(/\s+/g, '-')}`}
                       className="text-primary hover:text-primary/80 hover:underline"
                     >
@@ -210,32 +171,15 @@ export default async function RacePage({ params }: RacePageProps) {
               }
               if (key === 'xpPenalty') {
                 return (
-                  <div className="text-right">
-                    <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${
-                      value === 'No penalty' 
-                        ? 'bg-green-100 text-green-800' 
-                        : 'bg-yellow-100 text-yellow-800'
-                    } select-none`}>
-                      {value}
-                    </span>
+                  <div>
+                    {value}
                   </div>
                 );
               }
               if (key === 'alignments') {
                 return (
-                  <div className="flex flex-wrap gap-1">
-                    {row.alignments.split(', ').map((alignment: string) => (
-                      <span
-                        key={alignment}
-                        className={`px-2 py-1 rounded text-xs font-medium ${
-                          alignment === 'Good' ? 'text-green-600 bg-green-50' : 
-                          alignment === 'Neutral' ? 'text-yellow-600 bg-yellow-50' : 
-                          'text-red-600 bg-red-50'
-                        }`}
-                      >
-                        {alignment}
-                      </span>
-                    ))}
+                  <div>
+                    {row.alignments}
                   </div>
                 );
               }
