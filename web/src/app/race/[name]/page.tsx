@@ -100,11 +100,7 @@ export default async function RacePage({ params }: RacePageProps) {
               {race.allowedAlignments.map((alignment) => (
                 <span
                   key={alignment}
-                  className={`px-3 py-1 rounded-full text-sm font-medium ${
-                    alignment === 'Good' ? 'text-green-600 bg-green-50' : 
-                    alignment === 'Neutral' ? 'text-yellow-600 bg-yellow-50' : 
-                    'text-red-600 bg-red-50'
-                  }`}
+                  className="px-3 py-1 rounded-full text-sm font-medium bg-primary/10 text-primary"
                 >
                   {alignment}
                 </span>
