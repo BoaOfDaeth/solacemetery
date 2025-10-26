@@ -254,6 +254,7 @@ export const races: Record<Race, RaceData> = {
       'Learn dodging at decent level, if class allows',
       'Expert level of staff',
       'Can taunt others into a fight',
+      'Not allowed to join any clan',
     ],
     xpPenalty: 10,
     allowedAlignments: [Alignment.GOOD],
@@ -313,8 +314,23 @@ export const races: Record<Race, RaceData> = {
       Class.TRANSMUTER,
       Class.INVOKER,
     ],
-    reference: [],
-    resistances: [],
+    reference: [
+      { label: 'half-kender', url: '/help/half-kender-half-kenders' },
+    ],
+    resistances: [
+      {
+        damtype: 'acidic attacks',
+        value: 7,
+      },
+      {
+        damtype: 'poison',
+        value: -7,
+      },
+      {
+        damtype: 'diseases',
+        value: -7,
+      },
+    ],
   },
 
   [Race.GNOME]: {
