@@ -655,7 +655,13 @@ export const races: Record<Race, RaceData> = {
     slug: 'sivak',
     description:
       'Draconian subrace. Strongest, able to fly in the sky, larger than others.',
-    features: [],
+      features: [
+        'Has natural ability to regenerate health',
+        'Expert level of enhanced damage, if class allows',
+        'Can use their wings to evade attempts at tripping, crushing, and other bashing attacks',
+        'Has wings large enough to fly across the sky',
+        'Reduced movement cost and lag on mountains',
+      ],
     xpPenalty: 20,
     allowedAlignments: [Alignment.EVIL],
     maxStats: {
