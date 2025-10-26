@@ -601,7 +601,13 @@ export const races: Record<Race, RaceData> = {
     title: 'Kapak',
     slug: 'kapak',
     description: 'Draconian subrace. All-rounders, capable of spitting acid.',
-    features: [],
+    features: [
+      'Has natural ability to regenerate health',
+      'Expert level of enhanced damage, if class allows',
+      'Can use their wings to evade attempts at tripping, crushing, and other bashing attacks',
+      'Can spit acid at others',
+      'Reduced movement cost and lag on mountains',
+    ],
     xpPenalty: 20,
     allowedAlignments: [Alignment.EVIL],
     maxStats: {
@@ -612,8 +618,35 @@ export const races: Record<Race, RaceData> = {
       constitution: 20,
     },
     availableClasses: [Class.FIGHTER, Class.CLERIC, Class.OUTCAST],
-    reference: [],
-    resistances: [],
+    reference: [
+      { label: 'acidic spit', url: '/help/acidic-spit' },
+    ],
+    resistances: [
+      {
+        damtype: 'bashing',
+        value: 10,
+      },
+      {
+        damtype: 'piercing',
+        value: 10,
+      },
+      {
+        damtype: 'slashing',
+        value: 10,
+      },
+      {
+        damtype: 'poison',
+        value: 20,
+      },
+      {
+        damtype: 'holy attacks',
+        value: -20,
+      },
+      {
+        damtype: 'diseases',
+        value: 10,
+      },
+    ],
   },
 
   [Race.SIVAK]: {
