@@ -75,10 +75,10 @@ export const races: Record<Race, RaceData> = {
   [Race.HALF_KENDER]: {
     name: Race.HALF_KENDER,
     description: 'Offspring of humans and kenders. Neutral or good.',
-    features: [],
+    features: ['Has +1 to maximum of primary characteristic'],
     xpPenalty: 10,
     allowedAlignments: [Alignment.GOOD, Alignment.NEUTRAL],
-    maxStats: { strength: 20, intelligence: 20, wisdom: 19, dexterity: 23, constitution: 19 },
+    maxStats: { strength: 19, intelligence: 20, wisdom: 19, dexterity: 23, constitution: 19 },
     availableClasses: [Class.FIGHTER, Class.KNIGHT, Class.RANGER, Class.CLERIC, Class.DRUID, Class.THIEF, Class.ASSASSIN, Class.TRANSMUTER, Class.INVOKER]
   },
 
@@ -98,8 +98,8 @@ export const races: Record<Race, RaceData> = {
     features: [],
     xpPenalty: 25,
     allowedAlignments: [Alignment.GOOD, Alignment.NEUTRAL, Alignment.EVIL],
-    maxStats: { strength: 0, intelligence: 0, wisdom: 0, dexterity: 0, constitution: 0 },
-    availableClasses: [Class.FIGHTER, Class.KNIGHT, Class.RANGER, Class.CLERIC, Class.DRUID, Class.THIEF, Class.ASSASSIN, Class.TRANSMUTER, Class.INVOKER, Class.NECROMANCER, Class.OUTCAST]
+    maxStats: { strength: 25, intelligence: 15, wisdom: 17, dexterity: 17, constitution: 24 },
+    availableClasses: [Class.FIGHTER, Class.RANGER, Class.CLERIC, Class.DRUID, Class.OUTCAST]
   },
 
   [Race.DRACONIAN]: {
