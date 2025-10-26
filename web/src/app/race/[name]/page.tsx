@@ -40,38 +40,65 @@ export default async function RacePage({ params }: RacePageProps) {
     <div className="bg-background">
       <div className="max-w-7xl mx-auto px-2 sm:px-4 lg:px-6 lg:mb-2">
         {/* Race Header */}
-        <div className="mb-4">
+        <div className="mb-4 text-center">
           <h1 className="text-3xl font-bold text-foreground mb-2">{race.name}</h1>
           <p className="text-muted-foreground">{race.description}</p>
         </div>
 
         {/* Race Statistics */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-2 sm:gap-4 mb-2 lg:mb-4">
-          <StatsCard
-            title="Strength"
-            value={race.maxStats.strength}
-            icon={<Icon icon="game-icons:muscle-up" className="w-6 h-6 text-primary" />}
-          />
-          <StatsCard
-            title="Intelligence"
-            value={race.maxStats.intelligence}
-            icon={<Icon icon="game-icons:brain" className="w-6 h-6 text-primary" />}
-          />
-          <StatsCard
-            title="Wisdom"
-            value={race.maxStats.wisdom}
-            icon={<Icon icon="game-icons:wisdom" className="w-6 h-6 text-primary" />}
-          />
-          <StatsCard
-            title="Dexterity"
-            value={race.maxStats.dexterity}
-            icon={<Icon icon="game-icons:running-shoe" className="w-6 h-6 text-primary" />}
-          />
-          <StatsCard
-            title="Constitution"
-            value={race.maxStats.constitution}
-            icon={<Icon icon="game-icons:heart-shield" className="w-6 h-6 text-primary" />}
-          />
+        <div className="mb-2 lg:mb-4">
+          {/* Mobile: Icons only in one row */}
+          <div className="flex justify-center gap-4 sm:hidden">
+            <div className="flex flex-col items-center">
+              <Icon icon="game-icons:muscle-up" className="w-6 h-6 text-primary mb-1" />
+              <span className="text-sm font-medium text-foreground">{race.maxStats.strength}</span>
+            </div>
+            <div className="flex flex-col items-center">
+              <Icon icon="game-icons:brain" className="w-6 h-6 text-primary mb-1" />
+              <span className="text-sm font-medium text-foreground">{race.maxStats.intelligence}</span>
+            </div>
+            <div className="flex flex-col items-center">
+              <Icon icon="game-icons:wisdom" className="w-6 h-6 text-primary mb-1" />
+              <span className="text-sm font-medium text-foreground">{race.maxStats.wisdom}</span>
+            </div>
+            <div className="flex flex-col items-center">
+              <Icon icon="game-icons:running-shoe" className="w-6 h-6 text-primary mb-1" />
+              <span className="text-sm font-medium text-foreground">{race.maxStats.dexterity}</span>
+            </div>
+            <div className="flex flex-col items-center">
+              <Icon icon="game-icons:heart-shield" className="w-6 h-6 text-primary mb-1" />
+              <span className="text-sm font-medium text-foreground">{race.maxStats.constitution}</span>
+            </div>
+          </div>
+
+          {/* Desktop: Full StatsCard grid */}
+          <div className="hidden sm:grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-2 sm:gap-4">
+            <StatsCard
+              title="Strength"
+              value={race.maxStats.strength}
+              icon={<Icon icon="game-icons:muscle-up" className="w-6 h-6 text-primary" />}
+            />
+            <StatsCard
+              title="Intelligence"
+              value={race.maxStats.intelligence}
+              icon={<Icon icon="game-icons:brain" className="w-6 h-6 text-primary" />}
+            />
+            <StatsCard
+              title="Wisdom"
+              value={race.maxStats.wisdom}
+              icon={<Icon icon="game-icons:wisdom" className="w-6 h-6 text-primary" />}
+            />
+            <StatsCard
+              title="Dexterity"
+              value={race.maxStats.dexterity}
+              icon={<Icon icon="game-icons:running-shoe" className="w-6 h-6 text-primary" />}
+            />
+            <StatsCard
+              title="Constitution"
+              value={race.maxStats.constitution}
+              icon={<Icon icon="game-icons:heart-shield" className="w-6 h-6 text-primary" />}
+            />
+          </div>
         </div>
 
         {/* Race Features */}
