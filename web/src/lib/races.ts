@@ -102,14 +102,54 @@ export const races: Record<Race, RaceData> = {
     availableClasses: [Class.FIGHTER, Class.RANGER, Class.CLERIC, Class.DRUID, Class.OUTCAST]
   },
 
-  [Race.DRACONIAN]: {
-    name: Race.DRACONIAN,
-    description: 'Dragon-like race, may be of any alignment.',
+  [Race.AURAK]: {
+    name: Race.AURAK,
+    description: 'Draconian subrace. Wingless, proficient in magic.',
     features: [],
     xpPenalty: 20,
-    allowedAlignments: [Alignment.GOOD, Alignment.NEUTRAL, Alignment.EVIL],
-    maxStats: { strength: 0, intelligence: 0, wisdom: 0, dexterity: 0, constitution: 0 },
-    availableClasses: [Class.FIGHTER, Class.KNIGHT, Class.RANGER, Class.CLERIC, Class.DRUID, Class.THIEF, Class.ASSASSIN, Class.TRANSMUTER, Class.INVOKER, Class.NECROMANCER, Class.OUTCAST]
+    allowedAlignments: [Alignment.EVIL],
+    maxStats: { strength: 18, intelligence: 23, wisdom: 20, dexterity: 17, constitution: 20 },
+    availableClasses: [Class.FIGHTER, Class.CLERIC, Class.TRANSMUTER, Class.INVOKER, Class.NECROMANCER, Class.OUTCAST]
+  },
+
+  [Race.BAAZ]: {
+    name: Race.BAAZ,
+    description: 'Draconian subrace. Slender but agile, decent thieves.',
+    features: [],
+    xpPenalty: 20,
+    allowedAlignments: [Alignment.EVIL],
+    maxStats: { strength: 20, intelligence: 18, wisdom: 18, dexterity: 23, constitution: 21 },
+    availableClasses: [Class.FIGHTER, Class.THIEF, Class.ASSASSIN, Class.OUTCAST]
+  },
+
+  [Race.BOZAK]: {
+    name: Race.BOZAK,
+    description: 'Draconian subrace. Strong and unnaturally wise.',
+    features: [],
+    xpPenalty: 20,
+    allowedAlignments: [Alignment.EVIL],
+    maxStats: { strength: 22, intelligence: 20, wisdom: 22, dexterity: 18, constitution: 22 },
+    availableClasses: [Class.FIGHTER, Class.CLERIC, Class.TRANSMUTER, Class.INVOKER, Class.NECROMANCER, Class.OUTCAST]
+  },
+
+  [Race.KAPAK]: {
+    name: Race.KAPAK,
+    description: 'Draconian subrace. All-rounders, capable of spitting acid.',
+    features: [],
+    xpPenalty: 20,
+    allowedAlignments: [Alignment.EVIL],
+    maxStats: { strength: 21, intelligence: 20, wisdom: 20, dexterity: 21, constitution: 20 },
+    availableClasses: [Class.FIGHTER, Class.CLERIC, Class.OUTCAST]
+  },
+
+  [Race.SIVAK]: {
+    name: Race.SIVAK,
+    description: 'Draconian subrace. Strongest, able to fly in the sky, larger than others.',
+    features: [],
+    xpPenalty: 20,
+    allowedAlignments: [Alignment.EVIL],
+    maxStats: { strength: 23, intelligence: 19, wisdom: 18, dexterity: 21, constitution: 22 },
+    availableClasses: [Class.FIGHTER, Class.OUTCAST]
   }
 };
 

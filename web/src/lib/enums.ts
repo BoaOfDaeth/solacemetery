@@ -17,7 +17,11 @@ export enum Race {
   HALF_KENDER = 'Half-Kender',
   GNOME = 'Gnome',
   MINOTAUR = 'Minotaur',
-  DRACONIAN = 'Draconian',
+  AURAK = 'Aurak',
+  BAAZ = 'Baaz',
+  BOZAK = 'Bozak',
+  KAPAK = 'Kapak',
+  SIVAK = 'Sivak',
 }
 
 // Class enum
