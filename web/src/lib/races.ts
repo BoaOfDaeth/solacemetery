@@ -205,7 +205,7 @@ export const races: Record<Race, RaceData> = {
       'Can see in the darkness',
       'Skilled in swordsmanship, if class allows',
       'Necromancers who are dark-elves automatically have an innate mastery of the negative channel skill',
-    ], 
+    ],
     xpPenalty: 20,
     allowedAlignments: [Alignment.EVIL],
     maxStats: {
@@ -338,7 +338,7 @@ export const races: Record<Race, RaceData> = {
     title: 'Gnome',
     slug: 'gnome',
     description: 'Short and smart, inventors by nature.',
-    features: [],
+    features: ['Can use staves and wands at expert level'],
     xpPenalty: 10,
     allowedAlignments: [Alignment.NEUTRAL],
     maxStats: {
@@ -357,7 +357,12 @@ export const races: Record<Race, RaceData> = {
       Class.INVOKER,
     ],
     reference: [],
-    resistances: [],
+    resistances: [
+      {
+        damtype: 'bashing',
+        value: -20,
+      },
+    ],
   },
 
   [Race.MINOTAUR]: {
