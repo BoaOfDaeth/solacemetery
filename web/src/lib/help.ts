@@ -66,13 +66,13 @@ function parseHelpFile(filePath: string, category: string): HelpArticle[] {
       const title = keywordLine.trim().toLowerCase() || 'untitled';
       
       // Extract syntax if present (look for "Syntax:" in content, handle multi-line)
-      const syntaxMatch = body.match(/Syntax:\s*([\s\S]+?)(?:\n\s*\n|\n[A-Z]|$)/i);
+      const syntaxMatch = body.match(/Syntax:\s*([\s\S]+?)(?:\n\s*\n|\n==|\n[A-Z][A-Z\s]+[A-Z]|$)/i);
       const syntax = syntaxMatch ? syntaxMatch[1].trim() : undefined;
       
       // Clean content (remove syntax section if present)
       let cleanContent = body;
       if (syntaxMatch) {
-        cleanContent = body.replace(/Syntax:\s*[\s\S]+?(?:\n\s*\n|\n[A-Z]|$)/i, '').trim();
+        cleanContent = body.replace(/Syntax:\s*[\s\S]+?(?:\n\s*\n|\n==|\n[A-Z][A-Z\s]+[A-Z]|$)/i, '').trim();
       }
       
       // Skip articles with no content
