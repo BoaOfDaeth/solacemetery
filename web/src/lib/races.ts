@@ -606,7 +606,7 @@ export const races: Record<Race, RaceData> = {
       'Has natural ability to regenerate health',
       'Expert level of enhanced damage, if class allows',
       'Can use their wings to evade attempts at tripping, crushing, and other bashing attacks',
-      'Can spit acid at others',
+      'Can spit acid',
       'Reduced movement cost and lag on mountains',
     ],
     xpPenalty: 20,
