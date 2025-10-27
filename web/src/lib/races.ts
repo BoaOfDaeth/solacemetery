@@ -380,6 +380,7 @@ export const races: Record<Race, RaceData> = {
     features: [
       'Receive deathblow skill, if fighters',
       'Learn enhanced damage, bash and several other skills at expert level, if class allows',
+      'Moves more easily on flat terrain',
     ],
     xpPenalty: 25,
     allowedAlignments: [Alignment.GOOD, Alignment.NEUTRAL, Alignment.EVIL],
