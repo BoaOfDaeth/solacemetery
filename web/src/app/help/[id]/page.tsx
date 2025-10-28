@@ -1,4 +1,5 @@
 import { notFound } from 'next/navigation';
+import Link from 'next/link';
 import { getArticleById } from '@/lib/help';
 
 interface HelpArticlePageProps {
@@ -24,12 +25,25 @@ export default async function HelpArticlePage({ params }: HelpArticlePageProps) 
             {article.title}
           </h1>
           
+          <div className="mb-4">
+            <Link 
+              href={`/help/category/${article.category}`}
+              className="inline-block px-3 py-1 bg-primary/10 text-primary rounded-full text-sm font-medium hover:bg-primary/20 transition-colors"
+            >
+              {article.category}
+            </Link>
+          </div>
+          
           {article.syntax && (
-            <div className="mb-4">
+            <div className="lg:mb-4 mb-2">
               <h3 className="text-sm font-medium text-muted-foreground mb-2">Syntax:</h3>
-              <code className="bg-muted/30 text-sm font-mono bg-background px-2 py-1 rounded border">
-                {article.syntax}
-              </code>
+              <div className="bg-muted/30 text-sm font-mono bg-background px-2 py-1 rounded-lg border">
+                {article.syntax.split('\n').map((line, index) => (
+                  <div key={index} className={line.trim() ? '' : 'h-1'}>
+                    {line.trim() || '\u00A0'}
+                  </div>
+                ))}
+              </div>
             </div>
           )}
         </div>

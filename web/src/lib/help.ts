@@ -66,13 +66,13 @@ function parseHelpFile(filePath: string, category: string): HelpArticle[] {
       const title = keywordLine.trim().toLowerCase() || 'untitled';
       
       // Extract syntax if present (look for "Syntax:" in content, handle multi-line)
-      const syntaxMatch = body.match(/Syntax:\s*([\s\S]+?)(?:\n\s*\n|\n[A-Z]|$)/i);
+      const syntaxMatch = body.match(/Syntax:\s*([\s\S]+?)(?:\n\s*\n|\n==|\n[A-Z][A-Z\s]+[A-Z]|$)/i);
       const syntax = syntaxMatch ? syntaxMatch[1].trim() : undefined;
       
       // Clean content (remove syntax section if present)
       let cleanContent = body;
       if (syntaxMatch) {
-        cleanContent = body.replace(/Syntax:\s*[\s\S]+?(?:\n\s*\n|\n[A-Z]|$)/i, '').trim();
+        cleanContent = body.replace(/Syntax:\s*[\s\S]+?(?:\n\s*\n|\n==|\n[A-Z][A-Z\s]+[A-Z]|$)/i, '').trim();
       }
       
       // Skip articles with no content
@@ -233,5 +233,31 @@ export function searchHelpArticles(query: string): HelpArticle[] {
 export function getArticleById(id: string): HelpArticle | undefined {
   const data = getHelpData();
   return data.articlesMap.get(id);
+}
+
+/**
+ * Get articles by category
+ */
+export function getArticlesByCategory(category: string): HelpArticle[] {
+  const data = getHelpData();
+  return Array.from(data.articlesMap.values()).filter(
+    article => article.category === category
+  );
+}
+
+/**
+ * Get category info with article count
+ */
+export function getCategoryInfo(category: string): { name: string; articleCount: number } | null {
+  const data = getHelpData();
+  if (!data.categories.includes(category)) {
+    return null;
+  }
+  
+  const articles = getArticlesByCategory(category);
+  return {
+    name: category,
+    articleCount: articles.length
+  };
 }
 
