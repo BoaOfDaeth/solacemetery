@@ -16,7 +16,7 @@ build:
 	@docker build --build-arg BUILD_DATE="$$(date -u +"%Y-%m-%dT%H:%M:%SZ")" -t solacemetery .
 
 # Run Docker container
-run: build
+run:
 	@echo "Running Docker container..."
 	@if [ ! -f .env.local ]; then \
 		echo "Error: .env.local file not found!"; \
