@@ -78,7 +78,7 @@ export const classes: Record<Class, ClassData> = {
     description: 'Specialists in stealth and unarmed killing.',
     features: [],
     xpPenalty: 15,
-    allowedAlignments: [Alignment.GOOD, Alignment.NEUTRAL, Alignment.EVIL],
+    allowedAlignments: [Alignment.GOOD, Alignment.EVIL],
     reference: [{ label: 'wayfollow', url: '/help/wayfollow-waypath' }],
   },
 
