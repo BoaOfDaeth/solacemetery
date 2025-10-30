@@ -5,6 +5,7 @@ import { Icon } from '@iconify/react';
 import StatsCard from '@/components/StatsCard';
 import ModernTable from '@/components/ModernTable';
 import Link from 'next/link';
+import type { Metadata } from 'next';
 
 interface RacePageProps {
   params: Promise<{ name: string }>;
@@ -225,4 +226,22 @@ export default async function RacePage({ params }: RacePageProps) {
       </div>
     </div>
   );
+}
+
+export async function generateMetadata({ params }: RacePageProps): Promise<Metadata> {
+  const { name } = await params;
+  const race = getRaceBySlug(name);
+  if (!race) {
+    return { title: 'Race Not Found' };
+  }
+  const canonical = `/race/${race.slug}`;
+  const title = `${race.title} · Race`;
+  const description = race.description;
+  return {
+    title,
+    description,
+    alternates: { canonical },
+    openGraph: { title, description, url: canonical },
+    twitter: { title, description, card: 'summary' },
+  };
 }

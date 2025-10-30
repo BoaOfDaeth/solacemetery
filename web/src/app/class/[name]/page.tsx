@@ -4,6 +4,7 @@ import { getCompatibleRacesForClass, getRace } from '@/lib/races';
 import { Icon } from '@iconify/react';
 import ModernTable from '@/components/ModernTable';
 import Link from 'next/link';
+import type { Metadata } from 'next';
 
 interface ClassPageProps {
   params: Promise<{ name: string }>;
@@ -144,4 +145,22 @@ export default async function ClassPage({ params }: ClassPageProps) {
       </div>
     </div>
   );
+}
+
+export async function generateMetadata({ params }: ClassPageProps): Promise<Metadata> {
+  const { name } = await params;
+  const cls = getClassBySlug(name);
+  if (!cls) {
+    return { title: 'Class Not Found' };
+  }
+  const canonical = `/class/${cls.slug}`;
+  const title = `${cls.title} · Class`;
+  const description = cls.description;
+  return {
+    title,
+    description,
+    alternates: { canonical },
+    openGraph: { title, description, url: canonical },
+    twitter: { title, description, card: 'summary' },
+  };
 }

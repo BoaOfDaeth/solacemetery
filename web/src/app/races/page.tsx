@@ -1,6 +1,7 @@
 import { getAllRaces } from '@/lib/races';
 import ModernTable from '@/components/ModernTable';
 import Link from 'next/link';
+import type { Metadata } from 'next';
 
 export default async function RacesPage() {
   const races = getAllRaces();
@@ -54,3 +55,11 @@ export default async function RacesPage() {
     </div>
   );
 }
+
+export const metadata: Metadata = {
+  title: 'Races',
+  description: 'All playable races in Solace Mud.',
+  alternates: { canonical: '/races' },
+  openGraph: { title: 'Races', description: 'All playable races in Solace Mud.', url: '/races' },
+  twitter: { title: 'Races', description: 'All playable races in Solace Mud.', card: 'summary' },
+};

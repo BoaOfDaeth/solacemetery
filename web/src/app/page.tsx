@@ -3,6 +3,7 @@ import { query } from '@/lib/db';
 import { Icon } from '@iconify/react';
 import StatsCard from '@/components/StatsCard';
 import ModernTable from '@/components/ModernTable';
+import type { Metadata } from 'next';
 
 // Force dynamic rendering - this page should not be statically generated
 export const dynamic = 'force-dynamic';
@@ -206,3 +207,11 @@ export default async function Home() {
     </div>
   );
 }
+
+export const metadata: Metadata = {
+  title: 'Overview',
+  description: 'Latest PVP and MVP stats, leaders, and summaries for Solace Mud.',
+  alternates: { canonical: '/' },
+  openGraph: { title: 'Overview', description: 'Latest PVP and MVP stats, leaders, and summaries for Solace Mud.', url: '/' },
+  twitter: { title: 'Overview', description: 'Latest PVP and MVP stats, leaders, and summaries for Solace Mud.', card: 'summary' },
+};

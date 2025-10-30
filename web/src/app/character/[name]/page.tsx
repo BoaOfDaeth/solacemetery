@@ -2,6 +2,7 @@ import { FormatPlayer, getDataCutoffDate, getTimeFilterClauseWithAnd } from '@/l
 import { query } from '@/lib/db';
 import { notFound } from 'next/navigation';
 import ModernTable from '@/components/ModernTable';
+import type { Metadata } from 'next';
 
 interface CharacterData {
   character: string;
@@ -246,4 +247,19 @@ export default async function CharacterPage({
       </div>
     </div>
   );
+}
+
+export async function generateMetadata({ params }: { params: Promise<{ name: string }> }): Promise<Metadata> {
+  const { name } = await params;
+  const decodedName = decodeURIComponent(name);
+  const canonical = `/character/${encodeURIComponent(decodedName)}`;
+  const title = `${decodedName} · Character`;
+  const description = `PVP and MVP records for ${decodedName} in Solace Mud.`;
+  return {
+    title,
+    description,
+    alternates: { canonical },
+    openGraph: { title, description, url: canonical },
+    twitter: { title, description, card: 'summary' },
+  };
 }

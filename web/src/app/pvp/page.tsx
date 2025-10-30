@@ -2,6 +2,7 @@ import { FormatPlayer, getDataCutoffDate, getTimeFilterClauseWithAnd } from '@/l
 import { query } from '@/lib/db';
 import Pagination from '@/components/Pagination';
 import ModernTable from '@/components/ModernTable';
+import type { Metadata } from 'next';
 
 interface PvpRecord {
   id: number;
@@ -132,3 +133,11 @@ export default async function PvpPage({
     </div>
   );
 }
+
+export const metadata: Metadata = {
+  title: 'Player Kills',
+  description: 'Recent player-vs-player kills in Solace Mud.',
+  alternates: { canonical: '/pvp' },
+  openGraph: { title: 'Player Kills', description: 'Recent player-vs-player kills in Solace Mud.', url: '/pvp' },
+  twitter: { title: 'Player Kills', description: 'Recent player-vs-player kills in Solace Mud.', card: 'summary' },
+};

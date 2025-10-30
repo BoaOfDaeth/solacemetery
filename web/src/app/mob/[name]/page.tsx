@@ -2,6 +2,7 @@ import { FormatPlayer, getDataCutoffDate, getTimeFilterClauseWithAnd } from '@/l
 import { query } from '@/lib/db';
 import { notFound } from 'next/navigation';
 import ModernTable from '@/components/ModernTable';
+import type { Metadata } from 'next';
 
 // Force dynamic rendering - this page should not be statically generated
 export const dynamic = 'force-dynamic';
@@ -138,4 +139,19 @@ export default async function MobPage({
       </div>
     </div>
   );
+}
+
+export async function generateMetadata({ params }: { params: Promise<{ name: string }> }): Promise<Metadata> {
+  const { name } = await params;
+  const decodedName = decodeURIComponent(name);
+  const canonical = `/mob/${encodeURIComponent(decodedName)}`;
+  const title = `${decodedName} · Mob`;
+  const description = `Statistics and victims for ${decodedName} in Solace Mud.`;
+  return {
+    title,
+    description,
+    alternates: { canonical },
+    openGraph: { title, description, url: canonical },
+    twitter: { title, description, card: 'summary' },
+  };
 }
