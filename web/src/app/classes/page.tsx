@@ -2,6 +2,7 @@ import { getAllClasses } from '@/lib/classes';
 import { getCompatibleRacesForClass } from '@/lib/races';
 import ModernTable from '@/components/ModernTable';
 import Link from 'next/link';
+import type { Metadata } from 'next';
 
 export default async function ClassesPage() {
   const classes = getAllClasses();
@@ -55,3 +56,11 @@ export default async function ClassesPage() {
     </div>
   );
 }
+
+export const metadata: Metadata = {
+  title: 'Classes',
+  description: 'All playable classes in Solace Mud.',
+  alternates: { canonical: '/classes' },
+  openGraph: { title: 'Classes', description: 'All playable classes in Solace Mud.', url: '/classes' },
+  twitter: { title: 'Classes', description: 'All playable classes in Solace Mud.', card: 'summary' },
+};

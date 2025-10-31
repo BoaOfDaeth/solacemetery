@@ -3,6 +3,9 @@ import Link from 'next/link';
 // Constants
 export const DATA_FRESHNESS_THRESHOLD_MINUTES = 30;
 
+// Site domain used for canonical URLs and metadata
+export const DOMAIN = 'https://solace.rs';
+
 /**
  * Get the cutoff time for data freshness filtering
  * Returns a time string that is 30 minutes ago from current server time

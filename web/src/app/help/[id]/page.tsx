@@ -1,6 +1,7 @@
 import { notFound } from 'next/navigation';
 import Link from 'next/link';
 import { getArticleById } from '@/lib/help';
+import type { Metadata } from 'next';
 
 interface HelpArticlePageProps {
   params: Promise<{ id: string }>;
@@ -60,7 +61,7 @@ export default async function HelpArticlePage({ params }: HelpArticlePageProps) 
 }
 
 
-export async function generateMetadata({ params }: HelpArticlePageProps) {
+export async function generateMetadata({ params }: HelpArticlePageProps): Promise<Metadata> {
   const { id } = await params;
   const article = getArticleById(id);
   
@@ -72,6 +73,17 @@ export async function generateMetadata({ params }: HelpArticlePageProps) {
 
   return {
     title: `${article.title} - Help`,
-    description: article.content.substring(0, 160) + '...',
+    description: `${article.content.substring(0, 160)}...`,
+    alternates: { canonical: `/help/${id}` },
+    openGraph: {
+      title: `${article.title} - Help`,
+      description: `${article.content.substring(0, 160)}...`,
+      url: `/help/${id}`,
+    },
+    twitter: {
+      title: `${article.title} - Help`,
+      description: `${article.content.substring(0, 160)}...`,
+      card: 'summary',
+    },
   };
 }

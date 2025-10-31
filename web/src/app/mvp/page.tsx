@@ -2,6 +2,7 @@ import { FormatPlayer, getDataCutoffDate, getTimeFilterClause } from '@/lib/util
 import { query } from '@/lib/db';
 import Pagination from '@/components/Pagination';
 import ModernTable from '@/components/ModernTable';
+import type { Metadata } from 'next';
 
 // Force dynamic rendering - this page should not be statically generated
 export const dynamic = 'force-dynamic';
@@ -133,3 +134,11 @@ export default async function MvpPage({
     </div>
   );
 }
+
+export const metadata: Metadata = {
+  title: 'Mob Kills',
+  description: 'Recent player kills by mobs in Solace Mud.',
+  alternates: { canonical: '/mvp' },
+  openGraph: { title: 'Mob Kills', description: 'Recent player kills by mobs in Solace Mud.', url: '/mvp' },
+  twitter: { title: 'Mob Kills', description: 'Recent player kills by mobs in Solace Mud.', card: 'summary' },
+};

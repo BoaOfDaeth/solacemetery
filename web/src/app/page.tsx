@@ -1,8 +1,13 @@
-import { FormatPlayer, getDataCutoffDate, getTimeFilterClause } from '@/lib/utils';
+import {
+  FormatPlayer,
+  getDataCutoffDate,
+  getTimeFilterClause,
+} from '@/lib/utils';
 import { query } from '@/lib/db';
 import { Icon } from '@iconify/react';
 import StatsCard from '@/components/StatsCard';
 import ModernTable from '@/components/ModernTable';
+import type { Metadata } from 'next';
 
 // Force dynamic rendering - this page should not be statically generated
 export const dynamic = 'force-dynamic';
@@ -28,22 +33,29 @@ interface Stats {
 async function getStats(): Promise<Stats> {
   try {
     const cutoffDate = getDataCutoffDate();
-    
-    const mvpCount = await query(`
+
+    const mvpCount = await query(
+      `
       SELECT COUNT(*) as count 
       FROM MVP 
       WHERE ${getTimeFilterClause()}
-    `, [cutoffDate]);
-    
-    const pvpCount = await query(`
+    `,
+      [cutoffDate]
+    );
+
+    const pvpCount = await query(
+      `
       SELECT COUNT(*) as count 
       FROM PVP 
       WHERE killer != victim 
       AND (${getTimeFilterClause()})
-    `, [cutoffDate]);
+    `,
+      [cutoffDate]
+    );
 
     // Get top 10 player killers with their race and class
-    const topKillers = await query(`
+    const topKillers = await query(
+      `
       SELECT 
         killer,
         COUNT(*) as kills,
@@ -55,10 +67,13 @@ async function getStats(): Promise<Stats> {
       GROUP BY killer 
       ORDER BY kills DESC 
       LIMIT 10
-    `, [cutoffDate]);
+    `,
+      [cutoffDate]
+    );
 
     // Get top 10 monster killers
-    const topMonsterKillers = await query(`
+    const topMonsterKillers = await query(
+      `
       SELECT 
         killer,
         COUNT(*) as kills,
@@ -69,7 +84,9 @@ async function getStats(): Promise<Stats> {
       GROUP BY killer 
       ORDER BY total_levels DESC 
       LIMIT 10
-    `, [cutoffDate]);
+    `,
+      [cutoffDate]
+    );
 
     return {
       mvp_records: (mvpCount as any[])[0]?.count || 0,
@@ -95,13 +112,21 @@ export default async function Home() {
     <div className="bg-background">
       {/* Statistics Overview */}
       <div className="max-w-7xl mx-auto px-2 sm:px-4 lg:px-6">
+        {/* Join Game Connection Info */}
+        <p className="mb-4 text-base sm:text-lg font-mono font-medium text-foreground text-center">
+          telnet://play.solace.rs:4000
+        </p>
+
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mb-4">
           <StatsCard
             title="Players killed by players"
             value={stats.pvp_records.toLocaleString()}
             href="/pvp"
             icon={
-              <Icon icon="game-icons:backstab" className="w-6 h-6 text-primary" />
+              <Icon
+                icon="game-icons:backstab"
+                className="w-6 h-6 text-primary"
+              />
             }
           />
           <StatsCard
@@ -109,14 +134,21 @@ export default async function Home() {
             value={stats.mvp_records.toLocaleString()}
             href="/mvp"
             icon={
-              <Icon icon="game-icons:crab-claw" className="w-6 h-6 text-primary" />
+              <Icon
+                icon="game-icons:crab-claw"
+                className="w-6 h-6 text-primary"
+              />
             }
           />
           <StatsCard
             title="Top Killer"
             value={stats.top_killers?.[0]?.kills || 0}
-            description={stats.top_killers?.[0]?.killer || "No data"}
-            href={stats.top_killers?.[0]?.killer ? `/character/${encodeURIComponent(stats.top_killers[0].killer)}` : undefined}
+            description={stats.top_killers?.[0]?.killer || 'No data'}
+            href={
+              stats.top_killers?.[0]?.killer
+                ? `/character/${encodeURIComponent(stats.top_killers[0].killer)}`
+                : undefined
+            }
             icon={
               <Icon icon="game-icons:scythe" className="w-6 h-6 text-primary" />
             }
@@ -130,7 +162,7 @@ export default async function Home() {
             title="Top 10 Player Killers"
             columns={[
               { key: 'player', label: 'Player' },
-              { key: 'kills', label: 'Kills', className: 'text-right' }
+              { key: 'kills', label: 'Kills', className: 'text-right' },
             ]}
             data={stats.top_killers || []}
             renderCell={(key, value, row) => {
@@ -163,7 +195,7 @@ export default async function Home() {
             title="Top 10 Mobs"
             columns={[
               { key: 'mob', label: 'Mob' },
-              { key: 'levels', label: 'Levels Sum', className: 'text-right' }
+              { key: 'levels', label: 'Levels Sum', className: 'text-right' },
             ]}
             data={stats.top_monster_killers || []}
             renderCell={(key, value, row) => {
@@ -201,8 +233,23 @@ export default async function Home() {
           />
         </div>
       </div>
-
-
     </div>
   );
 }
+
+export const metadata: Metadata = {
+  title: 'Overview · Solace Mud',
+  description:
+    'Latest PVP and MVP stats, leaders, and summaries for Solace Mud.',
+  alternates: { canonical: '/' },
+  openGraph: {
+    description:
+      'Latest PVP and MVP stats, leaders, and summaries for Solace Mud.',
+    url: '/',
+  },
+  twitter: {
+    description:
+      'Latest PVP and MVP stats, leaders, and summaries for Solace Mud.',
+    card: 'summary',
+  },
+};

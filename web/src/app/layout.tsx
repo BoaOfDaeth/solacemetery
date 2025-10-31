@@ -7,6 +7,7 @@ import Navigation from '@/components/Navigation';
 import Footer from '@/components/Footer';
 import logoImage from '@/public/images/logo.png';
 import './globals.css';
+import { DOMAIN } from '@/lib/utils';
 
 const geistSans = Geist({
   variable: '--font-geist-sans',
@@ -19,8 +20,26 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: 'Solace MUD Stats',
-  description: 'Player statistics and combat records for Solace MUD',
+  metadataBase: new URL(DOMAIN),
+  title: {
+    default: 'Solace Mud',
+    template: '%s · Solace Mud',
+  },
+  description: 'Player statistics and combat records for Solace Mud',
+  alternates: { canonical: '/' },
+  openGraph: {
+    type: 'website',
+    siteName: 'Solace Mud',
+    title: 'Solace Mud',
+    description: 'Player statistics and combat records for Solace Mud',
+    url: '/',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Solace Mud',
+    description: 'Player statistics and combat records for Solace Mud',
+  },
+  robots: { index: true, follow: true },
 };
 
 export default function RootLayout({
@@ -79,7 +98,7 @@ export default function RootLayout({
                   />
                 </div>
                 <span className="font-semibold text-foreground hidden md:block text-sm sm:text-base">
-                  Solace MUD Stats
+                  Solace Mud
                 </span>
               </Link>
 

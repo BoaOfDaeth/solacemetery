@@ -1,6 +1,7 @@
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import { getArticlesByCategory, getCategoryInfo } from '@/lib/help';
+import type { Metadata } from 'next';
 
 interface CategoryPageProps {
   params: Promise<{ category: string }>;
@@ -44,7 +45,7 @@ export default async function CategoryPage({ params }: CategoryPageProps) {
   );
 }
 
-export async function generateMetadata({ params }: CategoryPageProps) {
+export async function generateMetadata({ params }: CategoryPageProps): Promise<Metadata> {
   const { category } = await params;
   const categoryInfo = getCategoryInfo(category);
   
@@ -56,6 +57,17 @@ export async function generateMetadata({ params }: CategoryPageProps) {
 
   return {
     title: `${category} Articles - Help`,
-    description: `Browse ${categoryInfo.articleCount} help articles in the ${category} category for Solace MUD`,
+    description: `Browse ${categoryInfo.articleCount} help articles in the ${category} category for Solace Mud`,
+    alternates: { canonical: `/help/category/${category}` },
+    openGraph: {
+      title: `${category} Articles - Help`,
+      description: `Browse ${categoryInfo.articleCount} help articles in the ${category} category for Solace Mud`,
+      url: `/help/category/${category}`,
+    },
+    twitter: {
+      title: `${category} Articles - Help`,
+      description: `Browse ${categoryInfo.articleCount} help articles in the ${category} category for Solace Mud`,
+      card: 'summary',
+    },
   };
 }
