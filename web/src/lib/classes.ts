@@ -137,11 +137,11 @@ export const classes: Record<Class, ClassData> = {
       {
         id: FighterSpecialization.SPEAR,
         skills: [
-          { name: 'charge set', level: 22 },
-          { name: 'impale', level: 26 },
-          { name: 'jab', level: 16 },
-          { name: 'stand off', level: 15 },
-          { name: 'harpoon', level: 31 },
+          { name: 'charge set', level: 22, url: '/help/charge-set' },
+          { name: 'impale', level: 26, url: '/help/impale' },
+          { name: 'jab', level: 16, url: '/help/jab' },
+          { name: 'stand off', level: 15, url: '/help/stand-off' },
+          { name: 'harpoon', level: 31, url: '/help/harpoon' },
         ],
       },
       {
