@@ -71,6 +71,7 @@ export const classes: Record<Class, ClassData> = {
       FighterSpecialization.WHIP_FLAIL,
       FighterSpecialization.MACE,
       FighterSpecialization.AXE,
+      FighterSpecialization.STAFF,
       FighterSpecialization.SPEAR,
       FighterSpecialization.HAND_TO_HAND,
       FighterSpecialization.RANGED,
@@ -127,10 +128,10 @@ export const classes: Record<Class, ClassData> = {
       {
         id: FighterSpecialization.STAFF,
         skills: [
-          { name: 'overhead', level: 20 },
-          { name: 'pugil', level: 10 },
-          { name: 'leg sweep', level: 16 },
-          { name: 'stand off', level: 15 },
+          { name: 'overhead', level: 20, url: '/help/overhead' },
+          { name: 'pugil', level: 10, url: '/help/pugil' },
+          { name: 'leg sweep', level: 16, url: '/help/leg-sweep-legsweep' },
+          { name: 'stand off', level: 15, url: '/help/stand-off' },
         ],
       },
       {
