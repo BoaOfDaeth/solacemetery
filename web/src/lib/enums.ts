@@ -40,13 +40,16 @@ export enum Class {
 }
 
 export enum FighterSpecialization {
-  AXE = 'Axe',
+  SWORD = 'Sword',
   DAGGER = 'Dagger',
-  FLail = 'Flail',
+  WHIP_FLAIL = 'Whip/Flail',
   MACE = 'Mace',
-  POLEARM = 'Polearm',
-  SHIELD_BLOCK = 'Shield Block',
+  AXE = 'Axe',
+  STAFF = 'Staff',
   SPEAR = 'Spear',
+  HAND_TO_HAND = 'Hand to Hand',
+  RANGED = 'Ranged',
+  SHIELD = 'Shield',
 }
 
 // Helper functions to get all values
