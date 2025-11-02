@@ -42,10 +42,14 @@ export default function SkillTable({
 
       {/* Table */}
       <div className="overflow-x-auto">
-        <table className="min-w-full divide-y divide-border">
-          <thead className="bg-muted/50">
+        <table className="w-full table-fixed">
+          <colgroup>
+            <col style={{ width: '80px' }} />
+            <col style={{ width: 'auto' }} />
+          </colgroup>
+          <thead className="bg-muted/50 border-b border-border">
             <tr>
-              <th className="px-3 sm:px-6 py-2 text-left text-xs font-medium text-muted-foreground uppercase tracking-wider">
+              <th className="px-3 sm:px-6 py-2 text-left text-xs font-medium text-muted-foreground uppercase tracking-wider w-20">
                 Level
               </th>
               <th className="px-3 sm:px-6 py-2 text-left text-xs font-medium text-muted-foreground uppercase tracking-wider">
@@ -53,13 +57,13 @@ export default function SkillTable({
               </th>
             </tr>
           </thead>
-          <tbody className="bg-card divide-y divide-border">
+          <tbody className="bg-card [&>tr:not(:last-child)]:border-b [&>tr:not(:last-child)]:border-border">
             {levels.map((level) => (
               <tr
                 key={level}
                 className="hover:bg-accent/50 transition-colors duration-150"
               >
-                <td className="px-3 sm:px-6 py-3 text-sm font-medium text-foreground">
+                <td className="px-3 sm:px-6 py-3 text-sm font-medium text-foreground w-20">
                   {level}
                 </td>
                 <td className="px-3 sm:px-6 py-3">
