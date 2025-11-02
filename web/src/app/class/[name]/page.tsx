@@ -94,10 +94,26 @@ export default async function ClassPage({
           )}
         </div>
 
+        {/* Weapons */}
+        {cls.weapons && cls.weapons.length > 0 && (
+          <div className="mt-2 lg:mt-4">
+            <SkillTable title="Weapons" skills={cls.weapons} />
+          </div>
+        )}
+
+        {/* Specializations and Basic Skills */}
+        <ClassSkillsDisplay
+          basicSkills={cls.basicSkills}
+          specs={cls.specs}
+          specChoices={cls.specChoices}
+          specAllowed={cls.specAllowed}
+          selectedSpecs={selectedSpecs}
+          currentPath={`/class/${cls.slug}`}
+        />
 
         {/* Class Features */}
         {cls.features.length > 0 && (
-          <div className="bg-card border border-border rounded-xl shadow-sm p-4 sm:p-6 mb-2 lg:mb-4">
+          <div className="bg-card border border-border rounded-xl shadow-sm p-4 sm:p-6 mb-2 lg:mb-4 mt-2 lg:mt-4">
             <h2 className="text-xl font-semibold text-foreground mb-4 flex items-center">
               <Icon icon="game-icons:magic-swirl" className="w-5 h-5 mr-2 text-primary" />
               Special Features
@@ -111,7 +127,7 @@ export default async function ClassPage({
         )}
 
         {/* Class Information */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-2 lg:gap-4 mb-2 lg:mb-4">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-2 lg:gap-4 mb-2 lg:mb-4 mt-2 lg:mt-4">
           <div className="bg-card border border-border rounded-xl shadow-sm p-4 sm:p-6">
             <h3 className="text-lg font-semibold text-foreground mb-3 flex items-center">
               <Icon icon="game-icons:balance-scale" className="w-5 h-5 mr-2 text-primary" />
@@ -170,23 +186,6 @@ export default async function ClassPage({
             }
             return value;
           }}
-        />
-
-        {/* Weapons */}
-        {cls.weapons && cls.weapons.length > 0 && (
-          <div className="mt-2 lg:mt-4">
-            <SkillTable title="Weapons" skills={cls.weapons} />
-          </div>
-        )}
-
-        {/* Specializations and Basic Skills */}
-        <ClassSkillsDisplay
-          basicSkills={cls.basicSkills}
-          specs={cls.specs}
-          specChoices={cls.specChoices}
-          specAllowed={cls.specAllowed}
-          selectedSpecs={selectedSpecs}
-          currentPath={`/class/${cls.slug}`}
         />
       </div>
     </div>

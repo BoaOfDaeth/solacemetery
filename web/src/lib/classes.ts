@@ -80,10 +80,10 @@ export const classes: Record<Class, ClassData> = {
       {
         id: FighterSpecialization.SWORD,
         skills: [
-          { name: 'flurry', level: 29 },
-          { name: 'flourentine', level: 18 },
-          { name: 'riposte', level: 21 },
-          { name: 'cross slice', level: 22 },
+          { name: 'flurry', level: 29, url: '/help/flurry' },
+          { name: 'flourentine', level: 18, url: '/help/flourentine' },
+          { name: 'riposte', level: 21, url: '/help/riposte' },
+          { name: 'cross slice', level: 22, url: '/help/cross-slice-crossslice' },
         ],
       },
       {
