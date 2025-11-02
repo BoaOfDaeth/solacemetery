@@ -43,8 +43,8 @@ export interface Skill {
   url?: string; // URL to corresponding help article (optional, can be filled manually)
 }
 
-// Skillset interface
-export interface Skillset {
+// BasicSkills interface
+export interface BasicSkills {
   title: string;
   skills: Skill[];
 }
@@ -59,5 +59,6 @@ export interface ClassData {
   xpPenalty: number; // Percentage penalty (0-25)
   allowedAlignments: Alignment[];
   reference: ReferenceLink[];
-  skillsets?: Skillset[]; // Optional skillsets for the class
+  weapons?: Skill[]; // Weapon skills (level 1)
+  basicSkills?: BasicSkills; // Optional basic skills for the class
 }

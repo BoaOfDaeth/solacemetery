@@ -69,14 +69,14 @@ export default function SkillTable({
                         <Link
                           key={skill.name}
                           href={skill.url}
-                          className="text-primary hover:text-primary/80 hover:underline font-medium text-sm"
+                          className="px-2 py-1 border border-border rounded text-primary hover:text-primary/80 hover:underline hover:border-primary/50 font-medium text-sm transition-colors"
                         >
                           {skill.name}
                         </Link>
                       ) : (
                         <span
                           key={skill.name}
-                          className="text-foreground font-medium text-sm"
+                          className="px-2 py-1 border border-border rounded text-foreground font-medium text-sm"
                         >
                           {skill.name}
                         </span>

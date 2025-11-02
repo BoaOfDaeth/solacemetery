@@ -144,16 +144,20 @@ export default async function ClassPage({ params }: ClassPageProps) {
           }}
         />
 
-        {/* Skillsets */}
-        {cls.skillsets && cls.skillsets.length > 0 && (
-          <div className="mt-2 lg:mt-4 space-y-4">
-            {cls.skillsets.map((skillset, index) => (
-              <SkillTable
-                key={index}
-                title={skillset.title}
-                skills={skillset.skills}
-              />
-            ))}
+        {/* Weapons */}
+        {cls.weapons && cls.weapons.length > 0 && (
+          <div className="mt-2 lg:mt-4">
+            <SkillTable title="Weapons" skills={cls.weapons} />
+          </div>
+        )}
+
+        {/* Basic Skills */}
+        {cls.basicSkills && (
+          <div className="mt-2 lg:mt-4">
+            <SkillTable
+              title={cls.basicSkills.title}
+              skills={cls.basicSkills.skills}
+            />
           </div>
         )}
       </div>

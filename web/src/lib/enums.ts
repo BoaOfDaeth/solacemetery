@@ -39,6 +39,16 @@ export enum Class {
   OUTCAST = 'Outcast',
 }
 
+export enum FighterSpecialization {
+  AXE = 'Axe',
+  DAGGER = 'Dagger',
+  FLail = 'Flail',
+  MACE = 'Mace',
+  POLEARM = 'Polearm',
+  SHIELD_BLOCK = 'Shield Block',
+  SPEAR = 'Spear',
+}
+
 // Helper functions to get all values
 export function getAllAlignments(): Alignment[] {
   return Object.values(Alignment);
