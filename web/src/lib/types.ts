@@ -36,6 +36,19 @@ export interface ReferenceLink {
   url: string;
 }
 
+// Skill interface
+export interface Skill {
+  name: string;
+  level: number;
+  url?: string; // URL to corresponding help article (optional, can be filled manually)
+}
+
+// Skillset interface
+export interface Skillset {
+  title: string;
+  skills: Skill[];
+}
+
 // Class interface
 export interface ClassData {
   name: Class;
@@ -46,4 +59,5 @@ export interface ClassData {
   xpPenalty: number; // Percentage penalty (0-25)
   allowedAlignments: Alignment[];
   reference: ReferenceLink[];
+  skillsets?: Skillset[]; // Optional skillsets for the class
 }

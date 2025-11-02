@@ -3,6 +3,7 @@ import { getClassBySlug, getAllClasses } from '@/lib/classes';
 import { getCompatibleRacesForClass, getRace } from '@/lib/races';
 import { Icon } from '@iconify/react';
 import ModernTable from '@/components/ModernTable';
+import SkillTable from '@/components/SkillTable';
 import Link from 'next/link';
 import type { Metadata } from 'next';
 
@@ -142,6 +143,19 @@ export default async function ClassPage({ params }: ClassPageProps) {
             return value;
           }}
         />
+
+        {/* Skillsets */}
+        {cls.skillsets && cls.skillsets.length > 0 && (
+          <div className="mt-2 lg:mt-4 space-y-4">
+            {cls.skillsets.map((skillset, index) => (
+              <SkillTable
+                key={index}
+                title={skillset.title}
+                skills={skillset.skills}
+              />
+            ))}
+          </div>
+        )}
       </div>
     </div>
   );
