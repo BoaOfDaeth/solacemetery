@@ -4,6 +4,7 @@ import { getCompatibleRacesForClass, getRace } from '@/lib/races';
 import { Icon } from '@iconify/react';
 import ModernTable from '@/components/ModernTable';
 import SkillTable from '@/components/SkillTable';
+import SpecToggler from '@/components/SpecToggler';
 import Link from 'next/link';
 import type { Metadata } from 'next';
 
@@ -148,6 +149,16 @@ export default async function ClassPage({ params }: ClassPageProps) {
         {cls.weapons && cls.weapons.length > 0 && (
           <div className="mt-2 lg:mt-4">
             <SkillTable title="Weapons" skills={cls.weapons} />
+          </div>
+        )}
+
+        {/* Specializations */}
+        {cls.specChoices && cls.specChoices > 0 && cls.specAllowed && cls.specAllowed.length > 0 && (
+          <div className="mt-2 lg:mt-4">
+            <SpecToggler
+              availableSpecs={cls.specAllowed}
+              maxSelections={cls.specChoices}
+            />
           </div>
         )}
 

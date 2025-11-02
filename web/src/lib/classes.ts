@@ -64,6 +64,17 @@ export const classes: Record<Class, ClassData> = {
       { name: 'fourth attack', level: 23 },
       { name: 'adrenalin rush', level: 25 },
     ],
+    specChoices: 3,
+    specAllowed: [
+      FighterSpecialization.SWORD,
+      FighterSpecialization.WHIP_FLAIL,
+      FighterSpecialization.MACE,
+      FighterSpecialization.AXE,
+      FighterSpecialization.SPEAR,
+      FighterSpecialization.HAND_TO_HAND,
+      FighterSpecialization.RANGED,
+      FighterSpecialization.SHIELD,
+    ],
     specs: [
       {
         id: FighterSpecialization.SWORD,
