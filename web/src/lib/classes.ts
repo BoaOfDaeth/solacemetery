@@ -167,9 +167,9 @@ export const classes: Record<Class, ClassData> = {
       {
         id: FighterSpecialization.SHIELD,
         skills: [
-          { name: 'shield mastery', level: 24 },
-          { name: 'shield bash', level: 21 },
-          { name: 'porcupine stance', level: 16 },
+          { name: 'shield mastery', level: 24, url: '/help/shield-mastery' },
+          { name: 'shield bash', level: 21, url: '/help/shield-bash' },
+          { name: 'porcupine stance', level: 16, url: '/help/porcupine-stance' },
         ],
       },
     ],
