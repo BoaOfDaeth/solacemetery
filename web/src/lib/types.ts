@@ -1,4 +1,4 @@
-import { Alignment, Race, Class } from './enums';
+import { Alignment, Race, Class, FighterSpecialization } from './enums';
 
 // Character stats interface
 export interface CharacterStats {
@@ -43,9 +43,9 @@ export interface Skill {
   url?: string; // URL to corresponding help article (optional, can be filled manually)
 }
 
-// BasicSkills interface
-export interface BasicSkills {
-  title: string;
+// Spec interface
+export interface Spec {
+  id: FighterSpecialization;
   skills: Skill[];
 }
 
@@ -60,5 +60,6 @@ export interface ClassData {
   allowedAlignments: Alignment[];
   reference: ReferenceLink[];
   weapons?: Skill[]; // Weapon skills (level 1)
-  basicSkills?: BasicSkills; // Optional basic skills for the class
+  basicSkills?: Skill[]; // Optional basic skills for the class
+  specs?: Spec[];
 }

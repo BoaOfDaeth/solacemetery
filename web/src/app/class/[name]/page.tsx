@@ -152,11 +152,11 @@ export default async function ClassPage({ params }: ClassPageProps) {
         )}
 
         {/* Basic Skills */}
-        {cls.basicSkills && (
+        {cls.basicSkills && cls.basicSkills.length > 0 && (
           <div className="mt-2 lg:mt-4">
             <SkillTable
-              title={cls.basicSkills.title}
-              skills={cls.basicSkills.skills}
+              title="Basic Skills"
+              skills={cls.basicSkills}
             />
           </div>
         )}
