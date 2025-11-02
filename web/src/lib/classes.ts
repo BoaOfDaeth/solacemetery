@@ -67,6 +67,7 @@ export const classes: Record<Class, ClassData> = {
     specChoices: 3,
     specAllowed: [
       FighterSpecialization.SWORD,
+      FighterSpecialization.DAGGER,
       FighterSpecialization.WHIP_FLAIL,
       FighterSpecialization.MACE,
       FighterSpecialization.AXE,
@@ -80,7 +81,7 @@ export const classes: Record<Class, ClassData> = {
         id: FighterSpecialization.SWORD,
         skills: [
           { name: 'flurry', level: 29 },
-          { name: 'flourentine,', level: 18 },
+          { name: 'flourentine', level: 18 },
           { name: 'riposte', level: 21 },
           { name: 'cross slice', level: 22 },
         ],
