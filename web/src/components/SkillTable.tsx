@@ -4,7 +4,7 @@ import { Skill } from '@/lib/types';
 
 interface SkillTableProps {
   title: string;
-  skills: Skill[];
+  skills: (Skill & { isSpec?: boolean })[];
   className?: string;
 }
 
@@ -22,7 +22,7 @@ export default function SkillTable({
       acc[skill.level].push(skill);
       return acc;
     },
-    {} as Record<number, Skill[]>
+    {} as Record<number, (Skill & { isSpec?: boolean })[]>
   );
 
   const levels = Object.keys(skillsByLevel)
@@ -64,24 +64,32 @@ export default function SkillTable({
                 </td>
                 <td className="px-3 sm:px-6 py-3">
                   <div className="flex flex-wrap gap-2">
-                    {skillsByLevel[level].map((skill) =>
-                      skill.url ? (
+                    {skillsByLevel[level].map((skill) => {
+                      const isSpec = skill.isSpec === true;
+                      const yellowClasses = isSpec
+                        ? 'border-yellow-500/50 bg-yellow-500/10 text-yellow-700 dark:text-yellow-400 hover:border-yellow-500/80'
+                        : '';
+                      const defaultClasses = skill.url
+                        ? 'border border-border rounded text-primary hover:text-primary/80 hover:underline hover:border-primary/50'
+                        : 'border border-border rounded text-foreground';
+
+                      return skill.url ? (
                         <Link
                           key={skill.name}
                           href={skill.url}
-                          className="px-2 py-1 border border-border rounded text-primary hover:text-primary/80 hover:underline hover:border-primary/50 font-medium text-sm transition-colors"
+                          className={`px-2 py-1 rounded font-medium text-sm transition-colors ${defaultClasses} ${yellowClasses}`}
                         >
                           {skill.name}
                         </Link>
                       ) : (
                         <span
                           key={skill.name}
-                          className="px-2 py-1 border border-border rounded text-foreground font-medium text-sm"
+                          className={`px-2 py-1 rounded font-medium text-sm ${defaultClasses} ${yellowClasses}`}
                         >
                           {skill.name}
                         </span>
-                      )
-                    )}
+                      );
+                    })}
                   </div>
                 </td>
               </tr>

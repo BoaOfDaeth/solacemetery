@@ -1,10 +1,11 @@
 import { notFound } from 'next/navigation';
 import { getClassBySlug, getAllClasses } from '@/lib/classes';
 import { getCompatibleRacesForClass, getRace } from '@/lib/races';
+import { FighterSpecialization } from '@/lib/enums';
 import { Icon } from '@iconify/react';
 import ModernTable from '@/components/ModernTable';
 import SkillTable from '@/components/SkillTable';
-import SpecToggler from '@/components/SpecToggler';
+import ClassSkillsDisplay from '@/components/ClassSkillsDisplay';
 import Link from 'next/link';
 import type { Metadata } from 'next';
 
@@ -19,13 +20,39 @@ export async function generateStaticParams() {
   }));
 }
 
-export default async function ClassPage({ params }: ClassPageProps) {
+interface ClassPageSearchParams {
+  spec?: string | string[];
+}
+
+export default async function ClassPage({ 
+  params,
+  searchParams 
+}: ClassPageProps & {
+  searchParams: Promise<ClassPageSearchParams>;
+}) {
   const { name } = await params;
+  const search = await searchParams;
   
   const cls = getClassBySlug(name);
   if (!cls) {
     notFound();
   }
+
+  // Parse selected specs from URL params and validate them
+  const specParam = search.spec;
+  const rawSpecs = Array.isArray(specParam)
+    ? (specParam as string[])
+    : specParam
+    ? [specParam]
+    : [];
+  
+  // Validate specs against valid FighterSpecialization values
+  const validSpecValues = Object.values(FighterSpecialization);
+  const selectedSpecs = rawSpecs
+    .filter((spec): spec is FighterSpecialization => 
+      validSpecValues.includes(spec as FighterSpecialization)
+    )
+    .slice(0, cls.specChoices || 3); // Limit to max allowed selections
 
   const compatibleRaceNames = getCompatibleRacesForClass(cls.name);
   const compatibleRaces = compatibleRaceNames.map(raceName => getRace(raceName)).filter(Boolean);
@@ -152,25 +179,15 @@ export default async function ClassPage({ params }: ClassPageProps) {
           </div>
         )}
 
-        {/* Specializations */}
-        {cls.specChoices && cls.specChoices > 0 && cls.specAllowed && cls.specAllowed.length > 0 && (
-          <div className="mt-2 lg:mt-4">
-            <SpecToggler
-              availableSpecs={cls.specAllowed}
-              maxSelections={cls.specChoices}
-            />
-          </div>
-        )}
-
-        {/* Basic Skills */}
-        {cls.basicSkills && cls.basicSkills.length > 0 && (
-          <div className="mt-2 lg:mt-4">
-            <SkillTable
-              title="Basic Skills"
-              skills={cls.basicSkills}
-            />
-          </div>
-        )}
+        {/* Specializations and Basic Skills */}
+        <ClassSkillsDisplay
+          basicSkills={cls.basicSkills}
+          specs={cls.specs}
+          specChoices={cls.specChoices}
+          specAllowed={cls.specAllowed}
+          selectedSpecs={selectedSpecs}
+          currentPath={`/class/${cls.slug}`}
+        />
       </div>
     </div>
   );

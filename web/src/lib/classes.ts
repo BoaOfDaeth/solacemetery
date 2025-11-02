@@ -98,10 +98,10 @@ export const classes: Record<Class, ClassData> = {
         skills: [
           { name: 'flog', level: 16 },
           { name: 'strip weapon', level: 16 },
-          { name: 'choke,', level: 21 },
-          { name: 'lash,', level: 11 },
-          { name: 'pull,', level: 19 },
-          { name: 'eyejab,', level: 13 },
+          { name: 'choke', level: 21 },
+          { name: 'lash', level: 11 },
+          { name: 'pull', level: 19 },
+          { name: 'eyejab', level: 13 },
         ],
       },
       {

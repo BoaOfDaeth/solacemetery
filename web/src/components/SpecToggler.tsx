@@ -1,50 +1,44 @@
-'use client';
-
-import React, { useState } from 'react';
+import React from 'react';
+import Link from 'next/link';
 import { FighterSpecialization } from '@/lib/enums';
 
 interface SpecTogglerProps {
   availableSpecs: FighterSpecialization[];
   maxSelections?: number;
-  onChange?: (selectedSpecs: FighterSpecialization[]) => void;
+  selectedSpecs: FighterSpecialization[];
+  currentPath: string;
   className?: string;
 }
 
 export default function SpecToggler({
   availableSpecs,
   maxSelections = 3,
-  onChange,
+  selectedSpecs,
+  currentPath,
   className = '',
 }: SpecTogglerProps) {
-  const [selectedSpecs, setSelectedSpecs] = useState<FighterSpecialization[]>([]);
-
-  const toggleSpec = (spec: FighterSpecialization) => {
-    setSelectedSpecs((prev) => {
-      const isSelected = prev.includes(spec);
-      let newSelection: FighterSpecialization[];
-
-      if (isSelected) {
-        // Deselect
-        newSelection = prev.filter((s) => s !== spec);
-      } else {
-        // Select, but check max limit
-        if (prev.length >= maxSelections) {
-          // Don't allow more selections
-          return prev;
-        }
-        newSelection = [...prev, spec];
-      }
-
-      // Call onChange callback if provided
-      if (onChange) {
-        onChange(newSelection);
-      }
-
-      return newSelection;
-    });
-  };
-
   const canSelectMore = selectedSpecs.length < maxSelections;
+
+  const createSpecUrl = (spec: FighterSpecialization): string => {
+    const isSelected = selectedSpecs.includes(spec);
+    const newSpecs = isSelected
+      ? selectedSpecs.filter((s) => s !== spec)
+      : [...selectedSpecs, spec];
+
+    // Only update if we're not exceeding max or if deselecting
+    if (!isSelected && newSpecs.length > maxSelections) {
+      return '#'; // Disabled - return current URL
+    }
+
+    // Build URL with spec params
+    const params = new URLSearchParams();
+    newSpecs.forEach((s) => {
+      params.append('spec', s);
+    });
+
+    const query = params.toString();
+    return query ? `${currentPath}?${query}` : currentPath;
+  };
 
   return (
     <div className={`bg-card border border-border rounded-xl shadow-sm p-4 sm:p-6 ${className}`}>
@@ -62,14 +56,15 @@ export default function SpecToggler({
           const isSelected = selectedSpecs.includes(spec);
           const isDisabled = !isSelected && !canSelectMore;
 
+          const specUrl = createSpecUrl(spec);
+
           return (
-            <button
+            <Link
               key={spec}
-              type="button"
-              onClick={() => toggleSpec(spec)}
-              disabled={isDisabled}
+              href={specUrl}
+              scroll={false}
               className={`
-                px-4 py-3 rounded-lg border-2 text-left transition-all duration-200
+                px-4 py-3 rounded-lg border-2 text-left transition-all duration-200 block
                 ${
                   isSelected
                     ? 'border-primary bg-primary/10 text-primary font-medium'
@@ -77,7 +72,7 @@ export default function SpecToggler({
                 }
                 ${
                   isDisabled
-                    ? 'opacity-50 cursor-not-allowed'
+                    ? 'opacity-50 cursor-not-allowed pointer-events-none'
                     : 'cursor-pointer hover:bg-muted/50'
                 }
               `}
@@ -100,7 +95,7 @@ export default function SpecToggler({
                   </svg>
                 )}
               </div>
-            </button>
+            </Link>
           );
         })}
       </div>
