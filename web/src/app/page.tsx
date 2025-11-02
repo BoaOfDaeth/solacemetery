@@ -113,11 +113,11 @@ export default async function Home() {
       {/* Statistics Overview */}
       <div className="max-w-7xl mx-auto px-2 sm:px-4 lg:px-6">
         {/* Join Game Connection Info */}
-        <p className="mb-4 text-base sm:text-lg font-mono font-medium text-foreground text-center">
+        <p className="mb-2 text-base sm:text-lg font-mono font-medium text-foreground text-center">
           telnet://play.solace.rs:4000
         </p>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mb-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2 lg:gap-4 mb-2 lg:mb-4">
           <StatsCard
             title="Players killed by players"
             value={stats.pvp_records.toLocaleString()}
@@ -156,7 +156,7 @@ export default async function Home() {
         </div>
 
         {/* Leaderboards */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-2 lg:gap-4">
           {/* Top 10 Player Killers */}
           <ModernTable
             title="Top 10 Player Killers"
