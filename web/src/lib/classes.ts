@@ -147,12 +147,12 @@ export const classes: Record<Class, ClassData> = {
       {
         id: FighterSpecialization.HAND_TO_HAND,
         skills: [
-          { name: 'iron strike', level: 11 },
-          { name: 'throw', level: 16 },
-          { name: 'leaping strike', level: 20 },
-          { name: 'ground control', level: 18 },
-          { name: 'hand block', level: 12 },
-          { name: 'grapple', level: 10 },
+          { name: 'iron strike', level: 11, url: '/help/iron-strike-ironstrike' },
+          { name: 'throw', level: 16, url: '/help/throw' },
+          { name: 'leaping strike', level: 20, url: '/help/leaping-strike' },
+          { name: 'ground control', level: 18, url: '/help/ground-control' },
+          { name: 'hand block', level: 12, url: '/help/hand-block' },
+          { name: 'grapple', level: 10, url: '/help/grapple-grappling' },
         ],
       },
       {
