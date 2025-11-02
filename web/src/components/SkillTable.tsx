@@ -70,25 +70,30 @@ export default function SkillTable({
                   <div className="flex flex-wrap gap-2">
                     {skillsByLevel[level].map((skill) => {
                       const isSpec = skill.isSpec === true;
-                      const yellowClasses = isSpec
-                        ? 'border-yellow-500/50 bg-yellow-500/10 text-yellow-700 dark:text-yellow-400 hover:border-yellow-500/80'
+                      const borderClasses = isSpec
+                        ? 'border-yellow-500 hover:border-yellow-500/80'
+                        : skill.url
+                        ? 'border border-border hover:border-primary/50'
+                        : 'border border-border';
+                      const bgClasses = isSpec
+                        ? 'bg-yellow-500/10'
                         : '';
-                      const defaultClasses = skill.url
-                        ? 'border border-border rounded text-primary hover:text-primary/80 hover:underline hover:border-primary/50'
-                        : 'border border-border rounded text-foreground';
+                      const textClasses = skill.url
+                        ? 'text-primary hover:text-primary/80 hover:underline'
+                        : 'text-foreground';
 
                       return skill.url ? (
                         <Link
                           key={skill.name}
                           href={skill.url}
-                          className={`px-2 py-1 rounded font-medium text-sm transition-colors ${defaultClasses} ${yellowClasses}`}
+                          className={`px-2 py-1 rounded font-medium text-sm transition-colors border ${borderClasses} ${bgClasses} ${textClasses}`}
                         >
                           {skill.name}
                         </Link>
                       ) : (
                         <span
                           key={skill.name}
-                          className={`px-2 py-1 rounded font-medium text-sm ${defaultClasses} ${yellowClasses}`}
+                          className={`px-2 py-1 rounded font-medium text-sm border ${borderClasses} ${bgClasses} ${textClasses}`}
                         >
                           {skill.name}
                         </span>

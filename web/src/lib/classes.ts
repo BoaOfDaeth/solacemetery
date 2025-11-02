@@ -157,10 +157,10 @@ export const classes: Record<Class, ClassData> = {
       {
         id: FighterSpecialization.RANGED,
         skills: [
-          { name: 'accuracy', level: 11 },
-          { name: 'quick shot', level: 15 },
-          { name: 'aimed shot', level: 19 },
-          { name: 'volley', level: 26 },
+          { name: 'accuracy', level: 11, url: '/help/accuracy' },
+          { name: 'quick shot', level: 15, url: '/help/quick-shot-quickshot' },
+          { name: 'aimed shot', level: 19, url: '/help/aimed-shot' },
+          { name: 'volley', level: 26, url: '/help/volley' },
         ],
       },
       {
