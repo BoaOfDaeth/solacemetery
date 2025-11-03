@@ -514,26 +514,26 @@ export const classes: Record<Class, ClassData> = {
         spells: [
           { name: 'first random animal form', level: 15 },
           { name: 'second random animal form', level: 19 },
-          { name: 'owlform', level: 23, url: '/help/owlform' },
-          { name: 'bearform', level: 27, url: '/help/bearform' },
+          { name: 'owlform', level: 23, url: '/help/owlform-owl-form' },
+          { name: 'bearform', level: 27, url: '/help/wolfform-boarform-bearform' },
         ],
       },
       {
         id: Specs.KINSHIP_WOLF,
         spells: [
-          { name: 'greater wolf form', level: 18, url: '/help/greater-wolf-form' },
+          { name: 'greater wolf form', level: 18, url: '/help/druid-forms-greater-boar-greater' },
         ],
       },
       {
         id: Specs.KINSHIP_BOAR,
         spells: [
-          { name: 'greater boar form', level: 18, url: '/help/greater-boar-form' },
+          { name: 'greater boar form', level: 18, url: '/help/druid-forms-greater-boar-greater' },
         ],
       },
       {
         id: Specs.KINSHIP_ORANGUTAN,
         spells: [
-          { name: 'orangoutang form', level: 19, url: '/help/orangoutang-form' },
+          { name: 'orangoutang form', level: 19, url: '/help/druid-forms-greater-boar-greater' },
         ],
       },
     ],
