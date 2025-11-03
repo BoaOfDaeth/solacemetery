@@ -68,6 +68,10 @@ export enum Specs {
   GOD_PALADINE = 'Paladine',
   GOD_MISHAKAL = 'Mishakal',
   GOD_MAJERE = 'Majere',
+  // Cleric gods (Neutral)
+  GOD_REORX = 'Reorx',
+  GOD_CHISLEV = 'Chislev',
+  GOD_SIRRION = 'Sirrion',
 }
 
 // Helper functions to get all values

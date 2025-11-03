@@ -658,6 +658,21 @@ export const classes: Record<Class, ClassData> = {
         allowedAlignments: [Alignment.GOOD],
         excludedBasicSkills: ['shield block', 'mace swing'],
       },
+      {
+        spec: Specs.GOD_REORX,
+        desc: ['a sign of the forging Hammer'],
+        allowedAlignments: [Alignment.NEUTRAL],
+      },
+      {
+        spec: Specs.GOD_CHISLEV,
+        desc: ['a sign of Oak and Earth'],
+        allowedAlignments: [Alignment.NEUTRAL],
+      },
+      {
+        spec: Specs.GOD_SIRRION,
+        desc: ['a sign of twin sparks'],
+        allowedAlignments: [Alignment.NEUTRAL],
+      },
     ],
   },
 
