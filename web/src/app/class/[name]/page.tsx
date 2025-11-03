@@ -93,11 +93,12 @@ export default async function ClassPage({
           )}
         </div>
 
-        {/* Weapons, Consumables, Specializations and Basic Skills */}
+        {/* Weapons, Consumables, Specializations, Basic Skills and Spells */}
         <ClassSkillsDisplay
           weapons={cls.weapons}
           consumables={cls.consumables}
           basicSkills={cls.basicSkills}
+          basicSpells={cls.basicSpells}
           specs={cls.specs}
           specChoices={cls.specChoices}
           specAllowed={cls.specAllowed}

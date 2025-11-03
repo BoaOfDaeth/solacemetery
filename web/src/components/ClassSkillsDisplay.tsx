@@ -9,6 +9,7 @@ interface ClassSkillsDisplayProps {
   weapons?: Skill[];
   consumables?: Skill[];
   basicSkills?: Skill[];
+  basicSpells?: Skill[];
   specs?: Spec[];
   specChoices?: number;
   specAllowed?: FighterSpecialization[];
@@ -20,6 +21,7 @@ export default function ClassSkillsDisplay({
   weapons = [],
   consumables = [],
   basicSkills = [],
+  basicSpells = [],
   specs = [],
   specChoices,
   specAllowed,
@@ -40,8 +42,8 @@ export default function ClassSkillsDisplay({
 
   return (
     <>
-      {/* Weapons, Consumables, Specializations and Skills - side by side on desktop */}
-      {(weapons.length > 0 || consumables.length > 0 || (specChoices && specChoices > 0 && specAllowed && specAllowed.length > 0) || allSkills.length > 0) ? (
+      {/* Weapons, Consumables, Specializations, Skills and Spells - side by side on desktop */}
+      {(weapons.length > 0 || consumables.length > 0 || (specChoices && specChoices > 0 && specAllowed && specAllowed.length > 0) || allSkills.length > 0 || basicSpells.length > 0) ? (
         <div className="mt-2 lg:mt-4">
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
             {/* Left Column: Weapons, Consumables, Specializations */}
@@ -67,12 +69,15 @@ export default function ClassSkillsDisplay({
               )}
             </div>
             
-            {/* Right Column: Skills Chart */}
-            {allSkills.length > 0 && (
-              <div className="lg:col-span-2">
+            {/* Right Column: Skills and Spells Charts */}
+            <div className="lg:col-span-2 flex flex-col gap-4">
+              {allSkills.length > 0 && (
                 <SkillChart title="Skills" skills={allSkills} />
-              </div>
-            )}
+              )}
+              {basicSpells.length > 0 && (
+                <SkillChart title="Spells" skills={basicSpells} />
+              )}
+            </div>
           </div>
         </div>
       ) : null}

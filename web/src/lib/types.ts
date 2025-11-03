@@ -62,6 +62,7 @@ export interface ClassData {
   weapons?: Skill[]; // Weapon skills (level 1)
   consumables?: Skill[]; // Consumable item skills (level 1)
   basicSkills?: Skill[]; // Optional basic skills for the class
+  basicSpells?: Skill[]; // Optional basic spells for the class
   specs?: Spec[];
   specChoices?: number; // Number of specializations that can be selected
   specAllowed?: FighterSpecialization[]; // Available specializations for selection
