@@ -72,6 +72,12 @@ export enum Specs {
   GOD_REORX = 'Reorx',
   GOD_CHISLEV = 'Chislev',
   GOD_SIRRION = 'Sirrion',
+  // Cleric gods (Evil)
+  GOD_MORGION = 'Morgion',
+  GOD_CHEMOSH = 'Chemosh',
+  GOD_SARGONNAS = 'Sargonnas',
+  GOD_TAKHISIS = 'Takhisis',
+  GOD_HIDDUKEL = 'Hiddukel',
 }
 
 // Helper functions to get all values

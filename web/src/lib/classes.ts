@@ -749,6 +749,31 @@ export const classes: Record<Class, ClassData> = {
         desc: ['a sign of twin sparks'],
         allowedAlignments: [Alignment.NEUTRAL],
       },
+      {
+        spec: Specs.GOD_MORGION,
+        desc: ['a sign of the decaying Goats head'],
+        allowedAlignments: [Alignment.EVIL],
+      },
+      {
+        spec: Specs.GOD_CHEMOSH,
+        desc: ['a sign of the Inverted cross'],
+        allowedAlignments: [Alignment.EVIL],
+      },
+      {
+        spec: Specs.GOD_SARGONNAS,
+        desc: ['a sign of raging fire'],
+        allowedAlignments: [Alignment.EVIL],
+      },
+      {
+        spec: Specs.GOD_TAKHISIS,
+        desc: ['a sign of Five clenched dragon claws'],
+        allowedAlignments: [Alignment.EVIL],
+      },
+      {
+        spec: Specs.GOD_HIDDUKEL,
+        desc: ['a sign of a single gold coin'],
+        allowedAlignments: [Alignment.EVIL],
+      },
     ],
   },
 
