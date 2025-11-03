@@ -142,13 +142,14 @@ export default async function ClassPage({
   // Prepare compatible races data for table
   const racesData = compatibleRaces.map(race => {
     const cumulativeXpPenalty = race!.xpPenalty + cls.xpPenalty;
+    const stats = race!.maxStats;
+    const statsString = `${stats.strength}/${stats.intelligence}/${stats.wisdom}/${stats.dexterity}/${stats.constitution}`;
     return {
       name: race!.name,
       title: race!.title,
       slug: race!.slug,
-      description: race!.description,
       xpPenalty: cumulativeXpPenalty === 0 ? 'No penalty' : `${cumulativeXpPenalty}%`,
-      alignments: race!.allowedAlignments.join(', '),
+      stats: statsString,
     };
   });
 
@@ -236,9 +237,8 @@ export default async function ClassPage({
           title="Compatible Races"
           columns={[
             { key: 'name', label: 'Race' },
-            { key: 'description', label: 'Description', hideOnMobile: true },
             { key: 'xpPenalty', label: 'XP' },
-            { key: 'alignments', label: 'Alignments' },
+            { key: 'stats', label: 'Stats' },
           ]}
           data={racesData}
           renderCell={(key, value, row) => {
@@ -252,9 +252,9 @@ export default async function ClassPage({
                 </Link>
               );
             }
-            if (key === 'description') {
+            if (key === 'stats') {
               return (
-                <span className="text-sm text-muted-foreground line-clamp-2 max-w-md block">
+                <span className="text-sm font-mono text-foreground">
                   {value}
                 </span>
               );
