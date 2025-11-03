@@ -13,6 +13,8 @@ const nextConfig: NextConfig = {
   experimental: {
     // Enable optimizations
     optimizePackageImports: [],
+    // Inline critical CSS to prevent white flash
+    inlineCss: true,
   },
 
   // Environment variables that should be available at build time

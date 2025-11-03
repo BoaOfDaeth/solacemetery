@@ -1,3 +1,11 @@
+import type { Metadata } from 'next';
+
+export const metadata: Metadata = {
+  title: '404 · Page Not Found',
+  description: 'The page you\'re looking for doesn\'t exist or has been moved.',
+  robots: { index: false, follow: false },
+};
+
 export default function NotFound() {
   return (
     <div className="bg-background flex items-center justify-center px-4 py-16">

@@ -807,7 +807,7 @@ export const classes: Record<Class, ClassData> = {
       { name: 'invisibility', level: 6, url: '/help/invisibility-mass-invis-invis' },
       { name: 'detect invis', level: 7, url: '/help/detect-invis' },
       { name: 'protection', level: 7, url: '/help/protection' },
-      { name: 'lightning bolt', level: 8, url: '/help/lightning-bolt' },
+      { name: 'lightning bolt', level: 8 },
       { name: 'teleport', level: 9, url: '/help/teleport-group-teleport' },
       { name: 'energy drain', level: 13, url: '/help/energy-drain' },
       { name: 'summon', level: 16, url: '/help/summon' },
