@@ -24,6 +24,7 @@ interface ClassPageSearchParams {
   spec?: string | string[];
   magicmajor?: string;
   wayfollow?: string;
+  kinship?: string;
   alignment?: string;
 }
 
@@ -67,6 +68,12 @@ export default async function ClassPage({
   const wayfollowParam = search.wayfollow;
   const selectedWayfollow = wayfollowParam && validSpecValues.includes(wayfollowParam as Specs)
     ? (wayfollowParam as Specs)
+    : null;
+
+  // Parse selected kinship from URL params and validate it
+  const kinshipParam = search.kinship;
+  const selectedKinship = kinshipParam && validSpecValues.includes(kinshipParam as Specs)
+    ? (kinshipParam as Specs)
     : null;
 
   // Parse selected alignment from URL params and validate it
@@ -165,6 +172,8 @@ export default async function ClassPage({
           selectedMagicMajor={selectedMagicMajor}
           wayfollowChoices={cls.wayfollowChoices}
           selectedWayfollow={selectedWayfollow}
+          kinshipChoices={cls.kinshipChoices}
+          selectedKinship={selectedKinship}
           alignToggler={
             <AlignToggler
               availableAlignments={availableAlignments}
@@ -173,6 +182,7 @@ export default async function ClassPage({
                 ...(search.spec ? { spec: search.spec } : {}),
                 ...(search.magicmajor ? { magicmajor: search.magicmajor } : {}),
                 ...(search.wayfollow ? { wayfollow: search.wayfollow } : {}),
+                ...(search.kinship ? { kinship: search.kinship } : {}),
               }}
               currentPath={`/class/${cls.slug}`}
             />
