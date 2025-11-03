@@ -243,8 +243,14 @@ export default async function ClassPage({
   );
 }
 
-export async function generateMetadata({ params }: ClassPageProps): Promise<Metadata> {
+export async function generateMetadata({ 
+  params,
+  searchParams 
+}: ClassPageProps & {
+  searchParams: Promise<ClassPageSearchParams>;
+}): Promise<Metadata> {
   const { name } = await params;
+  const search = await searchParams;
   const cls = getClassBySlug(name);
   if (!cls) {
     return { title: 'Class Not Found' };
@@ -252,11 +258,19 @@ export async function generateMetadata({ params }: ClassPageProps): Promise<Meta
   const canonical = `/class/${cls.slug}`;
   const title = `${cls.title} · Class`;
   const description = cls.description;
+  
+  // Check if any query parameters are present
+  const hasQueryParams = Boolean(
+    search.spec || search.magicmajor || search.wayfollow || 
+    search.kinship || search.alignment
+  );
+  
   return {
     title,
     description,
     alternates: { canonical },
     openGraph: { title, description, url: canonical },
     twitter: { title, description, card: 'summary' },
+    robots: hasQueryParams ? { index: false, follow: false } : undefined,
   };
 }
