@@ -548,6 +548,26 @@ export const classes: Record<Class, ClassData> = {
       { name: 'turn undead', level: 21, url: '/help/turn-undead' },
       { name: 'consecrate', level: 26, url: '/help/consecrate' },
     ],
+    specSkills: [
+      {
+        id: Specs.GOD_KIRI_JOLITH,
+        skills: [
+          { name: 'enhanced damage', level: 15, url: '/help/enhanced-damage' },
+        ],
+      },
+    ],
+    specSpells: [
+      {
+        id: Specs.GOD_KIRI_JOLITH,
+        spells: [
+          { name: 'summon', level: 15, url: '/help/summon' },
+          { name: 'hammerfist', level: 19, url: '/help/hammerfist' },
+          { name: 'blessed reversal', level: 26, url: '/help/blessed-reversal' },
+          { name: 'foresight', level: 27, url: '/help/foresight' },
+          { name: 'call deva', level: 30, url: '/help/call-deva' },
+        ],
+      },
+    ],
     worshipChoices: [
       {
         spec: Specs.GOD_KIRI_JOLITH,

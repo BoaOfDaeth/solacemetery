@@ -70,6 +70,11 @@ export default function ClassSkillsDisplay({
     ? (specSkills.find((s) => s.id === selectedKinship)?.skills || [])
     : [];
 
+  // Get skills from selected worship
+  const selectedWorshipSkills = selectedWorship
+    ? (specSkills.find((s) => s.id === selectedWorship)?.skills || [])
+    : [];
+
   // Get spells from selected specializations (fighter specs)
   const selectedSpecSpells = selectedSpecs.flatMap((specId) => {
     const spec = specSpells.find((s) => s.id === specId);
@@ -91,22 +96,29 @@ export default function ClassSkillsDisplay({
     ? (specSpells.find((s) => s.id === selectedKinship)?.spells || [])
     : [];
 
-  // Merge basic skills with selected spec skills, magic major skills, wayfollow skills, and kinship skills, marking spec skills with a flag
+  // Get spells from selected worship
+  const selectedWorshipSpells = selectedWorship
+    ? (specSpells.find((s) => s.id === selectedWorship)?.spells || [])
+    : [];
+
+  // Merge basic skills with selected spec skills, magic major skills, wayfollow skills, kinship skills, and worship skills, marking spec skills with a flag
   const allSkills: (Skill & { isSpec?: boolean })[] = [
     ...basicSkills.map((skill) => ({ ...skill, isSpec: false })),
     ...selectedSpecSkills.map((skill) => ({ ...skill, isSpec: true })),
     ...selectedMagicMajorSkills.map((skill) => ({ ...skill, isSpec: true })),
     ...selectedWayfollowSkills.map((skill) => ({ ...skill, isSpec: true })),
     ...selectedKinshipSkills.map((skill) => ({ ...skill, isSpec: true })),
+    ...selectedWorshipSkills.map((skill) => ({ ...skill, isSpec: true })),
   ];
 
-  // Merge basic spells with selected spec spells, magic major spells, wayfollow spells, and kinship spells, marking spec spells with a flag
+  // Merge basic spells with selected spec spells, magic major spells, wayfollow spells, kinship spells, and worship spells, marking spec spells with a flag
   const allSpells: (Skill & { isSpec?: boolean })[] = [
     ...basicSpells.map((spell) => ({ ...spell, isSpec: false })),
     ...selectedSpecSpells.map((spell) => ({ ...spell, isSpec: true })),
     ...selectedMagicMajorSpells.map((spell) => ({ ...spell, isSpec: true })),
     ...selectedWayfollowSpells.map((spell) => ({ ...spell, isSpec: true })),
     ...selectedKinshipSpells.map((spell) => ({ ...spell, isSpec: true })),
+    ...selectedWorshipSpells.map((spell) => ({ ...spell, isSpec: true })),
   ];
 
   return (
