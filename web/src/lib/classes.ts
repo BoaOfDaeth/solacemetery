@@ -586,6 +586,10 @@ export const classes: Record<Class, ClassData> = {
         id: Specs.GOD_CHISLEV,
         skills: [], // Chislev has no additional skills beyond basic skills
       },
+      {
+        id: Specs.GOD_SIRRION,
+        skills: [], // Sirrion has no additional skills beyond basic skills
+      },
     ],
     specSpells: [
       {
@@ -690,6 +694,21 @@ export const classes: Record<Class, ClassData> = {
           { name: 'summon air elemental', level: 28, url: '/help/summon-air-elemental' },
           { name: 'incarnation of nature', level: 30, url: '/help/incarnation-of-nature' },
           { name: 'summon thorn elemental', level: 32, url: '/help/summon-thorn-elemental' },
+        ],
+      },
+      {
+        id: Specs.GOD_SIRRION,
+        spells: [
+          { name: 'resist cold', level: 10, url: '/help/resist-cold' },
+          { name: 'gate', level: 11, url: '/help/gate' },
+          { name: 'resist lightning', level: 12, url: '/help/resist-lightning' },
+          { name: 'aid', level: 14, url: '/help/aid' },
+          { name: 'cure mortal wounds', level: 15, url: '/help/cure-mortal-wounds' },
+          { name: 'blaze', level: 16, url: '/help/blaze' },
+          { name: 'flame aura', level: 20, url: '/help/flame-aura' },
+          { name: 'group teleport', level: 23, url: '/help/teleport-group-teleport' },
+          { name: 'flame ring', level: 26, url: '/help/flame-ring' },
+          { name: 'morph liquid', level: 30, url: '/help/morph-liquid' },
         ],
       },
     ],
