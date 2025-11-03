@@ -1,6 +1,7 @@
 import React from 'react';
 import SpecToggler from './SpecToggler';
-import SkillTable from './SkillTable';
+// import SkillTable from './SkillTable';
+import SkillChart from './SkillChart';
 import { Skill, Spec } from '@/lib/types';
 import { FighterSpecialization } from '@/lib/enums';
 
@@ -35,24 +36,31 @@ export default function ClassSkillsDisplay({
 
   return (
     <>
-      {/* Specializations */}
-      {specChoices && specChoices > 0 && specAllowed && specAllowed.length > 0 && (
+      {/* Specializations and Skills - side by side on desktop */}
+      {(specChoices && specChoices > 0 && specAllowed && specAllowed.length > 0) || allSkills.length > 0 ? (
         <div className="mt-2 lg:mt-4">
-          <SpecToggler
-            availableSpecs={specAllowed}
-            maxSelections={specChoices}
-            selectedSpecs={selectedSpecs}
-            currentPath={currentPath}
-          />
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
+            {/* Specializations - vertical */}
+            {specChoices && specChoices > 0 && specAllowed && specAllowed.length > 0 && (
+              <div className="lg:col-span-1">
+                <SpecToggler
+                  availableSpecs={specAllowed}
+                  maxSelections={specChoices}
+                  selectedSpecs={selectedSpecs}
+                  currentPath={currentPath}
+                />
+              </div>
+            )}
+            
+            {/* Skills Chart */}
+            {allSkills.length > 0 && (
+              <div className={specChoices && specChoices > 0 && specAllowed && specAllowed.length > 0 ? 'lg:col-span-2' : 'lg:col-span-3'}>
+                <SkillChart title="Skills" skills={allSkills} />
+              </div>
+            )}
+          </div>
         </div>
-      )}
-
-      {/* Basic Skills */}
-      {allSkills.length > 0 && (
-        <div className="mt-2 lg:mt-4">
-          <SkillTable title="Skills" skills={allSkills} />
-        </div>
-      )}
+      ) : null}
     </>
   );
 }
