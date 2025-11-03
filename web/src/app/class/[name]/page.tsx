@@ -76,13 +76,32 @@ export default async function ClassPage({
     ? (alignmentParam as Alignment)
     : null;
 
+  // Determine available alignments based on selected wayfollow
+  let availableAlignments = cls.allowedAlignments;
+  let validSelectedAlignment = selectedAlignment;
+  if (selectedWayfollow && cls.wayfollowChoices) {
+    const selectedWayfollowData = cls.wayfollowChoices.find(
+      (way) => way.spec === selectedWayfollow
+    );
+    if (selectedWayfollowData) {
+      // Intersect class allowed alignments with wayfollow allowed alignments
+      availableAlignments = cls.allowedAlignments.filter((alignment) =>
+        selectedWayfollowData.allowedAlignments.includes(alignment)
+      );
+      // Clear selected alignment if it's not allowed by the selected wayfollow
+      if (validSelectedAlignment && !availableAlignments.includes(validSelectedAlignment)) {
+        validSelectedAlignment = null;
+      }
+    }
+  }
+
   const compatibleRaceNames = getCompatibleRacesForClass(cls.name);
   let compatibleRaces = compatibleRaceNames.map(raceName => getRace(raceName)).filter(Boolean);
 
   // Filter races by selected alignment if one is selected
-  if (selectedAlignment) {
+  if (validSelectedAlignment) {
     compatibleRaces = compatibleRaces.filter(race => 
-      race?.allowedAlignments.includes(selectedAlignment)
+      race?.allowedAlignments.includes(validSelectedAlignment!)
     );
   }
 
@@ -159,8 +178,8 @@ export default async function ClassPage({
         {/* Class Information */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-2 lg:gap-4 mb-2 lg:mb-4 mt-2 lg:mt-4">
           <AlignToggler
-            availableAlignments={cls.allowedAlignments}
-            selectedAlignment={selectedAlignment}
+            availableAlignments={availableAlignments}
+            selectedAlignment={validSelectedAlignment}
             preserveParams={{
               ...(search.spec ? { spec: search.spec } : {}),
               ...(search.magicmajor ? { magicmajor: search.magicmajor } : {}),

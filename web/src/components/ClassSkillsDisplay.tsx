@@ -4,7 +4,7 @@ import SpecTogglerSingle from './SpecTogglerSingle';
 // import SkillTable from './SkillTable';
 import SkillChart from './SkillChart';
 import { Skill, Spec, SpecSpell } from '@/lib/types';
-import { Specs } from '@/lib/enums';
+import { Specs, Alignment } from '@/lib/enums';
 
 interface ClassSkillsDisplayProps {
   weapons?: Skill[];
@@ -18,7 +18,7 @@ interface ClassSkillsDisplayProps {
   selectedSpecs: Specs[];
   magicMajorChoices?: Array<{ spec: Specs; desc: string[] }>;
   selectedMagicMajor?: Specs | null;
-  wayfollowChoices?: Array<{ spec: Specs; desc: string[] }>;
+  wayfollowChoices?: Array<{ spec: Specs; desc: string[]; allowedAlignments: Alignment[] }>;
   selectedWayfollow?: Specs | null;
   currentPath: string;
 }

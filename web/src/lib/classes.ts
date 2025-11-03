@@ -437,6 +437,7 @@ export const classes: Record<Class, ClassData> = {
           'Gain Viper, Python and Tiger styles',
           'Always evil alignment',
         ],
+        allowedAlignments: [Alignment.EVIL],
       },
       {
         spec: Specs.WAY_BEASTS,
@@ -446,6 +447,7 @@ export const classes: Record<Class, ClassData> = {
           'Gain Dragon, Wyvern and Tiger styles',
           'Raw power and strength',
         ],
+        allowedAlignments: [Alignment.GOOD, Alignment.EVIL],
       },
       {
         spec: Specs.WAY_SEASONS,
@@ -455,6 +457,7 @@ export const classes: Record<Class, ClassData> = {
           'Gain Wyvern, Tiger, and Python styles',
           'Specialized in long-term engagement',
         ],
+        allowedAlignments: [Alignment.GOOD],
       },
     ],
   },
