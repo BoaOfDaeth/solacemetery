@@ -42,7 +42,7 @@ export default function SpecToggler({
 
   return (
     <div className={`bg-card border border-border rounded-xl shadow-sm p-4 sm:p-6 ${className}`}>
-      <div className="mb-4">
+      <div className="mb-4 text-center">
         <h3 className="text-lg font-semibold text-foreground mb-2">
           Specializations
         </h3>
