@@ -12,7 +12,8 @@
     "start": "next start",
     "lint": "next lint",
     "format": "prettier --write .",
-    "format:check": "prettier --check ."
+    "format:check": "prettier --check .",
+    "check-help-urls": "tsx scripts/check-help-urls.ts"
   },
   "dependencies": {
     "@iconify/react": "^6.0.1",
@@ -31,6 +32,7 @@
     "eslint-config-next": "15.4.6",
     "prettier": "^3.6.2",
     "tailwindcss": "^4",
+    "tsx": "^4.20.6",
     "typescript": "^5"
   }
 }

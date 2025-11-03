@@ -1,8 +1,11 @@
 import { notFound } from 'next/navigation';
 import { getClassBySlug, getAllClasses } from '@/lib/classes';
 import { getCompatibleRacesForClass, getRace } from '@/lib/races';
+import { Specs, Alignment } from '@/lib/enums';
+import AlignToggler from '@/components/AlignToggler';
 import { Icon } from '@iconify/react';
 import ModernTable from '@/components/ModernTable';
+import ClassSkillsDisplay from '@/components/ClassSkillsDisplay';
 import Link from 'next/link';
 import type { Metadata } from 'next';
 
@@ -17,26 +20,138 @@ export async function generateStaticParams() {
   }));
 }
 
-export default async function ClassPage({ params }: ClassPageProps) {
+interface ClassPageSearchParams {
+  spec?: string | string[];
+  magicmajor?: string;
+  wayfollow?: string;
+  kinship?: string;
+  worship?: string;
+  alignment?: string;
+}
+
+export default async function ClassPage({ 
+  params,
+  searchParams 
+}: ClassPageProps & {
+  searchParams: Promise<ClassPageSearchParams>;
+}) {
   const { name } = await params;
+  const search = await searchParams;
   
   const cls = getClassBySlug(name);
   if (!cls) {
     notFound();
   }
 
+  // Parse selected specs from URL params and validate them
+  const specParam = search.spec;
+  const rawSpecs = Array.isArray(specParam)
+    ? (specParam as string[])
+    : specParam
+    ? [specParam]
+    : [];
+  
+  // Validate specs against valid Specs values
+  const validSpecValues = Object.values(Specs);
+  const selectedSpecs = rawSpecs
+    .filter((spec): spec is Specs => 
+      validSpecValues.includes(spec as Specs)
+    )
+    .slice(0, cls.specChoices || 3); // Limit to max allowed selections
+
+  // Parse selected magic major from URL params and validate it
+  const magicMajorParam = search.magicmajor;
+  const selectedMagicMajor = magicMajorParam && validSpecValues.includes(magicMajorParam as Specs)
+    ? (magicMajorParam as Specs)
+    : null;
+
+  // Parse selected wayfollow from URL params and validate it
+  const wayfollowParam = search.wayfollow;
+  const selectedWayfollow = wayfollowParam && validSpecValues.includes(wayfollowParam as Specs)
+    ? (wayfollowParam as Specs)
+    : null;
+
+  // Parse selected kinship from URL params and validate it
+  const kinshipParam = search.kinship;
+  const selectedKinship = kinshipParam && validSpecValues.includes(kinshipParam as Specs)
+    ? (kinshipParam as Specs)
+    : null;
+
+  // Parse selected worship from URL params and validate it
+  const worshipParam = search.worship;
+  const selectedWorship = worshipParam && validSpecValues.includes(worshipParam as Specs)
+    ? (worshipParam as Specs)
+    : null;
+
+  // Parse selected alignment from URL params and validate it
+  const alignmentParam = search.alignment;
+  const validAlignmentValues = Object.values(Alignment);
+  const selectedAlignment = alignmentParam && validAlignmentValues.includes(alignmentParam as Alignment)
+    ? (alignmentParam as Alignment)
+    : null;
+
+  // Determine available alignments based on selected wayfollow or worship
+  let availableAlignments = cls.allowedAlignments;
+  let validSelectedAlignment = selectedAlignment;
+  if (selectedWayfollow && cls.wayfollowChoices) {
+    const selectedWayfollowData = cls.wayfollowChoices.find(
+      (way) => way.spec === selectedWayfollow
+    );
+    if (selectedWayfollowData) {
+      // Intersect class allowed alignments with wayfollow allowed alignments
+      availableAlignments = cls.allowedAlignments.filter((alignment) =>
+        selectedWayfollowData.allowedAlignments.includes(alignment)
+      );
+      // Clear selected alignment if it's not allowed by the selected wayfollow
+      if (validSelectedAlignment && !availableAlignments.includes(validSelectedAlignment)) {
+        validSelectedAlignment = null;
+      }
+    }
+  }
+  if (selectedWorship && cls.worshipChoices) {
+    const selectedWorshipData = cls.worshipChoices.find(
+      (worship) => worship.spec === selectedWorship
+    );
+    if (selectedWorshipData) {
+      // Intersect class allowed alignments with worship allowed alignments
+      availableAlignments = cls.allowedAlignments.filter((alignment) =>
+        selectedWorshipData.allowedAlignments.includes(alignment)
+      );
+      // Clear selected alignment if it's not allowed by the selected worship
+      if (validSelectedAlignment && !availableAlignments.includes(validSelectedAlignment)) {
+        validSelectedAlignment = null;
+      }
+    }
+  }
+  
+  // If only one alignment is available, auto-select it
+  if (availableAlignments.length === 1 && !validSelectedAlignment) {
+    validSelectedAlignment = availableAlignments[0];
+  }
+
   const compatibleRaceNames = getCompatibleRacesForClass(cls.name);
-  const compatibleRaces = compatibleRaceNames.map(raceName => getRace(raceName)).filter(Boolean);
+  let compatibleRaces = compatibleRaceNames.map(raceName => getRace(raceName)).filter(Boolean);
+
+  // Filter races by selected alignment if one is selected
+  if (validSelectedAlignment) {
+    compatibleRaces = compatibleRaces.filter(race => 
+      race?.allowedAlignments.includes(validSelectedAlignment!)
+    );
+  }
 
   // Prepare compatible races data for table
-  const racesData = compatibleRaces.map(race => ({
-    name: race!.name,
-    title: race!.title,
-    slug: race!.slug,
-    description: race!.description,
-    xpPenalty: race!.xpPenalty === 0 ? 'No penalty' : `${race!.xpPenalty}%`,
-    alignments: race!.allowedAlignments.join(', '),
-  }));
+  const racesData = compatibleRaces.map(race => {
+    const cumulativeXpPenalty = race!.xpPenalty + cls.xpPenalty;
+    const stats = race!.maxStats;
+    const statsString = `${stats.strength}/${stats.intelligence}/${stats.wisdom}/${stats.dexterity}/${stats.constitution}`;
+    return {
+      name: race!.name,
+      title: race!.title,
+      slug: race!.slug,
+      xpPenalty: cumulativeXpPenalty === 0 ? 'No penalty' : `${cumulativeXpPenalty}%`,
+      stats: statsString,
+    };
+  });
 
   return (
     <div className="bg-background">
@@ -65,10 +180,45 @@ export default async function ClassPage({ params }: ClassPageProps) {
           )}
         </div>
 
+        {/* Weapons, Consumables, Specializations, Basic Skills and Spells */}
+        <ClassSkillsDisplay
+          weapons={cls.weapons}
+          consumables={cls.consumables}
+          basicSkills={cls.basicSkills}
+          basicSpells={cls.basicSpells}
+          specSkills={cls.specSkills}
+          specSpells={cls.specSpells}
+          specChoices={cls.specChoices}
+          specAllowed={cls.specAllowed}
+          selectedSpecs={selectedSpecs}
+          magicMajorChoices={cls.magicMajorChoices}
+          selectedMagicMajor={selectedMagicMajor}
+          wayfollowChoices={cls.wayfollowChoices}
+          selectedWayfollow={selectedWayfollow}
+          kinshipChoices={cls.kinshipChoices}
+          selectedKinship={selectedKinship}
+          worshipChoices={cls.worshipChoices}
+          selectedWorship={selectedWorship}
+          alignToggler={
+            <AlignToggler
+              availableAlignments={availableAlignments}
+              selectedAlignment={validSelectedAlignment}
+              preserveParams={{
+                ...(search.spec ? { spec: search.spec } : {}),
+                ...(search.magicmajor ? { magicmajor: search.magicmajor } : {}),
+                ...(search.wayfollow ? { wayfollow: search.wayfollow } : {}),
+                ...(search.kinship ? { kinship: search.kinship } : {}),
+                ...(search.worship ? { worship: search.worship } : {}),
+              }}
+              currentPath={`/class/${cls.slug}`}
+            />
+          }
+          currentPath={`/class/${cls.slug}`}
+        />
 
         {/* Class Features */}
         {cls.features.length > 0 && (
-          <div className="bg-card border border-border rounded-xl shadow-sm p-4 sm:p-6 mb-2 lg:mb-4">
+          <div className="bg-card border border-border rounded-xl shadow-sm p-4 sm:p-6 mb-2 lg:mb-4 mt-2 lg:mt-4">
             <h2 className="text-xl font-semibold text-foreground mb-4 flex items-center">
               <Icon icon="game-icons:magic-swirl" className="w-5 h-5 mr-2 text-primary" />
               Special Features
@@ -81,44 +231,14 @@ export default async function ClassPage({ params }: ClassPageProps) {
           </div>
         )}
 
-        {/* Class Information */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-2 lg:gap-4 mb-2 lg:mb-4">
-          <div className="bg-card border border-border rounded-xl shadow-sm p-4 sm:p-6">
-            <h3 className="text-lg font-semibold text-foreground mb-3 flex items-center">
-              <Icon icon="game-icons:balance-scale" className="w-5 h-5 mr-2 text-primary" />
-              Allowed Alignments
-            </h3>
-            <div className="flex flex-wrap gap-2">
-              {cls.allowedAlignments.map((alignment) => (
-                <span
-                  key={alignment}
-                  className="px-3 py-1 rounded-full text-sm font-medium bg-primary/10 text-primary"
-                >
-                  {alignment}
-                </span>
-              ))}
-            </div>
-          </div>
-          
-          <div className="bg-card border border-border rounded-xl shadow-sm p-4 sm:p-6">
-            <h3 className="text-lg font-semibold text-foreground mb-3 flex items-center">
-              <Icon icon="game-icons:fast-arrow" className="w-5 h-5 mr-2 text-primary" />
-              Experience Penalty
-            </h3>
-            <p className="text-muted-foreground text-lg">
-              {cls.xpPenalty === 0 ? 'No penalty' : `${cls.xpPenalty}% penalty`}
-            </p>
-          </div>
-        </div>
-
         {/* Compatible Races */}
-        <ModernTable
+        <div className="mt-2 lg:mt-4 mb-2 lg:mb-4">
+          <ModernTable
           title="Compatible Races"
           columns={[
             { key: 'name', label: 'Race' },
-            { key: 'description', label: 'Description', hideOnMobile: true },
             { key: 'xpPenalty', label: 'XP' },
-            { key: 'alignments', label: 'Alignments' },
+            { key: 'stats', label: 'Stats' },
           ]}
           data={racesData}
           renderCell={(key, value, row) => {
@@ -132,23 +252,30 @@ export default async function ClassPage({ params }: ClassPageProps) {
                 </Link>
               );
             }
-            if (key === 'description') {
+            if (key === 'stats') {
               return (
-                <span className="text-sm text-muted-foreground line-clamp-2 max-w-md block">
+                <span className="text-sm font-mono text-foreground">
                   {value}
                 </span>
               );
             }
             return value;
           }}
-        />
+          />
+        </div>
       </div>
     </div>
   );
 }
 
-export async function generateMetadata({ params }: ClassPageProps): Promise<Metadata> {
+export async function generateMetadata({ 
+  params,
+  searchParams 
+}: ClassPageProps & {
+  searchParams: Promise<ClassPageSearchParams>;
+}): Promise<Metadata> {
   const { name } = await params;
+  const search = await searchParams;
   const cls = getClassBySlug(name);
   if (!cls) {
     return { title: 'Class Not Found' };
@@ -156,11 +283,19 @@ export async function generateMetadata({ params }: ClassPageProps): Promise<Meta
   const canonical = `/class/${cls.slug}`;
   const title = `${cls.title} · Class`;
   const description = cls.description;
+  
+  // Check if any query parameters are present
+  const hasQueryParams = Boolean(
+    search.spec || search.magicmajor || search.wayfollow || 
+    search.kinship || search.worship || search.alignment
+  );
+  
   return {
     title,
     description,
     alternates: { canonical },
     openGraph: { title, description, url: canonical },
     twitter: { title, description, card: 'summary' },
+    robots: hasQueryParams ? { index: false, follow: false } : undefined,
   };
 }

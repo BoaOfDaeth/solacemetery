@@ -135,10 +135,20 @@ export default async function MvpPage({
   );
 }
 
-export const metadata: Metadata = {
-  title: 'Mob Kills',
-  description: 'Recent player kills by mobs in Solace Mud.',
-  alternates: { canonical: '/mvp' },
-  openGraph: { title: 'Mob Kills', description: 'Recent player kills by mobs in Solace Mud.', url: '/mvp' },
-  twitter: { title: 'Mob Kills', description: 'Recent player kills by mobs in Solace Mud.', card: 'summary' },
-};
+export async function generateMetadata({
+  searchParams,
+}: {
+  searchParams: Promise<{ page?: string }>;
+}): Promise<Metadata> {
+  const search = await searchParams;
+  const hasQueryParams = Boolean(search.page && search.page !== '1');
+  
+  return {
+    title: 'Mob Kills',
+    description: 'Recent player kills by mobs in Solace Mud.',
+    alternates: { canonical: '/mvp' },
+    openGraph: { title: 'Mob Kills', description: 'Recent player kills by mobs in Solace Mud.', url: '/mvp' },
+    twitter: { title: 'Mob Kills', description: 'Recent player kills by mobs in Solace Mud.', card: 'summary' },
+    robots: hasQueryParams ? { index: false, follow: false } : undefined,
+  };
+}

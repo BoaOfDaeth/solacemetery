@@ -39,6 +39,47 @@ export enum Class {
   OUTCAST = 'Outcast',
 }
 
+export enum Specs {
+  // Fighter specializations
+  SWORD = 'Sword',
+  DAGGER = 'Dagger',
+  WHIP_FLAIL = 'Whip/Flail',
+  MACE = 'Mace',
+  AXE = 'Axe',
+  STAFF = 'Staff',
+  SPEAR = 'Spear',
+  HAND_TO_HAND = 'Hand to Hand',
+  RANGED = 'Ranged',
+  SHIELD = 'Shield',
+  // Magic majors
+  ABJURATION = 'Abjuration',
+  ALTERATION = 'Alteration',
+  // Assassin ways
+  WAY_SHADOWS = 'Shadows',
+  WAY_BEASTS = 'Beasts',
+  WAY_SEASONS = 'Seasons',
+  // Druid kinships
+  KINSHIP_ALL = 'All Animals',
+  KINSHIP_WOLF = 'Greater Wolf',
+  KINSHIP_BOAR = 'Greater Boar',
+  KINSHIP_ORANGUTAN = 'Powerful Orangutan',
+  // Cleric gods (Good)
+  GOD_KIRI_JOLITH = 'Kiri-Jolith',
+  GOD_PALADINE = 'Paladine',
+  GOD_MISHAKAL = 'Mishakal',
+  GOD_MAJERE = 'Majere',
+  // Cleric gods (Neutral)
+  GOD_REORX = 'Reorx',
+  GOD_CHISLEV = 'Chislev',
+  GOD_SIRRION = 'Sirrion',
+  // Cleric gods (Evil)
+  GOD_MORGION = 'Morgion',
+  GOD_CHEMOSH = 'Chemosh',
+  GOD_SARGONNAS = 'Sargonnas',
+  GOD_TAKHISIS = 'Takhisis',
+  GOD_HIDDUKEL = 'Hiddukel',
+}
+
 // Helper functions to get all values
 export function getAllAlignments(): Alignment[] {
   return Object.values(Alignment);

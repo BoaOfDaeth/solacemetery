@@ -4,6 +4,7 @@ import { notFound } from 'next/navigation';
 import Pagination from '@/components/Pagination';
 import ModernTable from '@/components/ModernTable';
 import { searchHelpArticles } from '@/lib/help';
+import type { Metadata } from 'next';
 
 interface SearchResult {
   name: string;
@@ -49,64 +50,65 @@ async function getSearchResults(searchQuery: string, page: number = 1, limit: nu
       WHERE victim LIKE ?
     `, [queryParam]);
 
+    // Combine all character results
+    const allCharacterResults = [
+      ...pvpKillers,
+      ...pvpVictims,
+      ...mvpVictims,
+    ].reduce((acc: any[], curr: any) => {
+      if (!acc.find((item: any) => item.name === curr.name)) {
+        acc.push(curr);
+      }
+      return acc;
+    }, []);
+
     // Search for monsters in MVP table (as killers)
     const mvpKillers = await query(`
       SELECT DISTINCT killer as name, 'mvp_killer' as source
       FROM MVP 
-      WHERE killer LIKE ?
+      WHERE killer LIKE ? AND killer != victim
     `, [queryParam]);
 
-    // Search for help articles
-    const helpArticles = searchHelpArticles(searchQuery.trim());
-    const helpResults = helpArticles.map(article => ({
-      name: article.title,
-      type: 'help' as const,
-      source: 'help_article',
-      id: article.id
-    }));
+    // Search help articles
+    const helpResults = searchHelpArticles(searchQuery.trim());
 
-    // Combine all results and remove duplicates
-    const allResults = [
-      ...(pvpKillers as any[]).map(r => ({ ...r, type: 'character' as const })),
-      ...(pvpVictims as any[]).map(r => ({ ...r, type: 'character' as const })),
-      ...(mvpVictims as any[]).map(r => ({ ...r, type: 'character' as const })),
-      ...(mvpKillers as any[]).map(r => ({ ...r, type: 'monster' as const })),
-      ...helpResults
+    // Combine and format results
+    const results: SearchResult[] = [
+      ...allCharacterResults.map((r: any) => ({
+        name: r.name,
+        type: 'character' as const,
+        source: r.source,
+      })),
+      ...mvpKillers.map((r: any) => ({
+        name: r.name,
+        type: 'monster' as const,
+        source: r.source,
+      })),
+      ...helpResults.map((article) => ({
+        name: article.title,
+        type: 'help' as const,
+        source: 'help',
+        id: article.id,
+      })),
     ];
 
-    // Remove duplicates based on name and type
-    const uniqueResults = allResults.filter((result, index, self) =>
-      index === self.findIndex(r => r.name === result.name && r.type === result.type)
-    );
-
-    // Group sources for each character/monster
-    const groupedResults = uniqueResults.reduce((acc, result) => {
-      const existing = acc.find((r: SearchResult) => r.name === result.name && r.type === result.type);
-      if (existing) {
-        existing.source += `,${result.source}`;
-      } else {
-        acc.push({ ...result });
-      }
-      return acc;
-    }, [] as SearchResult[]);
-
     // Calculate pagination
-    const total = groupedResults.length;
+    const total = results.length;
     const totalPages = Math.ceil(total / limit);
-    const offset = (page - 1) * limit;
-    
-    // Get paginated results
-    const paginatedResults = groupedResults.slice(offset, offset + limit);
+    const currentPage = Math.max(1, Math.min(page, totalPages));
+    const startIndex = (currentPage - 1) * limit;
+    const endIndex = startIndex + limit;
+    const paginatedResults = results.slice(startIndex, endIndex);
 
     return {
-      query: searchQuery.trim(),
+      query: searchQuery,
       results: paginatedResults,
       total,
-      currentPage: page,
+      currentPage,
       totalPages,
     };
   } catch (error) {
-    console.error('Error fetching search results:', error);
+    console.error('Search error:', error);
     return null;
   }
 }
@@ -182,7 +184,7 @@ export default async function SearchPage({
             );
           }
           return value;
-        }}
+        }
             className="border-0 shadow-none"
           />
         </div>
@@ -197,4 +199,22 @@ export default async function SearchPage({
       </div>
     </div>
   );
+}
+
+export async function generateMetadata({
+  searchParams,
+}: {
+  searchParams: Promise<{ q?: string; page?: string }>;
+}): Promise<Metadata> {
+  const search = await searchParams;
+  const hasQueryParams = Boolean(search.q || (search.page && search.page !== '1'));
+  
+  return {
+    title: 'Search',
+    description: 'Search for characters, monsters, and help articles in Solace Mud.',
+    alternates: { canonical: '/search' },
+    openGraph: { title: 'Search', description: 'Search for characters, monsters, and help articles in Solace Mud.', url: '/search' },
+    twitter: { title: 'Search', description: 'Search for characters, monsters, and help articles in Solace Mud.', card: 'summary' },
+    robots: hasQueryParams ? { index: false, follow: false } : undefined,
+  };
 }

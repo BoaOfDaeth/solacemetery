@@ -134,10 +134,20 @@ export default async function PvpPage({
   );
 }
 
-export const metadata: Metadata = {
-  title: 'Player Kills',
-  description: 'Recent player-vs-player kills in Solace Mud.',
-  alternates: { canonical: '/pvp' },
-  openGraph: { title: 'Player Kills', description: 'Recent player-vs-player kills in Solace Mud.', url: '/pvp' },
-  twitter: { title: 'Player Kills', description: 'Recent player-vs-player kills in Solace Mud.', card: 'summary' },
-};
+export async function generateMetadata({
+  searchParams,
+}: {
+  searchParams: Promise<{ page?: string }>;
+}): Promise<Metadata> {
+  const search = await searchParams;
+  const hasQueryParams = Boolean(search.page && search.page !== '1');
+  
+  return {
+    title: 'Player Kills',
+    description: 'Recent player-vs-player kills in Solace Mud.',
+    alternates: { canonical: '/pvp' },
+    openGraph: { title: 'Player Kills', description: 'Recent player-vs-player kills in Solace Mud.', url: '/pvp' },
+    twitter: { title: 'Player Kills', description: 'Recent player-vs-player kills in Solace Mud.', card: 'summary' },
+    robots: hasQueryParams ? { index: false, follow: false } : undefined,
+  };
+}
