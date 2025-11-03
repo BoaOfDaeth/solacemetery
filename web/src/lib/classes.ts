@@ -1,5 +1,5 @@
 import { ClassData } from './types';
-import { Class, Alignment, FighterSpecialization } from './enums';
+import { Class, Alignment, FighterSpecialization, MagicMajor } from './enums';
 
 export const classes: Record<Class, ClassData> = {
   [Class.FIGHTER]: {
@@ -443,6 +443,10 @@ export const classes: Record<Class, ClassData> = {
       { name: 'soften', level: 23, url: '/help/soften' },
       { name: 'duo dimension', level: 24, url: '/help/duo-dimension-duo' },
       { name: 'mana shield', level: 24, url: '/help/mana-shield' },
+    ],
+    magicMajorChoices: [
+      MagicMajor.ABJURATION,
+      MagicMajor.ALTERATION,
     ],
   },
 

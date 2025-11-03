@@ -1,4 +1,4 @@
-import { Alignment, Race, Class, FighterSpecialization } from './enums';
+import { Alignment, Race, Class, FighterSpecialization, MagicMajor } from './enums';
 
 // Character stats interface
 export interface CharacterStats {
@@ -66,4 +66,5 @@ export interface ClassData {
   specs?: Spec[];
   specChoices?: number; // Number of specializations that can be selected
   specAllowed?: FighterSpecialization[]; // Available specializations for selection
+  magicMajorChoices?: MagicMajor[]; // Available magic major choices for the class (e.g., transmuters)
 }

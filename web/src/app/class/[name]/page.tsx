@@ -1,7 +1,7 @@
 import { notFound } from 'next/navigation';
 import { getClassBySlug, getAllClasses } from '@/lib/classes';
 import { getCompatibleRacesForClass, getRace } from '@/lib/races';
-import { FighterSpecialization } from '@/lib/enums';
+import { FighterSpecialization, MagicMajor } from '@/lib/enums';
 import { Icon } from '@iconify/react';
 import ModernTable from '@/components/ModernTable';
 import ClassSkillsDisplay from '@/components/ClassSkillsDisplay';
@@ -21,6 +21,7 @@ export async function generateStaticParams() {
 
 interface ClassPageSearchParams {
   spec?: string | string[];
+  magicmajor?: string;
 }
 
 export default async function ClassPage({ 
@@ -52,6 +53,13 @@ export default async function ClassPage({
       validSpecValues.includes(spec as FighterSpecialization)
     )
     .slice(0, cls.specChoices || 3); // Limit to max allowed selections
+
+  // Parse selected magic major from URL params and validate it
+  const magicMajorParam = search.magicmajor;
+  const validMagicMajorValues = Object.values(MagicMajor);
+  const selectedMagicMajor = magicMajorParam && validMagicMajorValues.includes(magicMajorParam as MagicMajor)
+    ? (magicMajorParam as MagicMajor)
+    : null;
 
   const compatibleRaceNames = getCompatibleRacesForClass(cls.name);
   const compatibleRaces = compatibleRaceNames.map(raceName => getRace(raceName)).filter(Boolean);
@@ -103,6 +111,8 @@ export default async function ClassPage({
           specChoices={cls.specChoices}
           specAllowed={cls.specAllowed}
           selectedSpecs={selectedSpecs}
+          magicMajorChoices={cls.magicMajorChoices}
+          selectedMagicMajor={selectedMagicMajor}
           currentPath={`/class/${cls.slug}`}
         />
 

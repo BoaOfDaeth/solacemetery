@@ -1,9 +1,10 @@
 import React from 'react';
 import SpecToggler from './SpecToggler';
+import MagicMajorToggler from './MagicMajorToggler';
 // import SkillTable from './SkillTable';
 import SkillChart from './SkillChart';
 import { Skill, Spec } from '@/lib/types';
-import { FighterSpecialization } from '@/lib/enums';
+import { FighterSpecialization, MagicMajor } from '@/lib/enums';
 
 interface ClassSkillsDisplayProps {
   weapons?: Skill[];
@@ -14,6 +15,8 @@ interface ClassSkillsDisplayProps {
   specChoices?: number;
   specAllowed?: FighterSpecialization[];
   selectedSpecs: FighterSpecialization[];
+  magicMajorChoices?: MagicMajor[];
+  selectedMagicMajor?: MagicMajor | null;
   currentPath: string;
 }
 
@@ -26,6 +29,8 @@ export default function ClassSkillsDisplay({
   specChoices,
   specAllowed,
   selectedSpecs,
+  magicMajorChoices,
+  selectedMagicMajor,
   currentPath,
 }: ClassSkillsDisplayProps) {
   // Get skills from selected specializations
@@ -43,7 +48,7 @@ export default function ClassSkillsDisplay({
   return (
     <>
       {/* Weapons, Consumables, Specializations, Skills and Spells - side by side on desktop */}
-      {(weapons.length > 0 || consumables.length > 0 || (specChoices && specChoices > 0 && specAllowed && specAllowed.length > 0) || allSkills.length > 0 || basicSpells.length > 0) ? (
+      {(weapons.length > 0 || consumables.length > 0 || (magicMajorChoices && magicMajorChoices.length > 0) || (specChoices && specChoices > 0 && specAllowed && specAllowed.length > 0) || allSkills.length > 0 || basicSpells.length > 0) ? (
         <div className="mt-2 lg:mt-4">
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
             {/* Left Column: Weapons, Consumables, Specializations */}
@@ -56,6 +61,15 @@ export default function ClassSkillsDisplay({
               {/* Consumables */}
               {consumables.length > 0 && (
                 <SkillChart title="Consumables" skills={consumables} />
+              )}
+              
+              {/* Magic Major - single selection */}
+              {magicMajorChoices && magicMajorChoices.length > 0 && (
+                <MagicMajorToggler
+                  availableMajors={magicMajorChoices}
+                  selectedMajor={selectedMagicMajor}
+                  currentPath={currentPath}
+                />
               )}
               
               {/* Specializations - vertical */}

@@ -52,6 +52,11 @@ export enum FighterSpecialization {
   SHIELD = 'Shield',
 }
 
+export enum MagicMajor {
+  ABJURATION = 'Abjuration',
+  ALTERATION = 'Alteration',
+}
+
 // Helper functions to get all values
 export function getAllAlignments(): Alignment[] {
   return Object.values(Alignment);
