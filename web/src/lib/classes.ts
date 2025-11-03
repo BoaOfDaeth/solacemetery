@@ -798,7 +798,7 @@ export const classes: Record<Class, ClassData> = {
       { name: 'slaughter', level: 31, url: '/help/slaughter' },
     ],
     basicSpells: [
-      { name: 'magic missile', level: 1, url: '/help/magic-missile' },
+      { name: 'magic missile', level: 1 },
       { name: 'chill touch', level: 2, url: '/help/chill-touch' },
       { name: 'acid arrow', level: 3, url: '/help/acid-arrow' },
       { name: 'blindness', level: 4, url: '/help/blindness' },

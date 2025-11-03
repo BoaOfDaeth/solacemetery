@@ -12,11 +12,17 @@ import { DOMAIN } from '@/lib/utils';
 const geistSans = Geist({
   variable: '--font-geist-sans',
   subsets: ['latin'],
+  display: 'swap', // Use fallback font until custom font loads, prevents invisible text
+  preload: true, // Preload font files for faster loading
+  adjustFontFallback: true, // Adjust fallback font metrics to match Geist, reduces layout shift
 });
 
 const geistMono = Geist_Mono({
   variable: '--font-geist-mono',
   subsets: ['latin'],
+  display: 'swap', // Use fallback font until custom font loads, prevents invisible text
+  preload: true, // Preload font files for faster loading
+  adjustFontFallback: true, // Adjust fallback font metrics to match Geist Mono, reduces layout shift
 });
 
 export const metadata: Metadata = {
