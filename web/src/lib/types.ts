@@ -73,5 +73,5 @@ export interface ClassData {
   specSpells?: SpecSpell[]; // Spells for each specialization
   specChoices?: number; // Number of specializations that can be selected
   specAllowed?: Specs[]; // Available specializations for selection
-  magicMajorChoices?: Specs[]; // Available magic major choices for the class (e.g., transmuters)
+  magicMajorChoices?: Array<{ spec: Specs; desc: string[] }>; // Available magic major choices with descriptions
 }

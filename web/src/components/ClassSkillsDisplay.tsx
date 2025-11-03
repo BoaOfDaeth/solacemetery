@@ -16,7 +16,7 @@ interface ClassSkillsDisplayProps {
   specChoices?: number;
   specAllowed?: Specs[];
   selectedSpecs: Specs[];
-  magicMajorChoices?: Specs[];
+  magicMajorChoices?: Array<{ spec: Specs; desc: string[] }>;
   selectedMagicMajor?: Specs | null;
   currentPath: string;
 }

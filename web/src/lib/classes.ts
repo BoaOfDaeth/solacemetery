@@ -477,8 +477,23 @@ export const classes: Record<Class, ClassData> = {
       },
     ],
     magicMajorChoices: [
-      Specs.ABJURATION,
-      Specs.ALTERATION,
+      {
+        spec: Specs.ABJURATION,
+        desc: [
+          'Gain spellturning, displacement and block teleport spells',
+          'Learn sanctuary, spiderhands, paralysis and astral spell',
+          'Learn skills: speed control, flight control and skin control',
+          'Used for shapeshifting control',
+        ],
+      },
+      {
+        spec: Specs.ALTERATION,
+        desc: [
+          'Gain a major shapeshifting form at higher ranks',
+          'Shapeshift without losing certain spells',
+          'Natural ease with shapeshifting abilities',
+        ],
+      },
     ],
   },
 
