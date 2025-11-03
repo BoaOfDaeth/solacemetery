@@ -60,6 +60,7 @@ export interface ClassData {
   allowedAlignments: Alignment[];
   reference: ReferenceLink[];
   weapons?: Skill[]; // Weapon skills (level 1)
+  consumables?: Skill[]; // Consumable item skills (level 1)
   basicSkills?: Skill[]; // Optional basic skills for the class
   specs?: Spec[];
   specChoices?: number; // Number of specializations that can be selected

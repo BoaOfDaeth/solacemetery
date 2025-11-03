@@ -13,6 +13,7 @@ export const classes: Record<Class, ClassData> = {
     reference: [
       { label: 'specialization', url: '/help/specialization-specialize' },
     ],
+    consumables: [],
     weapons: [
       { name: 'axe', level: 1 },
       { name: 'dagger', level: 1 },

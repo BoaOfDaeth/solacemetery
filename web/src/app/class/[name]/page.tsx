@@ -4,7 +4,6 @@ import { getCompatibleRacesForClass, getRace } from '@/lib/races';
 import { FighterSpecialization } from '@/lib/enums';
 import { Icon } from '@iconify/react';
 import ModernTable from '@/components/ModernTable';
-import SkillTable from '@/components/SkillTable';
 import ClassSkillsDisplay from '@/components/ClassSkillsDisplay';
 import Link from 'next/link';
 import type { Metadata } from 'next';
@@ -94,15 +93,10 @@ export default async function ClassPage({
           )}
         </div>
 
-        {/* Weapons */}
-        {cls.weapons && cls.weapons.length > 0 && (
-          <div className="mt-2 lg:mt-4">
-            <SkillTable title="Weapons" skills={cls.weapons} />
-          </div>
-        )}
-
-        {/* Specializations and Basic Skills */}
+        {/* Weapons, Consumables, Specializations and Basic Skills */}
         <ClassSkillsDisplay
+          weapons={cls.weapons}
+          consumables={cls.consumables}
           basicSkills={cls.basicSkills}
           specs={cls.specs}
           specChoices={cls.specChoices}
