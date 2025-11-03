@@ -48,7 +48,7 @@ export default function MagicMajorToggler({
               href={majorUrl}
               scroll={false}
               className={`
-                px-4 py-3 rounded-lg border-2 text-left transition-all duration-200 block
+                px-4 py-3 rounded-lg border-2 text-left transition-all duration-200 block select-none
                 ${
                   isSelected
                     ? 'border-primary bg-primary/10 text-primary font-medium'
