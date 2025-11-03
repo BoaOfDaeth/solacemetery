@@ -1,6 +1,6 @@
 import React from 'react';
 import SpecToggler from './SpecToggler';
-import MagicMajorToggler from './MagicMajorToggler';
+import SpecTogglerSingle from './SpecTogglerSingle';
 // import SkillTable from './SkillTable';
 import SkillChart from './SkillChart';
 import { Skill, Spec, SpecSpell } from '@/lib/types';
@@ -89,11 +89,13 @@ export default function ClassSkillsDisplay({
                 <SkillChart title="Consumables" skills={consumables} />
               )}
               
-              {/* Magic Major - single selection */}
+              {/* Single spec selection (e.g., Magic Major) */}
               {magicMajorChoices && magicMajorChoices.length > 0 && (
-                <MagicMajorToggler
-                  availableMajors={magicMajorChoices}
-                  selectedMajor={selectedMagicMajor}
+                <SpecTogglerSingle
+                  availableSpecs={magicMajorChoices}
+                  selectedSpec={selectedMagicMajor}
+                  queryParam="magicmajor"
+                  title="Major Magic"
                   currentPath={currentPath}
                 />
               )}

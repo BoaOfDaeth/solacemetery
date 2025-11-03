@@ -2,31 +2,35 @@ import React from 'react';
 import Link from 'next/link';
 import { Specs } from '@/lib/enums';
 
-interface MagicMajor {
+interface SpecOption {
   spec: Specs;
   desc: string[];
 }
 
-interface SpecsTogglerProps {
-  availableMajors: MagicMajor[];
-  selectedMajor?: Specs | null;
+interface SpecTogglerSingleProps {
+  availableSpecs: SpecOption[];
+  selectedSpec?: Specs | null;
   currentPath: string;
+  queryParam?: string; // Query parameter name (e.g., 'magicmajor', 'spec', etc.)
+  title?: string; // Optional title for the component
   className?: string;
 }
 
-export default function MagicMajorToggler({
-  availableMajors,
-  selectedMajor,
+export default function SpecTogglerSingle({
+  availableSpecs,
+  selectedSpec,
   currentPath,
+  queryParam = 'spec',
+  title,
   className = '',
-}: SpecsTogglerProps) {
-  const createMajorUrl = (major: Specs): string => {
+}: SpecTogglerSingleProps) {
+  const createSpecUrl = (spec: Specs): string => {
     const params = new URLSearchParams();
     
-    // If clicking the same major, deselect it (don't add magicmajor param)
-    if (selectedMajor !== major) {
-      // Otherwise select this major
-      params.append('magicmajor', major);
+    // If clicking the same spec, deselect it (don't add query param)
+    if (selectedSpec !== spec) {
+      // Otherwise select this spec
+      params.append(queryParam, spec);
     }
     
     const query = params.toString();
@@ -35,22 +39,24 @@ export default function MagicMajorToggler({
 
   return (
     <div className={`bg-card border border-border rounded-xl shadow-sm p-4 sm:p-6 ${className}`}>
-      <div className="mb-4 text-center">
-        <h3 className="text-lg font-semibold text-foreground mb-2">
-          Major Magic
-        </h3>
-      </div>
+      {title && (
+        <div className="mb-4 text-center">
+          <h3 className="text-lg font-semibold text-foreground mb-2">
+            {title}
+          </h3>
+        </div>
+      )}
 
       <div className="space-y-3">
         <div className="grid grid-cols-2 gap-3">
-          {availableMajors.map((major) => {
-            const isSelected = selectedMajor === major.spec;
-            const majorUrl = createMajorUrl(major.spec);
+          {availableSpecs.map((specOption) => {
+            const isSelected = selectedSpec === specOption.spec;
+            const specUrl = createSpecUrl(specOption.spec);
 
             return (
               <Link
-                key={major.spec}
-                href={majorUrl}
+                key={specOption.spec}
+                href={specUrl}
                 scroll={false}
                 className={`
                   px-4 py-3 rounded-lg border-2 text-left transition-all duration-200 block select-none
@@ -64,7 +70,7 @@ export default function MagicMajorToggler({
               >
                 <div className="flex items-center justify-between">
                   <span className="text-sm font-medium">
-                    {major.spec}
+                    {specOption.spec}
                   </span>
                   {isSelected && (
                     <svg
@@ -85,16 +91,16 @@ export default function MagicMajorToggler({
           })}
         </div>
         {(() => {
-          const selectedMajorData = selectedMajor ? availableMajors.find((m) => m.spec === selectedMajor) : null;
-          return selectedMajorData && selectedMajorData.desc.length > 0 ? (
+          const selectedSpecData = selectedSpec ? availableSpecs.find((s) => s.spec === selectedSpec) : null;
+          return selectedSpecData && selectedSpecData.desc.length > 0 ? (
             <div className="mt-3 pt-3 border-t border-border">
               <ul className="space-y-1.5">
-                {selectedMajorData.desc.map((item, index) => (
-                <li key={index} className="text-xs text-muted-foreground flex items-start">
-                  <span className="mr-1.5">•</span>
-                  <span>{item}</span>
-                </li>
-              ))}
+                {selectedSpecData.desc.map((item, index) => (
+                  <li key={index} className="text-xs text-muted-foreground flex items-start">
+                    <span className="mr-1.5">•</span>
+                    <span>{item}</span>
+                  </li>
+                ))}
               </ul>
             </div>
           ) : null;
