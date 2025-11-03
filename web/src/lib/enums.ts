@@ -58,6 +58,11 @@ export enum Specs {
   WAY_SHADOWS = 'Shadows',
   WAY_BEASTS = 'Beasts',
   WAY_SEASONS = 'Seasons',
+  // Druid kinships
+  KINSHIP_ALL = 'All Animals',
+  KINSHIP_WOLF = 'Greater Wolf',
+  KINSHIP_BOAR = 'Greater Boar',
+  KINSHIP_ORANGUTAN = 'Powerful Orangutan',
 }
 
 // Helper functions to get all values
