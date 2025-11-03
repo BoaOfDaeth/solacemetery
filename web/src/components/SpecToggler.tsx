@@ -51,7 +51,7 @@ export default function SpecToggler({
         </p>
       </div>
 
-      <div className="flex flex-col gap-3">
+      <div className="grid grid-cols-2 gap-3">
         {availableSpecs.map((spec) => {
           const isSelected = selectedSpecs.includes(spec);
           const isDisabled = !isSelected && !canSelectMore;

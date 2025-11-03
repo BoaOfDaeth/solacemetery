@@ -61,7 +61,7 @@ export default function SkillChart({
                   <Link
                     key={skill.name}
                     href={skill.url}
-                    className={`px-1.5 py-0.5 rounded text-xs transition-colors border ${borderClasses} ${bgClasses} ${textClasses}`}
+                    className={`px-1.5 py-0.5 rounded text-sm transition-colors border ${borderClasses} ${bgClasses} ${textClasses}`}
                     title={`Level ${level}`}
                   >
                     {skill.name}
@@ -69,7 +69,7 @@ export default function SkillChart({
                 ) : (
                   <span
                     key={skill.name}
-                    className={`px-1.5 py-0.5 rounded text-xs border ${borderClasses} ${bgClasses} ${textClasses}`}
+                    className={`px-1.5 py-0.5 rounded text-sm border ${borderClasses} ${bgClasses} ${textClasses}`}
                     title={`Level ${level}`}
                   >
                     {skill.name}
