@@ -540,21 +540,31 @@ export const classes: Record<Class, ClassData> = {
     kinshipChoices: [
       {
         spec: Specs.KINSHIP_ALL,
-        desc: [], // TODO: Add descriptions for All Animals kinship
+        desc: [
+          'Obtains two random minor animal forms.',
+          'Has an owlform. Which is able to fly across the lands.',
+          'Has a bearform.',
+        ],
       },
       {
         spec: Specs.KINSHIP_WOLF,
-        desc: [], // TODO: Add descriptions for Greater Wolf kinship
+        desc: [
+          'Is able to cast spells upon itself while in animal form.',
+          'Is able to maintain itself as a greater wolf without using mana.',
+        ], // TODO: Add descriptions for Greater Wolf kinship
       },
       {
         spec: Specs.KINSHIP_BOAR,
-        desc: [], // TODO: Add descriptions for Greater Boar kinship
+        desc: [
+          'Is able to cast spells upon itself while in animal form.',
+          'Is able to maintain itself as a greater boar without using mana.',
+        ],
       },
       {
         spec: Specs.KINSHIP_ORANGUTAN,
         desc: [
-          'You will now be able to cast spells upon yourself while in animal form.',
-          'You will be able to maintain yourself as an orangoutang without using mana.',
+          'Is able to cast spells upon itself while in animal form.',
+          'Is able to maintain itself as an orangoutang without using mana.',
         ],
       },
     ],
