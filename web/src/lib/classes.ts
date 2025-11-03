@@ -576,6 +576,12 @@ export const classes: Record<Class, ClassData> = {
           { name: 'brace', level: 28, url: '/help/brace' },
         ],
       },
+      {
+        id: Specs.GOD_REORX,
+        skills: [
+          { name: 'enhanced damage', level: 15, url: '/help/enhanced-damage' },
+        ],
+      },
     ],
     specSpells: [
       {
@@ -633,6 +639,24 @@ export const classes: Record<Class, ClassData> = {
           { name: 'mass healing', level: 25, url: '/help/mass-healing' },
           { name: 'divine presence', level: 25, url: '/help/divine-presence' },
           { name: 'safety', level: 26, url: '/help/safety' },
+        ],
+      },
+      {
+        id: Specs.GOD_REORX,
+        spells: [
+          { name: 'sparks of the forge', level: 8, url: '/help/sparks-of-the-forge' },
+          { name: 'resist fire', level: 9, url: '/help/resist-fire' },
+          { name: 'resist cold', level: 10, url: '/help/resist-cold' },
+          { name: 'gate', level: 11, url: '/help/gate' },
+          { name: 'resist lightning', level: 12, url: '/help/resist-lightning' },
+          { name: 'cure mortal wounds', level: 15, url: '/help/cure-mortal-wounds' },
+          { name: 'shelter of the earth', level: 17, url: '/help/shelter-of-the-earth' },
+          { name: 'molten iron', level: 19, url: '/help/molten-iron' },
+          { name: 'roots of rock', level: 20, url: '/help/roots-of-rock' },
+          { name: 'blade barrier', level: 21, url: '/help/blade-barrier' },
+          { name: 'forged hammer', level: 21, url: '/help/forged-hammer' },
+          { name: 'group teleport', level: 23, url: '/help/teleport-group-teleport' },
+          { name: 'flesh to dust', level: 24, url: '/help/flesh-to-dust' },
         ],
       },
     ],
