@@ -47,7 +47,7 @@ export default function SkillChart({
             <span className="absolute left-0 text-foreground opacity-5 font-bold text-sm">
               {level}
             </span>
-            <div className="flex flex-wrap items-center justify-center gap-1.5">
+            <div className="flex flex-wrap items-center justify-center gap-1.5 pl-2">
               {skillsByLevel[level].map((skill) => {
                 const isSpec = skill.isSpec === true;
                 const borderClasses = isSpec
