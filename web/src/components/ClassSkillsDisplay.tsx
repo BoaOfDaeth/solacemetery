@@ -101,9 +101,19 @@ export default function ClassSkillsDisplay({
     ? (specSpells.find((s) => s.id === selectedWorship)?.spells || [])
     : [];
 
+  // Get excluded basic skills from selected worship (if any)
+  const excludedBasicSkills = selectedWorship && worshipChoices
+    ? worshipChoices.find((w) => w.spec === selectedWorship)?.excludedBasicSkills || []
+    : [];
+
+  // Filter basic skills to exclude any specified by the selected worship
+  const filteredBasicSkills = basicSkills.filter(
+    (skill) => !excludedBasicSkills.includes(skill.name.toLowerCase())
+  );
+
   // Merge basic skills with selected spec skills, magic major skills, wayfollow skills, kinship skills, and worship skills, marking spec skills with a flag
   const allSkills: (Skill & { isSpec?: boolean })[] = [
-    ...basicSkills.map((skill) => ({ ...skill, isSpec: false })),
+    ...filteredBasicSkills.map((skill) => ({ ...skill, isSpec: false })),
     ...selectedSpecSkills.map((skill) => ({ ...skill, isSpec: true })),
     ...selectedMagicMajorSkills.map((skill) => ({ ...skill, isSpec: true })),
     ...selectedWayfollowSkills.map((skill) => ({ ...skill, isSpec: true })),

@@ -567,6 +567,15 @@ export const classes: Record<Class, ClassData> = {
           { name: 'healing mastery', level: 32, url: '/help/healing-mastery' },
         ],
       },
+      {
+        id: Specs.GOD_MAJERE,
+        skills: [
+          { name: 'flowing block', level: 14, url: '/help/flowing-block' },
+          { name: 'swipe', level: 16, url: '/help/swipe' },
+          { name: 'strike', level: 18, url: '/help/strike' },
+          { name: 'brace', level: 28, url: '/help/brace' },
+        ],
+      },
     ],
     specSpells: [
       {
@@ -611,6 +620,21 @@ export const classes: Record<Class, ClassData> = {
           { name: 'rejuvenation chamber', level: 31, url: '/help/rejuvenation-chamber' },
         ],
       },
+      {
+        id: Specs.GOD_MAJERE,
+        spells: [
+          { name: 'gate', level: 11, url: '/help/gate' },
+          { name: 'resist lightning', level: 12, url: '/help/resist-lightning' },
+          { name: 'stoneskin', level: 17, url: '/help/ironskin-stoneskin' },
+          { name: 'imbue regeneration', level: 22, url: '/help/imbue-regeneration' },
+          { name: 'group teleport', level: 23, url: '/help/teleport-group-teleport' },
+          { name: 'heal', level: 24, url: '/help/heal' },
+          { name: 'healing sleep', level: 24, url: '/help/healing-sleep' },
+          { name: 'mass healing', level: 25, url: '/help/mass-healing' },
+          { name: 'divine presence', level: 25, url: '/help/divine-presence' },
+          { name: 'safety', level: 26, url: '/help/safety' },
+        ],
+      },
     ],
     worshipChoices: [
       {
@@ -632,6 +656,7 @@ export const classes: Record<Class, ClassData> = {
         spec: Specs.GOD_MAJERE,
         desc: ['a sign of the clenched Fist'], // TODO: Add descriptions for Majere
         allowedAlignments: [Alignment.GOOD],
+        excludedBasicSkills: ['shield block', 'mace swing'],
       },
     ],
   },
