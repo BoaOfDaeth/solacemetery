@@ -1,7 +1,8 @@
 import { notFound } from 'next/navigation';
 import { getClassBySlug, getAllClasses } from '@/lib/classes';
 import { getCompatibleRacesForClass, getRace } from '@/lib/races';
-import { Specs } from '@/lib/enums';
+import { Specs, Alignment } from '@/lib/enums';
+import AlignToggler from '@/components/AlignToggler';
 import { Icon } from '@iconify/react';
 import ModernTable from '@/components/ModernTable';
 import ClassSkillsDisplay from '@/components/ClassSkillsDisplay';
@@ -23,6 +24,7 @@ interface ClassPageSearchParams {
   spec?: string | string[];
   magicmajor?: string;
   wayfollow?: string;
+  alignment?: string;
 }
 
 export default async function ClassPage({ 
@@ -67,8 +69,22 @@ export default async function ClassPage({
     ? (wayfollowParam as Specs)
     : null;
 
+  // Parse selected alignment from URL params and validate it
+  const alignmentParam = search.alignment;
+  const validAlignmentValues = Object.values(Alignment);
+  const selectedAlignment = alignmentParam && validAlignmentValues.includes(alignmentParam as Alignment)
+    ? (alignmentParam as Alignment)
+    : null;
+
   const compatibleRaceNames = getCompatibleRacesForClass(cls.name);
-  const compatibleRaces = compatibleRaceNames.map(raceName => getRace(raceName)).filter(Boolean);
+  let compatibleRaces = compatibleRaceNames.map(raceName => getRace(raceName)).filter(Boolean);
+
+  // Filter races by selected alignment if one is selected
+  if (selectedAlignment) {
+    compatibleRaces = compatibleRaces.filter(race => 
+      race?.allowedAlignments.includes(selectedAlignment)
+    );
+  }
 
   // Prepare compatible races data for table
   const racesData = compatibleRaces.map(race => ({
@@ -142,22 +158,16 @@ export default async function ClassPage({
 
         {/* Class Information */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-2 lg:gap-4 mb-2 lg:mb-4 mt-2 lg:mt-4">
-          <div className="bg-card border border-border rounded-xl shadow-sm p-4 sm:p-6">
-            <h3 className="text-lg font-semibold text-foreground mb-3 flex items-center">
-              <Icon icon="game-icons:balance-scale" className="w-5 h-5 mr-2 text-primary" />
-              Allowed Alignments
-            </h3>
-            <div className="flex flex-wrap gap-2">
-              {cls.allowedAlignments.map((alignment) => (
-                <span
-                  key={alignment}
-                  className="px-3 py-1 rounded-full text-sm font-medium bg-primary/10 text-primary"
-                >
-                  {alignment}
-                </span>
-              ))}
-            </div>
-          </div>
+          <AlignToggler
+            availableAlignments={cls.allowedAlignments}
+            selectedAlignment={selectedAlignment}
+            preserveParams={{
+              ...(search.spec ? { spec: search.spec } : {}),
+              ...(search.magicmajor ? { magicmajor: search.magicmajor } : {}),
+              ...(search.wayfollow ? { wayfollow: search.wayfollow } : {}),
+            }}
+            currentPath={`/class/${cls.slug}`}
+          />
           
           <div className="bg-card border border-border rounded-xl shadow-sm p-4 sm:p-6">
             <h3 className="text-lg font-semibold text-foreground mb-3 flex items-center">
