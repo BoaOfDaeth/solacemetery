@@ -35,28 +35,40 @@ export default function ClassSkillsDisplay({
   selectedMagicMajor,
   currentPath,
 }: ClassSkillsDisplayProps) {
-  // Get skills from selected specializations
+  // Get skills from selected specializations (fighter specs)
   const selectedSpecSkills = selectedSpecs.flatMap((specId) => {
     const spec = specSkills.find((s) => s.id === specId);
     return spec?.skills || [];
   });
 
-  // Get spells from selected specializations
+  // Get skills from selected magic major
+  const selectedMagicMajorSkills = selectedMagicMajor
+    ? (specSkills.find((s) => s.id === selectedMagicMajor)?.skills || [])
+    : [];
+
+  // Get spells from selected specializations (fighter specs)
   const selectedSpecSpells = selectedSpecs.flatMap((specId) => {
     const spec = specSpells.find((s) => s.id === specId);
     return spec?.spells || [];
   });
 
-  // Merge basic skills with selected spec skills, marking spec skills with a flag
+  // Get spells from selected magic major
+  const selectedMagicMajorSpells = selectedMagicMajor
+    ? (specSpells.find((s) => s.id === selectedMagicMajor)?.spells || [])
+    : [];
+
+  // Merge basic skills with selected spec skills and magic major skills, marking spec skills with a flag
   const allSkills: (Skill & { isSpec?: boolean })[] = [
     ...basicSkills.map((skill) => ({ ...skill, isSpec: false })),
     ...selectedSpecSkills.map((skill) => ({ ...skill, isSpec: true })),
+    ...selectedMagicMajorSkills.map((skill) => ({ ...skill, isSpec: true })),
   ];
 
-  // Merge basic spells with selected spec spells, marking spec spells with a flag
+  // Merge basic spells with selected spec spells and magic major spells, marking spec spells with a flag
   const allSpells: (Skill & { isSpec?: boolean })[] = [
     ...basicSpells.map((spell) => ({ ...spell, isSpec: false })),
     ...selectedSpecSpells.map((spell) => ({ ...spell, isSpec: true })),
+    ...selectedMagicMajorSpells.map((spell) => ({ ...spell, isSpec: true })),
   ];
 
   return (

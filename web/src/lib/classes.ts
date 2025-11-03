@@ -442,7 +442,6 @@ export const classes: Record<Class, ClassData> = {
       { name: 'ironskin', level: 22, url: '/help/ironskin-stoneskin' },
       { name: 'soften', level: 23, url: '/help/soften' },
       { name: 'duo dimension', level: 24, url: '/help/duo-dimension-duo' },
-      { name: 'mana shield', level: 24, url: '/help/mana-shield' },
     ],
     specSpells: [
       {
