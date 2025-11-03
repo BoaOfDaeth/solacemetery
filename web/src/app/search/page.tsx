@@ -34,21 +34,21 @@ async function getSearchResults(searchQuery: string, page: number = 1, limit: nu
       SELECT DISTINCT killer as name, 'pvp_killer' as source
       FROM PVP 
       WHERE killer LIKE ? AND killer != victim
-    `, [queryParam]);
+    `, [queryParam]) as any[];
 
     // Search for characters in PVP table (as victims)
     const pvpVictims = await query(`
       SELECT DISTINCT victim as name, 'pvp_victim' as source
       FROM PVP 
       WHERE victim LIKE ?
-    `, [queryParam]);
+    `, [queryParam]) as any[];
 
     // Search for characters in MVP table (as victims)
     const mvpVictims = await query(`
       SELECT DISTINCT victim as name, 'mvp_victim' as source
       FROM MVP 
       WHERE victim LIKE ?
-    `, [queryParam]);
+    `, [queryParam]) as any[];
 
     // Combine all character results
     const allCharacterResults = [
@@ -67,7 +67,7 @@ async function getSearchResults(searchQuery: string, page: number = 1, limit: nu
       SELECT DISTINCT killer as name, 'mvp_killer' as source
       FROM MVP 
       WHERE killer LIKE ? AND killer != victim
-    `, [queryParam]);
+    `, [queryParam]) as any[];
 
     // Search help articles
     const helpResults = searchHelpArticles(searchQuery.trim());
@@ -143,48 +143,48 @@ export default async function SearchPage({
       <div className="max-w-7xl mx-auto px-2 sm:px-4 lg:px-6">
         <div className="bg-card border border-border rounded-xl shadow-sm overflow-hidden">
           <ModernTable
-        title={`${searchData.total} result${searchData.total !== 1 ? 's' : ''} found`}
-        description={`Search results for "${decodedQuery}"`}
-        columns={[
-          { key: 'name', label: 'Name' },
-          { key: 'type', label: 'Type' }
-        ]}
-        data={searchData.results}
-        renderCell={(key, value, row) => {
-          if (key === 'name') {
-            let href = '';
-            if (row.type === 'character') {
-              href = `/character/${encodeURIComponent(row.name)}`;
-            } else if (row.type === 'monster') {
-              href = `/mob/${encodeURIComponent(row.name)}`;
-            } else if (row.type === 'help') {
-              href = `/help/${row.id}`;
-            }
-            
-            return (
-              <Link
-                href={href}
-                className="text-primary hover:text-primary/80 hover:underline font-medium"
-              >
-                {row.name}
-              </Link>
-            );
-          }
-          if (key === 'type') {
-            return (
-              <span className={`inline-flex px-2.5 py-0.5 text-xs font-medium rounded-full ${
-                row.type === 'character' 
-                  ? 'bg-primary/10 text-primary' 
-                  : row.type === 'monster'
-                  ? 'bg-destructive/10 text-destructive'
-                  : 'bg-secondary/10 text-secondary-foreground'
-              }`}>
-                {row.type === 'character' ? 'Character' : row.type === 'monster' ? 'Monster' : 'Help'}
-              </span>
-            );
-          }
-          return value;
-        }
+            title={`${searchData.total} result${searchData.total !== 1 ? 's' : ''} found`}
+            description={`Search results for "${decodedQuery}"`}
+            columns={[
+              { key: 'name', label: 'Name' },
+              { key: 'type', label: 'Type' }
+            ]}
+            data={searchData.results}
+            renderCell={(key, value, row) => {
+              if (key === 'name') {
+                let href = '';
+                if (row.type === 'character') {
+                  href = `/character/${encodeURIComponent(row.name)}`;
+                } else if (row.type === 'monster') {
+                  href = `/mob/${encodeURIComponent(row.name)}`;
+                } else if (row.type === 'help') {
+                  href = `/help/${row.id}`;
+                }
+                
+                return (
+                  <Link
+                    href={href}
+                    className="text-primary hover:text-primary/80 hover:underline font-medium"
+                  >
+                    {row.name}
+                  </Link>
+                );
+              }
+              if (key === 'type') {
+                return (
+                  <span className={`inline-flex px-2.5 py-0.5 text-xs font-medium rounded-full ${
+                    row.type === 'character' 
+                      ? 'bg-primary/10 text-primary' 
+                      : row.type === 'monster'
+                      ? 'bg-destructive/10 text-destructive'
+                      : 'bg-secondary/10 text-secondary-foreground'
+                  }`}>
+                    {row.type === 'character' ? 'Character' : row.type === 'monster' ? 'Monster' : 'Help'}
+                  </span>
+                );
+              }
+              return value;
+            }}
             className="border-0 shadow-none"
           />
         </div>

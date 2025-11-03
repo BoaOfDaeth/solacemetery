@@ -22,7 +22,7 @@ interface ClassSkillsDisplayProps {
   selectedWayfollow?: Specs | null;
   kinshipChoices?: Array<{ spec: Specs; desc: string[] }>;
   selectedKinship?: Specs | null;
-  worshipChoices?: Array<{ spec: Specs; desc: string[]; allowedAlignments: Alignment[] }>;
+  worshipChoices?: Array<{ spec: Specs; desc: string[]; allowedAlignments: Alignment[]; excludedBasicSkills?: string[] }>;
   selectedWorship?: Specs | null;
   alignToggler?: React.ReactNode; // AlignToggler component to display
   currentPath: string;

@@ -81,47 +81,62 @@ export default function AlignToggler({
             const isSelected = effectiveSelectedAlignment === alignment;
             const isSingleAvailable = isSingleAlignment && alignment === singleAlignment;
             const alignmentUrl = createAlignmentUrl(alignment);
+            const shouldUseLink = isAvailable && !isSingleAvailable;
 
-            // For unavailable or single available alignments, use a div instead of Link to prevent navigation
-            const Component = (!isAvailable || isSingleAvailable) ? 'div' : Link;
-            const href = (!isAvailable || isSingleAvailable) ? undefined : alignmentUrl;
+            const className = `
+              px-4 py-3 rounded-lg border-2 text-left transition-all duration-200 block select-none
+              ${
+                !isAvailable
+                  ? 'border-border/50 bg-muted/30 text-muted-foreground/50 cursor-not-allowed opacity-60 pointer-events-none'
+                  : isSingleAvailable
+                  ? 'border-primary bg-primary/10 text-primary font-medium cursor-default'
+                  : isSelected
+                  ? 'border-primary bg-primary/10 text-primary font-medium cursor-pointer hover:bg-primary/15'
+                  : 'border-border bg-background text-foreground hover:border-primary/50 cursor-pointer hover:bg-muted/50'
+              }
+            `;
+
+            const content = (
+              <div className="flex items-center justify-between">
+                <span className="text-sm font-medium">
+                  {alignment}
+                </span>
+                {isSelected && (
+                  <svg
+                    className="w-5 h-5 text-primary flex-shrink-0"
+                    fill="currentColor"
+                    viewBox="0 0 20 20"
+                  >
+                    <path
+                      fillRule="evenodd"
+                      d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+                      clipRule="evenodd"
+                    />
+                  </svg>
+                )}
+              </div>
+            );
+
+            if (shouldUseLink) {
+              return (
+                <Link
+                  key={alignment}
+                  href={alignmentUrl}
+                  scroll={false}
+                  className={className}
+                >
+                  {content}
+                </Link>
+              );
+            }
 
             return (
-              <Component
+              <div
                 key={alignment}
-                {...(Component === Link ? { href, scroll: false } : {})}
-                className={`
-                  px-4 py-3 rounded-lg border-2 text-left transition-all duration-200 block select-none
-                  ${
-                    !isAvailable
-                      ? 'border-border/50 bg-muted/30 text-muted-foreground/50 cursor-not-allowed opacity-60 pointer-events-none'
-                      : isSingleAvailable
-                      ? 'border-primary bg-primary/10 text-primary font-medium cursor-default'
-                      : isSelected
-                      ? 'border-primary bg-primary/10 text-primary font-medium cursor-pointer hover:bg-primary/15'
-                      : 'border-border bg-background text-foreground hover:border-primary/50 cursor-pointer hover:bg-muted/50'
-                  }
-                `}
+                className={className}
               >
-                <div className="flex items-center justify-between">
-                  <span className="text-sm font-medium">
-                    {alignment}
-                  </span>
-                  {isSelected && (
-                    <svg
-                      className="w-5 h-5 text-primary flex-shrink-0"
-                      fill="currentColor"
-                      viewBox="0 0 20 20"
-                    >
-                      <path
-                        fillRule="evenodd"
-                        d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
-                        clipRule="evenodd"
-                      />
-                    </svg>
-                  )}
-                </div>
-              </Component>
+                {content}
+              </div>
             );
           })}
         </div>
