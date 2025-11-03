@@ -457,6 +457,13 @@ export const classes: Record<Class, ClassData> = {
           { name: 'mana shield', level: 24, url: '/help/mana-shield' },
         ],
       },
+      {
+        id: Specs.ALTERATION,
+        spells: [
+          { name: 'polymorph other', level: 27, url: '/help/polymorph-other' },
+          { name: 'mana shield', level: 24, url: '/help/mana-shield' },
+        ],
+      },
     ],
     specSkills: [
       {
