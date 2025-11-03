@@ -590,6 +590,30 @@ export const classes: Record<Class, ClassData> = {
         id: Specs.GOD_SIRRION,
         skills: [], // Sirrion has no additional skills beyond basic skills
       },
+      {
+        id: Specs.GOD_MORGION,
+        skills: [
+          { name: 'enhanced damage', level: 15, url: '/help/enhanced-damage' },
+        ],
+      },
+      {
+        id: Specs.GOD_CHEMOSH,
+        skills: [], // Chemosh has no additional skills beyond basic skills
+      },
+      {
+        id: Specs.GOD_SARGONNAS,
+        skills: [], // Sargonnas has no additional skills beyond basic skills
+      },
+      {
+        id: Specs.GOD_TAKHISIS,
+        skills: [], // Takhisis has no additional skills beyond basic skills
+      },
+      {
+        id: Specs.GOD_HIDDUKEL,
+        skills: [
+          { name: 'hoarding', level: 23, url: '/help/hoarding' },
+        ],
+      },
     ],
     specSpells: [
       {
@@ -709,6 +733,69 @@ export const classes: Record<Class, ClassData> = {
           { name: 'group teleport', level: 23, url: '/help/teleport-group-teleport' },
           { name: 'flame ring', level: 26, url: '/help/flame-ring' },
           { name: 'morph liquid', level: 30, url: '/help/morph-liquid' },
+        ],
+      },
+      {
+        id: Specs.GOD_MORGION,
+        spells: [
+          { name: 'summon plague', level: 15, url: '/help/summon-plague' },
+          { name: 'shroud', level: 17, url: '/help/shroud' },
+          { name: 'witherfist', level: 20, url: '/help/witherfist' },
+          { name: 'fatigue', level: 22, url: '/help/fatigue' },
+          { name: 'rot', level: 24, url: '/help/rot' },
+        ],
+      },
+      {
+        id: Specs.GOD_CHEMOSH,
+        spells: [
+          { name: 'summon', level: 15, url: '/help/summon' },
+          { name: 'shroud', level: 17, url: '/help/shroud' },
+          { name: 'create undead', level: 22, url: '/help/create-undead' },
+          { name: 'control undead', level: 23, url: '/help/control-undead' },
+          { name: 'undead drain', level: 23, url: '/help/undead-drain' },
+          { name: 'rip soul', level: 24, url: '/help/rip-soul' },
+          { name: 'black metamorphosis', level: 28, url: '/help/black-metamorphosis' },
+        ],
+      },
+      {
+        id: Specs.GOD_SARGONNAS,
+        spells: [
+          { name: 'resist fire', level: 9, url: '/help/resist-fire' },
+          { name: 'resist cold', level: 10, url: '/help/resist-cold' },
+          { name: 'summon', level: 15, url: '/help/summon' },
+          { name: 'demonfire fires of vengeance', level: 20, url: '/help/demonfire-fires-of-vengeance' },
+          { name: 'summon fire elemental', level: 25, url: '/help/summon-fire-elemental' },
+          { name: 'incarnation of fire', level: 27, url: '/help/incarnation-of-fire' },
+          { name: 'volcano', level: 32, url: '/help/volcano' },
+        ],
+      },
+      {
+        id: Specs.GOD_TAKHISIS,
+        spells: [
+          { name: 'resist fire', level: 9, url: '/help/resist-fire' },
+          { name: 'resist cold', level: 10, url: '/help/resist-cold' },
+          { name: 'gate', level: 11, url: '/help/gate' },
+          { name: 'resist lightning', level: 12, url: '/help/resist-lightning' },
+          { name: 'resist acid', level: 13, url: '/help/resist-acid' },
+          { name: 'cure mortal wounds', level: 15, url: '/help/cure-mortal-wounds' },
+          { name: 'shroud', level: 17, url: '/help/shroud' },
+          { name: 'dragonfire', level: 21, url: '/help/dragonfire' },
+          { name: 'group teleport', level: 23, url: '/help/teleport-group-teleport' },
+        ],
+      },
+      {
+        id: Specs.GOD_HIDDUKEL,
+        spells: [
+          { name: 'resist poison', level: 13, url: '/help/resist-poison' },
+          { name: 'curse of sloth', level: 15, url: '/help/curse-of-sloth' },
+          { name: 'cure mortal wounds', level: 15, url: '/help/cure-mortal-wounds' },
+          { name: 'summon', level: 15, url: '/help/summon' },
+          { name: 'shroud', level: 17, url: '/help/shroud' },
+          { name: 'illusionary aura', level: 18, url: '/help/illusionary-aura' },
+          { name: 'snake eyes', level: 19, url: '/help/snake-eyes' },
+          { name: 'golden shard', level: 19, url: '/help/golden-shard' },
+          { name: 'reverse transfer object', level: 20, url: '/help/reverse-transfer-object' },
+          { name: 'demonic strength', level: 27, url: '/help/demonic-strength' },
         ],
       },
     ],
