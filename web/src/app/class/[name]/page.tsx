@@ -94,6 +94,11 @@ export default async function ClassPage({
       }
     }
   }
+  
+  // If only one alignment is available, auto-select it
+  if (availableAlignments.length === 1 && !validSelectedAlignment) {
+    validSelectedAlignment = availableAlignments[0];
+  }
 
   const compatibleRaceNames = getCompatibleRacesForClass(cls.name);
   let compatibleRaces = compatibleRaceNames.map(raceName => getRace(raceName)).filter(Boolean);

@@ -1,6 +1,6 @@
 import React from 'react';
 import Link from 'next/link';
-import { Alignment } from '@/lib/enums';
+import { Alignment, getAllAlignments } from '@/lib/enums';
 
 interface AlignTogglerProps {
   availableAlignments: Alignment[];
@@ -17,6 +17,12 @@ export default function AlignToggler({
   preserveParams,
   className = '',
 }: AlignTogglerProps) {
+  const allAlignments = getAllAlignments();
+  const isSingleAlignment = availableAlignments.length === 1;
+  const singleAlignment = isSingleAlignment ? availableAlignments[0] : null;
+  // If only one alignment is available, force it to be selected
+  const effectiveSelectedAlignment = isSingleAlignment ? singleAlignment : selectedAlignment;
+  
   const createAlignmentUrl = (alignment: Alignment): string => {
     const params = new URLSearchParams();
     
@@ -34,11 +40,27 @@ export default function AlignToggler({
       });
     }
     
-    // If clicking the same alignment, deselect it (don't add query param)
+    const isAvailable = availableAlignments.includes(alignment);
+    const isSingleAvailable = isSingleAlignment && alignment === singleAlignment;
+    
+    // If unavailable, return current path (no query params)
+    if (!isAvailable) {
+      const query = params.toString();
+      return query ? `${currentPath}?${query}` : currentPath;
+    }
+    
+    // If single available alignment, return current path with preserved params only (don't add alignment param)
+    if (isSingleAvailable) {
+      const query = params.toString();
+      return query ? `${currentPath}?${query}` : currentPath;
+    }
+    
+    // For other available alignments, toggle behavior
     if (selectedAlignment !== alignment) {
-      // Otherwise select this alignment
+      // Select this alignment
       params.append('alignment', alignment);
     }
+    // If clicking the same alignment, deselect it (don't add query param)
     
     const query = params.toString();
     return query ? `${currentPath}?${query}` : currentPath;
@@ -54,23 +76,31 @@ export default function AlignToggler({
 
       <div className="space-y-3">
         <div className="grid grid-cols-3 gap-3">
-          {availableAlignments.map((alignment) => {
-            const isSelected = selectedAlignment === alignment;
+          {allAlignments.map((alignment) => {
+            const isAvailable = availableAlignments.includes(alignment);
+            const isSelected = effectiveSelectedAlignment === alignment;
+            const isSingleAvailable = isSingleAlignment && alignment === singleAlignment;
             const alignmentUrl = createAlignmentUrl(alignment);
 
+            // For unavailable or single available alignments, use a div instead of Link to prevent navigation
+            const Component = (!isAvailable || isSingleAvailable) ? 'div' : Link;
+            const href = (!isAvailable || isSingleAvailable) ? undefined : alignmentUrl;
+
             return (
-              <Link
+              <Component
                 key={alignment}
-                href={alignmentUrl}
-                scroll={false}
+                {...(Component === Link ? { href, scroll: false } : {})}
                 className={`
                   px-4 py-3 rounded-lg border-2 text-left transition-all duration-200 block select-none
                   ${
-                    isSelected
-                      ? 'border-primary bg-primary/10 text-primary font-medium'
-                      : 'border-border bg-background text-foreground hover:border-primary/50'
+                    !isAvailable
+                      ? 'border-border/50 bg-muted/30 text-muted-foreground/50 cursor-not-allowed opacity-60 pointer-events-none'
+                      : isSingleAvailable
+                      ? 'border-primary bg-primary/10 text-primary font-medium cursor-default'
+                      : isSelected
+                      ? 'border-primary bg-primary/10 text-primary font-medium cursor-pointer hover:bg-primary/15'
+                      : 'border-border bg-background text-foreground hover:border-primary/50 cursor-pointer hover:bg-muted/50'
                   }
-                  cursor-pointer hover:bg-muted/50
                 `}
               >
                 <div className="flex items-center justify-between">
@@ -91,7 +121,7 @@ export default function AlignToggler({
                     </svg>
                   )}
                 </div>
-              </Link>
+              </Component>
             );
           })}
         </div>
