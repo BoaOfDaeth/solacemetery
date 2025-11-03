@@ -1,11 +1,11 @@
 import React from 'react';
 import Link from 'next/link';
-import { FighterSpecialization } from '@/lib/enums';
+import { Specs } from '@/lib/enums';
 
 interface SpecTogglerProps {
-  availableSpecs: FighterSpecialization[];
+  availableSpecs: Specs[];
   maxSelections?: number;
-  selectedSpecs: FighterSpecialization[];
+  selectedSpecs: Specs[];
   currentPath: string;
   className?: string;
 }
@@ -19,7 +19,7 @@ export default function SpecToggler({
 }: SpecTogglerProps) {
   const canSelectMore = selectedSpecs.length < maxSelections;
 
-  const createSpecUrl = (spec: FighterSpecialization): string => {
+  const createSpecUrl = (spec: Specs): string => {
     const isSelected = selectedSpecs.includes(spec);
     const newSpecs = isSelected
       ? selectedSpecs.filter((s) => s !== spec)

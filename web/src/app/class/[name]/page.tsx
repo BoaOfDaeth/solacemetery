@@ -1,7 +1,7 @@
 import { notFound } from 'next/navigation';
 import { getClassBySlug, getAllClasses } from '@/lib/classes';
 import { getCompatibleRacesForClass, getRace } from '@/lib/races';
-import { FighterSpecialization, MagicMajor } from '@/lib/enums';
+import { Specs } from '@/lib/enums';
 import { Icon } from '@iconify/react';
 import ModernTable from '@/components/ModernTable';
 import ClassSkillsDisplay from '@/components/ClassSkillsDisplay';
@@ -46,19 +46,18 @@ export default async function ClassPage({
     ? [specParam]
     : [];
   
-  // Validate specs against valid FighterSpecialization values
-  const validSpecValues = Object.values(FighterSpecialization);
+  // Validate specs against valid Specs values
+  const validSpecValues = Object.values(Specs);
   const selectedSpecs = rawSpecs
-    .filter((spec): spec is FighterSpecialization => 
-      validSpecValues.includes(spec as FighterSpecialization)
+    .filter((spec): spec is Specs => 
+      validSpecValues.includes(spec as Specs)
     )
     .slice(0, cls.specChoices || 3); // Limit to max allowed selections
 
   // Parse selected magic major from URL params and validate it
   const magicMajorParam = search.magicmajor;
-  const validMagicMajorValues = Object.values(MagicMajor);
-  const selectedMagicMajor = magicMajorParam && validMagicMajorValues.includes(magicMajorParam as MagicMajor)
-    ? (magicMajorParam as MagicMajor)
+  const selectedMagicMajor = magicMajorParam && validSpecValues.includes(magicMajorParam as Specs)
+    ? (magicMajorParam as Specs)
     : null;
 
   const compatibleRaceNames = getCompatibleRacesForClass(cls.name);
@@ -107,7 +106,8 @@ export default async function ClassPage({
           consumables={cls.consumables}
           basicSkills={cls.basicSkills}
           basicSpells={cls.basicSpells}
-          specs={cls.specs}
+          specSkills={cls.specSkills}
+          specSpells={cls.specSpells}
           specChoices={cls.specChoices}
           specAllowed={cls.specAllowed}
           selectedSpecs={selectedSpecs}

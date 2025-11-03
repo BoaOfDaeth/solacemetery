@@ -1,4 +1,4 @@
-import { Alignment, Race, Class, FighterSpecialization, MagicMajor } from './enums';
+import { Alignment, Race, Class, Specs } from './enums';
 
 // Character stats interface
 export interface CharacterStats {
@@ -43,10 +43,16 @@ export interface Skill {
   url?: string; // URL to corresponding help article (optional, can be filled manually)
 }
 
-// Spec interface
+// Spec interface for skills
 export interface Spec {
-  id: FighterSpecialization;
+  id: Specs;
   skills: Skill[];
+}
+
+// Spec interface for spells
+export interface SpecSpell {
+  id: Specs;
+  spells: Skill[];
 }
 
 // Class interface
@@ -63,8 +69,9 @@ export interface ClassData {
   consumables?: Skill[]; // Consumable item skills (level 1)
   basicSkills?: Skill[]; // Optional basic skills for the class
   basicSpells?: Skill[]; // Optional basic spells for the class
-  specs?: Spec[];
+  specSkills?: Spec[]; // Skills for each specialization
+  specSpells?: SpecSpell[]; // Spells for each specialization
   specChoices?: number; // Number of specializations that can be selected
-  specAllowed?: FighterSpecialization[]; // Available specializations for selection
-  magicMajorChoices?: MagicMajor[]; // Available magic major choices for the class (e.g., transmuters)
+  specAllowed?: Specs[]; // Available specializations for selection
+  magicMajorChoices?: Specs[]; // Available magic major choices for the class (e.g., transmuters)
 }

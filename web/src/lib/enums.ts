@@ -39,7 +39,8 @@ export enum Class {
   OUTCAST = 'Outcast',
 }
 
-export enum FighterSpecialization {
+export enum Specs {
+  // Fighter specializations
   SWORD = 'Sword',
   DAGGER = 'Dagger',
   WHIP_FLAIL = 'Whip/Flail',
@@ -50,9 +51,7 @@ export enum FighterSpecialization {
   HAND_TO_HAND = 'Hand to Hand',
   RANGED = 'Ranged',
   SHIELD = 'Shield',
-}
-
-export enum MagicMajor {
+  // Magic majors
   ABJURATION = 'Abjuration',
   ALTERATION = 'Alteration',
 }

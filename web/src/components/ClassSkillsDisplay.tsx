@@ -3,20 +3,21 @@ import SpecToggler from './SpecToggler';
 import MagicMajorToggler from './MagicMajorToggler';
 // import SkillTable from './SkillTable';
 import SkillChart from './SkillChart';
-import { Skill, Spec } from '@/lib/types';
-import { FighterSpecialization, MagicMajor } from '@/lib/enums';
+import { Skill, Spec, SpecSpell } from '@/lib/types';
+import { Specs } from '@/lib/enums';
 
 interface ClassSkillsDisplayProps {
   weapons?: Skill[];
   consumables?: Skill[];
   basicSkills?: Skill[];
   basicSpells?: Skill[];
-  specs?: Spec[];
+  specSkills?: Spec[];
+  specSpells?: SpecSpell[];
   specChoices?: number;
-  specAllowed?: FighterSpecialization[];
-  selectedSpecs: FighterSpecialization[];
-  magicMajorChoices?: MagicMajor[];
-  selectedMagicMajor?: MagicMajor | null;
+  specAllowed?: Specs[];
+  selectedSpecs: Specs[];
+  magicMajorChoices?: Specs[];
+  selectedMagicMajor?: Specs | null;
   currentPath: string;
 }
 
@@ -25,7 +26,8 @@ export default function ClassSkillsDisplay({
   consumables = [],
   basicSkills = [],
   basicSpells = [],
-  specs = [],
+  specSkills = [],
+  specSpells = [],
   specChoices,
   specAllowed,
   selectedSpecs,
@@ -35,8 +37,14 @@ export default function ClassSkillsDisplay({
 }: ClassSkillsDisplayProps) {
   // Get skills from selected specializations
   const selectedSpecSkills = selectedSpecs.flatMap((specId) => {
-    const spec = specs.find((s) => s.id === specId);
+    const spec = specSkills.find((s) => s.id === specId);
     return spec?.skills || [];
+  });
+
+  // Get spells from selected specializations
+  const selectedSpecSpells = selectedSpecs.flatMap((specId) => {
+    const spec = specSpells.find((s) => s.id === specId);
+    return spec?.spells || [];
   });
 
   // Merge basic skills with selected spec skills, marking spec skills with a flag
@@ -45,10 +53,16 @@ export default function ClassSkillsDisplay({
     ...selectedSpecSkills.map((skill) => ({ ...skill, isSpec: true })),
   ];
 
+  // Merge basic spells with selected spec spells, marking spec spells with a flag
+  const allSpells: (Skill & { isSpec?: boolean })[] = [
+    ...basicSpells.map((spell) => ({ ...spell, isSpec: false })),
+    ...selectedSpecSpells.map((spell) => ({ ...spell, isSpec: true })),
+  ];
+
   return (
     <>
       {/* Weapons, Consumables, Specializations, Skills and Spells - side by side on desktop */}
-      {(weapons.length > 0 || consumables.length > 0 || (magicMajorChoices && magicMajorChoices.length > 0) || (specChoices && specChoices > 0 && specAllowed && specAllowed.length > 0) || allSkills.length > 0 || basicSpells.length > 0) ? (
+      {(weapons.length > 0 || consumables.length > 0 || (magicMajorChoices && magicMajorChoices.length > 0) || (specChoices && specChoices > 0 && specAllowed && specAllowed.length > 0) || allSkills.length > 0 || allSpells.length > 0) ? (
         <div className="mt-2 lg:mt-4">
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
             {/* Left Column: Weapons, Consumables, Specializations */}
@@ -88,8 +102,8 @@ export default function ClassSkillsDisplay({
               {allSkills.length > 0 && (
                 <SkillChart title="Skills" skills={allSkills} />
               )}
-              {basicSpells.length > 0 && (
-                <SkillChart title="Spells" skills={basicSpells} />
+              {allSpells.length > 0 && (
+                <SkillChart title="Spells" skills={allSpells} />
               )}
             </div>
           </div>

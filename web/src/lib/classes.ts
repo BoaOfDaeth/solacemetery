@@ -1,5 +1,5 @@
 import { ClassData } from './types';
-import { Class, Alignment, FighterSpecialization, MagicMajor } from './enums';
+import { Class, Alignment, Specs } from './enums';
 
 export const classes: Record<Class, ClassData> = {
   [Class.FIGHTER]: {
@@ -67,20 +67,20 @@ export const classes: Record<Class, ClassData> = {
     ],
     specChoices: 3,
     specAllowed: [
-      FighterSpecialization.SWORD,
-      FighterSpecialization.DAGGER,
-      FighterSpecialization.WHIP_FLAIL,
-      FighterSpecialization.MACE,
-      FighterSpecialization.AXE,
-      FighterSpecialization.STAFF,
-      FighterSpecialization.SPEAR,
-      FighterSpecialization.HAND_TO_HAND,
-      FighterSpecialization.RANGED,
-      FighterSpecialization.SHIELD,
+      Specs.SWORD,
+      Specs.DAGGER,
+      Specs.WHIP_FLAIL,
+      Specs.MACE,
+      Specs.AXE,
+      Specs.STAFF,
+      Specs.SPEAR,
+      Specs.HAND_TO_HAND,
+      Specs.RANGED,
+      Specs.SHIELD,
     ],
-    specs: [
+    specSkills: [
       {
-        id: FighterSpecialization.SWORD,
+        id: Specs.SWORD,
         skills: [
           { name: 'flurry', level: 29, url: '/help/flurry' },
           { name: 'flourentine', level: 18, url: '/help/flourentine' },
@@ -89,7 +89,7 @@ export const classes: Record<Class, ClassData> = {
         ],
       },
       {
-        id: FighterSpecialization.DAGGER,
+        id: Specs.DAGGER,
         skills: [
           { name: 'undercut', level: 19, url: '/help/undercut' },
           { name: 'bleed', level: 14, url: '/help/bleed' },
@@ -97,7 +97,7 @@ export const classes: Record<Class, ClassData> = {
         ],
       },
       {
-        id: FighterSpecialization.WHIP_FLAIL,
+        id: Specs.WHIP_FLAIL,
         skills: [
           { name: 'flog', level: 16, url: '/help/flog-flogging' },
           { name: 'strip weapon', level: 16, url: '/help/strip-weapon' },
@@ -108,7 +108,7 @@ export const classes: Record<Class, ClassData> = {
         ],
       },
       {
-        id: FighterSpecialization.MACE,
+        id: Specs.MACE,
         skills: [
           { name: 'boneshatter', level: 17, url: '/help/boneshatter' },
           { name: 'backhand', level: 15, url: '/help/backhand' },
@@ -116,7 +116,7 @@ export const classes: Record<Class, ClassData> = {
         ],
       },
       {
-        id: FighterSpecialization.AXE,
+        id: Specs.AXE,
         skills: [
           { name: 'pincer', level: 21, url: '/help/pincer' },
           { name: 'cleave', level: 26, url: '/help/cleave' },
@@ -127,7 +127,7 @@ export const classes: Record<Class, ClassData> = {
         ],
       },
       {
-        id: FighterSpecialization.STAFF,
+        id: Specs.STAFF,
         skills: [
           { name: 'overhead', level: 20, url: '/help/overhead' },
           { name: 'pugil', level: 10, url: '/help/pugil' },
@@ -136,7 +136,7 @@ export const classes: Record<Class, ClassData> = {
         ],
       },
       {
-        id: FighterSpecialization.SPEAR,
+        id: Specs.SPEAR,
         skills: [
           { name: 'charge set', level: 22, url: '/help/charge-set' },
           { name: 'impale', level: 26, url: '/help/impale' },
@@ -146,7 +146,7 @@ export const classes: Record<Class, ClassData> = {
         ],
       },
       {
-        id: FighterSpecialization.HAND_TO_HAND,
+        id: Specs.HAND_TO_HAND,
         skills: [
           { name: 'iron strike', level: 11, url: '/help/iron-strike-ironstrike' },
           { name: 'throw', level: 16, url: '/help/throw' },
@@ -157,7 +157,7 @@ export const classes: Record<Class, ClassData> = {
         ],
       },
       {
-        id: FighterSpecialization.RANGED,
+        id: Specs.RANGED,
         skills: [
           { name: 'accuracy', level: 11, url: '/help/accuracy' },
           { name: 'quick shot', level: 15, url: '/help/quick-shot-quickshot' },
@@ -166,7 +166,7 @@ export const classes: Record<Class, ClassData> = {
         ],
       },
       {
-        id: FighterSpecialization.SHIELD,
+        id: Specs.SHIELD,
         skills: [
           { name: 'shield mastery', level: 24, url: '/help/shield-mastery' },
           { name: 'shield bash', level: 21, url: '/help/shield-bash' },
@@ -255,16 +255,16 @@ export const classes: Record<Class, ClassData> = {
     ],
     specChoices: 2,
     specAllowed: [
-      FighterSpecialization.WHIP_FLAIL,
-      FighterSpecialization.STAFF,
-      FighterSpecialization.RANGED,
-      FighterSpecialization.AXE,
-      FighterSpecialization.HAND_TO_HAND,
-      FighterSpecialization.SPEAR,
+      Specs.WHIP_FLAIL,
+      Specs.STAFF,
+      Specs.RANGED,
+      Specs.AXE,
+      Specs.HAND_TO_HAND,
+      Specs.SPEAR,
     ],
-    specs: [
+    specSkills: [
       {
-        id: FighterSpecialization.STAFF,
+        id: Specs.STAFF,
         skills: [
           { name: 'overhead', level: 20, url: '/help/overhead' },
           { name: 'pugil', level: 10, url: '/help/pugil' },
@@ -273,7 +273,7 @@ export const classes: Record<Class, ClassData> = {
         ],
       },
       {
-        id: FighterSpecialization.RANGED,
+        id: Specs.RANGED,
         skills: [
           { name: 'accuracy', level: 11, url: '/help/accuracy' },
           { name: 'quick shot', level: 15, url: '/help/quick-shot-quickshot' },
@@ -282,7 +282,7 @@ export const classes: Record<Class, ClassData> = {
         ],
       },
       {
-        id: FighterSpecialization.AXE,
+        id: Specs.AXE,
         skills: [
           { name: 'pincer', level: 21, url: '/help/pincer' },
           { name: 'cleave', level: 26, url: '/help/cleave' },
@@ -293,7 +293,7 @@ export const classes: Record<Class, ClassData> = {
         ],
       },
       {
-        id: FighterSpecialization.SPEAR,
+        id: Specs.SPEAR,
         skills: [
           { name: 'charge set', level: 22, url: '/help/charge-set' },
           { name: 'impale', level: 26, url: '/help/impale' },
@@ -303,7 +303,7 @@ export const classes: Record<Class, ClassData> = {
         ],
       },
       {
-        id: FighterSpecialization.WHIP_FLAIL,
+        id: Specs.WHIP_FLAIL,
         skills: [
           { name: 'flog', level: 16, url: '/help/flog-flogging' },
           { name: 'strip weapon', level: 16, url: '/help/strip-weapon' },
@@ -314,7 +314,7 @@ export const classes: Record<Class, ClassData> = {
         ],
       },
       {
-        id: FighterSpecialization.HAND_TO_HAND,
+        id: Specs.HAND_TO_HAND,
         skills: [
           { name: 'iron strike', level: 11, url: '/help/iron-strike-ironstrike' },
           { name: 'throw', level: 16, url: '/help/throw' },
@@ -444,9 +444,35 @@ export const classes: Record<Class, ClassData> = {
       { name: 'duo dimension', level: 24, url: '/help/duo-dimension-duo' },
       { name: 'mana shield', level: 24, url: '/help/mana-shield' },
     ],
+    specSpells: [
+      {
+        id: Specs.ABJURATION,
+        spells: [
+          { name: 'spellturning', level: 29, url: '/help/spellturning' },
+          { name: 'paralysis', level: 26, url: '/help/paralysis' },
+          { name: 'displacement', level: 25, url: '/help/displacement' },
+          { name: 'block teleport', level: 18, url: '/help/block-teleport' },
+          { name: 'spiderhands', level: 15, url: '/help/spiderhands' },
+          { name: 'astral spell', level: 27, url: '/help/astral-spell' },
+          { name: 'harden skin', level: 17, url: '/help/harden-skin' },
+          { name: 'mana shield', level: 24, url: '/help/mana-shield' },
+        ],
+      },
+    ],
+    specSkills: [
+      {
+        id: Specs.ABJURATION,
+        skills: [
+          { name: 'speed control', level: 21, url: '/help/speed-control' },
+          { name: 'flight control', level: 18, url: '/help/flight-control' },
+          { name: 'skin control', level: 20, url: '/help/skin-control' },
+          { name: 'phase control', level: 22, url: '/help/phase-control' },
+        ],
+      },
+    ],
     magicMajorChoices: [
-      MagicMajor.ABJURATION,
-      MagicMajor.ALTERATION,
+      Specs.ABJURATION,
+      Specs.ALTERATION,
     ],
   },
 

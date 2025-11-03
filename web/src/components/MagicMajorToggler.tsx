@@ -1,21 +1,21 @@
 import React from 'react';
 import Link from 'next/link';
-import { MagicMajor } from '@/lib/enums';
+import { Specs } from '@/lib/enums';
 
-interface MagicMajorTogglerProps {
-  availableMajors: MagicMajor[];
-  selectedMajor?: MagicMajor | null;
+interface SpecsTogglerProps {
+  availableMajors: Specs[];
+  selectedMajor?: Specs | null;
   currentPath: string;
   className?: string;
 }
 
-export default function MagicMajorToggler({
+export default function SpecsToggler({
   availableMajors,
   selectedMajor,
   currentPath,
   className = '',
-}: MagicMajorTogglerProps) {
-  const createMajorUrl = (major: MagicMajor): string => {
+}: SpecsTogglerProps) {
+  const createMajorUrl = (major: Specs): string => {
     const params = new URLSearchParams();
     
     // If clicking the same major, deselect it (don't add magicmajor param)
