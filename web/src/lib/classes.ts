@@ -555,6 +555,12 @@ export const classes: Record<Class, ClassData> = {
           { name: 'enhanced damage', level: 15, url: '/help/enhanced-damage' },
         ],
       },
+      {
+        id: Specs.GOD_PALADINE,
+        skills: [
+          { name: 'enhanced damage', level: 15, url: '/help/enhanced-damage' },
+        ],
+      },
     ],
     specSpells: [
       {
@@ -563,6 +569,17 @@ export const classes: Record<Class, ClassData> = {
           { name: 'summon', level: 15, url: '/help/summon' },
           { name: 'hammerfist', level: 19, url: '/help/hammerfist' },
           { name: 'blessed reversal', level: 26, url: '/help/blessed-reversal' },
+          { name: 'foresight', level: 27, url: '/help/foresight' },
+          { name: 'call deva', level: 30, url: '/help/call-deva' },
+        ],
+      },
+      {
+        id: Specs.GOD_PALADINE,
+        spells: [
+          { name: 'summon', level: 15, url: '/help/summon' },
+          { name: 'hammerfist', level: 19, url: '/help/hammerfist' },
+          { name: 'repel evil', level: 22, url: '/help/repel-evil' },
+          { name: 'lifeline', level: 26, url: '/help/lifeline' },
           { name: 'foresight', level: 27, url: '/help/foresight' },
           { name: 'call deva', level: 30, url: '/help/call-deva' },
         ],
