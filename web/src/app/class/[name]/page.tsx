@@ -25,6 +25,7 @@ interface ClassPageSearchParams {
   magicmajor?: string;
   wayfollow?: string;
   kinship?: string;
+  worship?: string;
   alignment?: string;
 }
 
@@ -76,6 +77,12 @@ export default async function ClassPage({
     ? (kinshipParam as Specs)
     : null;
 
+  // Parse selected worship from URL params and validate it
+  const worshipParam = search.worship;
+  const selectedWorship = worshipParam && validSpecValues.includes(worshipParam as Specs)
+    ? (worshipParam as Specs)
+    : null;
+
   // Parse selected alignment from URL params and validate it
   const alignmentParam = search.alignment;
   const validAlignmentValues = Object.values(Alignment);
@@ -83,7 +90,7 @@ export default async function ClassPage({
     ? (alignmentParam as Alignment)
     : null;
 
-  // Determine available alignments based on selected wayfollow
+  // Determine available alignments based on selected wayfollow or worship
   let availableAlignments = cls.allowedAlignments;
   let validSelectedAlignment = selectedAlignment;
   if (selectedWayfollow && cls.wayfollowChoices) {
@@ -96,6 +103,21 @@ export default async function ClassPage({
         selectedWayfollowData.allowedAlignments.includes(alignment)
       );
       // Clear selected alignment if it's not allowed by the selected wayfollow
+      if (validSelectedAlignment && !availableAlignments.includes(validSelectedAlignment)) {
+        validSelectedAlignment = null;
+      }
+    }
+  }
+  if (selectedWorship && cls.worshipChoices) {
+    const selectedWorshipData = cls.worshipChoices.find(
+      (worship) => worship.spec === selectedWorship
+    );
+    if (selectedWorshipData) {
+      // Intersect class allowed alignments with worship allowed alignments
+      availableAlignments = cls.allowedAlignments.filter((alignment) =>
+        selectedWorshipData.allowedAlignments.includes(alignment)
+      );
+      // Clear selected alignment if it's not allowed by the selected worship
       if (validSelectedAlignment && !availableAlignments.includes(validSelectedAlignment)) {
         validSelectedAlignment = null;
       }
@@ -174,6 +196,8 @@ export default async function ClassPage({
           selectedWayfollow={selectedWayfollow}
           kinshipChoices={cls.kinshipChoices}
           selectedKinship={selectedKinship}
+          worshipChoices={cls.worshipChoices}
+          selectedWorship={selectedWorship}
           alignToggler={
             <AlignToggler
               availableAlignments={availableAlignments}
@@ -183,6 +207,7 @@ export default async function ClassPage({
                 ...(search.magicmajor ? { magicmajor: search.magicmajor } : {}),
                 ...(search.wayfollow ? { wayfollow: search.wayfollow } : {}),
                 ...(search.kinship ? { kinship: search.kinship } : {}),
+                ...(search.worship ? { worship: search.worship } : {}),
               }}
               currentPath={`/class/${cls.slug}`}
             />
@@ -262,7 +287,7 @@ export async function generateMetadata({
   // Check if any query parameters are present
   const hasQueryParams = Boolean(
     search.spec || search.magicmajor || search.wayfollow || 
-    search.kinship || search.alignment
+    search.kinship || search.worship || search.alignment
   );
   
   return {

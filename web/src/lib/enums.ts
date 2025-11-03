@@ -63,6 +63,11 @@ export enum Specs {
   KINSHIP_WOLF = 'Greater Wolf',
   KINSHIP_BOAR = 'Greater Boar',
   KINSHIP_ORANGUTAN = 'Powerful Orangutan',
+  // Cleric gods (Good)
+  GOD_KIRI_JOLITH = 'Kiri-Jolith',
+  GOD_PALADINE = 'Paladine',
+  GOD_MISHAKAL = 'Mishakal',
+  GOD_MAJERE = 'Majere',
 }
 
 // Helper functions to get all values

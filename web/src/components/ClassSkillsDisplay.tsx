@@ -22,6 +22,8 @@ interface ClassSkillsDisplayProps {
   selectedWayfollow?: Specs | null;
   kinshipChoices?: Array<{ spec: Specs; desc: string[] }>;
   selectedKinship?: Specs | null;
+  worshipChoices?: Array<{ spec: Specs; desc: string[]; allowedAlignments: Alignment[] }>;
+  selectedWorship?: Specs | null;
   alignToggler?: React.ReactNode; // AlignToggler component to display
   currentPath: string;
 }
@@ -42,6 +44,8 @@ export default function ClassSkillsDisplay({
   selectedWayfollow,
   kinshipChoices,
   selectedKinship,
+  worshipChoices,
+  selectedWorship,
   alignToggler,
   currentPath,
 }: ClassSkillsDisplayProps) {
@@ -108,7 +112,7 @@ export default function ClassSkillsDisplay({
   return (
     <>
       {/* Weapons, Consumables, Specializations, Skills and Spells - side by side on desktop */}
-      {(weapons.length > 0 || consumables.length > 0 || (magicMajorChoices && magicMajorChoices.length > 0) || (wayfollowChoices && wayfollowChoices.length > 0) || (kinshipChoices && kinshipChoices.length > 0) || (specChoices && specChoices > 0 && specAllowed && specAllowed.length > 0) || allSkills.length > 0 || allSpells.length > 0 || alignToggler) ? (
+      {(weapons.length > 0 || consumables.length > 0 || (magicMajorChoices && magicMajorChoices.length > 0) || (wayfollowChoices && wayfollowChoices.length > 0) || (kinshipChoices && kinshipChoices.length > 0) || (worshipChoices && worshipChoices.length > 0) || (specChoices && specChoices > 0 && specAllowed && specAllowed.length > 0) || allSkills.length > 0 || allSpells.length > 0 || alignToggler) ? (
         <div className="mt-2 lg:mt-4">
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
             {/* Left Column: Weapons, Consumables, Specializations, Alignments */}
@@ -152,6 +156,17 @@ export default function ClassSkillsDisplay({
                   selectedSpec={selectedKinship}
                   queryParam="kinship"
                   title="Kinship"
+                  currentPath={currentPath}
+                />
+              )}
+              
+              {/* Single spec selection (e.g., Worship) */}
+              {worshipChoices && worshipChoices.length > 0 && (
+                <SpecTogglerSingle
+                  availableSpecs={worshipChoices}
+                  selectedSpec={selectedWorship}
+                  queryParam="worship"
+                  title="Worship"
                   currentPath={currentPath}
                 />
               )}
