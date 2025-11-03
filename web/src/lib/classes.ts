@@ -428,14 +428,67 @@ export const classes: Record<Class, ClassData> = {
       { name: 'detect invis', level: 10, url: '/help/detect-invisibility' },
       { name: 'locate object', level: 17, url: '/help/locate-object' },
     ],
+    specSpells: [
+      {
+        id: Specs.WAY_SHADOWS,
+        spells: [
+          { name: 'word of recall', level: 21, url: '/help/word-of-recall' },
+        ],
+      },
+    ],
+    specSkills: [
+      {
+        id: Specs.WAY_SHADOWS,
+        skills: [
+          { name: 'style python', level: 15, url: '/help/styles' },
+          { name: 'style viper', level: 15, url: '/help/styles' },
+          { name: 'kidnap', level: 16, url: '/help/kidnap' },
+          { name: 'stalk', level: 23, url: '/help/stalk' },
+          { name: 'viper strike', level: 23, url: '/help/viper-strike' },
+          { name: 'latch attack', level: 24, url: '/help/latch-attack' },
+          { name: 'nightfist', level: 24, url: '/help/nightfist' },
+          { name: 'sting of the manticore', level: 29, url: '/help/sting-of-the-manticore' },
+        ],
+      },
+      {
+        id: Specs.WAY_SEASONS,
+        skills: [
+          { name: 'style wyvern', level: 15, url: '/help/styles' },
+          { name: 'style python', level: 15, url: '/help/styles' },
+          { name: 'calm mind', level: 20, url: '/help/calm-mind' },
+          { name: 'sweep kick', level: 21, url: '/help/sweep-kick' },
+          { name: 'weapon turn', level: 22, url: '/help/weapon-turn' },
+          { name: 'perception', level: 22, url: '/help/perception' },
+          { name: 'blood of winter ice', level: 23, url: '/help/blood-of-winter-ice' },
+          { name: 'latch attack', level: 24, url: '/help/latch-attack' },
+          { name: 'blood of summer fire', level: 25, url: '/help/blood-of-summer-fire' },
+          { name: 'fortitude of spring', level: 31, url: '/help/fortitude-of-spring' },
+        ],
+      },
+      {
+        id: Specs.WAY_BEASTS,
+        skills: [
+          { name: 'razorspine', level: 15, url: '/help/razorspine' },
+          { name: 'style dragon', level: 15, url: '/help/styles' },
+          { name: 'style wyvern', level: 15, url: '/help/styles' },
+          { name: 'eagle eye', level: 18, url: '/help/eagle-eye' },
+          { name: 'sweep kick', level: 21, url: '/help/sweep-kick' },
+          { name: 'dash', level: 21, url: '/help/dash' },
+          { name: 'weapon turn', level: 22, url: '/help/weapon-turn' },
+          { name: 'cleanse', level: 22, url: '/help/cleanse' },
+          { name: 'tiger claw', level: 23, url: '/help/tiger-claw' },
+          { name: 'dragon blood', level: 24, url: '/help/dragon-blood' },
+          { name: 'rage of the wolverine', level: 25, url: '/help/rage-of-the-wolverine' },
+          { name: 'dragon punch', level: 27, url: '/help/dragon-punch' },
+        ],
+      },
+    ],
     wayfollowChoices: [
       {
         spec: Specs.WAY_SHADOWS,
         desc: [
           'Silent, unseen killing and quiet extraction',
           'Expert in killing on their own terms',
-          'Gain Viper, Python and Tiger styles',
-          'Always evil alignment',
         ],
         allowedAlignments: [Alignment.EVIL],
       },
@@ -444,8 +497,6 @@ export const classes: Record<Class, ClassData> = {
         desc: [
           'Sudden brute force and speed',
           'Train amongst animals of the wild',
-          'Gain Dragon, Wyvern and Tiger styles',
-          'Raw power and strength',
         ],
         allowedAlignments: [Alignment.GOOD, Alignment.EVIL],
       },
@@ -454,8 +505,6 @@ export const classes: Record<Class, ClassData> = {
         desc: [
           'Path of endurance and dedication',
           'Mind and soul with body to overcome adversity',
-          'Gain Wyvern, Tiger, and Python styles',
-          'Specialized in long-term engagement',
         ],
         allowedAlignments: [Alignment.GOOD],
       },
