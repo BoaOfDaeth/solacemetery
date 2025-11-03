@@ -561,6 +561,12 @@ export const classes: Record<Class, ClassData> = {
           { name: 'enhanced damage', level: 15, url: '/help/enhanced-damage' },
         ],
       },
+      {
+        id: Specs.GOD_MISHAKAL,
+        skills: [
+          { name: 'healing mastery', level: 32, url: '/help/healing-mastery' },
+        ],
+      },
     ],
     specSpells: [
       {
@@ -582,6 +588,27 @@ export const classes: Record<Class, ClassData> = {
           { name: 'lifeline', level: 26, url: '/help/lifeline' },
           { name: 'foresight', level: 27, url: '/help/foresight' },
           { name: 'call deva', level: 30, url: '/help/call-deva' },
+        ],
+      },
+      {
+        id: Specs.GOD_MISHAKAL,
+        spells: [
+          { name: 'gate', level: 11, url: '/help/gate' },
+          { name: 'resist lightning', level: 12, url: '/help/resist-lightning' },
+          { name: 'stoneskin', level: 17, url: '/help/ironskin-stoneskin' },
+          { name: 'crown of archons', level: 18, url: '/help/crown-of-archons' },
+          { name: 'resist paralysis', level: 18, url: '/help/resist-paralysis' },
+          { name: 'redemption', level: 20, url: '/help/redemption' },
+          { name: 'resist undead', level: 21, url: '/help/resist-undead' },
+          { name: 'imbue regeneration', level: 22, url: '/help/imbue-regeneration' },
+          { name: 'repel evil', level: 22, url: '/help/repel-evil' },
+          { name: 'group teleport', level: 23, url: '/help/teleport-group-teleport' },
+          { name: 'heal', level: 24, url: '/help/heal' },
+          { name: 'healing sleep', level: 24, url: '/help/healing-sleep' },
+          { name: 'mass healing', level: 25, url: '/help/mass-healing' },
+          { name: 'safety', level: 26, url: '/help/safety' },
+          { name: 'utter heal', level: 30, url: '/help/utter-heal' },
+          { name: 'rejuvenation chamber', level: 31, url: '/help/rejuvenation-chamber' },
         ],
       },
     ],
