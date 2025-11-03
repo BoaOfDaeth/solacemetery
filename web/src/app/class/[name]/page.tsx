@@ -106,14 +106,17 @@ export default async function ClassPage({
   }
 
   // Prepare compatible races data for table
-  const racesData = compatibleRaces.map(race => ({
-    name: race!.name,
-    title: race!.title,
-    slug: race!.slug,
-    description: race!.description,
-    xpPenalty: race!.xpPenalty === 0 ? 'No penalty' : `${race!.xpPenalty}%`,
-    alignments: race!.allowedAlignments.join(', '),
-  }));
+  const racesData = compatibleRaces.map(race => {
+    const cumulativeXpPenalty = race!.xpPenalty + cls.xpPenalty;
+    return {
+      name: race!.name,
+      title: race!.title,
+      slug: race!.slug,
+      description: race!.description,
+      xpPenalty: cumulativeXpPenalty === 0 ? 'No penalty' : `${cumulativeXpPenalty}%`,
+      alignments: race!.allowedAlignments.join(', '),
+    };
+  });
 
   return (
     <div className="bg-background">
@@ -157,6 +160,18 @@ export default async function ClassPage({
           selectedMagicMajor={selectedMagicMajor}
           wayfollowChoices={cls.wayfollowChoices}
           selectedWayfollow={selectedWayfollow}
+          alignToggler={
+            <AlignToggler
+              availableAlignments={availableAlignments}
+              selectedAlignment={validSelectedAlignment}
+              preserveParams={{
+                ...(search.spec ? { spec: search.spec } : {}),
+                ...(search.magicmajor ? { magicmajor: search.magicmajor } : {}),
+                ...(search.wayfollow ? { wayfollow: search.wayfollow } : {}),
+              }}
+              currentPath={`/class/${cls.slug}`}
+            />
+          }
           currentPath={`/class/${cls.slug}`}
         />
 
@@ -175,32 +190,9 @@ export default async function ClassPage({
           </div>
         )}
 
-        {/* Class Information */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-2 lg:gap-4 mb-2 lg:mb-4 mt-2 lg:mt-4">
-          <AlignToggler
-            availableAlignments={availableAlignments}
-            selectedAlignment={validSelectedAlignment}
-            preserveParams={{
-              ...(search.spec ? { spec: search.spec } : {}),
-              ...(search.magicmajor ? { magicmajor: search.magicmajor } : {}),
-              ...(search.wayfollow ? { wayfollow: search.wayfollow } : {}),
-            }}
-            currentPath={`/class/${cls.slug}`}
-          />
-          
-          <div className="bg-card border border-border rounded-xl shadow-sm p-4 sm:p-6">
-            <h3 className="text-lg font-semibold text-foreground mb-3 flex items-center">
-              <Icon icon="game-icons:fast-arrow" className="w-5 h-5 mr-2 text-primary" />
-              Experience Penalty
-            </h3>
-            <p className="text-muted-foreground text-lg">
-              {cls.xpPenalty === 0 ? 'No penalty' : `${cls.xpPenalty}% penalty`}
-            </p>
-          </div>
-        </div>
-
         {/* Compatible Races */}
-        <ModernTable
+        <div className="mt-2 lg:mt-4 mb-2 lg:mb-4">
+          <ModernTable
           title="Compatible Races"
           columns={[
             { key: 'name', label: 'Race' },
@@ -229,7 +221,8 @@ export default async function ClassPage({
             }
             return value;
           }}
-        />
+          />
+        </div>
       </div>
     </div>
   );

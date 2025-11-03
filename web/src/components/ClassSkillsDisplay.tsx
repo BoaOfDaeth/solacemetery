@@ -20,6 +20,7 @@ interface ClassSkillsDisplayProps {
   selectedMagicMajor?: Specs | null;
   wayfollowChoices?: Array<{ spec: Specs; desc: string[]; allowedAlignments: Alignment[] }>;
   selectedWayfollow?: Specs | null;
+  alignToggler?: React.ReactNode; // AlignToggler component to display
   currentPath: string;
 }
 
@@ -37,6 +38,7 @@ export default function ClassSkillsDisplay({
   selectedMagicMajor,
   wayfollowChoices,
   selectedWayfollow,
+  alignToggler,
   currentPath,
 }: ClassSkillsDisplayProps) {
   // Get skills from selected specializations (fighter specs)
@@ -90,10 +92,10 @@ export default function ClassSkillsDisplay({
   return (
     <>
       {/* Weapons, Consumables, Specializations, Skills and Spells - side by side on desktop */}
-      {(weapons.length > 0 || consumables.length > 0 || (magicMajorChoices && magicMajorChoices.length > 0) || (wayfollowChoices && wayfollowChoices.length > 0) || (specChoices && specChoices > 0 && specAllowed && specAllowed.length > 0) || allSkills.length > 0 || allSpells.length > 0) ? (
+      {(weapons.length > 0 || consumables.length > 0 || (magicMajorChoices && magicMajorChoices.length > 0) || (wayfollowChoices && wayfollowChoices.length > 0) || (specChoices && specChoices > 0 && specAllowed && specAllowed.length > 0) || allSkills.length > 0 || allSpells.length > 0 || alignToggler) ? (
         <div className="mt-2 lg:mt-4">
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
-            {/* Left Column: Weapons, Consumables, Specializations */}
+            {/* Left Column: Weapons, Consumables, Specializations, Alignments */}
             <div className="lg:col-span-1 flex flex-col gap-4">
               {/* Weapons */}
               {weapons.length > 0 && (
@@ -136,6 +138,9 @@ export default function ClassSkillsDisplay({
                   currentPath={currentPath}
                 />
               )}
+              
+              {/* Alignment Toggler */}
+              {alignToggler}
             </div>
             
             {/* Right Column: Skills and Spells Charts */}
