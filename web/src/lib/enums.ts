@@ -54,6 +54,10 @@ export enum Specs {
   // Magic majors
   ABJURATION = 'Abjuration',
   ALTERATION = 'Alteration',
+  // Assassin ways
+  WAY_SHADOWS = 'Shadows',
+  WAY_BEASTS = 'Beasts',
+  WAY_SEASONS = 'Seasons',
 }
 
 // Helper functions to get all values

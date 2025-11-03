@@ -74,4 +74,5 @@ export interface ClassData {
   specChoices?: number; // Number of specializations that can be selected
   specAllowed?: Specs[]; // Available specializations for selection
   magicMajorChoices?: Array<{ spec: Specs; desc: string[] }>; // Available magic major choices with descriptions
+  wayfollowChoices?: Array<{ spec: Specs; desc: string[] }>; // Available wayfollow choices with descriptions (for assassins)
 }

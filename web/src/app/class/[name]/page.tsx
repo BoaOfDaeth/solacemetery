@@ -22,6 +22,7 @@ export async function generateStaticParams() {
 interface ClassPageSearchParams {
   spec?: string | string[];
   magicmajor?: string;
+  wayfollow?: string;
 }
 
 export default async function ClassPage({ 
@@ -58,6 +59,12 @@ export default async function ClassPage({
   const magicMajorParam = search.magicmajor;
   const selectedMagicMajor = magicMajorParam && validSpecValues.includes(magicMajorParam as Specs)
     ? (magicMajorParam as Specs)
+    : null;
+
+  // Parse selected wayfollow from URL params and validate it
+  const wayfollowParam = search.wayfollow;
+  const selectedWayfollow = wayfollowParam && validSpecValues.includes(wayfollowParam as Specs)
+    ? (wayfollowParam as Specs)
     : null;
 
   const compatibleRaceNames = getCompatibleRacesForClass(cls.name);
@@ -113,6 +120,8 @@ export default async function ClassPage({
           selectedSpecs={selectedSpecs}
           magicMajorChoices={cls.magicMajorChoices}
           selectedMagicMajor={selectedMagicMajor}
+          wayfollowChoices={cls.wayfollowChoices}
+          selectedWayfollow={selectedWayfollow}
           currentPath={`/class/${cls.slug}`}
         />
 
