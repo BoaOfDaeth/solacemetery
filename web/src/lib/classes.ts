@@ -600,12 +600,14 @@ export const classes: Record<Class, ClassData> = {
       {
         id: Specs.GOD_KIRI_JOLITH,
         skills: [
+          { name: 'apothecary brew', level: 17, url: '/help/apothecary-brew' },
           { name: 'enhanced damage', level: 15, url: '/help/enhanced-damage' },
         ],
       },
       {
         id: Specs.GOD_PALADINE,
         skills: [
+          { name: 'apothecary brew', level: 17, url: '/help/apothecary-brew' },
           { name: 'enhanced damage', level: 15, url: '/help/enhanced-damage' },
         ],
       },
@@ -619,6 +621,7 @@ export const classes: Record<Class, ClassData> = {
       {
         id: Specs.GOD_MAJERE,
         skills: [
+          { name: 'apothecary brew', level: 17, url: '/help/apothecary-brew' },
           {
             name: 'flowing block',
             level: 14,
@@ -747,7 +750,9 @@ export const classes: Record<Class, ClassData> = {
       {
         id: Specs.GOD_MAJERE,
         spells: [
-          { name: 'gate', level: 11, url: '/help/gate' },
+          { name: 'summon', level: 15, url: '/help/summon' },
+          { name: 'resist acid', level: 13 },
+          { name: 'resist poison', level: 13 },
           { name: 'resist lightning', level: 12, url: '/help/resist' },
           { name: 'stoneskin', level: 17, url: '/help/ironskin-stoneskin' },
           {
@@ -769,6 +774,11 @@ export const classes: Record<Class, ClassData> = {
           { name: 'mass healing', level: 25, url: '/help/mass-healing' },
           { name: 'divine presence', level: 25, url: '/help/divine-presence' },
           { name: 'safety', level: 26, url: '/help/safety' },
+          { name: 'cure mortal wounds', level: 15 },
+          { name: 'resist negative', level: 19 },
+          { name: 'resist fire', level: 9 },
+          { name: 'resist cold', level: 10 },
+          { name: 'sanctuary', level: 16, url: '/help/sanctuary' },
         ],
       },
       {
