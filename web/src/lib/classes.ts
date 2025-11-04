@@ -903,6 +903,15 @@ export const classes: Record<Class, ClassData> = {
       {
         id: Specs.GOD_MORGION,
         spells: [
+          { name: 'dispel magic', level: 17, url: '/help/dispel-magic' },
+          { name: 'blindness', level: 4, url: '/help/blindness' },
+          { name: 'curse', level: 12, url: '/help/curse' },
+          { name: 'weaken', level: 12, url: '/help/weaken' },
+          { name: 'poison', level: 6, url: '/help/poison' },
+          { name: 'cause light', level: 1, url: '/help/cause-light-cause-serious-cause' },
+          { name: 'cause serious', level: 3, url: '/help/cause-light-cause-serious-cause' },
+          { name: 'cause critical', level: 8, url: '/help/cause-light-cause-serious-cause' },
+          { name: 'harm', level: 13, url: '/help/cause-light-cause-serious-cause', },
           { name: 'summon', level: 15, url: '/help/summon' },
           { name: 'plague', level: 15 },
           { name: 'shroud', level: 17, url: '/help/shroud' },
@@ -914,6 +923,15 @@ export const classes: Record<Class, ClassData> = {
       {
         id: Specs.GOD_CHEMOSH,
         spells: [
+          { name: 'dispel magic', level: 17, url: '/help/dispel-magic' },
+          { name: 'blindness', level: 4, url: '/help/blindness' },
+          { name: 'curse', level: 12, url: '/help/curse' },
+          { name: 'weaken', level: 12, url: '/help/weaken' },
+          { name: 'poison', level: 6, url: '/help/poison' },
+          { name: 'cause light', level: 1, url: '/help/cause-light-cause-serious-cause' },
+          { name: 'cause serious', level: 3, url: '/help/cause-light-cause-serious-cause' },
+          { name: 'cause critical', level: 8, url: '/help/cause-light-cause-serious-cause' },
+          { name: 'harm', level: 13, url: '/help/cause-light-cause-serious-cause', },
           { name: 'summon', level: 15, url: '/help/summon' },
           { name: 'shroud', level: 17, url: '/help/shroud' },
           { name: 'create undead', level: 22, url: '/help/create-undead' },
@@ -930,6 +948,15 @@ export const classes: Record<Class, ClassData> = {
       {
         id: Specs.GOD_SARGONNAS,
         spells: [
+          { name: 'dispel magic', level: 17, url: '/help/dispel-magic' },
+          { name: 'blindness', level: 4, url: '/help/blindness' },
+          { name: 'curse', level: 12, url: '/help/curse' },
+          { name: 'weaken', level: 12, url: '/help/weaken' },
+          { name: 'poison', level: 6, url: '/help/poison' },
+          { name: 'cause light', level: 1, url: '/help/cause-light-cause-serious-cause' },
+          { name: 'cause serious', level: 3, url: '/help/cause-light-cause-serious-cause' },
+          { name: 'cause critical', level: 8, url: '/help/cause-light-cause-serious-cause' },
+          { name: 'harm', level: 13, url: '/help/cause-light-cause-serious-cause', },
           { name: 'resist fire', level: 9, url: '/help/resist' },
           { name: 'resist cold', level: 10, url: '/help/resist' },
           { name: 'summon', level: 15, url: '/help/summon' },
@@ -955,6 +982,15 @@ export const classes: Record<Class, ClassData> = {
       {
         id: Specs.GOD_TAKHISIS,
         spells: [
+          { name: 'dispel magic', level: 17, url: '/help/dispel-magic' },
+          { name: 'blindness', level: 4, url: '/help/blindness' },
+          { name: 'curse', level: 12, url: '/help/curse' },
+          { name: 'weaken', level: 12, url: '/help/weaken' },
+          { name: 'poison', level: 6, url: '/help/poison' },
+          { name: 'cause light', level: 1, url: '/help/cause-light-cause-serious-cause' },
+          { name: 'cause serious', level: 3, url: '/help/cause-light-cause-serious-cause' },
+          { name: 'cause critical', level: 8, url: '/help/cause-light-cause-serious-cause' },
+          { name: 'harm', level: 13, url: '/help/cause-light-cause-serious-cause', },
           { name: 'resist fire', level: 9, url: '/help/resist' },
           { name: 'resist cold', level: 10, url: '/help/resist' },
           { name: 'gate', level: 11, url: '/help/gate' },
@@ -974,6 +1010,15 @@ export const classes: Record<Class, ClassData> = {
       {
         id: Specs.GOD_HIDDUKEL,
         spells: [
+          { name: 'dispel magic', level: 17, url: '/help/dispel-magic' },
+          { name: 'blindness', level: 4, url: '/help/blindness' },
+          { name: 'curse', level: 12, url: '/help/curse' },
+          { name: 'weaken', level: 12, url: '/help/weaken' },
+          { name: 'poison', level: 6, url: '/help/poison' },
+          { name: 'cause light', level: 1, url: '/help/cause-light-cause-serious-cause' },
+          { name: 'cause serious', level: 3, url: '/help/cause-light-cause-serious-cause' },
+          { name: 'cause critical', level: 8, url: '/help/cause-light-cause-serious-cause' },
+          { name: 'harm', level: 13, url: '/help/cause-light-cause-serious-cause', },
           { name: 'resist poison', level: 13, url: '/help/resist' },
           {
             name: 'curse of sloth',
