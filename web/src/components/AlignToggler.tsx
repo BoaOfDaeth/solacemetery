@@ -123,6 +123,7 @@ export default function AlignToggler({
                   key={alignment}
                   href={alignmentUrl}
                   scroll={false}
+                  prefetch={true}
                   className={className}
                 >
                   {content}

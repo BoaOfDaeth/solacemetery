@@ -1009,7 +1009,6 @@ export const classes: Record<Class, ClassData> = {
         spells: [
           { name: 'dispel magic', level: 17, url: '/help/dispel-magic' },
           { name: 'blindness', level: 4, url: '/help/blindness' },
-          { name: 'curse', level: 12, url: '/help/curse' },
           { name: 'weaken', level: 12, url: '/help/weaken' },
           { name: 'poison', level: 6, url: '/help/poison' },
           { name: 'cause light', level: 1, url: '/help/cause-light-cause-serious-cause' },

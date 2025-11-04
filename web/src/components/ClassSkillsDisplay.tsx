@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import SpecToggler from './SpecToggler';
 import SpecTogglerSingle from './SpecTogglerSingle';
 // import SkillTable from './SkillTable';
@@ -49,87 +49,103 @@ export default function ClassSkillsDisplay({
   alignToggler,
   currentPath,
 }: ClassSkillsDisplayProps) {
-  // Get skills from selected specializations (fighter specs)
-  const selectedSpecSkills = selectedSpecs.flatMap((specId) => {
-    const spec = specSkills.find((s) => s.id === specId);
-    return spec?.skills || [];
-  });
+  // Memoize all skill/spell calculations to prevent unnecessary recalculations
+  const { allSkills, allSpells } = useMemo(() => {
+    // Get skills from selected specializations (fighter specs)
+    const selectedSpecSkills = selectedSpecs.flatMap((specId) => {
+      const spec = specSkills.find((s) => s.id === specId);
+      return spec?.skills || [];
+    });
 
-  // Get skills from selected magic major
-  const selectedMagicMajorSkills = selectedMagicMajor
-    ? (specSkills.find((s) => s.id === selectedMagicMajor)?.skills || [])
-    : [];
+    // Get skills from selected magic major
+    const selectedMagicMajorSkills = selectedMagicMajor
+      ? (specSkills.find((s) => s.id === selectedMagicMajor)?.skills || [])
+      : [];
 
-  // Get skills from selected wayfollow
-  const selectedWayfollowSkills = selectedWayfollow
-    ? (specSkills.find((s) => s.id === selectedWayfollow)?.skills || [])
-    : [];
+    // Get skills from selected wayfollow
+    const selectedWayfollowSkills = selectedWayfollow
+      ? (specSkills.find((s) => s.id === selectedWayfollow)?.skills || [])
+      : [];
 
-  // Get skills from selected kinship
-  const selectedKinshipSkills = selectedKinship
-    ? (specSkills.find((s) => s.id === selectedKinship)?.skills || [])
-    : [];
+    // Get skills from selected kinship
+    const selectedKinshipSkills = selectedKinship
+      ? (specSkills.find((s) => s.id === selectedKinship)?.skills || [])
+      : [];
 
-  // Get skills from selected worship
-  const selectedWorshipSkills = selectedWorship
-    ? (specSkills.find((s) => s.id === selectedWorship)?.skills || [])
-    : [];
+    // Get skills from selected worship
+    const selectedWorshipSkills = selectedWorship
+      ? (specSkills.find((s) => s.id === selectedWorship)?.skills || [])
+      : [];
 
-  // Get spells from selected specializations (fighter specs)
-  const selectedSpecSpells = selectedSpecs.flatMap((specId) => {
-    const spec = specSpells.find((s) => s.id === specId);
-    return spec?.spells || [];
-  });
+    // Get spells from selected specializations (fighter specs)
+    const selectedSpecSpells = selectedSpecs.flatMap((specId) => {
+      const spec = specSpells.find((s) => s.id === specId);
+      return spec?.spells || [];
+    });
 
-  // Get spells from selected magic major
-  const selectedMagicMajorSpells = selectedMagicMajor
-    ? (specSpells.find((s) => s.id === selectedMagicMajor)?.spells || [])
-    : [];
+    // Get spells from selected magic major
+    const selectedMagicMajorSpells = selectedMagicMajor
+      ? (specSpells.find((s) => s.id === selectedMagicMajor)?.spells || [])
+      : [];
 
-  // Get spells from selected wayfollow
-  const selectedWayfollowSpells = selectedWayfollow
-    ? (specSpells.find((s) => s.id === selectedWayfollow)?.spells || [])
-    : [];
+    // Get spells from selected wayfollow
+    const selectedWayfollowSpells = selectedWayfollow
+      ? (specSpells.find((s) => s.id === selectedWayfollow)?.spells || [])
+      : [];
 
-  // Get spells from selected kinship
-  const selectedKinshipSpells = selectedKinship
-    ? (specSpells.find((s) => s.id === selectedKinship)?.spells || [])
-    : [];
+    // Get spells from selected kinship
+    const selectedKinshipSpells = selectedKinship
+      ? (specSpells.find((s) => s.id === selectedKinship)?.spells || [])
+      : [];
 
-  // Get spells from selected worship
-  const selectedWorshipSpells = selectedWorship
-    ? (specSpells.find((s) => s.id === selectedWorship)?.spells || [])
-    : [];
+    // Get spells from selected worship
+    const selectedWorshipSpells = selectedWorship
+      ? (specSpells.find((s) => s.id === selectedWorship)?.spells || [])
+      : [];
 
-  // Get excluded basic skills from selected worship (if any)
-  const excludedBasicSkills = selectedWorship && worshipChoices
-    ? worshipChoices.find((w) => w.spec === selectedWorship)?.excludedBasicSkills || []
-    : [];
+    // Get excluded basic skills from selected worship (if any)
+    const excludedBasicSkills = selectedWorship && worshipChoices
+      ? worshipChoices.find((w) => w.spec === selectedWorship)?.excludedBasicSkills || []
+      : [];
 
-  // Filter basic skills to exclude any specified by the selected worship
-  const filteredBasicSkills = basicSkills.filter(
-    (skill) => !excludedBasicSkills.includes(skill.name.toLowerCase())
-  );
+    // Filter basic skills to exclude any specified by the selected worship
+    const filteredBasicSkills = basicSkills.filter(
+      (skill) => !excludedBasicSkills.includes(skill.name.toLowerCase())
+    );
 
-  // Merge basic skills with selected spec skills, magic major skills, wayfollow skills, kinship skills, and worship skills, marking spec skills with a flag
-  const allSkills: (Skill & { isSpec?: boolean })[] = [
-    ...filteredBasicSkills.map((skill) => ({ ...skill, isSpec: false })),
-    ...selectedSpecSkills.map((skill) => ({ ...skill, isSpec: true })),
-    ...selectedMagicMajorSkills.map((skill) => ({ ...skill, isSpec: true })),
-    ...selectedWayfollowSkills.map((skill) => ({ ...skill, isSpec: true })),
-    ...selectedKinshipSkills.map((skill) => ({ ...skill, isSpec: true })),
-    ...selectedWorshipSkills.map((skill) => ({ ...skill, isSpec: true })),
-  ];
+    // Merge basic skills with selected spec skills, magic major skills, wayfollow skills, kinship skills, and worship skills, marking spec skills with a flag
+    const allSkills: (Skill & { isSpec?: boolean })[] = [
+      ...filteredBasicSkills.map((skill) => ({ ...skill, isSpec: false })),
+      ...selectedSpecSkills.map((skill) => ({ ...skill, isSpec: true })),
+      ...selectedMagicMajorSkills.map((skill) => ({ ...skill, isSpec: true })),
+      ...selectedWayfollowSkills.map((skill) => ({ ...skill, isSpec: true })),
+      ...selectedKinshipSkills.map((skill) => ({ ...skill, isSpec: true })),
+      ...selectedWorshipSkills.map((skill) => ({ ...skill, isSpec: true })),
+    ];
 
-  // Merge basic spells with selected spec spells, magic major spells, wayfollow spells, kinship spells, and worship spells, marking spec spells with a flag
-  const allSpells: (Skill & { isSpec?: boolean })[] = [
-    ...basicSpells.map((spell) => ({ ...spell, isSpec: false })),
-    ...selectedSpecSpells.map((spell) => ({ ...spell, isSpec: true })),
-    ...selectedMagicMajorSpells.map((spell) => ({ ...spell, isSpec: true })),
-    ...selectedWayfollowSpells.map((spell) => ({ ...spell, isSpec: true })),
-    ...selectedKinshipSpells.map((spell) => ({ ...spell, isSpec: true })),
-    ...selectedWorshipSpells.map((spell) => ({ ...spell, isSpec: true })),
-  ];
+    // Merge basic spells with selected spec spells, magic major spells, wayfollow spells, kinship spells, and worship spells, marking spec spells with a flag
+    const allSpells: (Skill & { isSpec?: boolean })[] = [
+      ...basicSpells.map((spell) => ({ ...spell, isSpec: false })),
+      ...selectedSpecSpells.map((spell) => ({ ...spell, isSpec: true })),
+      ...selectedMagicMajorSpells.map((spell) => ({ ...spell, isSpec: true })),
+      ...selectedWayfollowSpells.map((spell) => ({ ...spell, isSpec: true })),
+      ...selectedKinshipSpells.map((spell) => ({ ...spell, isSpec: true })),
+      ...selectedWorshipSpells.map((spell) => ({ ...spell, isSpec: true })),
+    ];
+
+    return { allSkills, allSpells };
+  }, [
+    selectedSpecs,
+    selectedMagicMajor,
+    selectedWayfollow,
+    selectedKinship,
+    selectedWorship,
+    specSkills,
+    specSpells,
+    basicSkills,
+    basicSpells,
+    worshipChoices,
+  ]);
 
   return (
     <>

@@ -29,6 +29,9 @@ interface ClassPageSearchParams {
   alignment?: string;
 }
 
+// Enable dynamic rendering for query params
+export const dynamic = 'force-dynamic';
+
 export default async function ClassPage({ 
   params,
   searchParams 

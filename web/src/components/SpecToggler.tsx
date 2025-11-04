@@ -63,6 +63,7 @@ export default function SpecToggler({
               key={spec}
               href={specUrl}
               scroll={false}
+              prefetch={true}
               className={`
                 px-4 py-3 rounded-lg border-2 text-left transition-all duration-200 block select-none
                 ${
