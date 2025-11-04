@@ -1,5 +1,5 @@
 import { ClassData } from './types';
-import { Class, Alignment, Specs } from './enums';
+import { Class, Alignment, Specs, Stat } from './enums';
 
 export const classes: Record<Class, ClassData> = {
   [Class.FIGHTER]: {
@@ -13,6 +13,7 @@ export const classes: Record<Class, ClassData> = {
     reference: [
       { label: 'specialization', url: '/help/specialization-specialize' },
     ],
+    primaryStat: Stat.STRENGTH,
     consumables: [],
     weapons: [
       { name: 'axe', level: 1 },
@@ -206,6 +207,7 @@ export const classes: Record<Class, ClassData> = {
 
   [Class.KNIGHT]: {
     name: Class.KNIGHT,
+    primaryStat: Stat.STRENGTH,
     title: 'Knight',
     slug: 'knight',
     description: 'Seekers of full knighthood.',
@@ -329,6 +331,7 @@ export const classes: Record<Class, ClassData> = {
 
   [Class.RANGER]: {
     name: Class.RANGER,
+    primaryStat: Stat.STRENGTH,
     title: 'Ranger',
     slug: 'ranger',
     description: 'Forest warriors, learned in woodlore and survival.',
@@ -496,6 +499,7 @@ export const classes: Record<Class, ClassData> = {
   },
   [Class.CLERIC]: {
     name: Class.CLERIC,
+    primaryStat: Stat.WISDOM,
     title: 'Cleric',
     slug: 'cleric',
     description: 'Followers of the Gods.',
@@ -1037,6 +1041,7 @@ export const classes: Record<Class, ClassData> = {
   },
 
   [Class.DRUID]: {
+    primaryStat: Stat.WISDOM,
     name: Class.DRUID,
     title: 'Druid',
     slug: 'druid',
@@ -1263,6 +1268,7 @@ export const classes: Record<Class, ClassData> = {
 
   [Class.THIEF]: {
     name: Class.THIEF,
+    primaryStat: Stat.DEXTERITY,
     title: 'Thief',
     slug: 'thief',
     description: "The skilled stealer of other people's belongings.",
@@ -1354,6 +1360,7 @@ export const classes: Record<Class, ClassData> = {
 
   [Class.ASSASSIN]: {
     name: Class.ASSASSIN,
+    primaryStat: Stat.DEXTERITY,
     title: 'Assassin',
     slug: 'assassin',
     description: 'Specialists in stealth and unarmed killing.',
@@ -1550,6 +1557,7 @@ export const classes: Record<Class, ClassData> = {
 
   [Class.TRANSMUTER]: {
     name: Class.TRANSMUTER,
+    primaryStat: Stat.INTELLIGENCE,
     title: 'Transmuter',
     slug: 'transmuter',
     description: 'Specialist mages who are masters of alteration magic.',
@@ -1725,6 +1733,7 @@ export const classes: Record<Class, ClassData> = {
 
   [Class.INVOKER]: {
     name: Class.INVOKER,
+    primaryStat: Stat.INTELLIGENCE,
     title: 'Invoker',
     slug: 'invoker',
     description: 'Specialist mages who are masters of energy manipulation.',
@@ -1810,6 +1819,7 @@ export const classes: Record<Class, ClassData> = {
   },
 
   [Class.NECROMANCER]: {
+    primaryStat: Stat.INTELLIGENCE,
     name: Class.NECROMANCER,
     title: 'Necromancer',
     slug: 'necromancer',
@@ -1909,6 +1919,7 @@ export const classes: Record<Class, ClassData> = {
 
   [Class.OUTCAST]: {
     name: Class.OUTCAST,
+    primaryStat: Stat.STRENGTH,
     title: 'Outcast',
     slug: 'outcast',
     description:

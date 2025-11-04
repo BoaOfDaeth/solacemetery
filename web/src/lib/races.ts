@@ -8,6 +8,7 @@ export const races: Record<Race, RaceData> = {
     slug: 'human',
     description: 'The most common race of the world.',
     features: ['Has +3 to maximum of primary characteristic'],
+    bonusStat: 3,
     xpPenalty: 0,
     allowedAlignments: [Alignment.GOOD, Alignment.NEUTRAL, Alignment.EVIL],
     maxStats: {
@@ -44,6 +45,7 @@ export const races: Record<Race, RaceData> = {
       'Can sneak and move quietly',
       'Can see in the darkness',
     ],
+    bonusStat: 2,
     xpPenalty: 5,
     allowedAlignments: [Alignment.GOOD, Alignment.NEUTRAL, Alignment.EVIL],
     maxStats: {
@@ -298,6 +300,7 @@ export const races: Record<Race, RaceData> = {
     slug: 'half-kender',
     description: 'Offspring of humans and kenders.',
     features: ['Has +1 to maximum of primary characteristic'],
+    bonusStat: 1,
     xpPenalty: 10,
     allowedAlignments: [Alignment.GOOD, Alignment.NEUTRAL],
     maxStats: {

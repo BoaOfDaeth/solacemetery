@@ -1,4 +1,4 @@
-import { Alignment, Race, Class, Specs } from './enums';
+import { Alignment, Race, Class, Specs, Stat } from './enums';
 
 // Character stats interface
 export interface CharacterStats {
@@ -28,6 +28,7 @@ export interface RaceData {
   availableClasses: Class[];
   reference: ReferenceLink[];
   resistances: Resistance[];
+  bonusStat?: number; // Optional bonus stat points that add to class primary stat
 }
 
 // Reference link interface
@@ -65,6 +66,7 @@ export interface ClassData {
   xpPenalty: number; // Percentage penalty (0-25)
   allowedAlignments: Alignment[];
   reference: ReferenceLink[];
+  primaryStat: Stat; // Primary stat for this class (bonus from race is added to this)
   weapons?: Skill[]; // Weapon skills (level 1)
   consumables?: Skill[]; // Consumable item skills (level 1)
   basicSkills?: Skill[]; // Optional basic skills for the class

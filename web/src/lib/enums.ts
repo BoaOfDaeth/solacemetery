@@ -5,6 +5,15 @@ export enum Alignment {
   EVIL = 'Evil',
 }
 
+// Stat enum
+export enum Stat {
+  STRENGTH = 'strength',
+  INTELLIGENCE = 'intelligence',
+  WISDOM = 'wisdom',
+  DEXTERITY = 'dexterity',
+  CONSTITUTION = 'constitution',
+}
+
 // Race enum
 export enum Race {
   HUMAN = 'Human',
