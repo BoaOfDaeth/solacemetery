@@ -1059,27 +1059,43 @@ export const classes: Record<Class, ClassData> = {
       },
       {
         spec: Specs.GOD_MORGION,
-        desc: ['A sign of the decaying Goats head'],
+        desc: [
+          'Protection spell grants a 25% damage reduction against good creatures',
+          'A sign of the decaying Goats head',
+        ],
         allowedAlignments: [Alignment.EVIL],
       },
       {
         spec: Specs.GOD_CHEMOSH,
-        desc: ['A sign of the Inverted cross'],
+        desc: [
+          'Protection spell grants a 25% damage reduction against good creatures',
+          'A sign of the Inverted cross',
+        ],
         allowedAlignments: [Alignment.EVIL],
       },
       {
         spec: Specs.GOD_SARGONNAS,
-        desc: ['A sign of raging fire'],
+        desc: [
+          'Protection spell grants a 25% damage reduction against good creatures',
+          'A sign of raging fire',
+        ],
         allowedAlignments: [Alignment.EVIL],
       },
       {
         spec: Specs.GOD_TAKHISIS,
-        desc: ['A sign of Five clenched dragon claws'],
+        desc: [
+          'Can cast shroud on others',
+          'Protection spell grants a 25% damage reduction against good creatures',
+          'A sign of Five clenched dragon claws',
+        ],
         allowedAlignments: [Alignment.EVIL],
       },
       {
         spec: Specs.GOD_HIDDUKEL,
-        desc: ['A sign of a single gold coin'],
+        desc: [
+          'Protection spell grants a 25% damage reduction against good creatures',
+          'A sign of a single gold coin',
+        ],
         allowedAlignments: [Alignment.EVIL],
       },
     ],
