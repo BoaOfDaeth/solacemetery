@@ -123,20 +123,39 @@ export default async function RacePage({ params }: RacePageProps) {
           </div>
         </div>
 
-        {/* Race Features */}
-        {race.features.length > 0 && (
-          <div className="bg-card border border-border rounded-xl shadow-sm p-4 sm:p-6 mb-2 lg:mb-4">
-            <h2 className="text-xl font-semibold text-foreground mb-4 flex items-center">
-              <Icon icon="game-icons:magic-swirl" className="w-5 h-5 mr-2 text-primary" />
-              Special Features
-            </h2>
-            <ul className="text-muted-foreground leading-relaxed">
-              {race.features.map((feature, index) => (
-                <li key={index} className="mb-1">• {feature}</li>
+        {/* Race Features and Alignments */}
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-2 lg:gap-4 mb-2 lg:mb-4">
+          {race.features.length > 0 && (
+            <div className="bg-card border border-border rounded-xl shadow-sm p-4 sm:p-6 lg:col-span-2">
+              <h2 className="text-xl font-semibold text-foreground mb-4 flex items-center">
+                <Icon icon="game-icons:magic-swirl" className="w-5 h-5 mr-2 text-primary" />
+                Special Features
+              </h2>
+              <ul className="text-muted-foreground leading-relaxed">
+                {race.features.map((feature, index) => (
+                  <li key={index} className="mb-1">• {feature}</li>
+                ))}
+              </ul>
+            </div>
+          )}
+          
+          <div className="bg-card border border-border rounded-xl shadow-sm p-4 sm:p-6">
+            <h3 className="text-lg font-semibold text-foreground mb-3 flex items-center justify-center">
+              <Icon icon="game-icons:balance-scale" className="w-5 h-5 mr-2 text-primary" />
+              Allowed Alignments
+            </h3>
+            <div className="flex flex-wrap gap-2 justify-center">
+              {race.allowedAlignments.map((alignment) => (
+                <span
+                  key={alignment}
+                  className="px-3 py-1 rounded-full text-sm font-medium bg-primary/10 text-primary"
+                >
+                  {alignment}
+                </span>
               ))}
-            </ul>
+            </div>
           </div>
-        )}
+        </div>
 
         {/* Race Resistances */}
         {race.resistances.length > 0 && (
@@ -164,35 +183,6 @@ export default async function RacePage({ params }: RacePageProps) {
           </div>
         )}
 
-        {/* Race Information */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-2 lg:gap-4 mb-2 lg:mb-4">
-          <div className="bg-card border border-border rounded-xl shadow-sm p-4 sm:p-6">
-            <h3 className="text-lg font-semibold text-foreground mb-3 flex items-center">
-              <Icon icon="game-icons:balance-scale" className="w-5 h-5 mr-2 text-primary" />
-              Allowed Alignments
-            </h3>
-            <div className="flex flex-wrap gap-2">
-              {race.allowedAlignments.map((alignment) => (
-                <span
-                  key={alignment}
-                  className="px-3 py-1 rounded-full text-sm font-medium bg-primary/10 text-primary"
-                >
-                  {alignment}
-                </span>
-              ))}
-            </div>
-          </div>
-          
-          <div className="bg-card border border-border rounded-xl shadow-sm p-4 sm:p-6 ">
-            <h3 className="text-lg font-semibold text-foreground mb-3 flex items-center">
-              <Icon icon="game-icons:fast-arrow" className="w-5 h-5 mr-2 text-primary" />
-              Experience Penalty
-            </h3>
-            <p className="text-muted-foreground text-lg">
-              {race.xpPenalty === 0 ? 'No penalty' : `${race.xpPenalty}%`}
-            </p>
-          </div>
-        </div>
 
         {/* Available Classes */}
         <ModernTable
