@@ -44,7 +44,7 @@ export default function SkillChart({
       <div className="px-4 sm:px-6 py-4">
         {levels.map((level) => (
           <div key={level} className="mb-2 last:mb-0 relative">
-            <span className="absolute left-0 text-foreground opacity-5 font-bold text-sm">
+            <span className="absolute left-0 text-foreground opacity-15 font-bold text-sm">
               {level}
             </span>
             <div className="flex flex-wrap items-center justify-center gap-1.5 pl-2">
