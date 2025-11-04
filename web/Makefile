@@ -36,3 +36,10 @@ run:
 clean:
 	@echo "Removing Docker image..."
 	docker rmi solacemetery 2>/dev/null || true
+
+deploy:
+	git fetch -q
+	@if [ "$$(git rev-parse @)" != "$$(git rev-parse @{u})" ]; then \
+		git pull --ff-only -q; \
+		./deploy.sh; \
+	fi
