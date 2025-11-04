@@ -612,6 +612,7 @@ export const classes: Record<Class, ClassData> = {
       {
         id: Specs.GOD_MISHAKAL,
         skills: [
+          { name: 'apothecary brew', level: 17, url: '/help/apothecary-brew' },
           { name: 'healing mastery', level: 32, url: '/help/healing-mastery' },
         ],
       },
@@ -734,6 +735,13 @@ export const classes: Record<Class, ClassData> = {
             level: 31,
             url: '/help/rejuvenation-chamber',
           },
+          { name: 'ressurection', level: 30 },
+          { name: 'cure mortal wounds', level: 15 },
+          { name: 'resist negative', level: 19 },
+          { name: 'resist fire', level: 9 },
+          { name: 'resist cold', level: 10 },
+          { name: 'sanctuary', level: 16, url: '/help/sanctuary' },
+          { name: 'merciful release', level: 12, url: '/help/merciful-release' },
         ],
       },
       {
@@ -975,24 +983,38 @@ export const classes: Record<Class, ClassData> = {
     worshipChoices: [
       {
         spec: Specs.GOD_KIRI_JOLITH,
-        desc: ['A sign of the silver War-hammer'],
+        desc: [
+          'Can cast sanctuary on others',
+          'Protection spell grants a 25% damage reduction against evil creatures',
+          'A sign of the silver War-hammer',
+        ],
         allowedAlignments: [Alignment.GOOD],
       },
       {
         spec: Specs.GOD_PALADINE,
-        desc: ['A sign of the Platinum dragon claw'],
+        desc: [
+          'Can cast sanctuary on others',
+          'Protection spell grants a 25% damage reduction against evil creatures',
+          'A sign of the Platinum dragon claw',
+        ],
         allowedAlignments: [Alignment.GOOD],
       },
       {
         spec: Specs.GOD_MISHAKAL,
-        desc: ['A sign of the Healer'],
+        desc: [
+          'Can cast sanctuary on others',
+          'Protection spell grants a 25% damage reduction against evil creatures',
+          'A sign of the Healer',
+        ],
         allowedAlignments: [Alignment.GOOD],
       },
       {
         spec: Specs.GOD_MAJERE,
         desc: [
+          'Can cast sanctuary on others',
+          'Protection spell grants a 25% damage reduction against evil creatures',
+          'Clerics of Majere lose access to shield block and mace swing',
           'A sign of the clenched Fist',
-          'Clerics of Majere lose access to shield block, mace swing',
         ],
         allowedAlignments: [Alignment.GOOD],
         excludedBasicSkills: ['shield block', 'mace swing'],
