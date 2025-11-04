@@ -834,7 +834,7 @@ export const classes: Record<Class, ClassData> = {
           { name: 'resist lightning', level: 12 },
           { name: 'briar shield', level: 13, url: '/help/briar-shield' },
           { name: 'aid', level: 14, url: '/help/aid' },
-          { name: 'circle of protection', level: 14 },
+          { name: 'circle of protection', level: 14, url: '/help/circle-of-protection' },
           { name: 'summon', level: 15, url: '/help/summon' },
           { name: 'cure mortal wounds', level: 15 },
           { name: 'plant seed', level: 15, url: '/help/plant-seed' },
