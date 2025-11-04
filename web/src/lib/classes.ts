@@ -673,15 +673,21 @@ export const classes: Record<Class, ClassData> = {
       {
         id: Specs.GOD_KIRI_JOLITH,
         spells: [
-          { name: 'summon', level: 15, url: '/help/summon' },
+          { name: 'gate', level: 11, url: '/help/gate' },
           { name: 'hammerfist', level: 19, url: '/help/hammerfist' },
+          { name: 'call deva', level: 30, url: '/help/call-deva' },
           {
             name: 'blessed reversal',
             level: 26,
             url: '/help/blessed-reversal',
           },
           { name: 'foresight', level: 27, url: '/help/foresight' },
-          { name: 'call deva', level: 30, url: '/help/call-deva' },
+          { name: 'cure mortal wounds', level: 15 },
+          { name: 'resist negative', level: 19 },
+          { name: 'resist fire', level: 9 },
+          { name: 'resist cold', level: 10 },
+          { name: 'sanctuary', level: 16, url: '/help/sanctuary' },
+          { name: 'chains of honor', level: 22, url: '/help/chains-of-honor' },
         ],
       },
       {
