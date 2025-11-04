@@ -142,7 +142,16 @@ export default async function ClassPage({
   // Prepare compatible races data for table
   const racesData = compatibleRaces.map(race => {
     const cumulativeXpPenalty = race!.xpPenalty + cls.xpPenalty;
-    const stats = race!.maxStats;
+    const stats = { ...race!.maxStats };
+    
+    // Apply bonusStat to primaryStat if race has bonus and class has primary stat
+    if (race!.bonusStat && cls.primaryStat) {
+      const primaryStatKey = cls.primaryStat as keyof typeof stats;
+      if (primaryStatKey in stats) {
+        stats[primaryStatKey] = stats[primaryStatKey] + race!.bonusStat;
+      }
+    }
+    
     const statsString = `${stats.strength}/${stats.intelligence}/${stats.wisdom}/${stats.dexterity}/${stats.constitution}`;
     return {
       name: race!.name,
