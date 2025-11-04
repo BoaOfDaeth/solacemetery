@@ -84,7 +84,9 @@ export const races: Record<Race, RaceData> = {
     title: 'Dwarf',
     slug: 'dwarf',
     description: 'Short & stout fellows, make good warriors.',
-    features: [],
+    features: [
+      'Can see in the darkness',
+    ],
     xpPenalty: 10,
     allowedAlignments: [Alignment.GOOD, Alignment.NEUTRAL],
     maxStats: {
@@ -102,7 +104,28 @@ export const races: Record<Race, RaceData> = {
       Class.ASSASSIN,
     ],
     reference: [],
-    resistances: [],
+    resistances: [
+      {
+        damtype: 'bashing',
+        value: 10,
+      },
+      {
+        damtype: 'acidic attacks',
+        value: -15,
+      },
+      {
+        damtype: 'poison',
+        value: 30,
+      },
+      {
+        damtype: 'diseases',
+        value: 30,
+      },
+      {
+        damtype: 'drowning',
+        value: -20,
+      },
+    ],
   },
 
   [Race.ELF]: {
