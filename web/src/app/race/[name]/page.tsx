@@ -29,14 +29,16 @@ export default async function RacePage({ params }: RacePageProps) {
   const availableClasses = race.availableClasses.map(className => getClass(className)).filter(Boolean);
 
   // Prepare available classes data for table
-  const classesData = availableClasses.map(cls => ({
-    name: cls!.name,
-    title: cls!.title,
-    slug: cls!.slug,
-    description: cls!.description,
-    xpPenalty: cls!.xpPenalty === 0 ? 'No penalty' : `${cls!.xpPenalty}%`,
-    alignments: cls!.allowedAlignments.join(', '),
-  }));
+  const classesData = availableClasses.map(cls => {
+    const cumulativeXpPenalty = race.xpPenalty + cls!.xpPenalty;
+    return {
+      name: cls!.name,
+      title: cls!.title,
+      slug: cls!.slug,
+      description: cls!.description,
+      xpPenalty: cumulativeXpPenalty === 0 ? 'No penalty' : `${cumulativeXpPenalty}%`,
+    };
+  });
 
   return (
     <div className="bg-background">
@@ -199,7 +201,6 @@ export default async function RacePage({ params }: RacePageProps) {
             { key: 'name', label: 'Class' },
             { key: 'description', label: 'Description', hideOnMobile: true },
             { key: 'xpPenalty', label: 'XP' },
-            { key: 'alignments', label: 'Alignments' },
           ]}
           data={classesData}
           renderCell={(key, value, row) => {
