@@ -64,6 +64,7 @@ export default function SkillChart({
                   <Link
                     key={skill.name}
                     href={skill.url}
+                    prefetch={false}
                     className={`px-1.5 py-0.5 rounded text-sm transition-colors border ${borderClasses} ${bgClasses} ${textClasses}`}
                   >
                     {skill.name}
