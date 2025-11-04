@@ -738,7 +738,8 @@ export const classes: Record<Class, ClassData> = {
       {
         id: Specs.GOD_MORGION,
         spells: [
-          { name: 'summon plague', level: 15, url: '/help/summon' },
+          { name: 'summon', level: 15, url: '/help/summon' },
+          { name: 'plague', level: 15 },
           { name: 'shroud', level: 17, url: '/help/shroud' },
           { name: 'witherfist', level: 20, url: '/help/witherfist' },
           { name: 'fatigue', level: 22, url: '/help/fatigue' },
@@ -763,7 +764,8 @@ export const classes: Record<Class, ClassData> = {
           { name: 'resist fire', level: 9, url: '/help/resist' },
           { name: 'resist cold', level: 10, url: '/help/resist' },
           { name: 'summon', level: 15, url: '/help/summon' },
-          { name: 'demonfire fires of vengeance', level: 20, url: '/help/fires-of-vengeance' },
+          { name: 'demonfire', level: 20 },
+          { name: 'fires of vengeance', level: 20, url: '/help/fires-of-vengeance' },
           { name: 'summon fire elemental', level: 25, url: '/help/conjure-fire-elemental' },
           { name: 'incarnation of fire', level: 27, url: '/help/incarnation-of-fire' },
           { name: 'volcano', level: 32, url: '/help/volcano' },
@@ -781,6 +783,7 @@ export const classes: Record<Class, ClassData> = {
           { name: 'shroud', level: 17, url: '/help/shroud' },
           { name: 'dragonfire', level: 21, url: '/help/dragonfire' },
           { name: 'group teleport', level: 23, url: '/help/teleport-group-teleport' },
+          { name: 'aspect of evil', level: 32, url: '/help/aspect-of-evil' },
         ],
       },
       {
