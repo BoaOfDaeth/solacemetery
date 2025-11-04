@@ -1054,7 +1054,7 @@ export const classes: Record<Class, ClassData> = {
       },
       {
         spec: Specs.GOD_SIRRION,
-        desc: ['A sign of twin sparks'],
+        desc: ['Can cast flame aura on others', 'A sign of twin sparks'],
         allowedAlignments: [Alignment.NEUTRAL],
       },
       {
