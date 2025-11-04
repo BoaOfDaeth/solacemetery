@@ -78,5 +78,5 @@ export interface ClassData {
   magicMajorChoices?: Array<{ spec: Specs; desc: string[] }>; // Available magic major choices with descriptions
   wayfollowChoices?: Array<{ spec: Specs; desc: string[]; allowedAlignments: Alignment[] }>; // Available wayfollow choices with descriptions and allowed alignments (for assassins)
   kinshipChoices?: Array<{ spec: Specs; desc: string[] }>; // Available kinship choices with descriptions (for druids)
-  worshipChoices?: Array<{ spec: Specs; desc: string[]; allowedAlignments: Alignment[]; excludedBasicSkills?: string[] }>; // Available worship/god choices with descriptions, allowed alignments, and basic skills to exclude (for clerics)
+  worshipChoices?: Array<{ spec: Specs; desc: string[]; allowedAlignments: Alignment[]; excludedBasicSkills?: string[]; excludedBasicSpells?: string[] }>; // Available worship/god choices with descriptions, allowed alignments, and basic skills/spells to exclude (for clerics)
 }

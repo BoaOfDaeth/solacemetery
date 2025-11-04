@@ -918,6 +918,7 @@ export const classes: Record<Class, ClassData> = {
           { name: 'witherfist', level: 20, url: '/help/witherfist' },
           { name: 'fatigue', level: 22, url: '/help/fatigue' },
           { name: 'rot', level: 24, url: '/help/rot' },
+          { name: 'expulsion', level: 18, url: '/help/expulsion' },
         ],
       },
       {
@@ -969,7 +970,7 @@ export const classes: Record<Class, ClassData> = {
           {
             name: 'summon fire elemental',
             level: 25,
-            url: '/help/conjure-fire-elemental',
+            url: '/help/summon-earth-elemental-summon-air',
           },
           {
             name: 'incarnation of fire',
@@ -1053,7 +1054,7 @@ export const classes: Record<Class, ClassData> = {
         spec: Specs.GOD_KIRI_JOLITH,
         desc: [
           'Can cast sanctuary on others',
-          'Protection spell grants a 25% damage reduction against evil creatures',
+          'Protection spell grants some damage reduction against evil creatures',
           'A sign of the silver War-hammer',
         ],
         allowedAlignments: [Alignment.GOOD],
@@ -1062,7 +1063,7 @@ export const classes: Record<Class, ClassData> = {
         spec: Specs.GOD_PALADINE,
         desc: [
           'Can cast sanctuary on others',
-          'Protection spell grants a 25% damage reduction against evil creatures',
+          'Protection spell grants some damage reduction against evil creatures',
           'A sign of the Platinum dragon claw',
         ],
         allowedAlignments: [Alignment.GOOD],
@@ -1071,7 +1072,7 @@ export const classes: Record<Class, ClassData> = {
         spec: Specs.GOD_MISHAKAL,
         desc: [
           'Can cast sanctuary on others',
-          'Protection spell grants a 25% damage reduction against evil creatures',
+          'Protection spell grants some damage reduction against evil creatures',
           'A sign of the Healer',
         ],
         allowedAlignments: [Alignment.GOOD],
@@ -1080,7 +1081,7 @@ export const classes: Record<Class, ClassData> = {
         spec: Specs.GOD_MAJERE,
         desc: [
           'Can cast sanctuary on others',
-          'Protection spell grants a 25% damage reduction against evil creatures',
+          'Protection spell grants some damage reduction against evil creatures',
           'Clerics of Majere lose access to shield block and mace swing',
           'A sign of the clenched Fist',
         ],
@@ -1105,15 +1106,24 @@ export const classes: Record<Class, ClassData> = {
       {
         spec: Specs.GOD_MORGION,
         desc: [
-          'Protection spell grants a 25% damage reduction against good creatures',
+          'Clerics of Morgion are unable to perform ordinary clerical healing',
+          'Some maledictions apply buffs to them instead of debuffs',
+          'Protection spell grants some damage reduction against good creatures',
           'A sign of the decaying Goats head',
         ],
         allowedAlignments: [Alignment.EVIL],
+        excludedBasicSpells: [
+          'cure light',
+          'cure serious',
+          'cure critical',
+          'cure disease',
+          'restoration',
+        ],
       },
       {
         spec: Specs.GOD_CHEMOSH,
         desc: [
-          'Protection spell grants a 25% damage reduction against good creatures',
+          'Protection spell grants some damage reduction against good creatures',
           'A sign of the Inverted cross',
         ],
         allowedAlignments: [Alignment.EVIL],
@@ -1121,7 +1131,7 @@ export const classes: Record<Class, ClassData> = {
       {
         spec: Specs.GOD_SARGONNAS,
         desc: [
-          'Protection spell grants a 25% damage reduction against good creatures',
+          'Protection spell grants some damage reduction against good creatures',
           'A sign of raging fire',
         ],
         allowedAlignments: [Alignment.EVIL],
@@ -1130,7 +1140,7 @@ export const classes: Record<Class, ClassData> = {
         spec: Specs.GOD_TAKHISIS,
         desc: [
           'Can cast shroud on others',
-          'Protection spell grants a 25% damage reduction against good creatures',
+          'Protection spell grants some damage reduction against good creatures',
           'A sign of Five clenched dragon claws',
         ],
         allowedAlignments: [Alignment.EVIL],
@@ -1138,7 +1148,7 @@ export const classes: Record<Class, ClassData> = {
       {
         spec: Specs.GOD_HIDDUKEL,
         desc: [
-          'Protection spell grants a 25% damage reduction against good creatures',
+          'Protection spell grants some damage reduction against good creatures',
           'A sign of a single gold coin',
         ],
         allowedAlignments: [Alignment.EVIL],
