@@ -988,7 +988,7 @@ export const classes: Record<Class, ClassData> = {
         spec: Specs.GOD_MAJERE,
         desc: [
           'A sign of the clenched Fist',
-          'Clerics of Majere lose Shield Block, Mace Swing',
+          'Clerics of Majere lose access to shield block, mace swing',
         ],
         allowedAlignments: [Alignment.GOOD],
         excludedBasicSkills: ['shield block', 'mace swing'],
