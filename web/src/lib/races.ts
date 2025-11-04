@@ -86,6 +86,9 @@ export const races: Record<Race, RaceData> = {
     description: 'Short & stout fellows, make good warriors.',
     features: [
       'Can see in the darkness',
+      'Dwarves become more resilient and strike harder when they are hurt',
+      'Dwarven fighters are naturally skilled in berserking; their rage allows them to resist harmful magic',
+      'Professional drinkers',
     ],
     xpPenalty: 10,
     allowedAlignments: [Alignment.GOOD, Alignment.NEUTRAL],
