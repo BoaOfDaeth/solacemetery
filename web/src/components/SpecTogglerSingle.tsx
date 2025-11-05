@@ -48,7 +48,7 @@ export default function SpecTogglerSingle({
       )}
 
       <div className="space-y-3">
-        <div className="grid grid-cols-1 gap-3">
+        <div className={`grid gap-3 ${availableSpecs.length > 4 ? 'grid-cols-2' : 'grid-cols-1'}`}>
           {availableSpecs.map((specOption) => {
             const isSelected = selectedSpec === specOption.spec;
             const specUrl = createSpecUrl(specOption.spec);
