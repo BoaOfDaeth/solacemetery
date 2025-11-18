@@ -1104,7 +1104,7 @@ export const classes: Record<Class, ClassData> = {
           'Clerics of Morgion are unable to perform ordinary clerical healing',
           'Some maledictions apply buffs to them instead of debuffs',
           'Protection spell grants some damage reduction against good creatures',
-          'A sign of the decaying Goats head',
+          'A sign of the decaying goat\'s head',
         ],
         allowedAlignments: [Alignment.EVIL],
         excludedBasicSpells: [
@@ -1136,7 +1136,7 @@ export const classes: Record<Class, ClassData> = {
         desc: [
           'Can cast shroud on others',
           'Protection spell grants some damage reduction against good creatures',
-          'A sign of Five clenched dragon claws',
+          'A sign of five clenched dragon claws',
         ],
         allowedAlignments: [Alignment.EVIL],
       },
@@ -1348,30 +1348,30 @@ export const classes: Record<Class, ClassData> = {
       {
         spec: Specs.KINSHIP_ALL,
         desc: [
-          'Obtains two random minor animal forms.',
-          'Has an owlform. Which is able to fly across the lands.',
-          'Has a bearform.',
+          'Obtains two random minor animal forms',
+          'Has an owlform, which is able to fly across the lands',
+          'Has a bearform',
         ],
       },
       {
         spec: Specs.KINSHIP_WOLF,
         desc: [
-          'Is able to cast spells upon itself while in animal form.',
-          'Is able to maintain itself as a greater wolf without using mana.',
+          'Is able to cast spells upon themselves while in animal form',
+          'Is able to maintain themselves as a greater wolf without using mana',
         ], // TODO: Add descriptions for Greater Wolf kinship
       },
       {
         spec: Specs.KINSHIP_BOAR,
         desc: [
-          'Is able to cast spells upon itself while in animal form.',
-          'Is able to maintain itself as a greater boar without using mana.',
+          'Is able to cast spells upon themselves while in animal form',
+          'Is able to maintain themselves as a greater boar without using mana',
         ],
       },
       {
         spec: Specs.KINSHIP_ORANGUTAN,
         desc: [
-          'Is able to cast spells upon itself while in animal form.',
-          'Is able to maintain itself as an orangoutang without using mana.',
+          'Is able to cast spells upon themselves while in animal form',
+          'Is able to maintain themselves as an orangutan without using mana',
         ],
       },
     ],
@@ -1651,7 +1651,7 @@ export const classes: Record<Class, ClassData> = {
         spec: Specs.WAY_BEASTS,
         desc: [
           'Sudden brute force and speed',
-          'Train amongst animals of the wild',
+          'Trains amongst animals of the wild',
         ],
         allowedAlignments: [Alignment.GOOD, Alignment.EVIL],
       },
@@ -1659,7 +1659,7 @@ export const classes: Record<Class, ClassData> = {
         spec: Specs.WAY_SEASONS,
         desc: [
           'Path of endurance and dedication',
-          'Mind and soul with body to overcome adversity',
+          'Mind and soul with the body to overcome adversity',
         ],
         allowedAlignments: [Alignment.GOOD],
       },
@@ -1829,13 +1829,13 @@ export const classes: Record<Class, ClassData> = {
       {
         spec: Specs.ABJURATION,
         desc: [
-          'Requires shapeshifting controls to maintain spells when shapeshifting',
+          'Requires shapeshifting controls to maintain spells while shapeshifting',
         ],
       },
       {
         spec: Specs.ALTERATION,
         desc: [
-          'Gain a major shapeshifting form at higher ranks',
+          'Gains a major shapeshifting form at higher ranks',
           'Shapeshift without needing to use shape controls',
         ],
       },
