@@ -19,13 +19,13 @@ build:
 # Run Docker container
 run:
 	@echo "Running Docker container..."
-	@if [ ! -f .env.local ]; then \
-		echo "Error: .env.local file not found!"; \
-		echo "Please create .env.local with DATABASE_URL variable."; \
-		echo "Example: echo 'DATABASE_URL=mysql://user:pass@host:port/db' > .env.local"; \
+	@if [ ! -f .env.prod ]; then \
+		echo "Error: .env.prod file not found!"; \
+		echo "Please create .env.prod with DATABASE_URL variable."; \
+		echo "Example: echo 'DATABASE_URL=mysql://user:pass@host:port/db' > .env.prod"; \
 		exit 1; \
 	fi
-	@echo "Loading DATABASE_URL from .env.local for runtime..."
+	@echo "Loading DATABASE_URL from .env.prod for runtime..."
 	@docker run -d \
 		--name solacemetery-app \
 		-p 3000:3000 \
