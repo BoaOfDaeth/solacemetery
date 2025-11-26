@@ -1,14 +1,15 @@
 # Solacemetery Web App Makefile
 
-.PHONY: help build clean run
+.PHONY: help build clean run submodules
 
 # Default target
 help:
 	@echo "Available commands:"
-	@echo "  build  - Build Docker image with tag 'solacemetery'"
-	@echo "  run    - Build and run Docker container on port 3000 (requires .env.local with DATABASE_URL)"
-	@echo "  clean  - Remove Docker image"
-	@echo "  help   - Show this help message"
+	@echo "  build      - Build Docker image with tag 'solacemetery'"
+	@echo "  run        - Build and run Docker container on port 3000 (requires .env.local with DATABASE_URL)"
+	@echo "  clean      - Remove Docker image"
+	@echo "  submodules - Initialize and update git submodules"
+	@echo "  help       - Show this help message"
 
 # Build Docker image
 build:
@@ -36,3 +37,9 @@ run:
 clean:
 	@echo "Removing Docker image..."
 	docker rmi solacemetery 2>/dev/null || true
+
+# Pull and update git submodules
+submodules:
+	@echo "Initializing and updating git submodules..."
+	@git submodule update --init --recursive
+	@echo "Submodules updated successfully!"
