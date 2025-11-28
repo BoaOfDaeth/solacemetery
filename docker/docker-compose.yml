@@ -64,6 +64,29 @@ services:
       - mongodb
       - redis
 
+  items:
+    build:
+      context: ../items
+      dockerfile: Dockerfile
+    container_name: solacers-items
+    restart: unless-stopped
+    ports:
+      - '${ITEMS_PORT:-2888}:2888'
+    environment:
+      MONGODB_URI: ${MONGODB_URI}
+      REDIS_URL: ${REDIS_URL}
+      DISCORD_CLIENT_ID: ${DISCORD_CLIENT_ID}
+      DISCORD_CLIENT_SECRET: ${DISCORD_CLIENT_SECRET}
+      DISCORD_REDIRECT_URI: ${DISCORD_REDIRECT_URI}
+      NODE_ENV: production
+      NEXT_TELEMETRY_DISABLED: 1
+      PORT: 2888
+    networks:
+      - solacers
+    depends_on:
+      - mongodb
+      - redis
+
 volumes:
   mongodb_data:
     driver: local

@@ -47,7 +47,7 @@ COPY --from=builder --chown=nextjs:nodejs /app/.next/static ./.next/static
 
 USER nextjs
 
-ENV PORT=3000
+ENV PORT=2888
 # set hostname to listen on all interfaces
 ENV HOSTNAME="0.0.0.0"
 
