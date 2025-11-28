@@ -25,6 +25,9 @@ run:
 		echo "Example: echo 'DATABASE_URL=mysql://user:pass@host:port/db' > .env.prod"; \
 		exit 1; \
 	fi
+	@echo "Stopping and removing existing container if it exists..."
+	@docker stop solacemetery-app 2>/dev/null || true
+	@docker rm solacemetery-app 2>/dev/null || true
 	@echo "Loading DATABASE_URL from .env.prod for runtime..."
 	@docker run -d \
 		--name solacemetery-app \
