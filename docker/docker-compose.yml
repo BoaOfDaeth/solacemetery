@@ -1,0 +1,55 @@
+name: solabase
+
+services:
+  mongodb:
+    image: mongo:latest
+    container_name: solabase-mongodb
+    restart: unless-stopped
+    ports:
+      - '${MONGODB_PORT:-27093}:27017'
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: ${MONGO_INITDB_ROOT_USERNAME}
+      MONGO_INITDB_ROOT_PASSWORD: ${MONGO_INITDB_ROOT_PASSWORD}
+      MONGO_INITDB_DATABASE: solabase
+    volumes:
+      - mongodb_data:/data/db
+    networks:
+      - solabase-network
+
+  redis:
+    image: redis:8.2.1-alpine
+    container_name: solabase-redis
+    restart: unless-stopped
+    ports:
+      - '${REDIS_PORT:-6379}:6379'
+    volumes:
+      - redis_data:/data
+    sysctls:
+      - net.core.somaxconn=1024
+    command: |
+      redis-server
+      --save 60 1
+      --loglevel warning
+      --maxmemory 256mb
+      --maxmemory-policy allkeys-lru
+      --tcp-backlog 511
+      --timeout 0
+      --tcp-keepalive 300
+    networks:
+      - solabase-network
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 10s
+
+volumes:
+  mongodb_data:
+    driver: local
+  redis_data:
+    driver: local
+
+networks:
+  solabase-network:
+    driver: bridge
