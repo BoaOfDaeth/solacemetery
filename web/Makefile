@@ -6,7 +6,7 @@
 help:
 	@echo "Available commands:"
 	@echo "  build      - Build Docker image with tag 'solacemetery'"
-	@echo "  run        - Build and run Docker container using docker-compose (requires ../docker/.env)"
+	@echo "  run        - Build and run Docker container using docker compose (requires ../docker/.env)"
 	@echo "  clean      - Remove Docker image"
 	@echo "  submodules - Initialize and update git submodules"
 	@echo "  help       - Show this help message"
@@ -16,7 +16,7 @@ build:
 	@echo "Building Docker image with tag 'solacemetery'..."
 	@docker build --build-arg BUILD_DATE="$$(date -u +"%Y-%m-%dT%H:%M:%SZ")" -t solacemetery .
 
-# Run Docker container using docker-compose
+# Run Docker container using docker compose
 run:
 	@echo "Building and running Docker container with docker compose..."
 	@if [ ! -f ../docker/.env ]; then \
