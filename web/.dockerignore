@@ -8,3 +8,11 @@ node_modules
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+*.md
+README.md
+.gitignore
+.eslintrc*
+.prettierrc*
+Makefile
+snippets.http
+solace-helpdev/
