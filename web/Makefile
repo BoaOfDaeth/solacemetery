@@ -18,14 +18,14 @@ build:
 
 # Run Docker container using docker-compose
 run:
-	@echo "Building and running Docker container with docker-compose..."
+	@echo "Building and running Docker container with docker compose..."
 	@if [ ! -f ../docker/.env ]; then \
 		echo "Error: .env file not found in docker directory!"; \
 		exit 1; \
 	fi
 	@cd ../docker && \
 		BUILD_DATE="$$(date -u +"%Y-%m-%dT%H:%M:%SZ")" \
-		docker-compose up -d --build web
+		docker compose up -d --build web
 	@echo "Container started! Access the app at http://localhost:$${WEB_PORT:-3000}"
 
 # Clean up Docker image
