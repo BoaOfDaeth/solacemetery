@@ -20,8 +20,6 @@ services:
     image: redis:8.2.1-alpine
     container_name: solacers-redis
     restart: unless-stopped
-    ports:
-      - '${REDIS_PORT:-6379}:6379'
     volumes:
       - redis_data:/data
     sysctls:
@@ -73,8 +71,8 @@ services:
     ports:
       - '${ITEMS_PORT:-2888}:2888'
     environment:
-      MONGODB_URI: ${MONGODB_URI}
-      REDIS_URL: ${REDIS_URL}
+      MONGODB_URI: mongodb://${MONGO_INITDB_ROOT_USERNAME}:${MONGO_INITDB_ROOT_PASSWORD}@mongodb:27017/${MONGO_INITDB_DATABASE}?authSource=admin
+      REDIS_URL: redis://redis:6379
       DISCORD_CLIENT_ID: ${DISCORD_CLIENT_ID}
       DISCORD_CLIENT_SECRET: ${DISCORD_CLIENT_SECRET}
       DISCORD_REDIRECT_URI: ${DISCORD_REDIRECT_URI}
