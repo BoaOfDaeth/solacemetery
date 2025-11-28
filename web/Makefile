@@ -6,7 +6,7 @@
 help:
 	@echo "Available commands:"
 	@echo "  build      - Build Docker image with tag 'solacemetery'"
-	@echo "  run        - Build and run Docker container on port 3000 (requires .env.local with DATABASE_URL)"
+	@echo "  run        - Build and run Docker container using docker-compose (requires ../docker/.env)"
 	@echo "  clean      - Remove Docker image"
 	@echo "  submodules - Initialize and update git submodules"
 	@echo "  help       - Show this help message"
@@ -16,25 +16,17 @@ build:
 	@echo "Building Docker image with tag 'solacemetery'..."
 	@docker build --build-arg BUILD_DATE="$$(date -u +"%Y-%m-%dT%H:%M:%SZ")" -t solacemetery .
 
-# Run Docker container
+# Run Docker container using docker-compose
 run:
-	@echo "Running Docker container..."
-	@if [ ! -f .env.prod ]; then \
-		echo "Error: .env.prod file not found!"; \
-		echo "Please create .env.prod with DATABASE_URL variable."; \
-		echo "Example: echo 'DATABASE_URL=mysql://user:pass@host:port/db' > .env.prod"; \
+	@echo "Building and running Docker container with docker-compose..."
+	@if [ ! -f ../docker/.env ]; then \
+		echo "Error: .env file not found in docker directory!"; \
 		exit 1; \
 	fi
-	@echo "Stopping and removing existing container if it exists..."
-	@docker stop solacemetery-app 2>/dev/null || true
-	@docker rm solacemetery-app 2>/dev/null || true
-	@echo "Loading DATABASE_URL from .env.prod for runtime..."
-	@docker run -d \
-		--name solacemetery-app \
-		-p 3000:3000 \
-		--env-file .env.prod \
-		solacemetery
-	@echo "Container started! Access the app at http://localhost:3000"
+	@cd ../docker && \
+		BUILD_DATE="$$(date -u +"%Y-%m-%dT%H:%M:%SZ")" \
+		docker-compose up -d --build web
+	@echo "Container started! Access the app at http://localhost:$${WEB_PORT:-3000}"
 
 # Clean up Docker image
 clean:
