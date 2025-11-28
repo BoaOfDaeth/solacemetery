@@ -21,6 +21,9 @@ COPY . .
 # Learn more here: https://nextjs.org/telemetry
 ENV NEXT_TELEMETRY_DISABLED=1
 
+# Increase Node.js heap size to prevent out of memory errors during build
+ENV NODE_OPTIONS="--max-old-space-size=4096"
+
 RUN npm run build
 
 # Production image, copy all the files and run next
