@@ -17,7 +17,7 @@ export async function GET(request: NextRequest) {
     const limit = 10;
 
     let searchFilter: Record<string, unknown> = {};
-    let textSearch: { $text?: { $search: string } } = {};
+    const textSearch: { $text?: { $search: string } } = {};
 
     // If there's a search query, use text search for better performance
     if (query && query.length >= 2) {

@@ -173,12 +173,6 @@ export async function createOrUpdateParsedItem(
       };
     }
 
-    // Update visibleAfter for API posts when updating existing items
-    if (isApiPost) {
-      const visibleAfter = new Date(Date.now() + 36 * 60 * 60 * 1000); // 36 hours from now
-      updateData.visibleAfter = visibleAfter;
-    }
-
     await ParsedItem.findOneAndUpdate({ hru: parsedData.hru }, updateData);
 
     // Update the raw item with the parsed item's HRU
@@ -217,9 +211,9 @@ export async function createOrUpdateParsedItem(
       newParsedItemData.hidden = true;
     }
 
-    // Set visibleAfter for API posts (36 hours delay)
+    // Set visibleAfter for API posts (12 hours delay)
     if (isApiPost) {
-      const visibleAfter = new Date(Date.now() + 36 * 60 * 60 * 1000); // 36 hours from now
+      const visibleAfter = new Date(Date.now() + 12 * 60 * 60 * 1000); // 12 hours from now
       newParsedItemData.visibleAfter = visibleAfter;
     }
 
