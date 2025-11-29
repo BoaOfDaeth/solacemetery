@@ -40,12 +40,22 @@ export async function GET(request: NextRequest) {
     searchFilter = addVisibilityFilter(searchFilter, userIsAdmin);
 
     // Determine sort order
-    let sortOrder: Record<string, 1 | -1>;
-    if (sort === 'level') {
-      sortOrder = { level: -1 };
+    let sortOrder: Record<string, 1 | -1 | { $meta: 'textScore' }>;
+    if (query && query.length >= 2) {
+      // When searching, sort by text score (relevance) first, then by sort preference
+      if (sort === 'level') {
+        sortOrder = { score: { $meta: 'textScore' }, level: -1 };
+      } else {
+        sortOrder = { score: { $meta: 'textScore' }, createdAt: -1 };
+      }
     } else {
-      // Default to 'latest' (createdAt desc)
-      sortOrder = { createdAt: -1 };
+      // No search query, use normal sorting
+      if (sort === 'level') {
+        sortOrder = { level: -1 };
+      } else {
+        // Default to 'latest' (createdAt desc)
+        sortOrder = { createdAt: -1 };
+      }
     }
 
     // Combine text search with other filters
@@ -61,7 +71,10 @@ export async function GET(request: NextRequest) {
     const skip = (page - 1) * limit;
 
     // Get items with pagination
-    const items = await ParsedItem.find(combinedFilter)
+    // Include text score in projection when using text search
+    const projection =
+      query && query.length >= 2 ? { score: { $meta: 'textScore' } } : {};
+    const items = await ParsedItem.find(combinedFilter, projection)
       .sort(sortOrder)
       .skip(skip)
       .limit(limit)
@@ -74,6 +87,19 @@ export async function GET(request: NextRequest) {
           type?: string;
           slot?: string;
           raw: string;
+          damageType?: string;
+          averageDamage?: number;
+          acAverage?: number;
+          acBonus?: number;
+          damrollBonus?: number;
+          whenWorn?: {
+            strength?: number;
+            dexterity?: number;
+            constitution?: number;
+            mana?: number;
+            health?: number;
+            hitRoll?: number;
+          };
           roomHistory: string[];
           hidden?: boolean;
           visibleAfter?: Date;
@@ -114,6 +140,12 @@ export async function GET(request: NextRequest) {
         type: item.type,
         slot: item.slot,
         raw: String(item.raw),
+        damageType: item.damageType,
+        averageDamage: item.averageDamage,
+        acAverage: item.acAverage,
+        acBonus: item.acBonus,
+        damrollBonus: item.damrollBonus,
+        whenWorn: item.whenWorn,
         ...(userIsAdmin && { roomHistory: item.roomHistory }),
         ...(userIsAdmin && usernames.length > 0 && { postedBy: usernames }),
         hidden: Boolean(item.hidden),

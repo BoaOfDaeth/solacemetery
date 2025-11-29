@@ -26,6 +26,19 @@ interface ParsedItemLean {
   type?: string;
   slot?: string;
   raw: string;
+  damageType?: string;
+  averageDamage?: number;
+  acAverage?: number;
+  acBonus?: number;
+  damrollBonus?: number;
+  whenWorn?: {
+    strength?: number;
+    dexterity?: number;
+    constitution?: number;
+    mana?: number;
+    health?: number;
+    hitRoll?: number;
+  };
   room?: string;
   by?: string;
   foundAt?: Date;
@@ -67,6 +80,19 @@ async function getItems(
     type?: string;
     slot?: string;
     raw: string;
+    damageType?: string;
+    averageDamage?: number;
+    acAverage?: number;
+    acBonus?: number;
+    damrollBonus?: number;
+    whenWorn?: {
+      strength?: number;
+      dexterity?: number;
+      constitution?: number;
+      mana?: number;
+      health?: number;
+      hitRoll?: number;
+    };
     room?: string;
     by?: string;
     foundAt?: string;
@@ -125,9 +151,22 @@ async function getItems(
     const hasPrevPage = page > 1;
     const skip = (page - 1) * limit;
 
+    // Determine sort order
+    let sortOrder: Record<string, 1 | -1 | { $meta: 'textScore' }>;
+    if (query && query.length >= 2) {
+      // When searching, sort by text score (relevance) first, then by creation date
+      sortOrder = { score: { $meta: 'textScore' }, createdAt: -1 };
+    } else {
+      // No search query, use normal sorting
+      sortOrder = { createdAt: -1 };
+    }
+
     // Get items with pagination
-    const items = await ParsedItem.find(combinedFilter)
-      .sort({ createdAt: -1 })
+    // Include text score in projection when using text search
+    const projection =
+      query && query.length >= 2 ? { score: { $meta: 'textScore' } } : {};
+    const items = await ParsedItem.find(combinedFilter, projection)
+      .sort(sortOrder)
       .skip(skip)
       .limit(limit)
       .lean<ParsedItemLean[]>();
@@ -141,6 +180,11 @@ async function getItems(
       type: item.type,
       slot: item.slot,
       raw: String(item.raw),
+      damageType: item.damageType,
+      averageDamage: item.averageDamage,
+      acAverage: item.acAverage,
+      acBonus: item.acBonus,
+      damrollBonus: item.damrollBonus,
       room: item.room ? String(item.room) : undefined,
       by: item.by ? String(item.by) : undefined,
       foundAt: item.foundAt ? String(item.foundAt) : undefined,
@@ -251,6 +295,12 @@ export default async function ItemsPage({ searchParams }: ItemsPageProps) {
                       item.type ? ` • ${item.type}` : ''
                     }${item.slot ? ` • ${item.slot}` : ''}`}
                     rawItem={rawItem}
+                    damageType={item.damageType}
+                    averageDamage={item.averageDamage}
+                    acAverage={item.acAverage}
+                    acBonus={item.acBonus}
+                    damrollBonus={item.damrollBonus}
+                    whenWorn={item.whenWorn}
                     userIsAdmin={userIsAdmin}
                     itemHidden={Boolean(item.hidden)}
                     isPending={isPending}

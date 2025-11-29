@@ -14,6 +14,19 @@ interface ExpandableItemCardProps {
     updatedAt: string;
     parsedId?: string;
   };
+  damageType?: string;
+  averageDamage?: number;
+  acAverage?: number;
+  acBonus?: number;
+  damrollBonus?: number;
+  whenWorn?: {
+    strength?: number;
+    dexterity?: number;
+    constitution?: number;
+    mana?: number;
+    health?: number;
+    hitRoll?: number;
+  };
   cardStyle?: React.CSSProperties;
   defaultExpanded?: boolean;
   showExpandButton?: boolean;
@@ -28,6 +41,12 @@ export default function ExpandableItemCard({
   subtitle,
   children,
   rawItem,
+  damageType,
+  averageDamage,
+  acAverage,
+  acBonus,
+  damrollBonus,
+  // whenWorn is an internal field used for search, not displayed
   cardStyle,
   defaultExpanded = false,
   showExpandButton = true,
@@ -55,6 +74,24 @@ export default function ExpandableItemCard({
     ? 'border-dotted border-2'
     : 'border-solid border';
 
+  // Format armor class display with acBonus
+  const armorClassDisplay =
+    acAverage !== undefined
+      ? acBonus !== undefined
+        ? `${acAverage} ${acBonus > 0 ? '+' : ''}${acBonus}`
+        : `${acAverage}`
+      : null;
+
+  // Format damage display with damrollBonus
+  // Always show damrollBonus with averageDamage when both exist: "27 +8"
+  // If damageType is NOT defined, use blank string instead of showing it
+  const damageDisplay =
+    averageDamage !== undefined
+      ? damrollBonus !== undefined
+        ? `${averageDamage} ${damrollBonus > 0 ? '+' : ''}${damrollBonus} ${damageType || ''}`
+        : `${averageDamage} ${damageType || ''}`
+      : null;
+
   return (
     <div>
       <div
@@ -67,7 +104,6 @@ export default function ExpandableItemCard({
           <button
             onClick={() => setIsExpanded(!isExpanded)}
             className="w-full text-left flex justify-between items-center cursor-pointer"
-            title={isExpanded ? 'Hide Raw Data' : 'Show Raw Data'}
           >
             <div className="flex-1">
               <h1 className="text-lg md:text-xl font-bold text-gray-800 select-text">
@@ -80,22 +116,34 @@ export default function ExpandableItemCard({
               )}
               {children}
             </div>
-            <div className="ml-4 p-2">
-              <svg
-                className={`w-4 h-4 transition-transform duration-200 ${
-                  isExpanded ? 'rotate-180' : 'rotate-0'
-                }`}
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M19 9l-7 7-7-7"
-                />
-              </svg>
+            <div className="flex items-center gap-4">
+              {armorClassDisplay && (
+                <div className="text-sm font-semibold text-gray-700">
+                  {armorClassDisplay}
+                </div>
+              )}
+              {damageDisplay && (
+                <div className="text-sm font-semibold text-gray-700">
+                  {damageDisplay}
+                </div>
+              )}
+              <div className="ml-4 p-2">
+                <svg
+                  className={`w-4 h-4 transition-transform duration-200 ${
+                    isExpanded ? 'rotate-180' : 'rotate-0'
+                  }`}
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M19 9l-7 7-7-7"
+                  />
+                </svg>
+              </div>
             </div>
           </button>
         ) : (
@@ -115,6 +163,18 @@ export default function ExpandableItemCard({
                 </p>
               )}
               {children}
+            </div>
+            <div className="flex items-center gap-4">
+              {armorClassDisplay && (
+                <div className="text-sm font-semibold text-gray-700">
+                  {armorClassDisplay}
+                </div>
+              )}
+              {damageDisplay && (
+                <div className="text-sm font-semibold text-gray-700">
+                  {damageDisplay}
+                </div>
+              )}
             </div>
           </div>
         )}

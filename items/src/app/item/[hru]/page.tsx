@@ -22,6 +22,19 @@ interface ParsedItemLean {
   type?: string;
   slot?: string;
   raw: string;
+  damageType?: string;
+  averageDamage?: number;
+  acAverage?: number;
+  acBonus?: number;
+  damrollBonus?: number;
+  whenWorn?: {
+    strength?: number;
+    dexterity?: number;
+    constitution?: number;
+    mana?: number;
+    health?: number;
+    hitRoll?: number;
+  };
   roomHistory: string[];
   createdAt: Date;
   updatedAt: Date;
@@ -125,6 +138,12 @@ async function getItem(hru: string) {
       type: parsedItem.type,
       slot: parsedItem.slot,
       raw: String(parsedItem.raw),
+      damageType: parsedItem.damageType,
+      averageDamage: parsedItem.averageDamage,
+      acAverage: parsedItem.acAverage,
+      acBonus: parsedItem.acBonus,
+      damrollBonus: parsedItem.damrollBonus,
+      whenWorn: parsedItem.whenWorn,
       roomHistory: parsedItem.roomHistory,
       createdAt: String(parsedItem.createdAt),
       updatedAt: String(parsedItem.updatedAt),
@@ -183,6 +202,12 @@ export default async function ItemPage({ params }: ItemPageProps) {
             item.parsedItem.type ? ` • ${item.parsedItem.type}` : ''
           }${item.parsedItem.slot ? ` • ${item.parsedItem.slot}` : ''}`}
           rawItem={item.rawItem}
+          damageType={item.parsedItem.damageType}
+          averageDamage={item.parsedItem.averageDamage}
+          acAverage={item.parsedItem.acAverage}
+          acBonus={item.parsedItem.acBonus}
+          damrollBonus={item.parsedItem.damrollBonus}
+          whenWorn={item.parsedItem.whenWorn}
           defaultExpanded={true}
           showExpandButton={false}
           userIsAdmin={userIsAdmin}

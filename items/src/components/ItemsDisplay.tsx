@@ -131,6 +131,12 @@ export default function ItemsDisplay({ userIsAdmin }: ItemsDisplayProps) {
                 item.type ? ` • ${item.type}` : ''
               }${item.slot ? ` • ${item.slot}` : ''}`}
               rawItem={rawItem}
+              damageType={item.damageType}
+              averageDamage={item.averageDamage}
+              acAverage={item.acAverage}
+              acBonus={item.acBonus}
+              damrollBonus={item.damrollBonus}
+              whenWorn={item.whenWorn}
               userIsAdmin={userIsAdmin}
               itemHidden={Boolean(item.hidden)}
               isPending={isPending}

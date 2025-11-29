@@ -7,6 +7,20 @@ export interface IParsedItem extends Document {
   type?: string; // Item type extracted from "is armor", "is weapon", etc.
   slot?: string; // Equipment slot for wearable items (e.g., 'head', 'body', 'arms', 'hands', 'legs', 'feet', 'finger', 'wrist', 'neck')
   raw: string; // Original raw text
+  damageType?: string; // Damage type for weapons (e.g., 'slash', 'pierce', 'cold', etc.)
+  averageDamage?: number; // Average damage for weapons
+  acAverage?: number; // Average armor class (average of pierce, bash, slash, magic)
+  acBonus?: number; // Armor class bonus from whenWorn
+  damrollBonus?: number; // Damage roll bonus from whenWorn
+  whenWorn?: {
+    strength?: number;
+    dexterity?: number;
+    constitution?: number;
+    mana?: number;
+    health?: number;
+    hitRoll?: number;
+  };
+  searchText?: string; // Indexed searchable text: name + whenWorn stats
   roomHistory: string[]; // Array of rooms where this item was found
   hidden: boolean;
   createdBy?: string; // Username of the user who first created this parsed item
@@ -44,6 +58,27 @@ const ParsedItemSchema: Schema = new Schema(
       required: true,
       trim: true,
     },
+    damageType: {
+      type: String,
+      trim: true,
+    },
+    averageDamage: {
+      type: Number,
+    },
+    acAverage: {
+      type: Number,
+    },
+    acBonus: {
+      type: Number,
+    },
+    damrollBonus: {
+      type: Number,
+    },
+    // whenWorn is a virtual field - calculated during parsing but not saved to database
+    searchText: {
+      type: String,
+      trim: true,
+    },
     roomHistory: {
       type: [String],
       default: [],
@@ -71,7 +106,7 @@ const ParsedItemSchema: Schema = new Schema(
 ParsedItemSchema.index({ level: 1 });
 ParsedItemSchema.index({ type: 1 });
 ParsedItemSchema.index({ slot: 1 });
-ParsedItemSchema.index({ raw: 'text' }); // Text index for full-text search on raw field
+ParsedItemSchema.index({ searchText: 'text' }); // Text index for full-text search on searchText field
 // Note: hru field already has unique index from schema definition
 
 // Ensure model picks up schema changes during dev hot-reload

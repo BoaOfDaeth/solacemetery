@@ -10,6 +10,19 @@ interface Item {
   type?: string;
   slot?: string;
   raw: string;
+  damageType?: string;
+  averageDamage?: number;
+  acAverage?: number;
+  acBonus?: number;
+  damrollBonus?: number;
+  whenWorn?: {
+    strength?: number;
+    dexterity?: number;
+    constitution?: number;
+    mana?: number;
+    health?: number;
+    hitRoll?: number;
+  };
   roomHistory: string[];
   createdAt: string;
   updatedAt: string;

@@ -20,6 +20,19 @@ interface ParsedItemLean {
   type?: string;
   slot?: string;
   raw: string;
+  damageType?: string;
+  averageDamage?: number;
+  acAverage?: number;
+  acBonus?: number;
+  damrollBonus?: number;
+  whenWorn?: {
+    strength?: number;
+    dexterity?: number;
+    constitution?: number;
+    mana?: number;
+    health?: number;
+    hitRoll?: number;
+  };
   roomHistory: string[];
   createdAt: Date;
   updatedAt: Date;
@@ -137,6 +150,12 @@ export default async function ComparePage({ searchParams }: ComparePageProps) {
                     parsedItem.type ? ` • ${parsedItem.type}` : ''
                   }${parsedItem.slot ? ` • ${parsedItem.slot}` : ''}`}
                   rawItem={item}
+                  damageType={parsedItem.damageType}
+                  averageDamage={parsedItem.averageDamage}
+                  acAverage={parsedItem.acAverage}
+                  acBonus={parsedItem.acBonus}
+                  damrollBonus={parsedItem.damrollBonus}
+                  whenWorn={parsedItem.whenWorn}
                   defaultExpanded={true}
                   showExpandButton={false}
                   userIsAdmin={userIsAdmin}

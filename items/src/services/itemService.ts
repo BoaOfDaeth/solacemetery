@@ -2,6 +2,7 @@ import connectDB from '@/lib/mongodb';
 import ParsedItem from '@/models/ParsedItem';
 import Item from '@/models/Item';
 import User from '@/models/User';
+import { DAMAGE_TYPE_BY_KEYWORD } from '@/lib/constants';
 
 export interface ParsedItemData {
   name: string;
@@ -10,6 +11,20 @@ export interface ParsedItemData {
   type?: string;
   slot?: string;
   raw: string;
+  damageType?: string;
+  averageDamage?: number;
+  acAverage?: number;
+  acBonus?: number;
+  damrollBonus?: number;
+  whenWorn?: {
+    strength?: number;
+    dexterity?: number;
+    constitution?: number;
+    mana?: number;
+    health?: number;
+    hitRoll?: number;
+  };
+  searchText?: string;
 }
 
 export function parseItemRaw(raw: string): ParsedItemData {
@@ -96,10 +111,162 @@ export function parseItemRaw(raw: string): ParsedItemData {
     }
   }
 
+  // Parse damage type from "Its attacks take the form of a <keyword>."
+  for (const line of lines) {
+    const attackMatch = line.match(
+      /its\s+attacks\s+take\s+the\s+form\s+of\s+a\s+([^.]+)\./i
+    );
+    if (attackMatch) {
+      const keyword = attackMatch[1].trim().toLowerCase();
+      const damageType = DAMAGE_TYPE_BY_KEYWORD[keyword];
+      if (damageType) {
+        parsed.damageType = damageType;
+        break;
+      }
+    }
+  }
+
+  // Parse average damage from "It deals XdY damage (averaging at Z)."
+  for (const line of lines) {
+    const damageMatch = line.match(
+      /it\s+deals\s+\d+d\d+\s+damage\s+\(averaging\s+at\s+(\d+)\)\./i
+    );
+    if (damageMatch) {
+      parsed.averageDamage = parseInt(damageMatch[1]);
+      break;
+    }
+  }
+
+  // Parse armor class from "Armor class bonus: 4 vs pierce, 4 vs bash, 4 vs slash, and 2 vs magic."
+  // Calculate average of the 4 values
+  for (const line of lines) {
+    const armorMatch = line.match(
+      /armor\s+class\s+bonus:\s+(\d+)\s+vs\s+pierce,\s+(\d+)\s+vs\s+bash,\s+(\d+)\s+vs\s+slash,\s+and\s+(\d+)\s+vs\s+magic\./i
+    );
+    if (armorMatch) {
+      const pierce = parseInt(armorMatch[1]);
+      const bash = parseInt(armorMatch[2]);
+      const slash = parseInt(armorMatch[3]);
+      const magic = parseInt(armorMatch[4]);
+      parsed.acAverage = Math.round((pierce + bash + slash + magic) / 4);
+      break;
+    }
+  }
+
+  // Parse "When worn, it" section - virtual field for searchText and bonus calculations
+  // Need to check original raw text for indentation
+  const whenWorn: ParsedItemData['whenWorn'] = {};
+  let acBonus: number | undefined;
+  let damrollBonus: number | undefined;
+  const rawLines = raw.split('\n');
+  let inWhenWornSection = false;
+
+  for (let i = 0; i < rawLines.length; i++) {
+    const originalLine = rawLines[i];
+    const trimmedLine = originalLine.trim();
+
+    // Skip empty lines
+    if (trimmedLine.length === 0) {
+      continue;
+    }
+
+    // Check if we're entering the "When worn, it" section
+    if (trimmedLine.match(/when\s+worn,\s+it/i)) {
+      inWhenWornSection = true;
+      continue;
+    }
+
+    // If we're in the section, only process indented lines (lines that start with whitespace)
+    if (inWhenWornSection) {
+      // Check if line is indented (starts with whitespace)
+      if (!/^\s/.test(originalLine)) {
+        // Line is not indented, we've reached the end of the section
+        break;
+      }
+
+      // Parse "modifies <stat> by <value>"
+      const modifyMatch = trimmedLine.match(
+        /modifies\s+(hit\s+roll|damage\s+roll|armor\s+class|\w+)\s+by\s+(-?\d+)/i
+      );
+      if (modifyMatch) {
+        const stat = modifyMatch[1].toLowerCase();
+        const value = parseInt(modifyMatch[2]);
+
+        // Map stat names to whenWorn fields
+        if (stat === 'strength') {
+          whenWorn.strength = value;
+        } else if (stat === 'dexterity') {
+          whenWorn.dexterity = value;
+        } else if (stat === 'constitution') {
+          whenWorn.constitution = value;
+        } else if (stat === 'mana') {
+          whenWorn.mana = value;
+        } else if (stat === 'health') {
+          whenWorn.health = value;
+        } else if (stat === 'hit roll') {
+          whenWorn.hitRoll = value;
+        } else if (stat === 'armor class') {
+          acBonus = value;
+        } else if (stat === 'damage roll') {
+          damrollBonus = value;
+        }
+      }
+    }
+  }
+
+  // Set acBonus and damrollBonus if found (calculated from whenWorn section)
+  if (acBonus !== undefined) {
+    parsed.acBonus = acBonus;
+  }
+  if (damrollBonus !== undefined) {
+    parsed.damrollBonus = damrollBonus;
+  }
+
   // Generate HRU from the parsed name (slugified)
   parsed.hru = slugify(parsed.name);
 
+  // Build searchText: name + whenWorn stats (whenWorn is virtual, not saved to DB)
+  parsed.searchText = buildSearchText(parsed.name, whenWorn);
+
   return parsed;
+}
+
+function buildSearchText(
+  name: string,
+  whenWorn?: ParsedItemData['whenWorn']
+): string {
+  const parts: string[] = [name.toLowerCase()];
+
+  if (whenWorn) {
+    if (whenWorn.strength !== undefined) {
+      parts.push(
+        `strength ${whenWorn.strength > 0 ? '+' : ''}${whenWorn.strength}`
+      );
+    }
+    if (whenWorn.dexterity !== undefined) {
+      parts.push(
+        `dexterity ${whenWorn.dexterity > 0 ? '+' : ''}${whenWorn.dexterity}`
+      );
+    }
+    if (whenWorn.constitution !== undefined) {
+      parts.push(
+        `constitution ${whenWorn.constitution > 0 ? '+' : ''}${whenWorn.constitution}`
+      );
+    }
+    if (whenWorn.mana !== undefined) {
+      parts.push(`mana ${whenWorn.mana > 0 ? '+' : ''}${whenWorn.mana}`);
+    }
+    if (whenWorn.health !== undefined) {
+      parts.push(`health ${whenWorn.health > 0 ? '+' : ''}${whenWorn.health}`);
+    }
+    if (whenWorn.hitRoll !== undefined) {
+      parts.push(
+        `hit roll ${whenWorn.hitRoll > 0 ? '+' : ''}${whenWorn.hitRoll}`
+      );
+    }
+  }
+
+  return parts.join(' ');
 }
 
 export function slugify(text: string): string {
@@ -157,12 +324,19 @@ export async function createOrUpdateParsedItem(
 
   if (existingParsedItem) {
     // Update existing parsed item (don't change createdBy - preserve original creator)
+    // Note: whenWorn is a virtual field - not saved to database
     const updateData: Record<string, unknown> = {
       name: parsedData.name,
       level: parsedData.level,
       type: parsedData.type,
       slot: parsedData.slot,
       raw: parsedData.raw,
+      damageType: parsedData.damageType,
+      averageDamage: parsedData.averageDamage,
+      acAverage: parsedData.acAverage,
+      acBonus: parsedData.acBonus,
+      damrollBonus: parsedData.damrollBonus,
+      searchText: parsedData.searchText,
       updatedAt: new Date(),
     };
 
@@ -183,8 +357,20 @@ export async function createOrUpdateParsedItem(
     return { success: true, hru: parsedData.hru };
   } else {
     // Create new parsed item with raw item data
+    // Note: whenWorn is a virtual field - not saved to database
     const newParsedItemData: Record<string, unknown> = {
-      ...parsedData,
+      name: parsedData.name,
+      hru: parsedData.hru,
+      level: parsedData.level,
+      type: parsedData.type,
+      slot: parsedData.slot,
+      raw: parsedData.raw,
+      damageType: parsedData.damageType,
+      averageDamage: parsedData.averageDamage,
+      acAverage: parsedData.acAverage,
+      acBonus: parsedData.acBonus,
+      damrollBonus: parsedData.damrollBonus,
+      searchText: parsedData.searchText,
       roomHistory: [],
     };
 
