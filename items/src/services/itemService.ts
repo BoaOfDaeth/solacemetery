@@ -111,14 +111,16 @@ export function parseItemRaw(raw: string): ParsedItemData {
     }
   }
 
-  // Parse damage type from "Its attacks take the form of a <keyword>."
+  // Parse damage type from "Its attacks take the form of <keyword>."
+  // Match exact keyword from constants (which include articles where needed)
   for (const line of lines) {
     const attackMatch = line.match(
-      /its\s+attacks\s+take\s+the\s+form\s+of\s+a\s+([^.]+)\./i
+      /its\s+attacks\s+take\s+the\s+form\s+of\s+([^.]+)\./i
     );
     if (attackMatch) {
-      const keyword = attackMatch[1].trim().toLowerCase();
-      const damageType = DAMAGE_TYPE_BY_KEYWORD[keyword];
+      const extractedText = attackMatch[1].trim().toLowerCase();
+      // Match exact keyword from constants
+      const damageType = DAMAGE_TYPE_BY_KEYWORD[extractedText];
       if (damageType) {
         parsed.damageType = damageType;
         break;
