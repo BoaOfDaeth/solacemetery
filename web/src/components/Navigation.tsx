@@ -6,6 +6,7 @@ import Link from 'next/link';
 interface NavItem {
   label: string;
   href: string;
+  external?: boolean;
 }
 
 interface NavigationProps {
@@ -138,15 +139,34 @@ export default function Navigation({
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-2">
       <div className="flex items-center justify-center h-8">
         <nav className="flex items-center space-x-1">
-          {items.map((item, index) => (
-            <Link
-              key={index}
-              href={item.href}
-              className="px-3 py-2 text-sm font-medium text-primary rounded-lg hover:bg-primary/10 focus:outline-none focus:ring-2 focus:ring-primary/20 transition-colors"
-            >
-              {item.label}
-            </Link>
-          ))}
+          {items.map((item, index) => {
+            const isExternal = item.external || item.href.startsWith('http://') || item.href.startsWith('https://');
+            const linkClassName = "px-3 py-2 text-sm font-medium text-primary rounded-lg hover:bg-primary/10 focus:outline-none focus:ring-2 focus:ring-primary/20 transition-colors";
+            
+            if (isExternal) {
+              return (
+                <a
+                  key={index}
+                  href={item.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className={linkClassName}
+                >
+                  {item.label}
+                </a>
+              );
+            }
+            
+            return (
+              <Link
+                key={index}
+                href={item.href}
+                className={linkClassName}
+              >
+                {item.label}
+              </Link>
+            );
+          })}
         </nav>
       </div>
     </div>
@@ -161,11 +181,28 @@ function CompactMobileNavItem({
   item: NavItem;
   onClose: () => void;
 }) {
+  const isExternal = item.external || item.href.startsWith('http://') || item.href.startsWith('https://');
+  const linkClassName = "block px-3 py-2 text-sm font-medium text-primary rounded-lg hover:bg-primary/10 focus:outline-none transition-colors";
+  
+  if (isExternal) {
+    return (
+      <a
+        href={item.href}
+        target="_blank"
+        rel="noopener noreferrer"
+        onClick={onClose}
+        className={linkClassName}
+      >
+        {item.label}
+      </a>
+    );
+  }
+  
   return (
     <Link
       href={item.href}
       onClick={onClose}
-      className="block px-3 py-2 text-sm font-medium text-primary rounded-lg hover:bg-primary/10 focus:outline-none transition-colors"
+      className={linkClassName}
     >
       {item.label}
     </Link>

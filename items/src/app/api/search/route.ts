@@ -17,10 +17,11 @@ export async function GET(request: NextRequest) {
     const limit = 10;
 
     let searchFilter: Record<string, unknown> = {};
+    let textSearch: { $text?: { $search: string } } = {};
 
-    // If there's a search query, filter by name
+    // If there's a search query, use text search for better performance
     if (query && query.length >= 2) {
-      searchFilter.name = { $regex: query, $options: 'i' };
+      textSearch.$text = { $search: query };
     }
 
     // If there's a filter, add it to the search filter
@@ -47,8 +48,11 @@ export async function GET(request: NextRequest) {
       sortOrder = { createdAt: -1 };
     }
 
+    // Combine text search with other filters
+    const combinedFilter = { ...textSearch, ...searchFilter };
+
     // Get total count with the same filter
-    const totalItems = await ParsedItem.countDocuments(searchFilter);
+    const totalItems = await ParsedItem.countDocuments(combinedFilter);
 
     // Calculate pagination info
     const totalPages = Math.ceil(totalItems / limit);
@@ -57,7 +61,7 @@ export async function GET(request: NextRequest) {
     const skip = (page - 1) * limit;
 
     // Get items with pagination
-    const items = await ParsedItem.find(searchFilter)
+    const items = await ParsedItem.find(combinedFilter)
       .sort(sortOrder)
       .skip(skip)
       .limit(limit)

@@ -78,6 +78,11 @@ export default function RootLayout({
       label: 'Help articles',
       href: '/help',
     },
+    {
+      label: 'Items DB',
+      href: 'https://solabase.deliriumtech.online/',
+      external: true,
+    },
   ];
 
   return (

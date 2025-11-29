@@ -93,10 +93,11 @@ async function getItems(
     const limit = 10;
 
     let searchFilter: Record<string, unknown> = {};
+    let textSearch: { $text?: { $search: string } } = {};
 
-    // If there's a search query, filter by name
+    // If there's a search query, use text search for better performance
     if (query && query.length >= 2) {
-      searchFilter.name = { $regex: query, $options: 'i' };
+      textSearch.$text = { $search: query };
     }
 
     // If there's a filter, add it to the search filter
@@ -112,8 +113,11 @@ async function getItems(
     // Apply visibility filter (visibleAfter for API posts)
     searchFilter = addVisibilityFilter(searchFilter, userIsAdmin);
 
+    // Combine text search with other filters
+    const combinedFilter = { ...textSearch, ...searchFilter };
+
     // Get total count
-    const totalItems = await ParsedItem.countDocuments(searchFilter);
+    const totalItems = await ParsedItem.countDocuments(combinedFilter);
 
     // Calculate pagination
     const totalPages = Math.ceil(totalItems / limit);
@@ -122,7 +126,7 @@ async function getItems(
     const skip = (page - 1) * limit;
 
     // Get items with pagination
-    const items = await ParsedItem.find(searchFilter)
+    const items = await ParsedItem.find(combinedFilter)
       .sort({ createdAt: -1 })
       .skip(skip)
       .limit(limit)

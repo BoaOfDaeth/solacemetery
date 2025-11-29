@@ -71,6 +71,7 @@ const ParsedItemSchema: Schema = new Schema(
 ParsedItemSchema.index({ level: 1 });
 ParsedItemSchema.index({ type: 1 });
 ParsedItemSchema.index({ slot: 1 });
+ParsedItemSchema.index({ raw: 'text' }); // Text index for full-text search on raw field
 // Note: hru field already has unique index from schema definition
 
 // Ensure model picks up schema changes during dev hot-reload
