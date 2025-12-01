@@ -54,6 +54,7 @@ services:
       - '${WEB_PORT:-3000}:3000'
     environment:
       DATABASE_URL: ${DATABASE_URL}
+      REDIS_URL: redis://redis:6379
       NODE_ENV: production
       NEXT_TELEMETRY_DISABLED: 1
     networks:
