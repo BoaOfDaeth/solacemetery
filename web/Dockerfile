@@ -9,7 +9,7 @@ WORKDIR /app
 
 # Install all dependencies (including dev dependencies needed for build)
 COPY package.json package-lock.json* ./
-RUN npm ci --no-audit --no-fund && \
+RUN npm install --no-audit --no-fund && \
     npm cache clean --force
 
 # Rebuild the source code only when needed
