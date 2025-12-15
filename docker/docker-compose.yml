@@ -24,23 +24,27 @@ services:
       - redis_data:/data
     sysctls:
       - net.core.somaxconn=1024
-    command: |
-      redis-server
-      --save 60 1
-      --loglevel warning
-      --maxmemory 256mb
-      --maxmemory-policy allkeys-lru
-      --tcp-backlog 511
-      --timeout 0
-      --tcp-keepalive 300
+    command:
+      - redis-server
+      - --save
+      - "60"
+      - "1"
+      - --loglevel
+      - warning
+      - --maxmemory
+      - 256mb
+      - --maxmemory-policy
+      - allkeys-lru
+      - --tcp-backlog
+      - "511"
+      - --timeout
+      - "0"
+      - --tcp-keepalive
+      - "300"
+      - --bind
+      - "0.0.0.0"
     networks:
       - solacers
-    healthcheck:
-      test: ["CMD", "redis-cli", "ping"]
-      interval: 30s
-      timeout: 10s
-      retries: 3
-      start_period: 10s
 
   web:
     build:
@@ -60,8 +64,10 @@ services:
     networks:
       - solacers
     depends_on:
-      - mongodb
-      - redis
+      mongodb:
+        condition: service_started
+      redis:
+        condition: service_started
 
   items:
     build:
@@ -83,8 +89,10 @@ services:
     networks:
       - solacers
     depends_on:
-      - mongodb
-      - redis
+      mongodb:
+        condition: service_started
+      redis:
+        condition: service_started
 
 volumes:
   mongodb_data:
