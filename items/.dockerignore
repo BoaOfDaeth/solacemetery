@@ -1,3 +1,17 @@
+# Prevent large dev artifacts from being sent in the build context
+node_modules
+.next
+.git
+.gitignore
+.env
+.env.*
+npm-debug.log*
+yarn-error.log*
+*.log
+coverage
+dist
+tmp
+*.tmp
 Dockerfile
 .dockerignore
 node_modules
