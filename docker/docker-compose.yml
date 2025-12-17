@@ -47,11 +47,8 @@ services:
       - solacers
 
   web:
-    build:
-      context: ../web
-      dockerfile: Dockerfile
-      args:
-        BUILD_DATE: ${BUILD_DATE:-}
+    image: ghcr.io/boaofdaeth/solacemetery:latest
+    pull_policy: always
     container_name: solacers-web
     restart: unless-stopped
     ports:
@@ -70,9 +67,8 @@ services:
         condition: service_started
 
   items:
-    build:
-      context: ../items
-      dockerfile: Dockerfile
+    image: ghcr.io/boaofdaeth/solabase:latest
+    pull_policy: always
     container_name: solacers-items
     restart: unless-stopped
     ports:
