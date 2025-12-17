@@ -1,6 +1,14 @@
 # Solacemetery Web App Makefile
 
-.PHONY: help build clean run submodules
+.PHONY: help build clean run submodules deploy
+
+# GitHub Container Registry (GHCR) deploy settings
+REGISTRY := ghcr.io
+GHCR_OWNER := boaofdaeth
+IMAGE_NAME := solacemetery
+IMAGE_TAG ?= latest
+PLATFORM := linux/amd64
+IMAGE := $(REGISTRY)/$(GHCR_OWNER)/$(IMAGE_NAME):$(IMAGE_TAG)
 
 # Default target
 help:
@@ -9,6 +17,7 @@ help:
 	@echo "  run        - Build and run Docker container using docker compose (requires ../docker/.env)"
 	@echo "  clean      - Remove Docker image"
 	@echo "  submodules - Initialize and update git submodules"
+	@echo "  deploy     - Build linux/amd64 image and push to GHCR (override IMAGE_TAG)"
 	@echo "  help       - Show this help message"
 
 # Build Docker image
@@ -38,3 +47,13 @@ submodules:
 	@echo "Initializing and updating git submodules..."
 	@git submodule update --init --recursive
 	@echo "Submodules updated successfully!"
+
+# Build for linux and push to GitHub Container Registry (requires: docker login ghcr.io)
+deploy:
+	@echo "Building and pushing $(IMAGE) for platform $(PLATFORM)..."
+	@docker buildx build \
+		--platform "$(PLATFORM)" \
+		--build-arg BUILD_DATE="$$(date -u +"%Y-%m-%dT%H:%M:%SZ")" \
+		-t "$(IMAGE)" \
+		--push \
+		.
