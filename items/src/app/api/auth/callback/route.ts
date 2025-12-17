@@ -131,6 +131,7 @@ export async function GET(request: NextRequest) {
         code: code,
         redirect_uri: DISCORD_REDIRECT_URI,
       }),
+      signal: AbortSignal.timeout(30000), // 30 second timeout
     });
 
     if (!tokenResponse.ok) {
@@ -149,6 +150,7 @@ export async function GET(request: NextRequest) {
       headers: {
         Authorization: `Bearer ${accessToken}`,
       },
+      signal: AbortSignal.timeout(30000), // 30 second timeout
     });
 
     if (!userResponse.ok) {

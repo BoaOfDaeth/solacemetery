@@ -70,19 +70,16 @@ services:
     pull_policy: always
     container_name: solacers-items
     restart: unless-stopped
-    ports:
-      - '${ITEMS_PORT:-2888}:2888'
+    network_mode: host
     environment:
-      MONGODB_URI: mongodb://${MONGO_INITDB_ROOT_USERNAME}:${MONGO_INITDB_ROOT_PASSWORD}@mongodb:27017/${MONGO_INITDB_DATABASE:-solacers}?authSource=admin
-      REDIS_URL: redis://redis:6379
+      MONGODB_URI: mongodb://${MONGO_INITDB_ROOT_USERNAME}:${MONGO_INITDB_ROOT_PASSWORD}@localhost:${MONGODB_PORT:-27093}/${MONGO_INITDB_DATABASE:-solacers}?authSource=admin
+      REDIS_URL: redis://localhost:${REDIS_PORT:-6379}
       DISCORD_CLIENT_ID: ${DISCORD_CLIENT_ID}
       DISCORD_CLIENT_SECRET: ${DISCORD_CLIENT_SECRET}
       DISCORD_REDIRECT_URI: ${DISCORD_REDIRECT_URI}
       NODE_ENV: production
       NEXT_TELEMETRY_DISABLED: 1
       PORT: 2888
-    networks:
-      - solacers
     depends_on:
       mongodb:
         condition: service_started
