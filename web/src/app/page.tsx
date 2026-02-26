@@ -113,9 +113,19 @@ export default async function Home() {
       {/* Statistics Overview */}
       <div className="max-w-7xl mx-auto px-2 sm:px-4 lg:px-6">
         {/* Join Game Connection Info */}
-        <p className="mb-2 text-base sm:text-lg font-mono font-medium text-foreground text-center">
-          telnet://play.solace.rs:4000
-        </p>
+        <div className="mb-2 flex flex-col items-center justify-center gap-1 text-base sm:flex-row sm:gap-4 sm:text-lg font-medium text-foreground">
+          <p className="font-mono text-center">
+            telnet://play.solace.rs:4000
+          </p>
+          <a
+            href="https://discord.gg/tt2Km8vFHa"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-primary hover:text-primary/80 hover:underline text-center"
+          >
+            Join Discord!
+          </a>
+        </div>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2 lg:gap-4 mb-2 lg:mb-4">
           <StatsCard
