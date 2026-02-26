@@ -26,6 +26,7 @@ jobs:
         with:
           ref: ${{ inputs.branch }}
           submodules: recursive
+          ssh-key: ${{ secrets.SOLACE_HELPDEV_DEPLOY_KEY }}
 
       - name: Set short SHA
         shell: bash
