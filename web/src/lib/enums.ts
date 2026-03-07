@@ -89,6 +89,11 @@ export enum Specs {
   GOD_HIDDUKEL = 'Hiddukel',
 }
 
+// Characters excluded from Top 10 player kill statistics
+export const PVP_LEADERBOARD_EXCLUDED: string[] = [
+  'Sirrion', // immortal
+];
+
 // Helper functions to get all values
 export function getAllAlignments(): Alignment[] {
   return Object.values(Alignment);

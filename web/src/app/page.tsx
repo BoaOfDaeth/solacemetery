@@ -4,6 +4,7 @@ import {
   getTimeFilterClause,
 } from '@/lib/utils';
 import { query } from '@/lib/db';
+import { PVP_LEADERBOARD_EXCLUDED } from '@/lib/enums';
 import { Icon } from '@iconify/react';
 import StatsCard from '@/components/StatsCard';
 import ModernTable from '@/components/ModernTable';
@@ -54,21 +55,23 @@ async function getStats(): Promise<Stats> {
     );
 
     // Get top 10 player killers with their race and class
+    const excludedPlaceholders = PVP_LEADERBOARD_EXCLUDED.map(() => '?').join(', ');
     const topKillers = await query(
       `
-      SELECT 
+      SELECT
         killer,
         COUNT(*) as kills,
         MAX(krace) as race,
         MAX(kclass) as class
-      FROM PVP 
-      WHERE killer != victim 
+      FROM PVP
+      WHERE killer != victim
+      AND killer NOT IN (${excludedPlaceholders})
       AND (${getTimeFilterClause()})
-      GROUP BY killer 
-      ORDER BY kills DESC 
+      GROUP BY killer
+      ORDER BY kills DESC
       LIMIT 10
     `,
-      [cutoffDate]
+      [...PVP_LEADERBOARD_EXCLUDED, cutoffDate]
     );
 
     // Get top 10 monster killers
