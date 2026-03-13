@@ -41,16 +41,16 @@ export default function HelpPage() {
 
 export const metadata = {
   title: 'Help Categories',
-  description: 'Browse help categories to find articles for Solace Mud',
+  description: 'Browse help categories to find articles for Solace MUD',
   alternates: { canonical: '/help' },
   openGraph: {
     title: 'Help Categories',
-    description: 'Browse help categories to find articles for Solace Mud',
+    description: 'Browse help categories to find articles for Solace MUD',
     url: '/help',
   },
   twitter: {
     title: 'Help Categories',
-    description: 'Browse help categories to find articles for Solace Mud',
+    description: 'Browse help categories to find articles for Solace MUD',
     card: 'summary',
   },
 } as const;

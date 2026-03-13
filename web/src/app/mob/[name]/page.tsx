@@ -146,7 +146,7 @@ export async function generateMetadata({ params }: { params: Promise<{ name: str
   const decodedName = decodeURIComponent(name);
   const canonical = `/mob/${encodeURIComponent(decodedName)}`;
   const title = `${decodedName} · Mob`;
-  const description = `Statistics and victims for ${decodedName} in Solace Mud.`;
+  const description = `Statistics and victims for ${decodedName} in Solace MUD.`;
   return {
     title,
     description,

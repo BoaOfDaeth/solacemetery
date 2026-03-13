@@ -251,18 +251,18 @@ export default async function Home() {
 }
 
 export const metadata: Metadata = {
-  title: 'Overview · Solace Mud',
+  title: 'Overview · Solace MUD',
   description:
-    'Latest PVP and MVP stats, leaders, and summaries for Solace Mud.',
+    'Latest PVP and MVP stats, leaders, and summaries for Solace MUD.',
   alternates: { canonical: '/' },
   openGraph: {
     description:
-      'Latest PVP and MVP stats, leaders, and summaries for Solace Mud.',
+      'Latest PVP and MVP stats, leaders, and summaries for Solace MUD.',
     url: '/',
   },
   twitter: {
     description:
-      'Latest PVP and MVP stats, leaders, and summaries for Solace Mud.',
+      'Latest PVP and MVP stats, leaders, and summaries for Solace MUD.',
     card: 'summary',
   },
 };

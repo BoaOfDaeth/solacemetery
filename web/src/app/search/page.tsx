@@ -211,10 +211,10 @@ export async function generateMetadata({
   
   return {
     title: 'Search',
-    description: 'Search for characters, monsters, and help articles in Solace Mud.',
+    description: 'Search for characters, monsters, and help articles in Solace MUD.',
     alternates: { canonical: '/search' },
-    openGraph: { title: 'Search', description: 'Search for characters, monsters, and help articles in Solace Mud.', url: '/search' },
-    twitter: { title: 'Search', description: 'Search for characters, monsters, and help articles in Solace Mud.', card: 'summary' },
+    openGraph: { title: 'Search', description: 'Search for characters, monsters, and help articles in Solace MUD.', url: '/search' },
+    twitter: { title: 'Search', description: 'Search for characters, monsters, and help articles in Solace MUD.', card: 'summary' },
     robots: hasQueryParams ? { index: false, follow: false } : undefined,
   };
 }

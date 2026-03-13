@@ -28,22 +28,22 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   metadataBase: new URL(DOMAIN),
   title: {
-    default: 'Solace Mud',
-    template: '%s · Solace Mud',
+    default: 'Solace MUD',
+    template: '%s · Solace MUD',
   },
-  description: 'Player statistics and combat records for Solace Mud',
+  description: 'Player statistics and combat records for Solace MUD',
   alternates: { canonical: '/' },
   openGraph: {
     type: 'website',
-    siteName: 'Solace Mud',
-    title: 'Solace Mud',
-    description: 'Player statistics and combat records for Solace Mud',
+    siteName: 'Solace MUD',
+    title: 'Solace MUD',
+    description: 'Player statistics and combat records for Solace MUD',
     url: '/',
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Solace Mud',
-    description: 'Player statistics and combat records for Solace Mud',
+    title: 'Solace MUD',
+    description: 'Player statistics and combat records for Solace MUD',
   },
   robots: { index: true, follow: true },
 };
@@ -109,7 +109,7 @@ export default function RootLayout({
                   />
                 </div>
                 <span className="font-semibold text-foreground hidden md:block text-sm sm:text-base">
-                  Solace Mud
+                  Solace MUD
                 </span>
               </Link>
 

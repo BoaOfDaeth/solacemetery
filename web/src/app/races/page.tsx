@@ -58,8 +58,8 @@ export default async function RacesPage() {
 
 export const metadata: Metadata = {
   title: 'Races',
-  description: 'All playable races in Solace Mud.',
+  description: 'All playable races in Solace MUD.',
   alternates: { canonical: '/races' },
-  openGraph: { title: 'Races', description: 'All playable races in Solace Mud.', url: '/races' },
-  twitter: { title: 'Races', description: 'All playable races in Solace Mud.', card: 'summary' },
+  openGraph: { title: 'Races', description: 'All playable races in Solace MUD.', url: '/races' },
+  twitter: { title: 'Races', description: 'All playable races in Solace MUD.', card: 'summary' },
 };

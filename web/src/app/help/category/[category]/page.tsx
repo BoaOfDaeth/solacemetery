@@ -57,16 +57,16 @@ export async function generateMetadata({ params }: CategoryPageProps): Promise<M
 
   return {
     title: `${category} Articles - Help`,
-    description: `Browse ${categoryInfo.articleCount} help articles in the ${category} category for Solace Mud`,
+    description: `Browse ${categoryInfo.articleCount} help articles in the ${category} category for Solace MUD`,
     alternates: { canonical: `/help/category/${category}` },
     openGraph: {
       title: `${category} Articles - Help`,
-      description: `Browse ${categoryInfo.articleCount} help articles in the ${category} category for Solace Mud`,
+      description: `Browse ${categoryInfo.articleCount} help articles in the ${category} category for Solace MUD`,
       url: `/help/category/${category}`,
     },
     twitter: {
       title: `${category} Articles - Help`,
-      description: `Browse ${categoryInfo.articleCount} help articles in the ${category} category for Solace Mud`,
+      description: `Browse ${categoryInfo.articleCount} help articles in the ${category} category for Solace MUD`,
       card: 'summary',
     },
   };

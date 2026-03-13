@@ -145,10 +145,10 @@ export async function generateMetadata({
   
   return {
     title: 'Mob Kills',
-    description: 'Recent player kills by mobs in Solace Mud.',
+    description: 'Recent player kills by mobs in Solace MUD.',
     alternates: { canonical: '/mvp' },
-    openGraph: { title: 'Mob Kills', description: 'Recent player kills by mobs in Solace Mud.', url: '/mvp' },
-    twitter: { title: 'Mob Kills', description: 'Recent player kills by mobs in Solace Mud.', card: 'summary' },
+    openGraph: { title: 'Mob Kills', description: 'Recent player kills by mobs in Solace MUD.', url: '/mvp' },
+    twitter: { title: 'Mob Kills', description: 'Recent player kills by mobs in Solace MUD.', card: 'summary' },
     robots: hasQueryParams ? { index: false, follow: false } : undefined,
   };
 }

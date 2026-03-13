@@ -59,8 +59,8 @@ export default async function ClassesPage() {
 
 export const metadata: Metadata = {
   title: 'Classes',
-  description: 'All playable classes in Solace Mud.',
+  description: 'All playable classes in Solace MUD.',
   alternates: { canonical: '/classes' },
-  openGraph: { title: 'Classes', description: 'All playable classes in Solace Mud.', url: '/classes' },
-  twitter: { title: 'Classes', description: 'All playable classes in Solace Mud.', card: 'summary' },
+  openGraph: { title: 'Classes', description: 'All playable classes in Solace MUD.', url: '/classes' },
+  twitter: { title: 'Classes', description: 'All playable classes in Solace MUD.', card: 'summary' },
 };
