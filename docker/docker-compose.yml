@@ -58,6 +58,8 @@ services:
       MONGODB_URI: mongodb://${MONGO_INITDB_ROOT_USERNAME}:${MONGO_INITDB_ROOT_PASSWORD}@localhost:${MONGODB_PORT:-27093}/${MONGO_INITDB_DATABASE:-solacers}?authSource=admin
       DATABASE_URL: ${DATABASE_URL}
       REDIS_URL: redis://localhost:${REDIS_PORT:-6379}
+      API_BASIC_USER: ${API_BASIC_USER}
+      API_BASIC_PASS: ${API_BASIC_PASS}
       NODE_ENV: production
       NEXT_TELEMETRY_DISABLED: 1
     depends_on:
