@@ -55,6 +55,7 @@ services:
     restart: unless-stopped
     network_mode: host
     environment:
+      MONGODB_URI: mongodb://${MONGO_INITDB_ROOT_USERNAME}:${MONGO_INITDB_ROOT_PASSWORD}@localhost:${MONGODB_PORT:-27093}/${MONGO_INITDB_DATABASE:-solacers}?authSource=admin
       DATABASE_URL: ${DATABASE_URL}
       REDIS_URL: redis://localhost:${REDIS_PORT:-6379}
       NODE_ENV: production
