@@ -47,9 +47,9 @@ export default async function LogPage({ params }: LogPageProps) {
 
   return (
     <div className="bg-background">
-      <div className="max-w-7xl mx-auto px-2 sm:px-4 lg:px-6 py-2">
+      <div className="max-w-7xl mx-auto px-2 sm:px-4 lg:px-6 py-2 overflow-x-hidden">
         <pre
-          className="log-body-mono whitespace-pre-wrap text-[10px] leading-[1.1] sm:text-xs sm:leading-[1.15] md:text-sm md:leading-[1.2] text-foreground overflow-x-auto"
+          className="log-body-mono whitespace-pre-wrap break-words max-w-full text-[10px] leading-[1.1] sm:text-xs sm:leading-[1.15] md:text-sm md:leading-[1.2] text-foreground"
           dangerouslySetInnerHTML={{ __html: html }}
         />
       </div>

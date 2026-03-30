@@ -22,7 +22,7 @@ function escapeHtml(text: string) {
 }
 
 const DAMAGE_REGEX =
-  /^.*?(\*{3}DEMOLISHES\*{3}|\*{3}DEVASTATES\*{3}|===OBLITERATES===|>>>ANNIHILATES<<<|<<<ERADICATES>>>|\b(?:misses|wounds|MUTILATES|scratches|mauls|DISEMBOWELS|grazes|decimates|DISMEMBERS|hits|devastates|MASSACRES|injures|maims|MANGLES)\b)(?=\s+(?:you|[A-Z][A-Za-z'-]+)[!.]?$)/;
+  /^.*?(\*{3}\s*DEMOLISHES\s*\*{3}|\*{3}\s*DEVASTATES\s*\*{3}|={3}\s*OBLITERATES\s*={3}|>{3}\s*ANNIHILATES\s*<{3}|<{3}\s*ERADICATES\s*>{3}|\b(?:misses|wounds|MUTILATES|scratches|mauls|DISEMBOWELS|grazes|decimates|DISMEMBERS|hits|devastates|MASSACRES|injures|maims|MANGLES)\b)(?=\s+(?:you|[A-Z][A-Za-z'-]+|a|an|the)\b.*[!.]?$)/;
 
 export const colorDamage: LineProcessor = ({ rawLine }) => {
   const match = rawLine.match(DAMAGE_REGEX);
@@ -47,9 +47,11 @@ export const colorDamage: LineProcessor = ({ rawLine }) => {
   };
 };
 
-const COMM_SAYS_REGEX = /^.*?\bsays,\s+('.*?')/;
-const COMM_YELLS_REGEX = /^.*?\byells,\s+('.*?')/;
-const COMM_TELLS_GROUP_REGEX = /^.*?\btells the group,\s+('.*?')/;
+// Capture from the first quote to the last quote on the line (greedy),
+// so contractions like "I'll" don't prematurely end the match.
+const COMM_SAYS_REGEX = /^.*?\bsays,\s+('.*')$/;
+const COMM_YELLS_REGEX = /^.*?\byells,\s+('.*')$/;
+const COMM_TELLS_GROUP_REGEX = /^.*?\btells the group,\s+('.*')$/;
 
 function applyQuotedHighlight(input: {
   rawLine: string;
