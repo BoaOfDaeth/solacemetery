@@ -2,6 +2,7 @@ import { notFound } from 'next/navigation';
 import connectDB from '@/lib/mongodb';
 import GameLog from '@/models/GameLog';
 import type { Metadata } from 'next';
+import { processGameLogData } from '@/lib/processGameLogData';
 
 interface LogPageProps {
   params: Promise<{ id: string }>;
@@ -18,6 +19,7 @@ async function getLog(id: string) {
       title: (log as any).title ?? 'Log',
       createdAt: log.createdAt instanceof Date ? log.createdAt.toISOString() : String(log.createdAt),
       text: log.text,
+      html: (log as any).html as string | undefined,
     };
   } catch {
     return null;
@@ -41,12 +43,15 @@ export default async function LogPage({ params }: LogPageProps) {
 
   if (!log) notFound();
 
+  const html = log.html ?? processGameLogData({ text: log.text }).html;
+
   return (
     <div className="bg-background">
       <div className="max-w-7xl mx-auto px-2 sm:px-4 lg:px-6 py-2">
-        <pre className="log-body-mono whitespace-pre-wrap text-[10px] leading-[1.1] sm:text-xs sm:leading-[1.15] md:text-sm md:leading-[1.2] text-foreground overflow-x-auto">
-          {log.text}
-        </pre>
+        <pre
+          className="log-body-mono whitespace-pre-wrap text-[10px] leading-[1.1] sm:text-xs sm:leading-[1.15] md:text-sm md:leading-[1.2] text-foreground overflow-x-auto"
+          dangerouslySetInnerHTML={{ __html: html }}
+        />
       </div>
     </div>
   );

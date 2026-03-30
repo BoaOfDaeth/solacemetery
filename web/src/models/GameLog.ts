@@ -5,6 +5,7 @@ export interface IGameLog extends Document {
   title: string;
   createdAt: Date;
   text: string;
+  html: string;
 }
 
 const GameLogSchema: Schema = new Schema(
@@ -20,6 +21,10 @@ const GameLogSchema: Schema = new Schema(
       trim: true,
     },
     text: {
+      type: String,
+      required: true,
+    },
+    html: {
       type: String,
       required: true,
     },

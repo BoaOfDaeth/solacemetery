@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import connectDB from '@/lib/mongodb';
 import GameLog from '@/models/GameLog';
+import { processGameLogData } from '@/lib/processGameLogData';
 
 export async function POST(request: NextRequest) {
   try {
@@ -50,11 +51,14 @@ export async function POST(request: NextRequest) {
       );
     }
 
+    const processed = processGameLogData({ text });
+
     const log = new GameLog({
       author,
       title,
       createdAt: new Date(createdAt),
       text,
+      html: processed.html,
     });
 
     const saved = await log.save();
