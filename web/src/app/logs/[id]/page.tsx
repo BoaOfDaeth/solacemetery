@@ -3,6 +3,7 @@ import connectDB from '@/lib/mongodb';
 import GameLog from '@/models/GameLog';
 import type { Metadata } from 'next';
 import { processGameLogData } from '@/lib/processGameLogData';
+import BackToTopButton from '@/components/BackToTopButton';
 
 interface LogPageProps {
   params: Promise<{ id: string }>;
@@ -48,6 +49,7 @@ export default async function LogPage({ params }: LogPageProps) {
   return (
     <div className="bg-background">
       <div className="max-w-7xl mx-auto px-2 sm:px-4 lg:px-6 py-2 overflow-x-hidden">
+        <BackToTopButton />
         <div className="flex items-baseline justify-between gap-3 flex-wrap mb-2">
           <div className="min-w-0">
             <div className="text-sm sm:text-base font-semibold text-foreground truncate">

@@ -79,12 +79,7 @@ export default async function LogsPage({
               }
               if (key === 'author') {
                 return (
-                  <Link
-                    href={`/logs/${row.id}`}
-                    className="font-medium text-primary hover:underline"
-                  >
-                    {value}
-                  </Link>
+                  <span className="text-foreground">{value}</span>
                 );
               }
               if (key === 'createdAt') {
