@@ -13,8 +13,9 @@ export function middleware(request: NextRequest) {
   // Keep preflight requests unblocked
   if (request.method === 'OPTIONS') return NextResponse.next();
 
-  const user = process.env.API_BASIC_USER;
-  const pass = process.env.API_BASIC_PASS;
+  // Use dynamic lookup to avoid build-time env inlining in middleware bundles.
+  const user = process.env['API_BASIC_USER'];
+  const pass = process.env['API_BASIC_PASS'];
 
   if (!user || !pass) {
     return new NextResponse('API auth is not configured', { status: 500 });
