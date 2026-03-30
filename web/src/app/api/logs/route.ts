@@ -9,7 +9,6 @@ export async function POST(request: NextRequest) {
 
     let author: string | undefined;
     let title: string | undefined;
-    let createdAt: string | undefined;
     let text: string | undefined;
 
     const contentType = request.headers.get('content-type') || '';
@@ -18,7 +17,6 @@ export async function POST(request: NextRequest) {
       const form = await request.formData();
       author = form.get('author')?.toString();
       title = form.get('title')?.toString();
-      createdAt = form.get('createdAt')?.toString();
 
       const file = form.get('file');
       if (file instanceof File) {
@@ -28,7 +26,6 @@ export async function POST(request: NextRequest) {
       const body = await request.json();
       author = body.author;
       title = body.title;
-      createdAt = body.createdAt;
       text = body.text;
     }
 
@@ -38,10 +35,6 @@ export async function POST(request: NextRequest) {
 
     if (!title || typeof title !== 'string') {
       return NextResponse.json({ success: false, error: 'title is required' }, { status: 400 });
-    }
-
-    if (!createdAt) {
-      return NextResponse.json({ success: false, error: 'createdAt is required' }, { status: 400 });
     }
 
     if (!text || typeof text !== 'string') {
@@ -56,7 +49,6 @@ export async function POST(request: NextRequest) {
     const log = new GameLog({
       author,
       title,
-      createdAt: new Date(createdAt),
       text,
       html: processed.html,
     });

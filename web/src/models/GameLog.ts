@@ -3,9 +3,10 @@ import mongoose, { Schema, Document } from 'mongoose';
 export interface IGameLog extends Document {
   author: string;
   title: string;
-  createdAt: Date;
   text: string;
   html: string;
+  createdAt: Date;
+  updatedAt: Date;
 }
 
 const GameLogSchema: Schema = new Schema(
@@ -28,13 +29,9 @@ const GameLogSchema: Schema = new Schema(
       type: String,
       required: true,
     },
-    createdAt: {
-      type: Date,
-      required: true,
-    },
   },
   {
-    timestamps: false,
+    timestamps: true,
   }
 );
 

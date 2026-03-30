@@ -53,10 +53,13 @@ export default async function LogsPage({
   return (
     <div className="bg-background">
       <div className="max-w-7xl mx-auto px-2 sm:px-4 lg:px-6">
+        <p className="text-sm text-muted-foreground italic mb-2">
+          To publish a log, please contact the Discord administrators.
+        </p>
         <div className="bg-card border border-border rounded-xl shadow-sm overflow-hidden">
           <ModernTable
             title="Logs"
-            description="Uploaded session logs from players"
+            showHeader={false}
             columns={[
               { key: 'title', label: 'Title' },
               { key: 'author', label: 'Author' },

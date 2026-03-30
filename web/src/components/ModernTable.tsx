@@ -10,6 +10,7 @@ interface Column {
 interface ModernTableProps {
   title: string;
   description?: string;
+  showHeader?: boolean;
   columns: Column[];
   data: any[];
   renderCell?: (key: string, value: any, row: any) => React.ReactNode;
@@ -19,6 +20,7 @@ interface ModernTableProps {
 export default function ModernTable({ 
   title, 
   description,
+  showHeader = true,
   columns, 
   data, 
   renderCell,
@@ -27,12 +29,14 @@ export default function ModernTable({
   return (
     <div className={`bg-card border border-border rounded-xl shadow-sm overflow-hidden ${className}`}>
       {/* Header */}
-      <div className="px-4 sm:px-6 py-3 border-b border-border bg-muted/30">
-        <h3 className="text-lg font-semibold text-foreground break-words">{title}</h3>
-        {description && (
-          <p className="text-sm text-muted-foreground mt-1 break-words">{description}</p>
-        )}
-      </div>
+      {showHeader && (
+        <div className="px-4 sm:px-6 py-3 border-b border-border bg-muted/30">
+          <h3 className="text-lg font-semibold text-foreground break-words">{title}</h3>
+          {description && (
+            <p className="text-sm text-muted-foreground mt-1 break-words">{description}</p>
+          )}
+        </div>
+      )}
       
       {/* Table */}
       <div className="overflow-x-auto">
