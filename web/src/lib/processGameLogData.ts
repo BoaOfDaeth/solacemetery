@@ -21,8 +21,64 @@ function escapeHtml(text: string) {
     .replaceAll("'", '&#39;');
 }
 
-const DAMAGE_REGEX =
-  /^.*?(\*{3}\s*DEMOLISHES\s*\*{3}|\*{3}\s*DEVASTATES\s*\*{3}|={3}\s*OBLITERATES\s*={3}|>{3}\s*ANNIHILATES\s*<{3}|<{3}\s*ERADICATES\s*>{3}|\b(?:misses|wounds|MUTILATES|scratches|mauls|DISEMBOWELS|grazes|decimates|DISMEMBERS|hits|devastates|MASSACRES|injures|maims|MANGLES)\b)(?=\s+(?:you|[A-Z][A-Za-z'-]+|a|an|the)\b.*[!.]?$)/;
+export type DamageType = {
+  token: string;
+  minDamage: number | null;
+  maxDamage: number | null;
+};
+
+// Single source of truth for damage tokens + their damage ranges.
+// minDamage/maxDamage are placeholders for now; fill them as you determine the mapping.
+export const DAMAGE_TYPES: readonly DamageType[] = [
+  { token: 'misses', minDamage: null, maxDamage: null },
+  { token: 'wounds', minDamage: null, maxDamage: null },
+  { token: 'MUTILATES', minDamage: null, maxDamage: null },
+  { token: '***DEMOLISHES***', minDamage: null, maxDamage: null },
+  { token: 'scratches', minDamage: null, maxDamage: null },
+  { token: 'mauls', minDamage: null, maxDamage: null },
+  { token: 'DISEMBOWELS', minDamage: null, maxDamage: null },
+  { token: '***DEVASTATES***', minDamage: null, maxDamage: null },
+  { token: 'grazes', minDamage: null, maxDamage: null },
+  { token: 'decimates', minDamage: null, maxDamage: null },
+  { token: 'DISMEMBERS', minDamage: null, maxDamage: null },
+  { token: '===OBLITERATES===', minDamage: null, maxDamage: null },
+  { token: 'hits', minDamage: null, maxDamage: null },
+  { token: 'devastates', minDamage: null, maxDamage: null },
+  { token: 'MASSACRES', minDamage: null, maxDamage: null },
+  { token: '>>>ANNIHILATES<<<', minDamage: null, maxDamage: null },
+  { token: 'injures', minDamage: null, maxDamage: null },
+  { token: 'maims', minDamage: null, maxDamage: null },
+  { token: 'MANGLES', minDamage: null, maxDamage: null },
+  { token: '<<<ERADICATES>>>', minDamage: null, maxDamage: null },
+] as const;
+
+function escapeRegExp(text: string) {
+  return text.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+}
+
+function tokenToDamageRegexPart(token: string) {
+  // Allow optional spaces inside marker tokens (e.g. "*** DEMOLISHES ***").
+  const star = token.match(/^\*{3}([A-Z]+)\*{3}$/);
+  if (star) return String.raw`\*{3}\s*${escapeRegExp(star[1])}\s*\*{3}`;
+
+  const eq = token.match(/^={3}([A-Z]+)={3}$/);
+  if (eq) return String.raw`={3}\s*${escapeRegExp(eq[1])}\s*={3}`;
+
+  const rAngle = token.match(/^>{3}([A-Z]+)<{3}$/);
+  if (rAngle) return String.raw`>{3}\s*${escapeRegExp(rAngle[1])}\s*<{3}`;
+
+  const lAngle = token.match(/^<{3}([A-Z]+)>{3}$/);
+  if (lAngle) return String.raw`<{3}\s*${escapeRegExp(lAngle[1])}\s*>{3}`;
+
+  // Normal word token.
+  return String.raw`\b${escapeRegExp(token)}\b`;
+}
+
+const DAMAGE_TOKEN_PARTS = DAMAGE_TYPES.map((d) => tokenToDamageRegexPart(d.token));
+
+const DAMAGE_REGEX = new RegExp(
+  String.raw`^.*?(${DAMAGE_TOKEN_PARTS.join('|')})(?=\s+(?:you|[A-Z][A-Za-z'-]+|a|an|the)\b.*[!.]?$)`
+);
 
 export const colorDamage: LineProcessor = ({ rawLine }) => {
   const match = rawLine.match(DAMAGE_REGEX);
