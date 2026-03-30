@@ -72,6 +72,12 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
+/* Used for raw game log text rendering */
+.log-body-mono {
+  font-family: "Bitstream Vera Sans Mono", ui-monospace, SFMono-Regular, Menlo, Monaco,
+    Consolas, "Liberation Mono", "Courier New", monospace;
+}
+
 /* Custom scrollbar */
 ::-webkit-scrollbar {
   width: 8px;
