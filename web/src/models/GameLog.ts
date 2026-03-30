@@ -5,6 +5,7 @@ export interface IGameLog extends Document {
   title: string;
   text: string;
   html: string;
+  damageTotals: { actor: string; given: number; taken: number }[];
   createdAt: Date;
   updatedAt: Date;
 }
@@ -28,6 +29,20 @@ const GameLogSchema: Schema = new Schema(
     html: {
       type: String,
       required: true,
+    },
+    damageTotals: {
+      type: [
+        new Schema(
+          {
+            actor: { type: String, required: true },
+            given: { type: Number, required: true },
+            taken: { type: Number, required: true },
+          },
+          { _id: false }
+        ),
+      ],
+      required: true,
+      default: [],
     },
   },
   {

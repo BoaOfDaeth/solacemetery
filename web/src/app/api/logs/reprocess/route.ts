@@ -17,12 +17,12 @@ export async function POST() {
       processed += 1;
 
       const text = typeof (doc as any).text === 'string' ? (doc as any).text : '';
-      const html = processGameLogData({ text }).html;
+      const processedLog = processGameLogData({ text });
 
       bulkOps.push({
         updateOne: {
           filter: { _id: doc._id },
-          update: { $set: { html } },
+          update: { $set: { html: processedLog.html, damageTotals: processedLog.damageTotals } },
         },
       });
 

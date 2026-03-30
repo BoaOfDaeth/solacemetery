@@ -1,5 +1,12 @@
+export type DamageTotals = {
+  actor: string;
+  given: number;
+  taken: number;
+};
+
 type LineContext = {
   lineNumber: number;
+  damageTotals: Map<string, { given: number; taken: number }>;
 };
 
 type LineProcessResult = {
@@ -21,7 +28,7 @@ function escapeHtml(text: string) {
     .replaceAll("'", '&#39;');
 }
 
-export type DamageType = {
+export type DamageToken = {
   token: string;
   minDamage: number | null;
   maxDamage: number | null;
@@ -29,7 +36,7 @@ export type DamageType = {
 
 // Single source of truth for damage tokens + their damage ranges.
 // minDamage/maxDamage are placeholders for now; fill them as you determine the mapping.
-export const DAMAGE_TYPES: readonly DamageType[] = [
+export const DAMAGE_TOKENS: readonly DamageToken[] = [
   { token: 'misses', minDamage: 0, maxDamage: 0 },
   { token: 'scratches', minDamage: 1, maxDamage: 1 },
   { token: 'grazes', minDamage: 1, maxDamage: 1 },
@@ -75,33 +82,124 @@ function tokenToDamageRegexPart(token: string) {
   return String.raw`\b${escapeRegExp(token)}\b`;
 }
 
-const DAMAGE_TOKEN_PARTS = DAMAGE_TYPES.map((d) => tokenToDamageRegexPart(d.token));
+const DAMAGE_TOKEN_PARTS = DAMAGE_TOKENS.map((d) => tokenToDamageRegexPart(d.token));
 
-const DAMAGE_REGEX = new RegExp(
-  String.raw`^.*?(${DAMAGE_TOKEN_PARTS.join('|')})(?=\s+(?:you|[A-Z][A-Za-z'-]+|a|an|the)\b.*[!.]?$)`
+const DAMAGE_EVENT_REGEX = new RegExp(
+  String.raw`^\s*(.+?)\s+(${DAMAGE_TOKEN_PARTS.join('|')})\s+((?:you|[A-Z][A-Za-z'-]+|a|an|the)\b.*?)[!.]?$`
 );
 
+function normalizeDamageTokenForLookup(token: string) {
+  // Marker tokens are allowed to contain optional spaces; normalize by stripping spaces.
+  if (/[=<>*]/.test(token)) return token.replace(/\s+/g, '');
+  return token;
+}
+
+const DAMAGE_TOKEN_BY_TOKEN = new Map<string, DamageToken>(
+  DAMAGE_TOKENS.map((t) => [normalizeDamageTokenForLookup(t.token), t])
+);
+
+function normalizeActor(rawActor: string) {
+  const trimmed = rawActor.trim();
+  if (!trimmed) return trimmed;
+
+  const youMatch = trimmed.match(/^(you|your)\b/i);
+  if (youMatch) return 'you';
+
+  // If the actor starts with a possessive name, strip the "'s" suffix.
+  // Examples: "Rae's flaming blade", "Malgor's poisonous bite"
+  const possessiveMatch = trimmed.match(/^([A-Z][A-Za-z'-]+)'s\b/);
+  if (possessiveMatch) return possessiveMatch[1];
+
+  // Common forms: "Malgor's poisonous bite", "Marijna", "A huge barbarian"
+  const nameMatch = trimmed.match(/^([A-Z][A-Za-z'-]+)(?:'s)?\b/);
+  if (nameMatch) return nameMatch[1];
+
+  return trimmed;
+}
+
+function normalizeTarget(rawTarget: string) {
+  const trimmed = rawTarget.trim().replace(/[!.]+$/, '').trim();
+  if (!trimmed) return trimmed;
+
+  if (/^(you|your)\b/i.test(trimmed)) return 'you';
+
+  // If the target starts with a possessive name, strip the "'s" suffix.
+  const possessiveMatch = trimmed.match(/^([A-Z][A-Za-z'-]+)'s\b/);
+  if (possessiveMatch) return possessiveMatch[1];
+
+  return trimmed;
+}
+
+function isCountableEntity(name: string) {
+  if (name === 'you') return true;
+  if (/^(A|An|The)\b/.test(name)) return false;
+  return /^[A-Z]/.test(name);
+}
+
+function getDamageEvent(rawLine: string) {
+  const match = rawLine.match(DAMAGE_EVENT_REGEX);
+  if (!match || typeof match.index !== 'number') return null;
+
+  const rawActor = match[1] ?? '';
+  const rawToken = match[2] ?? '';
+  const rawTarget = match[3] ?? '';
+  if (!rawActor || !rawToken || !rawTarget) return null;
+
+  const tokenIndex = rawLine.indexOf(rawToken, match.index);
+  if (tokenIndex < 0) return null;
+
+  const actor = normalizeActor(rawActor);
+  const target = normalizeTarget(rawTarget);
+  if (!actor || !target) return null;
+
+  const damageToken = DAMAGE_TOKEN_BY_TOKEN.get(normalizeDamageTokenForLookup(rawToken));
+  if (!damageToken || damageToken.minDamage == null || damageToken.maxDamage == null) return null;
+
+  const avg = (damageToken.minDamage + damageToken.maxDamage) / 2;
+
+  return {
+    actor,
+    target,
+    token: rawToken,
+    tokenIndex,
+    damageToken,
+    avg,
+  };
+}
+
 export const colorDamage: LineProcessor = ({ rawLine }) => {
-  const match = rawLine.match(DAMAGE_REGEX);
-  if (!match || typeof match.index !== 'number') {
-    return { html: escapeHtml(rawLine) };
-  }
+  const ev = getDamageEvent(rawLine);
+  if (!ev) return { html: escapeHtml(rawLine) };
 
-  const token = match[1] ?? '';
-  if (!token) return { html: escapeHtml(rawLine) };
-
-  const tokenIndex = rawLine.indexOf(token, match.index);
-  if (tokenIndex < 0) return { html: escapeHtml(rawLine) };
-
-  const before = rawLine.slice(0, tokenIndex);
-  const after = rawLine.slice(tokenIndex + token.length);
+  const before = rawLine.slice(0, ev.tokenIndex);
+  const after = rawLine.slice(ev.tokenIndex + ev.token.length);
 
   return {
     html:
       escapeHtml(before) +
-      `<span class="text-red-500 font-semibold">${escapeHtml(token)}</span>` +
+      `<span class="text-red-500 font-semibold">${escapeHtml(ev.token)}</span>` +
       escapeHtml(after),
   };
+};
+
+export const countDamageTotals: LineProcessor = ({ rawLine, currentHtml, ctx }) => {
+  const ev = getDamageEvent(rawLine);
+  if (!ev) return { html: currentHtml };
+
+  // Ignore entities that don't start with a capital letter (except normalized buckets).
+  if (!isCountableEntity(ev.actor) || !isCountableEntity(ev.target)) {
+    return { html: currentHtml };
+  }
+
+  const actorTotals = ctx.damageTotals.get(ev.actor) ?? { given: 0, taken: 0 };
+  actorTotals.given += ev.avg;
+  ctx.damageTotals.set(ev.actor, actorTotals);
+
+  const targetTotals = ctx.damageTotals.get(ev.target) ?? { given: 0, taken: 0 };
+  targetTotals.taken += ev.avg;
+  ctx.damageTotals.set(ev.target, targetTotals);
+
+  return { html: currentHtml };
 };
 
 // Capture from the first quote to the last quote on the line (greedy),
@@ -163,11 +261,12 @@ export const colorComm: LineProcessor = ({ rawLine, currentHtml }) => {
 };
 
 export function processGameLogData(input: { text: string; pipeline?: LineProcessor[] }) {
-  const pipeline = input.pipeline ?? [colorDamage, colorComm];
+  const pipeline = input.pipeline ?? [colorDamage, colorComm, countDamageTotals];
+  const damageTotals = new Map<string, { given: number; taken: number }>();
 
   const lines = input.text.split(/\r?\n/);
   const processedLines = lines.map((rawLine, i) => {
-    const ctx: LineContext = { lineNumber: i + 1 };
+    const ctx: LineContext = { lineNumber: i + 1, damageTotals };
 
     let current: LineProcessResult = { html: escapeHtml(rawLine) };
     for (const processor of pipeline) {
@@ -179,6 +278,11 @@ export function processGameLogData(input: { text: string; pipeline?: LineProcess
 
   return {
     html: processedLines.join('\n'),
+    damageTotals: Array.from(damageTotals.entries()).map(([actor, totals]) => ({
+      actor,
+      given: totals.given,
+      taken: totals.taken,
+    })),
   };
 }
 

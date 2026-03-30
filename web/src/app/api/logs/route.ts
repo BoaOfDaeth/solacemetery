@@ -51,6 +51,7 @@ export async function POST(request: NextRequest) {
       title,
       text,
       html: processed.html,
+      damageTotals: processed.damageTotals,
     });
 
     const saved = await log.save();
